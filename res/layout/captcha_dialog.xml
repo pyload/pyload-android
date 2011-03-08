@@ -10,7 +10,7 @@
                android:gravity="center"
                android:layout_gravity="fill_horizontal"
                android:padding="5dip"
-               />
+    />
     <EditText android:id="@+id/text"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"

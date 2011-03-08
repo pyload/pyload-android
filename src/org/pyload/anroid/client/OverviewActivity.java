@@ -167,7 +167,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		view = (TextView) findViewById(R.id.active);
 		view.setText(String.format("%d / %d", status.active, status.total));
 
-		if(captcha != null){
+		if(captcha != null && app.prefs.getBoolean("pull_captcha", true)){
 			showDialog(CAPTCHA_DIALOG);
 		}
 		
