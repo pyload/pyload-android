@@ -1,0 +1,201 @@
+package org.pyload.anroid.client;
+
+import java.util.HashMap;
+
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
+import org.pyload.thrift.Pyload.Client;
+
+import android.app.Application;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
+
+public class pyLoadApp extends Application {
+
+	private Client client;
+
+	// setted by main activity
+	private Handler mHandler;
+	private TaskQueue taskQueue;
+	SharedPreferences prefs;
+	ConnectivityManager cm;
+
+	private OverviewActivity overview;
+	private QueueActivity queue;
+	private CollectorActivity collector;
+	
+	public void init(){
+		
+		mHandler = new Handler();
+		HashMap<Throwable, Runnable> map= new HashMap<Throwable, Runnable>();
+		map.put(new TException(), handleTException);
+		map.put(new WrongLogin(), handleWrongLogin);
+		map.put(new TTransportException(), handleTException);
+		
+		taskQueue = new TaskQueue(mHandler, map);
+		
+		startTaskQueue();
+	}
+
+	public String verboseBool(boolean state) {
+		if (state)
+			return getString(R.string.on);
+		else
+			return getString(R.string.off);
+	}
+
+	public String formatSize(long size) {
+		double format = size;
+		int steps = 0;
+		String[] sizes = {"B", "KiB", "MiB", "GiB", "TiB"};
+		while (format > 1000) {
+			format /= 1024.0;
+			steps++;
+		}
+		return String.format("%.2f %s", format, sizes[steps]);
+	}
+
+	boolean login() throws TException {
+
+		String host = prefs.getString("host", "10.0.2.2");
+		int port = Integer.parseInt(prefs.getString("port", "7227"));
+		String username = prefs.getString("username", "User");
+		String password = prefs.getString("password", "pwhere");
+
+		TTransport trans = new TSocket(host, port);
+		try {
+			trans.open();
+		} catch (TTransportException e) {
+			Log.e("pyLoad", "Could not open Connection.", e);
+			throw new TException("No Connection");
+		}
+		TProtocol iprot = new TBinaryProtocol(trans);
+
+		client = new Client(iprot);
+		boolean login = false;
+		try {
+			login = client.login(username, password);
+		} catch (TException e) {
+			Log.e("pyLoad", "Login failed", e);
+
+			client = null;
+			throw e;
+		}
+
+		return login;
+	}
+
+	public Client getClient() throws TException, WrongLogin {
+
+		if (client == null) {
+			boolean loggedin = login();
+			if (!loggedin) {
+				client = null;
+				throw new WrongLogin();
+			}
+		}
+
+		return client;
+	}
+
+	public void addTask(GuiTask task) {
+		taskQueue.addTask(task);
+	}
+	
+	public void startTaskQueue() {
+		taskQueue.start();
+	}
+
+	final public Runnable handleTException = new Runnable() {
+		@Override
+		public void run() {
+			pyLoadApp.this.onTException();			
+		}
+	};
+	
+	public void onTException() {
+		client = null;
+
+		Toast t = Toast.makeText(this, R.string.no_connection,
+				Toast.LENGTH_SHORT);
+		t.show();
+
+	}
+
+	final public Runnable handleWrongLogin = new Runnable() {
+		@Override
+		public void run() {
+			pyLoadApp.this.onWrongLogin();			
+		}
+	};
+	
+	public void onWrongLogin() {
+		client = null;
+		Toast t = Toast.makeText(this, R.string.bad_login, Toast.LENGTH_SHORT);
+		t.show();
+	}
+	
+	final public Runnable handleSuccess = new Runnable() {
+		
+		@Override
+		public void run() {
+			onSuccess();
+		}
+	};
+	
+	public void onSuccess(){
+		Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
+		t.show();
+	}
+	
+	
+	public void setOverview(OverviewActivity overview) {
+		this.overview = overview;
+	}
+
+	public void setQueue(QueueActivity queue) {
+		this.queue = queue;
+	}
+
+	public void setCollector(CollectorActivity collector) {
+		this.collector = collector;
+	}
+
+	public void refreshTab(int index) {
+		switch (index) {
+		case 0:
+			overview.refresh();
+			break;
+		case 1:
+			queue.refresh();
+			break;
+		case 2:
+			collector.refresh();
+
+		default:
+			break;
+		}
+	}
+
+	public boolean hasConnection() {
+		NetworkInfo info = cm.getActiveNetworkInfo();
+		// TODO investigate network states, info etc
+		if (info != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public void clearTasks() {
+		taskQueue.clear();		
+	}
+
+}

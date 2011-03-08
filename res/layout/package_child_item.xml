@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
+	android:paddingTop="2dip" android:paddingBottom="2dip"
+	android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+	android:mode="twoLine">
+    
+    
+	<TextView android:id="@+id/name" android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearance" android:text="@string/n_a" />
+		
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/name"
+		android:layout_alignLeft="@+id/name">
+				
+		<TextView android:layout_width="wrap_content"
+		android:id="@+id/status"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:gravity="left" android:layout_gravity="fill_horizontal"
+		android:text="@string/n_a"
+		android:paddingRight="20dip"/>
+		
+		<TextView android:layout_width="wrap_content"
+		android:id="@+id/size"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
+		android:text="@string/n_a"
+		android:paddingRight="20dip"/>
+		
+		<TextView android:layout_width="wrap_content"
+		android:id="@+id/plugin"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:gravity="right" android:layout_gravity="fill_horizontal"
+		android:text="@string/n_a"/>
+		
+	</LinearLayout>
+
+</TwoLineListItem>
