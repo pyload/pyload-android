@@ -1,6 +1,7 @@
 package org.pyload.anroid.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.Pyload.Client;
@@ -21,6 +22,7 @@ import android.widget.TabHost;
 public class pyLoad extends TabActivity {
 
 	private pyLoadApp app;
+	private TabHost tabHost;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -30,14 +32,14 @@ public class pyLoad extends TabActivity {
 
 		app = (pyLoadApp) getApplicationContext();
 
-		Log.d("pyLoad", "Starting TaskQueue");
+		Log.d("pyLoad", "Starting pyLoad App");
 
 		app.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		app.cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		app.init();
+		app.init(this);
 
 		Resources res = getResources(); // Resource object to get Drawables
-		TabHost tabHost = getTabHost(); // The activity TabHost
+		tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		Intent intent; // Reusable Intent for each tab
 
@@ -45,22 +47,26 @@ public class pyLoad extends TabActivity {
 		intent = new Intent().setClass(this, OverviewActivity.class);
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("Overview")
-				.setIndicator("Overview", res.getDrawable(R.drawable.icon))
+		spec = tabHost
+				.newTabSpec("Overview")
+				.setIndicator("Overview",
+						res.getDrawable(R.drawable.ic_tab_pyload))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, QueueActivity.class);
 		String queue = app.getString(R.string.queue);
 		spec = tabHost.newTabSpec(queue)
-				.setIndicator(queue, res.getDrawable(R.drawable.icon))
+				.setIndicator(queue, res.getDrawable(R.drawable.ic_tab_queue))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
 		String collector = app.getString(R.string.collector);
 		intent = new Intent().setClass(this, CollectorActivity.class);
-		spec = tabHost.newTabSpec(collector)
-				.setIndicator(collector, res.getDrawable(R.drawable.icon))
+		spec = tabHost
+				.newTabSpec(collector)
+				.setIndicator(collector,
+						res.getDrawable(R.drawable.ic_tab_collector))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -99,6 +105,32 @@ public class pyLoad extends TabActivity {
 
 			return true;
 
+		case R.id.toggle_server:
+
+			app.addTask(new GuiTask(new Runnable() {
+
+				@Override
+				public void run() {
+					Client client = app.getClient();
+					client.togglePause();
+				}
+			}, app.handleSuccess));
+
+			return true;
+
+		case R.id.toggle_reconnect:
+
+			app.addTask(new GuiTask(new Runnable() {
+
+				@Override
+				public void run() {
+					Client client = app.getClient();
+					client.toggleReconnect();
+				}
+			}, app.handleSuccess));
+
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -107,37 +139,45 @@ public class pyLoad extends TabActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		
 		switch (requestCode) {
 		case 0:
 			switch (resultCode) {
 			case RESULT_OK:
-				
+
 				final String name = data.getStringExtra("name");
-				final String[] link_array = data.getStringExtra("links").split("\n");
+				final String[] link_array = data.getStringExtra("links").split(
+						"\n");
 				final Destination dest;
-				
-				if(data.getIntExtra("dest", 0) == 0)
+
+				if (data.getIntExtra("dest", 0) == 0)
 					dest = Destination.Queue;
 				else
 					dest = Destination.Collector;
-				
+
 				final ArrayList<String> links = new ArrayList<String>();
-				for (String link: link_array){
-					links.add(link);
-				}
-				
-				// TODO: password				
+				for (String link_row : link_array)
+					for (String link : link_row.split(" "))
+						links.add(link);
+
+				final String password = data.getStringExtra("password");
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						Client client = app.getClient();
-						client.addPackage(name, links, dest);
-						
+						int pid = client.addPackage(name, links, dest);
+
+						if (password != null && !password.equals("")) {
+
+							HashMap<String, String> opts = new HashMap<String, String>();
+							opts.put("password", password);
+
+							client.setPackageData(pid, opts);
+						}
+
 					}
-				},app.handleSuccess));
+				}, app.handleSuccess));
 				break;
 			default:
 				break;
@@ -148,6 +188,10 @@ public class pyLoad extends TabActivity {
 			break;
 		}
 
+	}
+	
+	public int getCurrentTab(){
+		return tabHost.getCurrentTab();
 	}
 
 }

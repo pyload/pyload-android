@@ -9,22 +9,33 @@ import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.Pyload.Client;
 import org.pyload.thrift.ServerStatus;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class OverviewActivity extends ListActivity {
+public class OverviewActivity extends ListActivity implements OnDismissListener {
+	
+	public final static int CAPTCHA_DIALOG = 0;
 
 	private pyLoadApp app;
 	private Client client;
@@ -34,12 +45,33 @@ public class OverviewActivity extends ListActivity {
 	private CaptchaTask captcha;
 	private int interval = 5;
 	private boolean update = false;
+	private boolean dialogOpen = false;
 
 	private final Handler mHandler = new Handler();
 	private final Runnable mUpdateResults = new Runnable() {
 		@Override
 		public void run() {
 			onDataReceived();
+		}
+	};
+	private final Runnable runUpdate = new Runnable() {
+		
+		@Override
+		public void run() {
+			client = app.getClient();
+			downloads = client.statusDownloads();
+			status = client.statusServer();
+			if (client.isCaptchaWaiting()) {
+				captcha = client.getCaptchaTask(false);
+			}
+		}
+	};
+	
+	private final Runnable cancelUpdate = new Runnable() {
+		
+		@Override
+		public void run() {
+			stopUpdate();			
 		}
 	};
 
@@ -135,6 +167,10 @@ public class OverviewActivity extends ListActivity {
 		view = (TextView) findViewById(R.id.active);
 		view.setText(String.format("%d / %d", status.active, status.total));
 
+		if(captcha != null){
+			showDialog(CAPTCHA_DIALOG);
+		}
+		
 	}
 
 	public void refresh() {
@@ -142,20 +178,8 @@ public class OverviewActivity extends ListActivity {
 		if (!app.hasConnection())
 			return;
 
-		GuiTask task = new GuiTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				client = app.getClient();
-				downloads = client.statusDownloads();
-				status = client.statusServer();
-				if (client.isCaptchaWaiting()) {
-					captcha = client.getCaptchaTask(false);
-				}
-
-			}
-		}, mUpdateResults);
+		GuiTask task = new GuiTask(runUpdate, mUpdateResults);
+		task.setCritical(cancelUpdate);
 
 		app.addTask(task);
 	}
@@ -173,6 +197,73 @@ public class OverviewActivity extends ListActivity {
 		
 		app.clearTasks();
 		stopUpdate();
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case CAPTCHA_DIALOG:
+			
+			if(dialogOpen) return null;
+			
+			final Dialog dialog = new Dialog(this);
+			dialog.setContentView(R.layout.captcha_dialog);
+			dialog.setTitle(getString(R.string.captcha_dialog_titel));
+
+			final TextView text = (TextView) dialog.findViewById(R.id.text);
+			final int tid = captcha.tid;
+			
+			ImageView image = (ImageView) dialog.findViewById(R.id.image);
+			
+			Bitmap bm = BitmapFactory.decodeByteArray(captcha.data.array(), 0, captcha.data.array().length);			
+			image.setImageBitmap(bm);
+			
+			Log.d("pyLoad", "Got Captcha Task"+ captcha.tid + "content length: "+ captcha.getData().length);
+			
+			Button enter = (Button) dialog.findViewById(R.id.enter);
+			
+			enter.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					app.addTask(new GuiTask(new Runnable() {						
+						@Override
+						public void run() {
+							String result = text.getText().toString();
+							Client client = app.getClient();
+							Log.d("pyLoad", "Send Captcha result: "+tid+" "+result);
+							client.setCaptchaResult(tid, result);
+							
+						}
+					}));
+					dialog.dismiss();
+				}
+			});
+			
+			Button cancel = (Button) dialog.findViewById(R.id.cancel);
+			
+			cancel.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					dialog.dismiss();
+				}
+			});
+			
+			dialog.setOnDismissListener(this);
+			
+			dialogOpen = true;
+			return dialog;
+
+		default:
+			return null;
+		}
+		
+	}
+
+	@Override
+	public void onDismiss(DialogInterface arg0) {
+        captcha = null;
+		dialogOpen = false;
 	}
 
 }
@@ -237,9 +328,16 @@ class OverviewAdapter extends BaseAdapter {
 
 			text = (TextView) view.findViewById(R.id.speed);
 			text.setText(app.formatSize(info.speed) + "/s");
+			
+			text = (TextView) view.findViewById(R.id.size_done);
+			text.setText(app.formatSize(info.size - info.bleft));
 
+			text = (TextView) view.findViewById(R.id.eta);
+			text.setText(info.format_eta);
+			
 			text = (TextView) view.findViewById(R.id.percent);
 			text.setText(info.percent + "%");
+			
 		} else if (info.status == DownloadStatus.Waiting) {
 			text = (TextView) view.findViewById(R.id.speed);
 			text.setText(info.format_wait);

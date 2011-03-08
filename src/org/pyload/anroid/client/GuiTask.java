@@ -8,6 +8,12 @@ public class GuiTask {
 	private final Runnable task;
 	private final Runnable success;
 	
+	//how often the task can be called
+	public int tries = 2;
+	
+	// called when anything goes wrong (optional)
+	private Runnable critical;
+	
 	public GuiTask(Runnable task){
 		this.task = task;
 		// Nop
@@ -44,6 +50,24 @@ public class GuiTask {
 	
 	public HashMap<Throwable, Runnable> getExceptionMap(){
 		return exceptionMap;
+	}
+	
+	public void putException(Throwable t, Runnable r){
+		if(exceptionMap == null) exceptionMap = new HashMap<Throwable, Runnable>();
+		
+		exceptionMap.put(t, r);
+	}
+	
+	public boolean hasCritical(){
+		return (critical != null);
+	}
+
+	public void setCritical(Runnable critical) {
+		this.critical = critical;
+	}
+
+	public Runnable getCritical() {
+		return critical;
 	}
 	
 }

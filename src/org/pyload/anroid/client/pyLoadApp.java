@@ -25,23 +25,26 @@ public class pyLoadApp extends Application {
 	// setted by main activity
 	private Handler mHandler;
 	private TaskQueue taskQueue;
+	private Throwable lastException;
 	SharedPreferences prefs;
 	ConnectivityManager cm;
 
+	private pyLoad main;
 	private OverviewActivity overview;
 	private QueueActivity queue;
 	private CollectorActivity collector;
-	
-	public void init(){
-		
+
+	public void init(pyLoad main) {
+		this.main = main;
+
 		mHandler = new Handler();
-		HashMap<Throwable, Runnable> map= new HashMap<Throwable, Runnable>();
-		map.put(new TException(), handleTException);
-		map.put(new WrongLogin(), handleWrongLogin);
-		map.put(new TTransportException(), handleTException);
-		
-		taskQueue = new TaskQueue(mHandler, map);
-		
+		HashMap<Throwable, Runnable> map = new HashMap<Throwable, Runnable>();
+		map.put(new TException(), handleException);
+		map.put(new WrongLogin(), handleException);
+		map.put(new TTransportException(), handleException);
+
+		taskQueue = new TaskQueue(this, mHandler, map);
+
 		startTaskQueue();
 	}
 
@@ -55,7 +58,7 @@ public class pyLoadApp extends Application {
 	public String formatSize(long size) {
 		double format = size;
 		int steps = 0;
-		String[] sizes = {"B", "KiB", "MiB", "GiB", "TiB"};
+		String[] sizes = { "B", "KiB", "MiB", "GiB", "TiB" };
 		while (format > 1000) {
 			format /= 1024.0;
 			steps++;
@@ -109,54 +112,52 @@ public class pyLoadApp extends Application {
 	public void addTask(GuiTask task) {
 		taskQueue.addTask(task);
 	}
-	
+
 	public void startTaskQueue() {
 		taskQueue.start();
 	}
 
-	final public Runnable handleTException = new Runnable() {
+	final public Runnable handleException = new Runnable() {
 		@Override
 		public void run() {
-			pyLoadApp.this.onTException();			
+			onException();
 		}
 	};
-	
-	public void onTException() {
+
+	public void onException() {
 		client = null;
 
-		Toast t = Toast.makeText(this, R.string.no_connection,
-				Toast.LENGTH_SHORT);
-		t.show();
-
-	}
-
-	final public Runnable handleWrongLogin = new Runnable() {
-		@Override
-		public void run() {
-			pyLoadApp.this.onWrongLogin();			
+		if (lastException instanceof TTransportException) {
+			Toast t = Toast.makeText(this, R.string.lost_connection,
+					Toast.LENGTH_SHORT);
+			t.show();
+		} else if (lastException instanceof WrongLogin) {
+			Toast t = Toast.makeText(this, R.string.bad_login,
+					Toast.LENGTH_SHORT);
+			t.show();
+		} else if (lastException instanceof TException) {
+			Toast t = Toast.makeText(this, R.string.no_connection,
+					Toast.LENGTH_SHORT);
+			t.show();
 		}
-	};
-	
-	public void onWrongLogin() {
-		client = null;
-		Toast t = Toast.makeText(this, R.string.bad_login, Toast.LENGTH_SHORT);
-		t.show();
 	}
-	
+
+
 	final public Runnable handleSuccess = new Runnable() {
-		
+
 		@Override
 		public void run() {
 			onSuccess();
 		}
 	};
-	
-	public void onSuccess(){
+
+	public void onSuccess() {
 		Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
 		t.show();
+		
+		refreshTab(main.getCurrentTab());
 	}
-	
-	
+
 	public void setOverview(OverviewActivity overview) {
 		this.overview = overview;
 	}
@@ -195,7 +196,11 @@ public class pyLoadApp extends Application {
 	}
 
 	public void clearTasks() {
-		taskQueue.clear();		
+		taskQueue.clear();
+	}
+
+	public void setLastException(Throwable t) {
+		lastException = t;		
 	}
 
 }

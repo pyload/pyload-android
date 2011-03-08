@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_root"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="10dp" android:orientation="vertical">
+    <ImageView android:id="@+id/image"
+               android:layout_width="fill_parent"
+               android:layout_height="100dip"
+               android:gravity="center"
+               android:layout_gravity="fill_horizontal"
+               android:padding="5dip"
+               />
+    <EditText android:id="@+id/text"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:lines="1"
+              />
+    <LinearLayout
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:id="@+id/linearLayout1">
+    
+    <Button android:onClick="dismiss" android:text="@string/enter" android:id="@+id/enter" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <Button android:onClick="cancel" android:text="@string/cancel" android:id="@+id/cancel" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+</LinearLayout>

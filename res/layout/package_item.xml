@@ -5,15 +5,21 @@
   android:layout_height="wrap_content"
   android:layout_gravity="right"
   android:layout_weight="1"
-  android:padding="6dip">
+  android:padding="6dip"
+  android:marqueeRepeatLimit="marquee_forever"
+  android:ellipsize="marquee">
   
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+  <org.pyload.android.client.components.ScrollingTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/name"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
     android:textAppearance="?android:attr/textAppearance"
     android:gravity="center_vertical"
-	/>
-
+    android:marqueeRepeatLimit="marquee_forever"
+    android:ellipsize="marquee"
+    android:scrollHorizontally="true"
+	android:maxLines="1"
+  />
+ 
 </LinearLayout>

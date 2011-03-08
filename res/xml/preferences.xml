@@ -3,6 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/general" android:key="general">
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:numeric="integer"></EditTextPreference>
+        <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"></CheckBoxPreference>
         
         
     </PreferenceCategory><PreferenceCategory android:key="login" android:title="@string/login">

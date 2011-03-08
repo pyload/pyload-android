@@ -54,7 +54,6 @@ public abstract class PackageActivity extends ExpandableListActivity {
 
 		setListAdapter(adapter);
 		registerForContextMenu(getExpandableListView());
-
 	}
 
 	@Override

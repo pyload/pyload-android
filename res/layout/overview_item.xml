@@ -2,9 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="vertical">
-	<TextView android:text="@string/n_a" android:id="@+id/name"
+	<org.pyload.android.client.components.ScrollingTextView android:text="@string/n_a" android:id="@+id/name"
 		android:textAppearance="?android:attr/textAppearance"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:marqueeRepeatLimit="marquee_forever"
+    	android:ellipsize="marquee"
+    	android:scrollHorizontally="true"
+		android:maxLines="1"/>
+	
 	<ProgressBar android:layout_width="fill_parent"
 		android:layout_height="wrap_content" style="?android:attr/progressBarStyleHorizontal"
 		android:id="@+id/progress" android:max="100" android:paddingTop="2dip" android:paddingBottom="2dip" />
@@ -13,17 +18,35 @@
 		android:orientation="horizontal" android:layout_height="wrap_content"
 		android:paddingBottom="5dip">
 
+		<TextView android:text="@string/n_a" android:id="@+id/size_done"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+				
+		<TextView android:text="@string/n_a" android:id="@+id/percent"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+
+
 		<TextView android:text="@string/n_a" android:id="@+id/size"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+	
+	</LinearLayout>
+	
+		<LinearLayout android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_height="wrap_content"
+		android:paddingBottom="5dip">
+
+		<TextView android:id="@+id/speed"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="left" android:layout_gravity="fill_horizontal"
 				android:layout_weight="1"/>
 
-		<TextView android:text="@string/n_a" android:id="@+id/speed"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
-				android:layout_weight="1"/>
 
-		<TextView android:text="@string/n_a" android:id="@+id/percent"
+		<TextView android:id="@+id/eta"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="right" android:layout_gravity="fill_horizontal"
 				android:layout_weight="1"/>
