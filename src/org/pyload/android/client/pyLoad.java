@@ -1,4 +1,4 @@
-package org.pyload.anroid.client;
+package org.pyload.android.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class pyLoad extends TabActivity {
 
 	/** Called when the activity is first created. */
 	@Override
-	public synchronized void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 

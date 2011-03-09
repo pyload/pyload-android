@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.pyload.anroid.client;
+package org.pyload.android.client;
 
 public final class R {
     public static final class array {

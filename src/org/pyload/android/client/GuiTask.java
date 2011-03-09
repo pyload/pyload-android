@@ -1,4 +1,4 @@
-package org.pyload.anroid.client;
+package org.pyload.android.client;
 
 import java.util.HashMap;
 

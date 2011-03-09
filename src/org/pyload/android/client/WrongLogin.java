@@ -1,4 +1,4 @@
-package org.pyload.anroid.client;
+package org.pyload.android.client;
 
 public class WrongLogin extends RuntimeException {
 
