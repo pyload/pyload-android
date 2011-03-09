@@ -26,7 +26,7 @@ public class pyLoad extends TabActivity {
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public synchronized void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
@@ -95,6 +95,7 @@ public class pyLoad extends TabActivity {
 			TabHost tabHost = getTabHost();
 			int tab = tabHost.getCurrentTab();
 
+			app.resetClient();
 			app.refreshTab(tab);
 
 			return true;
@@ -185,7 +186,7 @@ public class pyLoad extends TabActivity {
 			break;
 
 		default:
-			break;
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 
 	}

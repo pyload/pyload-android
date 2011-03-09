@@ -171,9 +171,7 @@ public class pyLoadApp extends Application {
 	}
 
 	public void refreshTab(int index) {
-		
-		client = null; //reset client
-		
+				
 		switch (index) {
 		case 0:
 			overview.refresh();
@@ -204,6 +202,10 @@ public class pyLoadApp extends Application {
 
 	public void setLastException(Throwable t) {
 		lastException = t;		
+	}
+
+	public void resetClient() {
+		client = null;		
 	}
 
 }
