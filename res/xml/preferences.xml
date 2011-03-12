@@ -4,6 +4,7 @@
     <PreferenceCategory android:title="@string/general" android:key="general">
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:numeric="integer"></EditTextPreference>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"></CheckBoxPreference>
+        <CheckBoxPreference android:key="invert_tabs" android:summary="@string/invert_tabs_desc" android:title="@string/invert_tabs" android:defaultValue="false"></CheckBoxPreference>
         
         
     </PreferenceCategory><PreferenceCategory android:key="login" android:title="@string/login">
@@ -11,6 +12,7 @@
         <EditTextPreference android:key="password" android:title="@string/password" android:singleLine="true" android:password="true"></EditTextPreference>
     </PreferenceCategory><PreferenceCategory android:key="server" android:title="@string/server">
         <EditTextPreference android:key="host" android:summary="@string/ip_desc" android:title="@string/ip" android:singleLine="true"></EditTextPreference>
-        <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="7227" android:singleLine="true" android:numeric="integer"></EditTextPreference>
+        <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="7227" android:numeric="integer" android:singleLine="true"></EditTextPreference>
+        <CheckBoxPreference android:key="ssl" android:summary="@string/ssl_desc" android:title="@string/ssl" android:defaultValue="false"></CheckBoxPreference>
     </PreferenceCategory>
 </PreferenceScreen>

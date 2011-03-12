@@ -13,13 +13,15 @@
 		android:marqueeRepeatLimit="marquee_forever"
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
-		android:maxLines="1" />
+		android:maxLines="1"
+		android:textColor="@android:color/white"/>
 		
 	<LinearLayout android:id="@+id/linearLayout1"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/name"
-		android:layout_alignLeft="@+id/name">
+		android:layout_alignLeft="@+id/name"
+		android:layout_weight="1">
 				
 		<TextView android:layout_width="wrap_content"
 		android:id="@+id/status"
@@ -27,7 +29,7 @@
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:gravity="left" android:layout_gravity="fill_horizontal"
 		android:text="@string/n_a"
-		android:paddingRight="20dip"/>
+		android:layout_weight="1"/>
 		
 		<TextView android:layout_width="wrap_content"
 		android:id="@+id/size"
@@ -35,14 +37,15 @@
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
 		android:text="@string/n_a"
-		android:paddingRight="20dip"/>
+		android:layout_weight="1"/>
 		
 		<TextView android:layout_width="wrap_content"
 		android:id="@+id/plugin"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:gravity="right" android:layout_gravity="fill_horizontal"
-		android:text="@string/n_a"/>
+		android:text="@string/n_a"
+		android:layout_weight="1"/>
 		
 	</LinearLayout>
 

@@ -20,6 +20,7 @@
     android:ellipsize="marquee"
     android:scrollHorizontally="true"
 	android:maxLines="1"
+	android:textColor="@android:color/white"
   />
  
 </LinearLayout>

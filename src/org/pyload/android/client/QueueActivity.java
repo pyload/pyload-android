@@ -2,7 +2,7 @@ package org.pyload.android.client;
 
 import android.os.Bundle;
 
-public class QueueActivity extends PackageActivity {
+public final class QueueActivity extends PackageActivity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		dest = 0;

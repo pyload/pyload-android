@@ -15,7 +15,7 @@
     <string name="ip">IP Address</string>
     <string name="ip_desc">IP Address of the remote pyLoad Core.</string>
     <string name="port">Port</string>
-    <string name="port_desc">Port of the server.</string>
+    <string name="port_desc">The port of the ThriftBackend you set in the remote section.</string>
     <string name="username">Username</string>
     <string name="username_desc">Your Username you use to login.</string>
     <string name="password">Password</string>
@@ -49,4 +49,8 @@
     <string name="retrieve_captcha_desc">Get captcha tasks from pyLoad when Overview is displayed.</string>
     <string name="enter">Enter</string>
     <string name="captcha_dialog_titel">Please enter the text</string>
+    <string name="invert_tabs">Invert tab icon color</string>
+    <string name="invert_tabs_desc">You may change the tab icon layout if it fits better to your theme.</string>
+    <string name="ssl">SSL Connection</string>
+    <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
 </resources>

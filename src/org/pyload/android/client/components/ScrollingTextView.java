@@ -1,5 +1,6 @@
 package org.pyload.android.client.components;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -8,7 +9,8 @@ import android.widget.TextView;
 public class ScrollingTextView extends TextView {
 
 	public ScrollingTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+		super(context, attrs, defStyle);	
+		setTextColor(R.color.white);
 
 	}
 

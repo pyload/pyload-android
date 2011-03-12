@@ -1,10 +1,16 @@
 package org.pyload.android.client;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSSLTransportFactory;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -73,13 +79,26 @@ public class pyLoadApp extends Application {
 		String username = prefs.getString("username", "User");
 		String password = prefs.getString("password", "pwhere");
 
-		TTransport trans = new TSocket(host, port);
-		try {
+		
+		TTransport trans;
+		if(prefs.getBoolean("ssl", false)){
+			SSLContext ctx;
+			final TrustManager[] trustAllCerts = {new AllTrustManager()};
+			try {
+				ctx = SSLContext.getInstance("TLS");
+				ctx.init(null, trustAllCerts, null);
+				Log.d("pyLoad", "SSL Context created");
+			} catch (NoSuchAlgorithmException e) {
+				throw new TException(e);
+			} catch (KeyManagementException e) {
+				throw new TException(e);
+			}
+			trans = TSSLTransportFactory.createClient(ctx.getSocketFactory(), host, port, 10000);			
+		}else{
+			trans = new TSocket(host, port);
 			trans.open();
-		} catch (TTransportException e) {
-			Log.e("pyLoad", "Could not open Connection.", e);
-			throw new TException("No Connection");
 		}
+		
 		TProtocol iprot = new TBinaryProtocol(trans);
 
 		client = new Client(iprot);

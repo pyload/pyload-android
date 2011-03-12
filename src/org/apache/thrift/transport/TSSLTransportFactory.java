@@ -203,7 +203,7 @@ public class TSSLTransportFactory {
     return ctx;
   }
 
-  private static TSocket createClient(SSLSocketFactory factory, String host, int port, int timeout) throws TTransportException {
+  public static TSocket createClient(SSLSocketFactory factory, String host, int port, int timeout) throws TTransportException {
     try {
       SSLSocket socket = (SSLSocket) factory.createSocket(host, port);
       socket.setSoTimeout(timeout);

@@ -2,7 +2,7 @@ package org.pyload.android.client;
 
 import android.os.Bundle;
 
-public class CollectorActivity extends PackageActivity {
+public final class CollectorActivity extends PackageActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		dest = 1;

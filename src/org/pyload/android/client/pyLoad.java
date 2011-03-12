@@ -42,6 +42,18 @@ public class pyLoad extends TabActivity {
 		tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		Intent intent; // Reusable Intent for each tab
+		
+		int tab_pyload, tab_queue, tab_collector;
+		if (app.prefs.getBoolean("invert_tabs", false)){
+			tab_pyload = R.drawable.ic_tab_pyload_inverted;
+			tab_queue = R.drawable.ic_tab_queue_inverted;
+			tab_collector = R.drawable.ic_tab_collector_inverted;
+		}else{
+			tab_pyload = R.drawable.ic_tab_pyload;
+			tab_queue = R.drawable.ic_tab_queue;
+			tab_collector = R.drawable.ic_tab_collector;
+		}
+		
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
 		intent = new Intent().setClass(this, OverviewActivity.class);
@@ -50,14 +62,14 @@ public class pyLoad extends TabActivity {
 		spec = tabHost
 				.newTabSpec("Overview")
 				.setIndicator("Overview",
-						res.getDrawable(R.drawable.ic_tab_pyload))
+						res.getDrawable(tab_pyload))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, QueueActivity.class);
 		String queue = app.getString(R.string.queue);
 		spec = tabHost.newTabSpec(queue)
-				.setIndicator(queue, res.getDrawable(R.drawable.ic_tab_queue))
+				.setIndicator(queue, res.getDrawable(tab_queue))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -66,7 +78,7 @@ public class pyLoad extends TabActivity {
 		spec = tabHost
 				.newTabSpec(collector)
 				.setIndicator(collector,
-						res.getDrawable(R.drawable.ic_tab_collector))
+						res.getDrawable(tab_collector))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -194,5 +206,4 @@ public class pyLoad extends TabActivity {
 	public int getCurrentTab(){
 		return tabHost.getCurrentTab();
 	}
-
 }
