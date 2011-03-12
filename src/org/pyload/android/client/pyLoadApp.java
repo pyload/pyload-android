@@ -103,18 +103,7 @@ public class pyLoadApp extends Application {
 		TProtocol iprot = new TBinaryProtocol(trans);
 
 		client = new Client(iprot);
-		boolean login = false;
-		try {
-			login = client.login(username, password);
-		} catch (TException e) {
-			Log.e("pyLoad", "Login failed", e);
-
-			client = null;
-			throw e;
-		}
-		
-		String server = client.getServerVersion();
-		if (!server.equals("0.4.4") && !server.equals("0.4.5")) throw new WrongServer();
+		boolean login = client.login(username, password);
 
 		return login;
 	}
@@ -127,6 +116,10 @@ public class pyLoadApp extends Application {
 				client = null;
 				throw new WrongLogin();
 			}
+			
+			String server = client.getServerVersion();
+			if (!server.equals("0.4.4") && !server.equals("0.4.5")) throw new WrongServer();
+			
 		}
 
 		return client;
