@@ -44,7 +44,7 @@
     <string name="cancel">Cancel</string>
     <string name="toggle_server">Toggle Server</string>
     <string name="toggle_reconnect">Toggle Reconnect</string>
-    <string name="lost_connection">Lost connection. Please refresh.</string>
+    <string name="lost_connection">Lost connection. Please try to refresh.</string>
     <string name="retrieve_captcha">Retrieve captcha taks</string>
     <string name="retrieve_captcha_desc">Get captcha tasks from pyLoad when Overview is displayed.</string>
     <string name="enter">Enter</string>
@@ -53,4 +53,5 @@
     <string name="invert_tabs_desc">You may change the tab icon layout if it fits better to your theme.</string>
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
+    <string name="old_server">Server version does not match, please update your server/client.</string>
 </resources>

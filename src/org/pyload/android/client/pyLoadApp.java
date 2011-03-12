@@ -48,6 +48,7 @@ public class pyLoadApp extends Application {
 		map.put(new TException(), handleException);
 		map.put(new WrongLogin(), handleException);
 		map.put(new TTransportException(), handleException);
+		map.put(new WrongServer(), handleException);
 
 		taskQueue = new TaskQueue(this, mHandler, map);
 
@@ -111,6 +112,9 @@ public class pyLoadApp extends Application {
 			client = null;
 			throw e;
 		}
+		
+		String server = client.getServerVersion();
+		if (!server.equals("0.4.4") && !server.equals("0.4.5")) throw new WrongServer();
 
 		return login;
 	}
@@ -157,6 +161,9 @@ public class pyLoadApp extends Application {
 		} else if (lastException instanceof TException) {
 			Toast t = Toast.makeText(this, R.string.no_connection,
 					Toast.LENGTH_SHORT);
+			t.show();
+		} else if(lastException instanceof WrongServer){
+			Toast t = Toast.makeText(this, R.string.old_server, Toast.LENGTH_SHORT);
 			t.show();
 		}
 	}

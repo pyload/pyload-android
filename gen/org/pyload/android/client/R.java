@@ -124,6 +124,7 @@ public final class R {
         public static final int no_downloads=0x7f050002;
         public static final int no_packages=0x7f050001;
         public static final int off=0x7f050019;
+        public static final int old_server=0x7f050031;
         public static final int on=0x7f050018;
         public static final int package_links=0x7f050023;
         public static final int password=0x7f050012;
