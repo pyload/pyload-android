@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -109,7 +110,8 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
-		int id = item.getGroupId();
+		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+		final int id = menuInfo.position;
 		final DownloadInfo info = downloads.get(id);
 		switch (item.getItemId()) {
 		case R.id.abort:
