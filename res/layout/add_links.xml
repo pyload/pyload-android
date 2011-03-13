@@ -52,22 +52,29 @@
     android:entries="@array/destination_list">
 </Spinner>
 
-<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:orientation="horizontal">
+<LinearLayout android:layout_height="wrap_content" 
+	android:layout_width="fill_parent"
+	android:id="@+id/linearLayout1" 
+	android:orientation="horizontal"
+	android:gravity="center_horizontal"
+	android:layout_weight="1">
 
 <Button  
     android:id="@+id/button_add"  
     android:layout_height="wrap_content"  
     android:text="@string/add"  
     android:onClick="addPackage"  
-    android:layout_width="wrap_content">  
+    android:layout_width="match_parent"
+    android:layout_weight="1">  
 </Button>
 
 <Button  
     android:id="@+id/button_cancel"  
-    android:layout_height="wrap_content"  
+    android:layout_height="wrap_content"
     android:text="@string/cancel"  
     android:onClick="onCancel"  
-    android:layout_width="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_weight="1">
 </Button>
 
 </LinearLayout>  

@@ -1,11 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
-	android:paddingTop="2dip" android:paddingBottom="2dip"
-	android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-	android:mode="twoLine">
-    
-    
+<?xml version="1.0" encoding="utf-8"?>	
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="?android:attr/listPreferredItemHeight"
+	android:paddingTop="2dip" android:paddingBottom="2dip">
+	
+	<ImageView 
+	android:layout_width="?android:attr/expandableListPreferredItemPaddingLeft"
+	android:id="@+id/status_icon"
+	android:layout_height="fill_parent"
+	android:layout_alignParentLeft="true"
+	android:layout_centerVertical="true"/>
+	
 	<org.pyload.android.client.components.ScrollingTextView android:id="@+id/name" android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearance"
@@ -14,9 +19,10 @@
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
 		android:maxLines="1"
-		android:textColor="@android:color/white"/>
+		android:textColor="@android:color/white"
+		android:layout_toRightOf="@+id/status_icon"/>
 		
-	<LinearLayout android:id="@+id/linearLayout1"
+	<LinearLayout android:id="@+id/linear"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/name"
@@ -24,29 +30,29 @@
 		android:layout_weight="1">
 				
 		<TextView android:layout_width="wrap_content"
-		android:id="@+id/status"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:gravity="left" android:layout_gravity="fill_horizontal"
-		android:text="@string/n_a"
-		android:layout_weight="1"/>
+			android:id="@+id/status"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:gravity="left" android:layout_gravity="fill_horizontal"
+			android:text="@string/n_a"
+			android:layout_weight="1"/>
 		
 		<TextView android:layout_width="wrap_content"
-		android:id="@+id/size"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
-		android:text="@string/n_a"
-		android:layout_weight="1"/>
+			android:id="@+id/size"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
+			android:text="@string/n_a"
+			android:layout_weight="1"/>
 		
 		<TextView android:layout_width="wrap_content"
-		android:id="@+id/plugin"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:gravity="right" android:layout_gravity="fill_horizontal"
-		android:text="@string/n_a"
-		android:layout_weight="1"/>
+			android:id="@+id/plugin"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:gravity="right" android:layout_gravity="fill_horizontal"
+			android:text="@string/n_a"
+			android:layout_weight="1"/>
 		
 	</LinearLayout>
 
-</TwoLineListItem>
+</RelativeLayout>

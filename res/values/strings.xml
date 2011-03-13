@@ -28,7 +28,7 @@
     <string name="off">off</string>
     <string name="n_a">n/a</string>
     <string name="success">Success.</string>
-    <string name="cant_move_files">You cant move single files.</string>
+    <string name="cant_move_files">You can\'t move single files.</string>
     <string name="abort">Abort</string>
     <string name="name">Name</string>
     <string name="addlinks_desc">Add a new Package.</string>

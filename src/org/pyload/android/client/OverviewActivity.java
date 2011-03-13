@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -217,7 +218,9 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 			
 			ImageView image = (ImageView) dialog.findViewById(R.id.image);
 			
-			Bitmap bm = BitmapFactory.decodeByteArray(captcha.data.array(), 0, captcha.data.array().length);			
+			byte[] decoded = Base64.decode(captcha.getData(), 0, captcha.getData().length, Base64.DEFAULT);
+			
+			Bitmap bm = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);			
 			image.setImageBitmap(bm);
 			
 			Log.d("pyLoad", "Got Captcha Task"+ captcha.tid + "content length: "+ captcha.getData().length);

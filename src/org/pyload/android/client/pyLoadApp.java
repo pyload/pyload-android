@@ -80,26 +80,31 @@ public class pyLoadApp extends Application {
 		String username = prefs.getString("username", "User");
 		String password = prefs.getString("password", "pwhere");
 
-		
+		//TODO: better exception handling
 		TTransport trans;
-		if(prefs.getBoolean("ssl", false)){
-			SSLContext ctx;
-			final TrustManager[] trustAllCerts = {new AllTrustManager()};
-			try {
-				ctx = SSLContext.getInstance("TLS");
-				ctx.init(null, trustAllCerts, null);
-				Log.d("pyLoad", "SSL Context created");
-			} catch (NoSuchAlgorithmException e) {
-				throw new TException(e);
-			} catch (KeyManagementException e) {
-				throw new TException(e);
+		try {
+			if (prefs.getBoolean("ssl", false)) {
+				SSLContext ctx;
+				final TrustManager[] trustAllCerts = { new AllTrustManager() };
+				try {
+					ctx = SSLContext.getInstance("TLS");
+					ctx.init(null, trustAllCerts, null);
+					Log.d("pyLoad", "SSL Context created");
+				} catch (NoSuchAlgorithmException e) {
+					throw new TException(e);
+				} catch (KeyManagementException e) {
+					throw new TException(e);
+				}
+				trans = TSSLTransportFactory.createClient(
+						ctx.getSocketFactory(), host, port, 8000);
+			} else {
+				trans = new TSocket(host, port, 8000);
+				trans.open();
 			}
-			trans = TSSLTransportFactory.createClient(ctx.getSocketFactory(), host, port, 10000);			
-		}else{
-			trans = new TSocket(host, port);
-			trans.open();
+		} catch (TTransportException e) {
+			throw new TException(e);
 		}
-		
+
 		TProtocol iprot = new TBinaryProtocol(trans);
 
 		client = new Client(iprot);
@@ -111,15 +116,17 @@ public class pyLoadApp extends Application {
 	public Client getClient() throws TException, WrongLogin {
 
 		if (client == null) {
+			Log.d("pyLoad", "Creating new Client");
 			boolean loggedin = login();
 			if (!loggedin) {
 				client = null;
 				throw new WrongLogin();
 			}
-			
+
 			String server = client.getServerVersion();
-			if (!server.equals("0.4.4") && !server.equals("0.4.5")) throw new WrongServer();
-			
+			if (!server.equals("0.4.4") && !server.equals("0.4.5"))
+				throw new WrongServer();
+
 		}
 
 		return client;
@@ -142,6 +149,7 @@ public class pyLoadApp extends Application {
 
 	public void onException() {
 		client = null;
+		Log.d("pyLoad", "Exception caught");
 
 		if (lastException instanceof TTransportException) {
 			Toast t = Toast.makeText(this, R.string.lost_connection,
@@ -155,12 +163,12 @@ public class pyLoadApp extends Application {
 			Toast t = Toast.makeText(this, R.string.no_connection,
 					Toast.LENGTH_SHORT);
 			t.show();
-		} else if(lastException instanceof WrongServer){
-			Toast t = Toast.makeText(this, R.string.old_server, Toast.LENGTH_SHORT);
+		} else if (lastException instanceof WrongServer) {
+			Toast t = Toast.makeText(this, R.string.old_server,
+					Toast.LENGTH_SHORT);
 			t.show();
 		}
 	}
-
 
 	final public Runnable handleSuccess = new Runnable() {
 
@@ -173,7 +181,7 @@ public class pyLoadApp extends Application {
 	public void onSuccess() {
 		Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
 		t.show();
-		
+
 		refreshTab(main.getCurrentTab());
 	}
 
@@ -190,7 +198,7 @@ public class pyLoadApp extends Application {
 	}
 
 	public void refreshTab(int index) {
-				
+
 		switch (index) {
 		case 0:
 			overview.refresh();
@@ -220,11 +228,12 @@ public class pyLoadApp extends Application {
 	}
 
 	public void setLastException(Throwable t) {
-		lastException = t;		
+		lastException = t;
 	}
 
 	public void resetClient() {
-		client = null;		
+		Log.d("pyLoad", "Client resetted");
+		client = null;
 	}
 
 }

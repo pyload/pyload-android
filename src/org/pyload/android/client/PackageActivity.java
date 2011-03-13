@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.pyload.android.client.components.FixedExpandableListActivity;
 import org.pyload.thrift.Destination;
+import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.FileData;
 import org.pyload.thrift.PackageData;
 import org.pyload.thrift.Pyload.Client;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -151,7 +153,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 			case R.id.move:
 				Toast.makeText(this, R.string.cant_move_files,
-						Toast.LENGTH_SHORT);
+						Toast.LENGTH_SHORT).show();
 				break;
 
 			default:
@@ -311,6 +313,14 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		text = (TextView) view.findViewById(R.id.plugin);
 		text.setText(file.plugin);
+		
+		
+		ImageView status = (ImageView) view.findViewById(R.id.status_icon);
+		if (file.status == DownloadStatus.Failed || file.status == DownloadStatus.Aborted || file.status == DownloadStatus.Offline){
+			status.setImageResource(R.drawable.stop);
+		} if (file.status == DownloadStatus.Finished){
+			status.setImageResource(R.drawable.tick);
+		}
 
 		return view;
 	}
