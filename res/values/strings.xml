@@ -45,7 +45,7 @@
     <string name="toggle_server">Toggle Server</string>
     <string name="toggle_reconnect">Toggle Reconnect</string>
     <string name="lost_connection">Lost connection. Please try to refresh.</string>
-    <string name="retrieve_captcha">Retrieve captcha taks</string>
+    <string name="retrieve_captcha">Retrieve captcha tasks</string>
     <string name="retrieve_captcha_desc">Get captcha tasks from pyLoad when Overview is displayed.</string>
     <string name="enter">Enter</string>
     <string name="captcha_dialog_titel">Please enter the text</string>
@@ -60,4 +60,7 @@
     <string name="folder">Folder</string>
     <string name="file_size">File Size: </string>
     <string name="parent_dir">Parent Directory</string>
+    <string name="eula_title">License</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Refuse</string>
 </resources>

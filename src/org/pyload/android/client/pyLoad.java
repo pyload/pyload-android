@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.Pyload.Client;
@@ -34,6 +35,8 @@ public class pyLoad extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		Eula.show(this);
+		
 		app = (pyLoadApp) getApplicationContext();
 
 		Log.d("pyLoad", "Starting pyLoad App");

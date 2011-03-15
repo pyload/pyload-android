@@ -123,6 +123,9 @@ public final class R {
         public static final int delete=0x7f050006;
         public static final int destination=0x7f050020;
         public static final int enter=0x7f05002b;
+        public static final int eula_accept=0x7f050039;
+        public static final int eula_refuse=0x7f05003a;
+        public static final int eula_title=0x7f050038;
         public static final int file_size=0x7f050036;
         public static final int folder=0x7f050035;
         public static final int general=0x7f050008;
