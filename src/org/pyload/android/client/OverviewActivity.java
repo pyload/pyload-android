@@ -3,6 +3,7 @@ package org.pyload.android.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.CaptchaTask;
 import org.pyload.thrift.DownloadInfo;
 import org.pyload.thrift.DownloadStatus;

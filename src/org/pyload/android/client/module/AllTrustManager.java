@@ -1,4 +1,4 @@
-package org.pyload.android.client;
+package org.pyload.android.client.module;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

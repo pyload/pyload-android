@@ -1,8 +1,12 @@
 package org.pyload.android.client;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.Pyload.Client;
 
@@ -42,27 +46,24 @@ public class pyLoad extends TabActivity {
 		tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		Intent intent; // Reusable Intent for each tab
-		
+
 		int tab_pyload, tab_queue, tab_collector;
-		if (app.prefs.getBoolean("invert_tabs", false)){
+		if (app.prefs.getBoolean("invert_tabs", false)) {
 			tab_pyload = R.drawable.ic_tab_pyload_inverted;
 			tab_queue = R.drawable.ic_tab_queue_inverted;
 			tab_collector = R.drawable.ic_tab_collector_inverted;
-		}else{
+		} else {
 			tab_pyload = R.drawable.ic_tab_pyload;
 			tab_queue = R.drawable.ic_tab_queue;
 			tab_collector = R.drawable.ic_tab_collector;
 		}
-		
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
 		intent = new Intent().setClass(this, OverviewActivity.class);
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost
-				.newTabSpec("Overview")
-				.setIndicator("Overview",
-						res.getDrawable(tab_pyload))
+		spec = tabHost.newTabSpec("Overview")
+				.setIndicator("Overview", res.getDrawable(tab_pyload))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -75,10 +76,8 @@ public class pyLoad extends TabActivity {
 
 		String collector = app.getString(R.string.collector);
 		intent = new Intent().setClass(this, CollectorActivity.class);
-		spec = tabHost
-				.newTabSpec(collector)
-				.setIndicator(collector,
-						res.getDrawable(tab_collector))
+		spec = tabHost.newTabSpec(collector)
+				.setIndicator(collector, res.getDrawable(tab_collector))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -156,11 +155,12 @@ public class pyLoad extends TabActivity {
 		case 0:
 			switch (resultCode) {
 			case RESULT_OK:
-
 				final String name = data.getStringExtra("name");
-				final String[] link_array = data.getStringExtra("links").split(
+				final String[] link_array = data.getStringExtra("links").trim().split(
 						"\n");
 				final Destination dest;
+				final String filepath = data.getStringExtra("filepath");
+				final String filename = data.getStringExtra("filename");
 
 				if (data.getIntExtra("dest", 0) == 0)
 					dest = Destination.Queue;
@@ -169,8 +169,9 @@ public class pyLoad extends TabActivity {
 
 				final ArrayList<String> links = new ArrayList<String>();
 				for (String link_row : link_array)
-					for (String link : link_row.split(" "))
-						links.add(link);
+					for (String link : link_row.trim().split(" "))
+						if (!link.equals(""))
+							links.add(link);
 
 				final String password = data.getStringExtra("password");
 
@@ -179,14 +180,34 @@ public class pyLoad extends TabActivity {
 					@Override
 					public void run() {
 						Client client = app.getClient();
-						int pid = client.addPackage(name, links, dest);
 
-						if (password != null && !password.equals("")) {
+						if (links.size() > 0) {
+							int pid = client.addPackage(name, links, dest);
 
-							HashMap<String, String> opts = new HashMap<String, String>();
-							opts.put("password", password);
+							if (password != null && !password.equals("")) {
 
-							client.setPackageData(pid, opts);
+								HashMap<String, String> opts = new HashMap<String, String>();
+								opts.put("password", password);
+
+								client.setPackageData(pid, opts);
+							}
+						}
+						if(filename != null && !filepath.equals("")){
+							
+							File file = new File(filepath);
+							try {
+								if (file.length() > (1 << 20)) throw new Exception("File size to large");
+								FileInputStream is = new FileInputStream(file);
+								ByteBuffer buffer = ByteBuffer.allocate((int) file.length());							
+								
+								while (is.getChannel().read(buffer) > 0);
+								buffer.rewind();								
+								is.close();
+								client.uploadContainer(filename, buffer);
+								
+							} catch (Throwable e) {
+								Log.e("pyLoad", "Error when uploading file", e);
+							}
 						}
 
 					}
@@ -202,8 +223,8 @@ public class pyLoad extends TabActivity {
 		}
 
 	}
-	
-	public int getCurrentTab(){
+
+	public int getCurrentTab() {
 		return tabHost.getCurrentTab();
 	}
 }

@@ -54,4 +54,10 @@
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
     <string name="old_server">Server version does not match, please update your server/client.</string>
+    <string name="choose_file">Container File</string>
+    <string name="choose">Choose</string>
+    <string name="current_dir">Current Dir: </string>
+    <string name="folder">Folder</string>
+    <string name="file_size">File Size: </string>
+    <string name="parent_dir">Parent Directory</string>
 </resources>

@@ -6,6 +6,7 @@
     <uses-sdk android:minSdkVersion="5" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <application android:label="@string/app_name" android:name="pyLoadApp" android:icon="@drawable/icon">
         <activity android:name=".pyLoad"
@@ -21,6 +22,7 @@
         <activity android:name="Preferences" android:label="@string/pref_name"></activity>
         <activity android:name="AddLinksActivity">
         </activity>
+        <activity android:name=".module.FileChooser"></activity>
 
     </application>
 </manifest>

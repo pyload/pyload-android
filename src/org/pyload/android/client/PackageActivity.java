@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pyload.android.client.components.FixedExpandableListActivity;
+import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.FileData;

@@ -14,6 +14,11 @@ import org.apache.thrift.transport.TSSLTransportFactory;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
+import org.pyload.android.client.exceptions.WrongLogin;
+import org.pyload.android.client.exceptions.WrongServer;
+import org.pyload.android.client.module.AllTrustManager;
+import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.TaskQueue;
 import org.pyload.thrift.Pyload.Client;
 
 import android.app.Application;

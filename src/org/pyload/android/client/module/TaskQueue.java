@@ -1,8 +1,10 @@
-package org.pyload.android.client;
+package org.pyload.android.client.module;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+
+import org.pyload.android.client.pyLoadApp;
 
 import android.os.Handler;
 import android.util.Log;
