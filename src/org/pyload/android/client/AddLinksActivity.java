@@ -11,12 +11,32 @@ import android.widget.Spinner;
 
 public class AddLinksActivity extends Activity {
 	
-	private String filename;
+	public static final int NEW_PACKAGE = 0;
+	
+	private String filename = "uploaded_from_android.dlc";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.add_links);
+		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		Intent intent = getIntent();
+		String path = intent.getStringExtra("dlcurl");
+		if (path != null){
+			EditText view = (EditText) findViewById(R.id.links);
+			view.setText(path);
+		}
+		path = intent.getStringExtra("dlcpath");
+		if (path != null){
+			EditText view = (EditText) findViewById(R.id.filename);
+			view.setText(path);
+		}
 		
 	}
 	

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+  
+<RelativeLayout
+android:layout_height="wrap_content"
+android:layout_width="fill_parent"
+android:id="@+id/relativeLayout"
+android:paddingBottom="15dip"
+android:layout_marginLeft="15dip"
+android:layout_marginRight="15dip">
+
+	<TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelName"
+        android:layout_height="wrap_content"
+        android:text="@string/name"/>
+   
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/name"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_toRightOf="@+id/labelName"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	<TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelPlugin"
+        android:layout_height="wrap_content"
+        android:text="@string/plugin"
+        android:layout_toLeftOf="@+id/plugin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/plugin"/>   
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/plugin"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/name"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	<TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelStatus"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        android:layout_toLeftOf="@+id/status"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/status"/>   
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/status"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/plugin"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	<TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelSize"
+        android:layout_height="wrap_content"
+        android:text="@string/size"
+        android:layout_toLeftOf="@+id/size"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/size"/>
+        
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/size"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/status"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	 <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelerror"
+        android:layout_height="wrap_content"
+        android:text="@string/error"
+        android:layout_toLeftOf="@+id/error"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/error"/>
+        
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/error"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/size"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	 <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelPackage"
+        android:layout_height="wrap_content"
+        android:text="@string/labelPackage"
+        android:layout_toLeftOf="@+id/packageValue"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/packageValue"/>
+        
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/packageValue"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/error"
+   		android:layout_alignParentRight="true"/>
+   		 
+   	 <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/labelFolder"
+        android:layout_height="wrap_content"
+        android:text="@string/folder"
+        android:layout_toLeftOf="@+id/folder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/folder"/>
+        
+	<TextView 
+   		android:layout_width="wrap_content"
+   		android:id="@+id/folder"
+   		android:text="@string/n_a"
+   		android:layout_height="wrap_content"
+   		android:gravity="right"
+   		android:layout_below="@+id/packageValue"
+   		android:layout_alignParentRight="true"/>
+   		 
+</RelativeLayout>>
+
+<Button 
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:id="@+id/close"
+android:text="@string/close"
+/>
+
+
+
+</LinearLayout>

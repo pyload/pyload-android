@@ -11,16 +11,20 @@ import org.pyload.thrift.FileData;
 import org.pyload.thrift.PackageData;
 import org.pyload.thrift.Pyload.Client;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ImageView;
@@ -32,6 +36,12 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 	/**
 	 * Destination, queue = 0, collector = 1, same as in pyLoad Core
 	 */
+	final static int FILEINFO_DIALOG = 0;
+
+	// saved for dialog
+	private int group = 0;
+	private int child = 0;
+
 	protected int dest;
 	private List<PackageData> data;
 	protected pyLoadApp app;
@@ -71,6 +81,99 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 		refresh();
 	}
 
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+
+		group = groupPosition;
+		child = childPosition;
+
+		showDialog(FILEINFO_DIALOG);
+		return true;
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case FILEINFO_DIALOG:
+
+			try {
+				// just to be sure, check if clicked file exists
+				data.get(group).links.get(child);
+			} catch (IndexOutOfBoundsException e) {
+				Log.d("pyLoad", "Error when creating dialog", e);
+				return null;
+			}
+
+			final Dialog dialog = new Dialog(this);
+			dialog.setContentView(R.layout.fileinfo_dialog);
+			dialog.setTitle(R.string.fileinfo_title);
+
+			Button button = (Button) dialog.findViewById(R.id.close);
+			button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					dialog.dismiss();
+				}
+			});
+
+			return dialog;
+
+		default:
+			return super.onCreateDialog(id);
+		}
+	}
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+		case FILEINFO_DIALOG:
+			
+			FileData file;
+
+			try {
+				file = data.get(group).links.get(child);
+			} catch (IndexOutOfBoundsException e) {
+				Log.d("pyLoad", "Error when preparing dialog", e);
+				return;
+			}
+			
+			TextView view = (TextView) dialog.findViewById(R.id.name);
+			view.setText(file.name);
+			
+			view = (TextView) dialog.findViewById(R.id.status);
+			view.setText(file.statusmsg);
+			
+			view = (TextView) dialog.findViewById(R.id.plugin);
+			view.setText(file.plugin);
+			
+			view = (TextView) dialog.findViewById(R.id.size);
+			view.setText(file.format_size);
+			
+			view = (TextView) dialog.findViewById(R.id.error);
+			view.setText(file.error);
+			
+			PackageData pack = null;
+			for(PackageData comparePack : data)
+				if(comparePack.pid == file.packageID) pack = comparePack;
+			
+			if(pack == null) return;
+			
+			view = (TextView) dialog.findViewById(R.id.packageValue);
+			view.setText(pack.name);
+			
+			view = (TextView) dialog.findViewById(R.id.folder);
+			view.setText(pack.folder);
+			
+			
+			
+			break;
+
+		default:
+			super.onPrepareDialog(id, dialog);
+		}
+	}
+
 	public void refresh() {
 
 		if (!app.hasConnection())
@@ -107,6 +210,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			ContextMenuInfo menuInfo) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.package_context_menu, menu);
+		menu.setHeaderTitle(R.string.choose_action);
 	}
 
 	@Override
@@ -149,7 +253,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 						client.deleteFiles(fids);
 					}
 				}, app.handleSuccess));
-				
+
 				break;
 
 			case R.id.move:
@@ -170,7 +274,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 			switch (item.getItemId()) {
 			case R.id.restart:
-				
+
 				app.addTask(new GuiTask(new Runnable() {
 					@Override
 					public void run() {
@@ -178,11 +282,10 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 						client.restartPackage(pack.pid);
 					}
 				}, app.handleSuccess));
-				
-				
+
 				break;
 			case R.id.delete:
-				
+
 				app.addTask(new GuiTask(new Runnable() {
 					@Override
 					public void run() {
@@ -192,11 +295,11 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 						client.deletePackages(pids);
 					}
 				}, app.handleSuccess));
-				
+
 				break;
 
 			case R.id.move:
-				
+
 				app.addTask(new GuiTask(new Runnable() {
 					@Override
 					public void run() {
@@ -211,7 +314,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 						client.movePackage(newDest, pack.pid);
 					}
 				}, app.handleSuccess));
-				
+
 				break;
 
 			default:
@@ -227,6 +330,18 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 }
 
 class PackageListAdapter extends BaseExpandableListAdapter {
+	
+	static class GroupViewHolder {
+		private TextView name;
+	}
+	
+	static class ChildViewHolder{
+		private TextView name;
+		private TextView status;
+		private TextView size;
+		private TextView plugin;
+		private ImageView status_icon;
+	}
 
 	private final Context context;
 	private List<PackageData> data;
@@ -288,12 +403,17 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			ViewGroup parent) {
 
 		PackageData pack = data.get(group);
-		final View view = layoutInflater.inflate(groupRes, null);
+		if (convertView == null) {
+			convertView = layoutInflater.inflate(groupRes, null);
+			GroupViewHolder holder = new GroupViewHolder();
+			holder.name = (TextView) convertView.findViewById(R.id.name);
+			convertView.setTag(holder);
+		}
+		
+		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
+		holder.name.setText(pack.name);
 
-		TextView name = (TextView) view.findViewById(R.id.name);
-		name.setText(pack.name);
-
-		return view;
+		return convertView;
 	}
 
 	@Override
@@ -301,29 +421,39 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 
 		FileData file = data.get(group).links.get(child);
-		final View view = layoutInflater.inflate(childRes, null);
 
-		TextView text = (TextView) view.findViewById(R.id.name);
-		text.setText(file.name);
+		if (convertView == null) {
+			convertView = layoutInflater.inflate(childRes, null);
+			ChildViewHolder holder = new ChildViewHolder();
+			holder.name = (TextView) convertView.findViewById(R.id.name);
+			holder.status = (TextView) convertView.findViewById(R.id.status);
+			holder.size = (TextView) convertView.findViewById(R.id.size);
+			holder.plugin = (TextView) convertView.findViewById(R.id.plugin);
+			holder.status_icon = (ImageView) convertView.findViewById(R.id.status_icon);
+			convertView.setTag(holder);
+		}
+			
+		ChildViewHolder holder = (ChildViewHolder) convertView.getTag();
 
-		text = (TextView) view.findViewById(R.id.status);
-		text.setText(file.statusmsg);
+		if (!file.name.equals(holder.name.getText()))
+			holder.name.setText(file.name);
 
-		text = (TextView) view.findViewById(R.id.size);
-		text.setText(app.formatSize(file.size));
+		holder.status.setText(file.statusmsg);
+		holder.size.setText(app.formatSize(file.size));
+		holder.plugin.setText(file.plugin);
 
-		text = (TextView) view.findViewById(R.id.plugin);
-		text.setText(file.plugin);
-		
-		
-		ImageView status = (ImageView) view.findViewById(R.id.status_icon);
-		if (file.status == DownloadStatus.Failed || file.status == DownloadStatus.Aborted || file.status == DownloadStatus.Offline){
-			status.setImageResource(R.drawable.stop);
-		} if (file.status == DownloadStatus.Finished){
-			status.setImageResource(R.drawable.tick);
+		if (file.status == DownloadStatus.Failed
+				|| file.status == DownloadStatus.Aborted
+				|| file.status == DownloadStatus.Offline) {
+			holder.status_icon.setImageResource(R.drawable.stop);
+		}
+		else if (file.status == DownloadStatus.Finished) {
+			holder.status_icon.setImageResource(R.drawable.tick);
+		} else {
+			holder.status_icon.setImageResource(0);
 		}
 
-		return view;
+		return convertView;
 	}
 
 	@Override

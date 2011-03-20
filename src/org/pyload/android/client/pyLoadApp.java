@@ -132,8 +132,7 @@ public class pyLoadApp extends Application {
 			if (!server.equals("0.4.4") && !server.equals("0.4.5"))
 				throw new WrongServer();
 
-		}
-
+		}		
 		return client;
 	}
 

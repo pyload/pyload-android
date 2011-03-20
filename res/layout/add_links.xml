@@ -64,7 +64,7 @@
     android:layout_height="wrap_content"
     android:hint="@string/choose_file"
     android:lines="1"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_weight="0.5">
 </EditText>
 
@@ -73,7 +73,7 @@
     android:layout_height="wrap_content"
     android:text="@string/choose"  
     android:onClick="pickFile"  
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_weight="1">
 </Button>
 
@@ -91,7 +91,7 @@
     android:layout_height="wrap_content"  
     android:text="@string/add"  
     android:onClick="addPackage"  
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_weight="1">  
 </Button>
 
@@ -100,7 +100,7 @@
     android:layout_height="wrap_content"
     android:text="@string/cancel"  
     android:onClick="onCancel"  
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_weight="1">
 </Button>
 

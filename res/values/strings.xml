@@ -63,4 +63,13 @@
     <string name="eula_title">License</string>
     <string name="eula_accept">Accept</string>
     <string name="eula_refuse">Refuse</string>
+    <string name="choose_action">Choose an action</string>
+    <string name="close">Close</string>
+    <string name="fileinfo_title">Fileinfo</string>
+    <string name="plugin">Plugin</string>
+    <string name="status">Status</string>
+    <string name="size">Size</string>
+    <string name="error">Error</string>
+    <string name="labelPackage">Package</string>
+    <string name="lambda"></string>
 </resources>

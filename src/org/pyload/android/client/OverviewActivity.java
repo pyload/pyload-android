@@ -3,6 +3,7 @@ package org.pyload.android.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.CaptchaTask;
 import org.pyload.thrift.DownloadInfo;
@@ -19,7 +20,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -107,6 +107,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 			ContextMenuInfo menuInfo) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.overview_context_menu, menu);
+		menu.setHeaderTitle(R.string.choose_action);
 	}
 
 	@Override
@@ -213,18 +214,11 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 			final Dialog dialog = new Dialog(this);
 			dialog.setContentView(R.layout.captcha_dialog);
 			dialog.setTitle(getString(R.string.captcha_dialog_titel));
-
+			
 			final TextView text = (TextView) dialog.findViewById(R.id.text);
 			final int tid = captcha.tid;
-			
-			ImageView image = (ImageView) dialog.findViewById(R.id.image);
-			
-			byte[] decoded = Base64.decode(captcha.getData(), 0, captcha.getData().length, Base64.DEFAULT);
-			
-			Bitmap bm = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);			
-			image.setImageBitmap(bm);
-			
-			Log.d("pyLoad", "Got Captcha Task"+ captcha.tid + "content length: "+ captcha.getData().length);
+						
+			Log.d("pyLoad", "Got Captcha Task");
 			
 			Button enter = (Button) dialog.findViewById(R.id.enter);
 			
@@ -265,13 +259,29 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		}
 		
 	}
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+		case CAPTCHA_DIALOG:
+			ImageView image = (ImageView) dialog.findViewById(R.id.image);
+			
+			byte[] decoded = Base64.decodeBase64(captcha.getData());
+			
+			Bitmap bm = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);			
+			image.setImageBitmap(bm);
+			break;
+
+		default:
+			super.onPrepareDialog(id, dialog);
+		}
+	}
 
 	@Override
 	public void onDismiss(DialogInterface arg0) {
         captcha = null;
 		dialogOpen = false;
 	}
-
 }
 
 /**
@@ -281,6 +291,16 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
  * 
  */
 class OverviewAdapter extends BaseAdapter {
+	
+	static class ViewHolder{
+		private TextView name;
+		private ProgressBar progress;
+		private TextView size;
+		private TextView percent;
+		private TextView size_done;
+		private TextView speed;
+		private TextView eta;
+	}
 
 	private final pyLoadApp app;
 	private List<DownloadInfo> downloads;
@@ -320,42 +340,52 @@ class OverviewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		DownloadInfo info = downloads.get(position);
-		final View view = layoutInflater.inflate(rowResID, null);
-
-		TextView text = (TextView) view.findViewById(R.id.name);
-		text.setText(info.name);
-
-		ProgressBar progress = (ProgressBar) view.findViewById(R.id.progress);
-		progress.setProgress(info.percent);
-
-		if (info.status == DownloadStatus.Downloading) {
-			text = (TextView) view.findViewById(R.id.size);
-			text.setText(app.formatSize(info.size));
-
-			text = (TextView) view.findViewById(R.id.speed);
-			text.setText(app.formatSize(info.speed) + "/s");
-			
-			text = (TextView) view.findViewById(R.id.size_done);
-			text.setText(app.formatSize(info.size - info.bleft));
-
-			text = (TextView) view.findViewById(R.id.eta);
-			text.setText(info.format_eta);
-			
-			text = (TextView) view.findViewById(R.id.percent);
-			text.setText(info.percent + "%");
-			
-		} else if (info.status == DownloadStatus.Waiting) {
-			text = (TextView) view.findViewById(R.id.speed);
-			text.setText(info.format_wait);
-
-			text = (TextView) view.findViewById(R.id.percent);
-			text.setText(info.statusmsg);
-		} else {
-			text = (TextView) view.findViewById(R.id.speed);
-			text.setText(info.statusmsg);
+		if(convertView == null){
+			convertView = layoutInflater.inflate(rowResID, null);
+			ViewHolder holder = new ViewHolder();
+			holder.name = (TextView) convertView.findViewById(R.id.name);
+			holder.progress = (ProgressBar) convertView.findViewById(R.id.progress);
+			holder.size = (TextView) convertView.findViewById(R.id.size);
+			holder.speed = (TextView) convertView.findViewById(R.id.speed);
+			holder.size_done = (TextView) convertView.findViewById(R.id.size_done);
+			holder.eta = (TextView) convertView.findViewById(R.id.eta);
+			holder.percent = (TextView) convertView.findViewById(R.id.percent);
+			convertView.setTag(holder);
 		}
 
-		return view;
+		ViewHolder holder = (ViewHolder) convertView.getTag();
+		
+		if(!info.name.equals(holder.name.getText()))
+			holder.name.setText(info.name);
+
+		holder.progress.setProgress(info.percent);
+
+		if (info.status == DownloadStatus.Downloading) {
+			holder.size.setText(app.formatSize(info.size));
+			holder.percent.setText(info.percent + "%");
+			holder.size_done.setText(app.formatSize(info.size - info.bleft));
+			
+			holder.speed.setText(app.formatSize(info.speed) + "/s");
+			holder.eta.setText(info.format_eta);
+			
+		} else if (info.status == DownloadStatus.Waiting) {
+			holder.size.setText(R.string.lambda);
+			holder.percent.setText(R.string.lambda);
+			holder.size_done.setText(R.string.lambda);
+			
+			holder.speed.setText(info.statusmsg);
+			holder.eta.setText(info.format_wait);
+
+		} else {
+			holder.size.setText(R.string.lambda);
+			holder.percent.setText(R.string.lambda);
+			holder.size_done.setText(R.string.lambda);
+			
+			holder.speed.setText(info.statusmsg);
+			holder.eta.setText(R.string.lambda);
+		}
+
+		return convertView;
 
 	}
 

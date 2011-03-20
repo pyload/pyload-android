@@ -24,14 +24,14 @@
     <Button android:onClick="dismiss"
     	android:text="@string/enter"
     	android:id="@+id/enter"
-    	android:layout_width="match_parent"
+    	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:layout_weight="1"/>
     	
     <Button android:onClick="cancel"
     	android:text="@string/cancel"
     	android:id="@+id/cancel"
-    	android:layout_width="match_parent"
+    	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:layout_weight="1"></Button>
     </LinearLayout>

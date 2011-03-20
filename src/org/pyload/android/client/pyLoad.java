@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -85,7 +86,27 @@ public class pyLoad extends TabActivity {
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTab(0);
-
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Intent intent=  getIntent();
+		Uri data = intent.getData();
+		
+		// we got an intent
+		if(data != null){
+			if(intent.getScheme().startsWith("http")){
+				Intent addURL = new Intent(app, AddLinksActivity.class);
+				addURL.putExtra("dlcurl", data.toString());
+				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
+			}else if(intent.getScheme().equals("file")){
+				Intent addURL = new Intent(app, AddLinksActivity.class);
+				addURL.putExtra("dlcpath", data.getPath());
+				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
+			}
+			intent.setData(null);
+		}
 	}
 
 	@Override
@@ -100,7 +121,7 @@ public class pyLoad extends TabActivity {
 		switch (item.getItemId()) {
 		case R.id.add_links:
 
-			startActivityForResult(new Intent(app, AddLinksActivity.class), 0);
+			startActivityForResult(new Intent(app, AddLinksActivity.class), AddLinksActivity.NEW_PACKAGE);
 
 			return true;
 
@@ -155,7 +176,7 @@ public class pyLoad extends TabActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		switch (requestCode) {
-		case 0:
+		case AddLinksActivity.NEW_PACKAGE:
 			switch (resultCode) {
 			case RESULT_OK:
 				final String name = data.getStringExtra("name");
@@ -226,7 +247,14 @@ public class pyLoad extends TabActivity {
 		}
 
 	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		Log.d("pyLoad", "got Intent");
+		super.onNewIntent(intent);
+	}
 
+	
 	public int getCurrentTab() {
 		return tabHost.getCurrentTab();
 	}
