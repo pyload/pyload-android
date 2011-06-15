@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.TabHost;
 
 public class pyLoad extends TabActivity {
@@ -34,10 +35,11 @@ public class pyLoad extends TabActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.main);
 
 		Eula.show(this);
-		
+
 		app = (pyLoadApp) getApplicationContext();
 
 		Log.d("pyLoad", "Starting pyLoad App");
@@ -87,20 +89,20 @@ public class pyLoad extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Intent intent=  getIntent();
+		Intent intent = getIntent();
 		Uri data = intent.getData();
-		
+
 		// we got an intent
-		if(data != null){
-			if(intent.getScheme().startsWith("http")){
+		if (data != null) {
+			if (intent.getScheme().startsWith("http")) {
 				Intent addURL = new Intent(app, AddLinksActivity.class);
 				addURL.putExtra("dlcurl", data.toString());
 				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
-			}else if(intent.getScheme().equals("file")){
+			} else if (intent.getScheme().equals("file")) {
 				Intent addURL = new Intent(app, AddLinksActivity.class);
 				addURL.putExtra("dlcpath", data.getPath());
 				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
@@ -121,7 +123,8 @@ public class pyLoad extends TabActivity {
 		switch (item.getItemId()) {
 		case R.id.add_links:
 
-			startActivityForResult(new Intent(app, AddLinksActivity.class), AddLinksActivity.NEW_PACKAGE);
+			startActivityForResult(new Intent(app, AddLinksActivity.class),
+					AddLinksActivity.NEW_PACKAGE);
 
 			return true;
 
@@ -180,8 +183,8 @@ public class pyLoad extends TabActivity {
 			switch (resultCode) {
 			case RESULT_OK:
 				final String name = data.getStringExtra("name");
-				final String[] link_array = data.getStringExtra("links").trim().split(
-						"\n");
+				final String[] link_array = data.getStringExtra("links").trim()
+						.split("\n");
 				final Destination dest;
 				final String filepath = data.getStringExtra("filepath");
 				final String filename = data.getStringExtra("filename");
@@ -216,19 +219,22 @@ public class pyLoad extends TabActivity {
 								client.setPackageData(pid, opts);
 							}
 						}
-						if(filename != null && !filepath.equals("")){
-							
+						if (filename != null && !filepath.equals("")) {
+
 							File file = new File(filepath);
 							try {
-								if (file.length() > (1 << 20)) throw new Exception("File size to large");
+								if (file.length() > (1 << 20))
+									throw new Exception("File size to large");
 								FileInputStream is = new FileInputStream(file);
-								ByteBuffer buffer = ByteBuffer.allocate((int) file.length());							
-								
-								while (is.getChannel().read(buffer) > 0);
-								buffer.rewind();								
+								ByteBuffer buffer = ByteBuffer
+										.allocate((int) file.length());
+
+								while (is.getChannel().read(buffer) > 0)
+									;
+								buffer.rewind();
 								is.close();
 								client.uploadContainer(filename, buffer);
-								
+
 							} catch (Throwable e) {
 								Log.e("pyLoad", "Error when uploading file", e);
 							}
@@ -247,14 +253,13 @@ public class pyLoad extends TabActivity {
 		}
 
 	}
-	
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		Log.d("pyLoad", "got Intent");
 		super.onNewIntent(intent);
 	}
 
-	
 	public int getCurrentTab() {
 		return tabHost.getCurrentTab();
 	}

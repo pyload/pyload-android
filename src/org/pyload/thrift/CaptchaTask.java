@@ -32,16 +32,19 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
   private static final TField TID_FIELD_DESC = new TField("tid", TType.I16, (short)1);
   private static final TField DATA_FIELD_DESC = new TField("data", TType.STRING, (short)2);
   private static final TField TYPE_FIELD_DESC = new TField("type", TType.STRING, (short)3);
+  private static final TField RESULT_TYPE_FIELD_DESC = new TField("resultType", TType.STRING, (short)4);
 
   public short tid;
   public ByteBuffer data;
   public String type;
+  public String resultType;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
     TID((short)1, "tid"),
     DATA((short)2, "data"),
-    TYPE((short)3, "type");
+    TYPE((short)3, "type"),
+    RESULT_TYPE((short)4, "resultType");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -62,6 +65,8 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
           return DATA;
         case 3: // TYPE
           return TYPE;
+        case 4: // RESULT_TYPE
+          return RESULT_TYPE;
         default:
           return null;
       }
@@ -114,6 +119,8 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.TYPE, new FieldMetaData("type", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.STRING)));
+    tmpMap.put(_Fields.RESULT_TYPE, new FieldMetaData("resultType", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     FieldMetaData.addStructMetaDataMap(CaptchaTask.class, metaDataMap);
   }
@@ -124,13 +131,15 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
   public CaptchaTask(
     short tid,
     ByteBuffer data,
-    String type)
+    String type,
+    String resultType)
   {
     this();
     this.tid = tid;
     setTidIsSet(true);
     this.data = data;
     this.type = type;
+    this.resultType = resultType;
   }
 
   /**
@@ -147,6 +156,9 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     if (other.isSetType()) {
       this.type = other.type;
     }
+    if (other.isSetResultType()) {
+      this.resultType = other.resultType;
+    }
   }
 
   public CaptchaTask deepCopy() {
@@ -159,6 +171,7 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     this.tid = 0;
     this.data = null;
     this.type = null;
+    this.resultType = null;
   }
 
   public short getTid() {
@@ -242,6 +255,30 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     }
   }
 
+  public String getResultType() {
+    return this.resultType;
+  }
+
+  public CaptchaTask setResultType(String resultType) {
+    this.resultType = resultType;
+    return this;
+  }
+
+  public void unsetResultType() {
+    this.resultType = null;
+  }
+
+  /** Returns true if field resultType is set (has been asigned a value) and false otherwise */
+  public boolean isSetResultType() {
+    return this.resultType != null;
+  }
+
+  public void setResultTypeIsSet(boolean value) {
+    if (!value) {
+      this.resultType = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case TID:
@@ -268,6 +305,14 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
       }
       break;
 
+    case RESULT_TYPE:
+      if (value == null) {
+        unsetResultType();
+      } else {
+        setResultType((String)value);
+      }
+      break;
+
     }
   }
 
@@ -281,6 +326,9 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
 
     case TYPE:
       return getType();
+
+    case RESULT_TYPE:
+      return getResultType();
 
     }
     throw new IllegalStateException();
@@ -299,6 +347,8 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
       return isSetData();
     case TYPE:
       return isSetType();
+    case RESULT_TYPE:
+      return isSetResultType();
     }
     throw new IllegalStateException();
   }
@@ -340,6 +390,15 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
       if (!(this_present_type && that_present_type))
         return false;
       if (!this.type.equals(that.type))
+        return false;
+    }
+
+    boolean this_present_resultType = true && this.isSetResultType();
+    boolean that_present_resultType = true && that.isSetResultType();
+    if (this_present_resultType || that_present_resultType) {
+      if (!(this_present_resultType && that_present_resultType))
+        return false;
+      if (!this.resultType.equals(that.resultType))
         return false;
     }
 
@@ -389,6 +448,16 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetResultType()).compareTo(typedOther.isSetResultType());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetResultType()) {
+      lastComparison = TBaseHelper.compareTo(this.resultType, typedOther.resultType);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -428,6 +497,13 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
+        case 4: // RESULT_TYPE
+          if (field.type == TType.STRING) {
+            this.resultType = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
         default:
           TProtocolUtil.skip(iprot, field.type);
       }
@@ -456,6 +532,11 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
       oprot.writeString(this.type);
       oprot.writeFieldEnd();
     }
+    if (this.resultType != null) {
+      oprot.writeFieldBegin(RESULT_TYPE_FIELD_DESC);
+      oprot.writeString(this.resultType);
+      oprot.writeFieldEnd();
+    }
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
@@ -482,6 +563,14 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
       sb.append("null");
     } else {
       sb.append(this.type);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("resultType:");
+    if (this.resultType == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.resultType);
     }
     first = false;
     sb.append(")");

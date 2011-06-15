@@ -15,9 +15,9 @@ public enum DownloadStatus implements TEnum {
   Offline(1),
   Online(2),
   Queued(3),
-  Checking(4),
+  Skipped(4),
   Waiting(5),
-  Reconnected(6),
+  TempOffline(6),
   Starting(7),
   Failed(8),
   Aborted(9),
@@ -55,11 +55,11 @@ public enum DownloadStatus implements TEnum {
       case 3:
         return Queued;
       case 4:
-        return Checking;
+        return Skipped;
       case 5:
         return Waiting;
       case 6:
-        return Reconnected;
+        return TempOffline;
       case 7:
         return Starting;
       case 8:

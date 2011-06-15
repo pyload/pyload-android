@@ -36,10 +36,12 @@ public final class R {
         public static final int ic_tab_queue_unselected=0x7f020013;
         public static final int icon=0x7f020014;
         public static final int inbox=0x7f020015;
-        public static final int redo=0x7f020016;
-        public static final int stop=0x7f020017;
-        public static final int tick=0x7f020018;
-        public static final int todo=0x7f020019;
+        public static final int menu_clock=0x7f020016;
+        public static final int redo=0x7f020017;
+        public static final int stop=0x7f020018;
+        public static final int tag=0x7f020019;
+        public static final int tick=0x7f02001a;
+        public static final int todo=0x7f02001b;
     }
     public static final class id {
         public static final int ScrollView01=0x7f080000;

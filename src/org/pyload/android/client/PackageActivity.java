@@ -123,12 +123,12 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			return super.onCreateDialog(id);
 		}
 	}
-	
+
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		switch (id) {
 		case FILEINFO_DIALOG:
-			
+
 			FileData file;
 
 			try {
@@ -137,36 +137,36 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 				Log.d("pyLoad", "Error when preparing dialog", e);
 				return;
 			}
-			
+
 			TextView view = (TextView) dialog.findViewById(R.id.name);
 			view.setText(file.name);
-			
+
 			view = (TextView) dialog.findViewById(R.id.status);
 			view.setText(file.statusmsg);
-			
+
 			view = (TextView) dialog.findViewById(R.id.plugin);
 			view.setText(file.plugin);
-			
+
 			view = (TextView) dialog.findViewById(R.id.size);
 			view.setText(file.format_size);
-			
+
 			view = (TextView) dialog.findViewById(R.id.error);
 			view.setText(file.error);
-			
+
 			PackageData pack = null;
-			for(PackageData comparePack : data)
-				if(comparePack.pid == file.packageID) pack = comparePack;
-			
-			if(pack == null) return;
-			
+			for (PackageData comparePack : data)
+				if (comparePack.pid == file.packageID)
+					pack = comparePack;
+
+			if (pack == null)
+				return;
+
 			view = (TextView) dialog.findViewById(R.id.packageValue);
 			view.setText(pack.name);
-			
+
 			view = (TextView) dialog.findViewById(R.id.folder);
 			view.setText(pack.folder);
-			
-			
-			
+
 			break;
 
 		default:
@@ -178,6 +178,8 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 		if (!app.hasConnection())
 			return;
+		
+		app.setProgress(true);
 
 		GuiTask task = new GuiTask(new Runnable() {
 
@@ -195,6 +197,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 	}
 
 	protected void onDataReceived() {
+		app.setProgress(false);
 		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
 		adapter.setData(data);
 	}
@@ -330,12 +333,12 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 }
 
 class PackageListAdapter extends BaseExpandableListAdapter {
-	
+
 	static class GroupViewHolder {
 		private TextView name;
 	}
-	
-	static class ChildViewHolder{
+
+	static class ChildViewHolder {
 		private TextView name;
 		private TextView status;
 		private TextView size;
@@ -409,7 +412,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			convertView.setTag(holder);
 		}
-		
+
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.name);
 
@@ -422,6 +425,9 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		FileData file = data.get(group).links.get(child);
 
+		if (file == null)
+			return null;
+
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(childRes, null);
 			ChildViewHolder holder = new ChildViewHolder();
@@ -429,10 +435,11 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.status = (TextView) convertView.findViewById(R.id.status);
 			holder.size = (TextView) convertView.findViewById(R.id.size);
 			holder.plugin = (TextView) convertView.findViewById(R.id.plugin);
-			holder.status_icon = (ImageView) convertView.findViewById(R.id.status_icon);
+			holder.status_icon = (ImageView) convertView
+					.findViewById(R.id.status_icon);
 			convertView.setTag(holder);
 		}
-			
+
 		ChildViewHolder holder = (ChildViewHolder) convertView.getTag();
 
 		if (!file.name.equals(holder.name.getText()))
@@ -446,9 +453,12 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 				|| file.status == DownloadStatus.Aborted
 				|| file.status == DownloadStatus.Offline) {
 			holder.status_icon.setImageResource(R.drawable.stop);
-		}
-		else if (file.status == DownloadStatus.Finished) {
+		} else if (file.status == DownloadStatus.Finished) {
 			holder.status_icon.setImageResource(R.drawable.tick);
+		} else if (file.status == DownloadStatus.Waiting) {
+			holder.status_icon.setImageResource(R.drawable.menu_clock);
+		} else if(file.status == DownloadStatus.Skipped){
+			holder.status_icon.setImageResource(R.drawable.tag);
 		} else {
 			holder.status_icon.setImageResource(0);
 		}

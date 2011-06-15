@@ -100,6 +100,7 @@ public class pyLoadApp extends Application {
 				} catch (KeyManagementException e) {
 					throw new TException(e);
 				}
+				// timeout 8000ms
 				trans = TSSLTransportFactory.createClient(
 						ctx.getSocketFactory(), host, port, 8000);
 			} else {
@@ -129,7 +130,7 @@ public class pyLoadApp extends Application {
 			}
 
 			String server = client.getServerVersion();
-			if (!server.equals("0.4.4") && !server.equals("0.4.5"))
+			if  (!server.equals("0.4.6"))
 				throw new WrongServer();
 
 		}		
@@ -172,6 +173,8 @@ public class pyLoadApp extends Application {
 					Toast.LENGTH_SHORT);
 			t.show();
 		}
+		
+		setProgress(false);
 	}
 
 	final public Runnable handleSuccess = new Runnable() {
@@ -238,6 +241,10 @@ public class pyLoadApp extends Application {
 	public void resetClient() {
 		Log.d("pyLoad", "Client resetted");
 		client = null;
+	}
+	
+	public void setProgress(boolean state){
+		main.setProgressBarIndeterminateVisibility(state);
 	}
 
 }

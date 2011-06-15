@@ -12,8 +12,8 @@
     <string name="refresh_rate">Refresh Rate</string>
     <string name="refresh_rate_desc">Time in seconds how often Overview screen should refresh.</string>
     <string name="server">Server</string>
-    <string name="ip">IP Address</string>
-    <string name="ip_desc">IP Address of the remote pyLoad Core.</string>
+    <string name="ip">Address</string>
+    <string name="ip_desc">IP or hostname of the remote pyLoad Core.</string>
     <string name="port">Port</string>
     <string name="port_desc">The port of the ThriftBackend you set in the remote section.</string>
     <string name="username">Username</string>
