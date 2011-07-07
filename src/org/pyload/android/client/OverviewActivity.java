@@ -223,7 +223,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		switch (id) {
 		case CAPTCHA_DIALOG:
 
-			if (dialogOpen)
+			if (dialogOpen || captcha == null)
 				return null;
 
 			final Dialog dialog = new Dialog(this);
@@ -231,6 +231,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 			dialog.setTitle(getString(R.string.captcha_dialog_titel));
 
 			final TextView text = (TextView) dialog.findViewById(R.id.text);
+
 			final int tid = captcha.tid;
 			lastCaptcha = tid;
 
