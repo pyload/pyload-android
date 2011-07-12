@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
+import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
 
 import android.app.TabActivity;
@@ -216,7 +217,12 @@ public class pyLoad extends TabActivity {
 								HashMap<String, String> opts = new HashMap<String, String>();
 								opts.put("password", password);
 
-								client.setPackageData(pid, opts);
+								try {
+									client.setPackageData(pid, opts);
+								} catch (PackageDoesNotExists e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 						}
 						if (filename != null && !filepath.equals("")) {

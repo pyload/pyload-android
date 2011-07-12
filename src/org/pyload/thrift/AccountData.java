@@ -112,7 +112,7 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
   static {
     Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TYPE, new FieldMetaData("type", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.STRING)));
+        new FieldValueMetaData(TType.STRING        , "PluginName")));
     tmpMap.put(_Fields.LOGIN, new FieldMetaData("login", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.PASSWORD, new FieldMetaData("password", TFieldRequirementType.OPTIONAL, 

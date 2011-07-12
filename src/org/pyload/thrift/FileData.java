@@ -172,7 +172,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     tmpMap.put(_Fields.NAME, new FieldMetaData("name", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.STRING)));
+        new FieldValueMetaData(TType.STRING        , "PluginName")));
     tmpMap.put(_Fields.SIZE, new FieldMetaData("size", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.I64)));
     tmpMap.put(_Fields.FORMAT_SIZE, new FieldMetaData("format_size", TFieldRequirementType.DEFAULT, 

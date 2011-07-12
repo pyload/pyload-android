@@ -130,7 +130,7 @@ public class pyLoadApp extends Application {
 			}
 
 			String server = client.getServerVersion();
-			if  (!server.equals("0.4.6"))
+			if  (!server.equals("0.4.6-dev"))
 				throw new WrongServer();
 
 		}		

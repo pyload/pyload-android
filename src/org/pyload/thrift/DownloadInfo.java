@@ -43,6 +43,8 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
   private static final TField FORMAT_WAIT_FIELD_DESC = new TField("format_wait", TType.STRING, (short)12);
   private static final TField WAIT_UNTIL_FIELD_DESC = new TField("wait_until", TType.I64, (short)13);
   private static final TField PACKAGE_ID_FIELD_DESC = new TField("packageID", TType.I32, (short)14);
+  private static final TField PACKAGE_NAME_FIELD_DESC = new TField("packageName", TType.STRING, (short)15);
+  private static final TField PLUGIN_FIELD_DESC = new TField("plugin", TType.STRING, (short)16);
 
   public int fid;
   public String name;
@@ -62,6 +64,8 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
   public String format_wait;
   public long wait_until;
   public int packageID;
+  public String packageName;
+  public String plugin;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -82,7 +86,9 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     STATUSMSG((short)11, "statusmsg"),
     FORMAT_WAIT((short)12, "format_wait"),
     WAIT_UNTIL((short)13, "wait_until"),
-    PACKAGE_ID((short)14, "packageID");
+    PACKAGE_ID((short)14, "packageID"),
+    PACKAGE_NAME((short)15, "packageName"),
+    PLUGIN((short)16, "plugin");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -125,6 +131,10 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
           return WAIT_UNTIL;
         case 14: // PACKAGE_ID
           return PACKAGE_ID;
+        case 15: // PACKAGE_NAME
+          return PACKAGE_NAME;
+        case 16: // PLUGIN
+          return PLUGIN;
         default:
           return null;
       }
@@ -206,6 +216,10 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
         new FieldValueMetaData(TType.I64)));
     tmpMap.put(_Fields.PACKAGE_ID, new FieldMetaData("packageID", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.I32        , "PackageID")));
+    tmpMap.put(_Fields.PACKAGE_NAME, new FieldMetaData("packageName", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.STRING)));
+    tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.STRING        , "PluginName")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     FieldMetaData.addStructMetaDataMap(DownloadInfo.class, metaDataMap);
   }
@@ -227,7 +241,9 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     String statusmsg,
     String format_wait,
     long wait_until,
-    int packageID)
+    int packageID,
+    String packageName,
+    String plugin)
   {
     this();
     this.fid = fid;
@@ -252,6 +268,8 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     setWait_untilIsSet(true);
     this.packageID = packageID;
     setPackageIDIsSet(true);
+    this.packageName = packageName;
+    this.plugin = plugin;
   }
 
   /**
@@ -286,6 +304,12 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     }
     this.wait_until = other.wait_until;
     this.packageID = other.packageID;
+    if (other.isSetPackageName()) {
+      this.packageName = other.packageName;
+    }
+    if (other.isSetPlugin()) {
+      this.plugin = other.plugin;
+    }
   }
 
   public DownloadInfo deepCopy() {
@@ -316,6 +340,8 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     this.wait_until = 0;
     setPackageIDIsSet(false);
     this.packageID = 0;
+    this.packageName = null;
+    this.plugin = null;
   }
 
   public int getFid() {
@@ -654,6 +680,54 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     __isset_bit_vector.set(__PACKAGEID_ISSET_ID, value);
   }
 
+  public String getPackageName() {
+    return this.packageName;
+  }
+
+  public DownloadInfo setPackageName(String packageName) {
+    this.packageName = packageName;
+    return this;
+  }
+
+  public void unsetPackageName() {
+    this.packageName = null;
+  }
+
+  /** Returns true if field packageName is set (has been asigned a value) and false otherwise */
+  public boolean isSetPackageName() {
+    return this.packageName != null;
+  }
+
+  public void setPackageNameIsSet(boolean value) {
+    if (!value) {
+      this.packageName = null;
+    }
+  }
+
+  public String getPlugin() {
+    return this.plugin;
+  }
+
+  public DownloadInfo setPlugin(String plugin) {
+    this.plugin = plugin;
+    return this;
+  }
+
+  public void unsetPlugin() {
+    this.plugin = null;
+  }
+
+  /** Returns true if field plugin is set (has been asigned a value) and false otherwise */
+  public boolean isSetPlugin() {
+    return this.plugin != null;
+  }
+
+  public void setPluginIsSet(boolean value) {
+    if (!value) {
+      this.plugin = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case FID:
@@ -768,6 +842,22 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
       }
       break;
 
+    case PACKAGE_NAME:
+      if (value == null) {
+        unsetPackageName();
+      } else {
+        setPackageName((String)value);
+      }
+      break;
+
+    case PLUGIN:
+      if (value == null) {
+        unsetPlugin();
+      } else {
+        setPlugin((String)value);
+      }
+      break;
+
     }
   }
 
@@ -815,6 +905,12 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     case PACKAGE_ID:
       return new Integer(getPackageID());
 
+    case PACKAGE_NAME:
+      return getPackageName();
+
+    case PLUGIN:
+      return getPlugin();
+
     }
     throw new IllegalStateException();
   }
@@ -854,6 +950,10 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
       return isSetWait_until();
     case PACKAGE_ID:
       return isSetPackageID();
+    case PACKAGE_NAME:
+      return isSetPackageName();
+    case PLUGIN:
+      return isSetPlugin();
     }
     throw new IllegalStateException();
   }
@@ -994,6 +1094,24 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
       if (!(this_present_packageID && that_present_packageID))
         return false;
       if (this.packageID != that.packageID)
+        return false;
+    }
+
+    boolean this_present_packageName = true && this.isSetPackageName();
+    boolean that_present_packageName = true && that.isSetPackageName();
+    if (this_present_packageName || that_present_packageName) {
+      if (!(this_present_packageName && that_present_packageName))
+        return false;
+      if (!this.packageName.equals(that.packageName))
+        return false;
+    }
+
+    boolean this_present_plugin = true && this.isSetPlugin();
+    boolean that_present_plugin = true && that.isSetPlugin();
+    if (this_present_plugin || that_present_plugin) {
+      if (!(this_present_plugin && that_present_plugin))
+        return false;
+      if (!this.plugin.equals(that.plugin))
         return false;
     }
 
@@ -1153,6 +1271,26 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetPackageName()).compareTo(typedOther.isSetPackageName());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPackageName()) {
+      lastComparison = TBaseHelper.compareTo(this.packageName, typedOther.packageName);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetPlugin()).compareTo(typedOther.isSetPlugin());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPlugin()) {
+      lastComparison = TBaseHelper.compareTo(this.plugin, typedOther.plugin);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -1276,6 +1414,20 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
+        case 15: // PACKAGE_NAME
+          if (field.type == TType.STRING) {
+            this.packageName = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 16: // PLUGIN
+          if (field.type == TType.STRING) {
+            this.plugin = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
         default:
           TProtocolUtil.skip(iprot, field.type);
       }
@@ -1345,6 +1497,16 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     oprot.writeFieldBegin(PACKAGE_ID_FIELD_DESC);
     oprot.writeI32(this.packageID);
     oprot.writeFieldEnd();
+    if (this.packageName != null) {
+      oprot.writeFieldBegin(PACKAGE_NAME_FIELD_DESC);
+      oprot.writeString(this.packageName);
+      oprot.writeFieldEnd();
+    }
+    if (this.plugin != null) {
+      oprot.writeFieldBegin(PLUGIN_FIELD_DESC);
+      oprot.writeString(this.plugin);
+      oprot.writeFieldEnd();
+    }
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
@@ -1432,6 +1594,22 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     if (!first) sb.append(", ");
     sb.append("packageID:");
     sb.append(this.packageID);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("packageName:");
+    if (this.packageName == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.packageName);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("plugin:");
+    if (this.plugin == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.plugin);
+    }
     first = false;
     sb.append(")");
     return sb.toString();

@@ -114,7 +114,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
   static {
     Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.STRING)));
+        new FieldValueMetaData(TType.STRING        , "PluginName")));
     tmpMap.put(_Fields.FUNC, new FieldMetaData("func", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.ARGUMENTS, new FieldMetaData("arguments", TFieldRequirementType.OPTIONAL, 
@@ -496,13 +496,13 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
         case 3: // ARGUMENTS
           if (field.type == TType.LIST) {
             {
-              TList _list27 = iprot.readListBegin();
-              this.arguments = new ArrayList<String>(_list27.size);
-              for (int _i28 = 0; _i28 < _list27.size; ++_i28)
+              TList _list22 = iprot.readListBegin();
+              this.arguments = new ArrayList<String>(_list22.size);
+              for (int _i23 = 0; _i23 < _list22.size; ++_i23)
               {
-                String _elem29;
-                _elem29 = iprot.readString();
-                this.arguments.add(_elem29);
+                String _elem24;
+                _elem24 = iprot.readString();
+                this.arguments.add(_elem24);
               }
               iprot.readListEnd();
             }
@@ -548,9 +548,9 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
         oprot.writeFieldBegin(ARGUMENTS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.arguments.size()));
-          for (String _iter30 : this.arguments)
+          for (String _iter25 : this.arguments)
           {
-            oprot.writeString(_iter30);
+            oprot.writeString(_iter25);
           }
           oprot.writeListEnd();
         }

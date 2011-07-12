@@ -11,8 +11,8 @@ import java.util.HashMap;
 import org.apache.thrift.TEnum;
 
 public enum Destination implements TEnum {
-  Queue(0),
-  Collector(1);
+  Collector(0),
+  Queue(1);
 
   private final int value;
 
@@ -34,9 +34,9 @@ public enum Destination implements TEnum {
   public static Destination findByValue(int value) { 
     switch (value) {
       case 0:
-        return Queue;
-      case 1:
         return Collector;
+      case 1:
+        return Queue;
       default:
         return null;
     }

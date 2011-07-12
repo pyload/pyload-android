@@ -56,35 +56,49 @@ public class Pyload {
 
     public List<String> getLog(int offset) throws TException;
 
-    public Map<String,String> checkURL(List<String> urls) throws TException;
-
     public boolean isTimeDownload() throws TException;
 
     public boolean isTimeReconnect() throws TException;
 
     public boolean toggleReconnect() throws TException;
 
-    public List<DownloadInfo> statusDownloads() throws TException;
+    public Map<String,List<String>> checkURLs(List<String> urls) throws TException;
 
-    public int addPackage(String name, List<String> links, Destination dest) throws TException;
+    public Map<String,List<String>> parseURLs(String html) throws TException;
+
+    public int checkOnlineStatus(List<String> urls) throws TException;
+
+    public Map<String,List<OnlineStatus>> pollResults(int rid) throws TException;
+
+    public List<DownloadInfo> statusDownloads() throws TException;
 
     public PackageData getPackageData(int pid) throws PackageDoesNotExists, TException;
 
+    public PackageData getPackageInfo(int pid) throws PackageDoesNotExists, TException;
+
     public FileData getFileData(int fid) throws FileDoesNotExists, TException;
 
-    public void deleteFiles(List<Integer> fids) throws TException;
+    public List<PackageData> getQueue() throws TException;
 
-    public void deletePackages(List<Integer> pids) throws TException;
-
-    public List<PackageInfo> getQueue() throws TException;
-
-    public List<PackageInfo> getCollector() throws TException;
+    public List<PackageData> getCollector() throws TException;
 
     public List<PackageData> getQueueData() throws TException;
 
     public List<PackageData> getCollectorData() throws TException;
 
+    public Map<Short,Integer> getPackageOrder(Destination destination) throws TException;
+
+    public Map<Short,Integer> getFileOrder(int pid) throws TException;
+
+    public int addPackage(String name, List<String> links, Destination dest) throws TException;
+
     public void addFiles(int pid, List<String> links) throws TException;
+
+    public void uploadContainer(String filename, ByteBuffer data) throws TException;
+
+    public void deleteFiles(List<Integer> fids) throws TException;
+
+    public void deletePackages(List<Integer> pids) throws TException;
 
     public void pushToQueue(int pid) throws TException;
 
@@ -104,23 +118,17 @@ public class Pyload {
 
     public void movePackage(Destination destination, int pid) throws TException;
 
-    public void uploadContainer(String filename, ByteBuffer data) throws TException;
-
     public void setPriority(int pid, byte priority) throws TException;
 
     public void orderPackage(int pid, short position) throws TException;
 
     public void orderFile(int fid, short position) throws TException;
 
-    public void setPackageData(int pid, Map<String,String> data) throws TException;
+    public void setPackageData(int pid, Map<String,String> data) throws PackageDoesNotExists, TException;
 
     public void deleteFinished() throws TException;
 
     public void restartFailed() throws TException;
-
-    public Map<Short,Integer> getPackageOrder(Destination destination) throws TException;
-
-    public Map<Short,Integer> getFileOrder(int pid) throws TException;
 
     public boolean isCaptchaWaiting() throws TException;
 
@@ -144,11 +152,15 @@ public class Pyload {
 
     public UserData getUserData(String username, String password) throws TException;
 
-    public Map<String,ServiceInfo> getServices() throws TException;
+    public Map<String,Map<String,String>> getServices() throws TException;
 
     public boolean hasService(String plugin, String func) throws TException;
 
     public String call(ServiceCall info) throws ServiceDoesNotExists, ServiceException, TException;
+
+    public Map<String,Map<String,String>> getAllInfo() throws TException;
+
+    public Map<String,String> getInfoByPlugin(String plugin) throws TException;
 
   }
 
@@ -180,25 +192,27 @@ public class Pyload {
 
     public void getLog(int offset, AsyncMethodCallback<AsyncClient.getLog_call> resultHandler) throws TException;
 
-    public void checkURL(List<String> urls, AsyncMethodCallback<AsyncClient.checkURL_call> resultHandler) throws TException;
-
     public void isTimeDownload(AsyncMethodCallback<AsyncClient.isTimeDownload_call> resultHandler) throws TException;
 
     public void isTimeReconnect(AsyncMethodCallback<AsyncClient.isTimeReconnect_call> resultHandler) throws TException;
 
     public void toggleReconnect(AsyncMethodCallback<AsyncClient.toggleReconnect_call> resultHandler) throws TException;
 
-    public void statusDownloads(AsyncMethodCallback<AsyncClient.statusDownloads_call> resultHandler) throws TException;
+    public void checkURLs(List<String> urls, AsyncMethodCallback<AsyncClient.checkURLs_call> resultHandler) throws TException;
 
-    public void addPackage(String name, List<String> links, Destination dest, AsyncMethodCallback<AsyncClient.addPackage_call> resultHandler) throws TException;
+    public void parseURLs(String html, AsyncMethodCallback<AsyncClient.parseURLs_call> resultHandler) throws TException;
+
+    public void checkOnlineStatus(List<String> urls, AsyncMethodCallback<AsyncClient.checkOnlineStatus_call> resultHandler) throws TException;
+
+    public void pollResults(int rid, AsyncMethodCallback<AsyncClient.pollResults_call> resultHandler) throws TException;
+
+    public void statusDownloads(AsyncMethodCallback<AsyncClient.statusDownloads_call> resultHandler) throws TException;
 
     public void getPackageData(int pid, AsyncMethodCallback<AsyncClient.getPackageData_call> resultHandler) throws TException;
 
+    public void getPackageInfo(int pid, AsyncMethodCallback<AsyncClient.getPackageInfo_call> resultHandler) throws TException;
+
     public void getFileData(int fid, AsyncMethodCallback<AsyncClient.getFileData_call> resultHandler) throws TException;
-
-    public void deleteFiles(List<Integer> fids, AsyncMethodCallback<AsyncClient.deleteFiles_call> resultHandler) throws TException;
-
-    public void deletePackages(List<Integer> pids, AsyncMethodCallback<AsyncClient.deletePackages_call> resultHandler) throws TException;
 
     public void getQueue(AsyncMethodCallback<AsyncClient.getQueue_call> resultHandler) throws TException;
 
@@ -208,7 +222,19 @@ public class Pyload {
 
     public void getCollectorData(AsyncMethodCallback<AsyncClient.getCollectorData_call> resultHandler) throws TException;
 
+    public void getPackageOrder(Destination destination, AsyncMethodCallback<AsyncClient.getPackageOrder_call> resultHandler) throws TException;
+
+    public void getFileOrder(int pid, AsyncMethodCallback<AsyncClient.getFileOrder_call> resultHandler) throws TException;
+
+    public void addPackage(String name, List<String> links, Destination dest, AsyncMethodCallback<AsyncClient.addPackage_call> resultHandler) throws TException;
+
     public void addFiles(int pid, List<String> links, AsyncMethodCallback<AsyncClient.addFiles_call> resultHandler) throws TException;
+
+    public void uploadContainer(String filename, ByteBuffer data, AsyncMethodCallback<AsyncClient.uploadContainer_call> resultHandler) throws TException;
+
+    public void deleteFiles(List<Integer> fids, AsyncMethodCallback<AsyncClient.deleteFiles_call> resultHandler) throws TException;
+
+    public void deletePackages(List<Integer> pids, AsyncMethodCallback<AsyncClient.deletePackages_call> resultHandler) throws TException;
 
     public void pushToQueue(int pid, AsyncMethodCallback<AsyncClient.pushToQueue_call> resultHandler) throws TException;
 
@@ -228,8 +254,6 @@ public class Pyload {
 
     public void movePackage(Destination destination, int pid, AsyncMethodCallback<AsyncClient.movePackage_call> resultHandler) throws TException;
 
-    public void uploadContainer(String filename, ByteBuffer data, AsyncMethodCallback<AsyncClient.uploadContainer_call> resultHandler) throws TException;
-
     public void setPriority(int pid, byte priority, AsyncMethodCallback<AsyncClient.setPriority_call> resultHandler) throws TException;
 
     public void orderPackage(int pid, short position, AsyncMethodCallback<AsyncClient.orderPackage_call> resultHandler) throws TException;
@@ -241,10 +265,6 @@ public class Pyload {
     public void deleteFinished(AsyncMethodCallback<AsyncClient.deleteFinished_call> resultHandler) throws TException;
 
     public void restartFailed(AsyncMethodCallback<AsyncClient.restartFailed_call> resultHandler) throws TException;
-
-    public void getPackageOrder(Destination destination, AsyncMethodCallback<AsyncClient.getPackageOrder_call> resultHandler) throws TException;
-
-    public void getFileOrder(int pid, AsyncMethodCallback<AsyncClient.getFileOrder_call> resultHandler) throws TException;
 
     public void isCaptchaWaiting(AsyncMethodCallback<AsyncClient.isCaptchaWaiting_call> resultHandler) throws TException;
 
@@ -273,6 +293,10 @@ public class Pyload {
     public void hasService(String plugin, String func, AsyncMethodCallback<AsyncClient.hasService_call> resultHandler) throws TException;
 
     public void call(ServiceCall info, AsyncMethodCallback<AsyncClient.call_call> resultHandler) throws TException;
+
+    public void getAllInfo(AsyncMethodCallback<AsyncClient.getAllInfo_call> resultHandler) throws TException;
+
+    public void getInfoByPlugin(String plugin, AsyncMethodCallback<AsyncClient.getInfoByPlugin_call> resultHandler) throws TException;
 
   }
 
@@ -761,42 +785,6 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getLog failed: unknown result");
     }
 
-    public Map<String,String> checkURL(List<String> urls) throws TException
-    {
-      send_checkURL(urls);
-      return recv_checkURL();
-    }
-
-    public void send_checkURL(List<String> urls) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("checkURL", TMessageType.CALL, ++seqid_));
-      checkURL_args args = new checkURL_args();
-      args.setUrls(urls);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public Map<String,String> recv_checkURL() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "checkURL failed: out of sequence response");
-      }
-      checkURL_result result = new checkURL_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "checkURL failed: unknown result");
-    }
-
     public boolean isTimeDownload() throws TException
     {
       send_isTimeDownload();
@@ -902,6 +890,150 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "toggleReconnect failed: unknown result");
     }
 
+    public Map<String,List<String>> checkURLs(List<String> urls) throws TException
+    {
+      send_checkURLs(urls);
+      return recv_checkURLs();
+    }
+
+    public void send_checkURLs(List<String> urls) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("checkURLs", TMessageType.CALL, ++seqid_));
+      checkURLs_args args = new checkURLs_args();
+      args.setUrls(urls);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,List<String>> recv_checkURLs() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "checkURLs failed: out of sequence response");
+      }
+      checkURLs_result result = new checkURLs_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "checkURLs failed: unknown result");
+    }
+
+    public Map<String,List<String>> parseURLs(String html) throws TException
+    {
+      send_parseURLs(html);
+      return recv_parseURLs();
+    }
+
+    public void send_parseURLs(String html) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("parseURLs", TMessageType.CALL, ++seqid_));
+      parseURLs_args args = new parseURLs_args();
+      args.setHtml(html);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,List<String>> recv_parseURLs() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "parseURLs failed: out of sequence response");
+      }
+      parseURLs_result result = new parseURLs_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "parseURLs failed: unknown result");
+    }
+
+    public int checkOnlineStatus(List<String> urls) throws TException
+    {
+      send_checkOnlineStatus(urls);
+      return recv_checkOnlineStatus();
+    }
+
+    public void send_checkOnlineStatus(List<String> urls) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("checkOnlineStatus", TMessageType.CALL, ++seqid_));
+      checkOnlineStatus_args args = new checkOnlineStatus_args();
+      args.setUrls(urls);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public int recv_checkOnlineStatus() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "checkOnlineStatus failed: out of sequence response");
+      }
+      checkOnlineStatus_result result = new checkOnlineStatus_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "checkOnlineStatus failed: unknown result");
+    }
+
+    public Map<String,List<OnlineStatus>> pollResults(int rid) throws TException
+    {
+      send_pollResults(rid);
+      return recv_pollResults();
+    }
+
+    public void send_pollResults(int rid) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("pollResults", TMessageType.CALL, ++seqid_));
+      pollResults_args args = new pollResults_args();
+      args.setRid(rid);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,List<OnlineStatus>> recv_pollResults() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "pollResults failed: out of sequence response");
+      }
+      pollResults_result result = new pollResults_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "pollResults failed: unknown result");
+    }
+
     public List<DownloadInfo> statusDownloads() throws TException
     {
       send_statusDownloads();
@@ -935,44 +1067,6 @@ public class Pyload {
         return result.success;
       }
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "statusDownloads failed: unknown result");
-    }
-
-    public int addPackage(String name, List<String> links, Destination dest) throws TException
-    {
-      send_addPackage(name, links, dest);
-      return recv_addPackage();
-    }
-
-    public void send_addPackage(String name, List<String> links, Destination dest) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("addPackage", TMessageType.CALL, ++seqid_));
-      addPackage_args args = new addPackage_args();
-      args.setName(name);
-      args.setLinks(links);
-      args.setDest(dest);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public int recv_addPackage() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "addPackage failed: out of sequence response");
-      }
-      addPackage_result result = new addPackage_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "addPackage failed: unknown result");
     }
 
     public PackageData getPackageData(int pid) throws PackageDoesNotExists, TException
@@ -1014,6 +1108,45 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getPackageData failed: unknown result");
     }
 
+    public PackageData getPackageInfo(int pid) throws PackageDoesNotExists, TException
+    {
+      send_getPackageInfo(pid);
+      return recv_getPackageInfo();
+    }
+
+    public void send_getPackageInfo(int pid) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("getPackageInfo", TMessageType.CALL, ++seqid_));
+      getPackageInfo_args args = new getPackageInfo_args();
+      args.setPid(pid);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public PackageData recv_getPackageInfo() throws PackageDoesNotExists, TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getPackageInfo failed: out of sequence response");
+      }
+      getPackageInfo_result result = new getPackageInfo_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.e != null) {
+        throw result.e;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getPackageInfo failed: unknown result");
+    }
+
     public FileData getFileData(int fid) throws FileDoesNotExists, TException
     {
       send_getFileData(fid);
@@ -1053,73 +1186,7 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getFileData failed: unknown result");
     }
 
-    public void deleteFiles(List<Integer> fids) throws TException
-    {
-      send_deleteFiles(fids);
-      recv_deleteFiles();
-    }
-
-    public void send_deleteFiles(List<Integer> fids) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("deleteFiles", TMessageType.CALL, ++seqid_));
-      deleteFiles_args args = new deleteFiles_args();
-      args.setFids(fids);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public void recv_deleteFiles() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "deleteFiles failed: out of sequence response");
-      }
-      deleteFiles_result result = new deleteFiles_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      return;
-    }
-
-    public void deletePackages(List<Integer> pids) throws TException
-    {
-      send_deletePackages(pids);
-      recv_deletePackages();
-    }
-
-    public void send_deletePackages(List<Integer> pids) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("deletePackages", TMessageType.CALL, ++seqid_));
-      deletePackages_args args = new deletePackages_args();
-      args.setPids(pids);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public void recv_deletePackages() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "deletePackages failed: out of sequence response");
-      }
-      deletePackages_result result = new deletePackages_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      return;
-    }
-
-    public List<PackageInfo> getQueue() throws TException
+    public List<PackageData> getQueue() throws TException
     {
       send_getQueue();
       return recv_getQueue();
@@ -1134,7 +1201,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public List<PackageInfo> recv_getQueue() throws TException
+    public List<PackageData> recv_getQueue() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -1154,7 +1221,7 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getQueue failed: unknown result");
     }
 
-    public List<PackageInfo> getCollector() throws TException
+    public List<PackageData> getCollector() throws TException
     {
       send_getCollector();
       return recv_getCollector();
@@ -1169,7 +1236,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public List<PackageInfo> recv_getCollector() throws TException
+    public List<PackageData> recv_getCollector() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -1259,6 +1326,116 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getCollectorData failed: unknown result");
     }
 
+    public Map<Short,Integer> getPackageOrder(Destination destination) throws TException
+    {
+      send_getPackageOrder(destination);
+      return recv_getPackageOrder();
+    }
+
+    public void send_getPackageOrder(Destination destination) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.CALL, ++seqid_));
+      getPackageOrder_args args = new getPackageOrder_args();
+      args.setDestination(destination);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<Short,Integer> recv_getPackageOrder() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getPackageOrder failed: out of sequence response");
+      }
+      getPackageOrder_result result = new getPackageOrder_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getPackageOrder failed: unknown result");
+    }
+
+    public Map<Short,Integer> getFileOrder(int pid) throws TException
+    {
+      send_getFileOrder(pid);
+      return recv_getFileOrder();
+    }
+
+    public void send_getFileOrder(int pid) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("getFileOrder", TMessageType.CALL, ++seqid_));
+      getFileOrder_args args = new getFileOrder_args();
+      args.setPid(pid);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<Short,Integer> recv_getFileOrder() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getFileOrder failed: out of sequence response");
+      }
+      getFileOrder_result result = new getFileOrder_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getFileOrder failed: unknown result");
+    }
+
+    public int addPackage(String name, List<String> links, Destination dest) throws TException
+    {
+      send_addPackage(name, links, dest);
+      return recv_addPackage();
+    }
+
+    public void send_addPackage(String name, List<String> links, Destination dest) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("addPackage", TMessageType.CALL, ++seqid_));
+      addPackage_args args = new addPackage_args();
+      args.setName(name);
+      args.setLinks(links);
+      args.setDest(dest);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public int recv_addPackage() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "addPackage failed: out of sequence response");
+      }
+      addPackage_result result = new addPackage_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "addPackage failed: unknown result");
+    }
+
     public void addFiles(int pid, List<String> links) throws TException
     {
       send_addFiles(pid, links);
@@ -1288,6 +1465,106 @@ public class Pyload {
         throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "addFiles failed: out of sequence response");
       }
       addFiles_result result = new addFiles_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      return;
+    }
+
+    public void uploadContainer(String filename, ByteBuffer data) throws TException
+    {
+      send_uploadContainer(filename, data);
+      recv_uploadContainer();
+    }
+
+    public void send_uploadContainer(String filename, ByteBuffer data) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("uploadContainer", TMessageType.CALL, ++seqid_));
+      uploadContainer_args args = new uploadContainer_args();
+      args.setFilename(filename);
+      args.setData(data);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public void recv_uploadContainer() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "uploadContainer failed: out of sequence response");
+      }
+      uploadContainer_result result = new uploadContainer_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      return;
+    }
+
+    public void deleteFiles(List<Integer> fids) throws TException
+    {
+      send_deleteFiles(fids);
+      recv_deleteFiles();
+    }
+
+    public void send_deleteFiles(List<Integer> fids) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("deleteFiles", TMessageType.CALL, ++seqid_));
+      deleteFiles_args args = new deleteFiles_args();
+      args.setFids(fids);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public void recv_deleteFiles() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "deleteFiles failed: out of sequence response");
+      }
+      deleteFiles_result result = new deleteFiles_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      return;
+    }
+
+    public void deletePackages(List<Integer> pids) throws TException
+    {
+      send_deletePackages(pids);
+      recv_deletePackages();
+    }
+
+    public void send_deletePackages(List<Integer> pids) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("deletePackages", TMessageType.CALL, ++seqid_));
+      deletePackages_args args = new deletePackages_args();
+      args.setPids(pids);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public void recv_deletePackages() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "deletePackages failed: out of sequence response");
+      }
+      deletePackages_result result = new deletePackages_result();
       result.read(iprot_);
       iprot_.readMessageEnd();
       return;
@@ -1591,40 +1868,6 @@ public class Pyload {
       return;
     }
 
-    public void uploadContainer(String filename, ByteBuffer data) throws TException
-    {
-      send_uploadContainer(filename, data);
-      recv_uploadContainer();
-    }
-
-    public void send_uploadContainer(String filename, ByteBuffer data) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("uploadContainer", TMessageType.CALL, ++seqid_));
-      uploadContainer_args args = new uploadContainer_args();
-      args.setFilename(filename);
-      args.setData(data);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public void recv_uploadContainer() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "uploadContainer failed: out of sequence response");
-      }
-      uploadContainer_result result = new uploadContainer_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      return;
-    }
-
     public void setPriority(int pid, byte priority) throws TException
     {
       send_setPriority(pid, priority);
@@ -1727,7 +1970,7 @@ public class Pyload {
       return;
     }
 
-    public void setPackageData(int pid, Map<String,String> data) throws TException
+    public void setPackageData(int pid, Map<String,String> data) throws PackageDoesNotExists, TException
     {
       send_setPackageData(pid, data);
       recv_setPackageData();
@@ -1744,7 +1987,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public void recv_setPackageData() throws TException
+    public void recv_setPackageData() throws PackageDoesNotExists, TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -1758,6 +2001,9 @@ public class Pyload {
       setPackageData_result result = new setPackageData_result();
       result.read(iprot_);
       iprot_.readMessageEnd();
+      if (result.e != null) {
+        throw result.e;
+      }
       return;
     }
 
@@ -1823,78 +2069,6 @@ public class Pyload {
       result.read(iprot_);
       iprot_.readMessageEnd();
       return;
-    }
-
-    public Map<Short,Integer> getPackageOrder(Destination destination) throws TException
-    {
-      send_getPackageOrder(destination);
-      return recv_getPackageOrder();
-    }
-
-    public void send_getPackageOrder(Destination destination) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.CALL, ++seqid_));
-      getPackageOrder_args args = new getPackageOrder_args();
-      args.setDestination(destination);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public Map<Short,Integer> recv_getPackageOrder() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getPackageOrder failed: out of sequence response");
-      }
-      getPackageOrder_result result = new getPackageOrder_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getPackageOrder failed: unknown result");
-    }
-
-    public Map<Short,Integer> getFileOrder(int pid) throws TException
-    {
-      send_getFileOrder(pid);
-      return recv_getFileOrder();
-    }
-
-    public void send_getFileOrder(int pid) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("getFileOrder", TMessageType.CALL, ++seqid_));
-      getFileOrder_args args = new getFileOrder_args();
-      args.setPid(pid);
-      args.write(oprot_);
-      oprot_.writeMessageEnd();
-      oprot_.getTransport().flush();
-    }
-
-    public Map<Short,Integer> recv_getFileOrder() throws TException
-    {
-      TMessage msg = iprot_.readMessageBegin();
-      if (msg.type == TMessageType.EXCEPTION) {
-        TApplicationException x = TApplicationException.read(iprot_);
-        iprot_.readMessageEnd();
-        throw x;
-      }
-      if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getFileOrder failed: out of sequence response");
-      }
-      getFileOrder_result result = new getFileOrder_result();
-      result.read(iprot_);
-      iprot_.readMessageEnd();
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getFileOrder failed: unknown result");
     }
 
     public boolean isCaptchaWaiting() throws TException
@@ -2286,7 +2460,7 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getUserData failed: unknown result");
     }
 
-    public Map<String,ServiceInfo> getServices() throws TException
+    public Map<String,Map<String,String>> getServices() throws TException
     {
       send_getServices();
       return recv_getServices();
@@ -2301,7 +2475,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public Map<String,ServiceInfo> recv_getServices() throws TException
+    public Map<String,Map<String,String>> recv_getServices() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -2398,6 +2572,77 @@ public class Pyload {
         throw result.e;
       }
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "call failed: unknown result");
+    }
+
+    public Map<String,Map<String,String>> getAllInfo() throws TException
+    {
+      send_getAllInfo();
+      return recv_getAllInfo();
+    }
+
+    public void send_getAllInfo() throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("getAllInfo", TMessageType.CALL, ++seqid_));
+      getAllInfo_args args = new getAllInfo_args();
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,Map<String,String>> recv_getAllInfo() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getAllInfo failed: out of sequence response");
+      }
+      getAllInfo_result result = new getAllInfo_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getAllInfo failed: unknown result");
+    }
+
+    public Map<String,String> getInfoByPlugin(String plugin) throws TException
+    {
+      send_getInfoByPlugin(plugin);
+      return recv_getInfoByPlugin();
+    }
+
+    public void send_getInfoByPlugin(String plugin) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("getInfoByPlugin", TMessageType.CALL, ++seqid_));
+      getInfoByPlugin_args args = new getInfoByPlugin_args();
+      args.setPlugin(plugin);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,String> recv_getInfoByPlugin() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "getInfoByPlugin failed: out of sequence response");
+      }
+      getInfoByPlugin_result result = new getInfoByPlugin_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "getInfoByPlugin failed: unknown result");
     }
 
   }
@@ -2806,37 +3051,6 @@ public class Pyload {
       }
     }
 
-    public void checkURL(List<String> urls, AsyncMethodCallback<checkURL_call> resultHandler) throws TException {
-      checkReady();
-      checkURL_call method_call = new checkURL_call(urls, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class checkURL_call extends TAsyncMethodCall {
-      private List<String> urls;
-      public checkURL_call(List<String> urls, AsyncMethodCallback<checkURL_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.urls = urls;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("checkURL", TMessageType.CALL, 0));
-        checkURL_args args = new checkURL_args();
-        args.setUrls(urls);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public Map<String,String> getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_checkURL();
-      }
-    }
-
     public void isTimeDownload(AsyncMethodCallback<isTimeDownload_call> resultHandler) throws TException {
       checkReady();
       isTimeDownload_call method_call = new isTimeDownload_call(resultHandler, this, protocolFactory, transport);
@@ -2921,6 +3135,130 @@ public class Pyload {
       }
     }
 
+    public void checkURLs(List<String> urls, AsyncMethodCallback<checkURLs_call> resultHandler) throws TException {
+      checkReady();
+      checkURLs_call method_call = new checkURLs_call(urls, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class checkURLs_call extends TAsyncMethodCall {
+      private List<String> urls;
+      public checkURLs_call(List<String> urls, AsyncMethodCallback<checkURLs_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.urls = urls;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("checkURLs", TMessageType.CALL, 0));
+        checkURLs_args args = new checkURLs_args();
+        args.setUrls(urls);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,List<String>> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_checkURLs();
+      }
+    }
+
+    public void parseURLs(String html, AsyncMethodCallback<parseURLs_call> resultHandler) throws TException {
+      checkReady();
+      parseURLs_call method_call = new parseURLs_call(html, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class parseURLs_call extends TAsyncMethodCall {
+      private String html;
+      public parseURLs_call(String html, AsyncMethodCallback<parseURLs_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.html = html;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("parseURLs", TMessageType.CALL, 0));
+        parseURLs_args args = new parseURLs_args();
+        args.setHtml(html);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,List<String>> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_parseURLs();
+      }
+    }
+
+    public void checkOnlineStatus(List<String> urls, AsyncMethodCallback<checkOnlineStatus_call> resultHandler) throws TException {
+      checkReady();
+      checkOnlineStatus_call method_call = new checkOnlineStatus_call(urls, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class checkOnlineStatus_call extends TAsyncMethodCall {
+      private List<String> urls;
+      public checkOnlineStatus_call(List<String> urls, AsyncMethodCallback<checkOnlineStatus_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.urls = urls;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("checkOnlineStatus", TMessageType.CALL, 0));
+        checkOnlineStatus_args args = new checkOnlineStatus_args();
+        args.setUrls(urls);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public int getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_checkOnlineStatus();
+      }
+    }
+
+    public void pollResults(int rid, AsyncMethodCallback<pollResults_call> resultHandler) throws TException {
+      checkReady();
+      pollResults_call method_call = new pollResults_call(rid, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class pollResults_call extends TAsyncMethodCall {
+      private int rid;
+      public pollResults_call(int rid, AsyncMethodCallback<pollResults_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.rid = rid;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("pollResults", TMessageType.CALL, 0));
+        pollResults_args args = new pollResults_args();
+        args.setRid(rid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,List<OnlineStatus>> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_pollResults();
+      }
+    }
+
     public void statusDownloads(AsyncMethodCallback<statusDownloads_call> resultHandler) throws TException {
       checkReady();
       statusDownloads_call method_call = new statusDownloads_call(resultHandler, this, protocolFactory, transport);
@@ -2946,43 +3284,6 @@ public class Pyload {
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_statusDownloads();
-      }
-    }
-
-    public void addPackage(String name, List<String> links, Destination dest, AsyncMethodCallback<addPackage_call> resultHandler) throws TException {
-      checkReady();
-      addPackage_call method_call = new addPackage_call(name, links, dest, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class addPackage_call extends TAsyncMethodCall {
-      private String name;
-      private List<String> links;
-      private Destination dest;
-      public addPackage_call(String name, List<String> links, Destination dest, AsyncMethodCallback<addPackage_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.name = name;
-        this.links = links;
-        this.dest = dest;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("addPackage", TMessageType.CALL, 0));
-        addPackage_args args = new addPackage_args();
-        args.setName(name);
-        args.setLinks(links);
-        args.setDest(dest);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public int getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_addPackage();
       }
     }
 
@@ -3017,6 +3318,37 @@ public class Pyload {
       }
     }
 
+    public void getPackageInfo(int pid, AsyncMethodCallback<getPackageInfo_call> resultHandler) throws TException {
+      checkReady();
+      getPackageInfo_call method_call = new getPackageInfo_call(pid, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class getPackageInfo_call extends TAsyncMethodCall {
+      private int pid;
+      public getPackageInfo_call(int pid, AsyncMethodCallback<getPackageInfo_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.pid = pid;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("getPackageInfo", TMessageType.CALL, 0));
+        getPackageInfo_args args = new getPackageInfo_args();
+        args.setPid(pid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public PackageData getResult() throws PackageDoesNotExists, TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getPackageInfo();
+      }
+    }
+
     public void getFileData(int fid, AsyncMethodCallback<getFileData_call> resultHandler) throws TException {
       checkReady();
       getFileData_call method_call = new getFileData_call(fid, resultHandler, this, protocolFactory, transport);
@@ -3048,68 +3380,6 @@ public class Pyload {
       }
     }
 
-    public void deleteFiles(List<Integer> fids, AsyncMethodCallback<deleteFiles_call> resultHandler) throws TException {
-      checkReady();
-      deleteFiles_call method_call = new deleteFiles_call(fids, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class deleteFiles_call extends TAsyncMethodCall {
-      private List<Integer> fids;
-      public deleteFiles_call(List<Integer> fids, AsyncMethodCallback<deleteFiles_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.fids = fids;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.CALL, 0));
-        deleteFiles_args args = new deleteFiles_args();
-        args.setFids(fids);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public void getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_deleteFiles();
-      }
-    }
-
-    public void deletePackages(List<Integer> pids, AsyncMethodCallback<deletePackages_call> resultHandler) throws TException {
-      checkReady();
-      deletePackages_call method_call = new deletePackages_call(pids, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class deletePackages_call extends TAsyncMethodCall {
-      private List<Integer> pids;
-      public deletePackages_call(List<Integer> pids, AsyncMethodCallback<deletePackages_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.pids = pids;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("deletePackages", TMessageType.CALL, 0));
-        deletePackages_args args = new deletePackages_args();
-        args.setPids(pids);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public void getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_deletePackages();
-      }
-    }
-
     public void getQueue(AsyncMethodCallback<getQueue_call> resultHandler) throws TException {
       checkReady();
       getQueue_call method_call = new getQueue_call(resultHandler, this, protocolFactory, transport);
@@ -3128,7 +3398,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public List<PackageInfo> getResult() throws TException {
+      public List<PackageData> getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -3156,7 +3426,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public List<PackageInfo> getResult() throws TException {
+      public List<PackageData> getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -3222,6 +3492,105 @@ public class Pyload {
       }
     }
 
+    public void getPackageOrder(Destination destination, AsyncMethodCallback<getPackageOrder_call> resultHandler) throws TException {
+      checkReady();
+      getPackageOrder_call method_call = new getPackageOrder_call(destination, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class getPackageOrder_call extends TAsyncMethodCall {
+      private Destination destination;
+      public getPackageOrder_call(Destination destination, AsyncMethodCallback<getPackageOrder_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.destination = destination;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.CALL, 0));
+        getPackageOrder_args args = new getPackageOrder_args();
+        args.setDestination(destination);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<Short,Integer> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getPackageOrder();
+      }
+    }
+
+    public void getFileOrder(int pid, AsyncMethodCallback<getFileOrder_call> resultHandler) throws TException {
+      checkReady();
+      getFileOrder_call method_call = new getFileOrder_call(pid, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class getFileOrder_call extends TAsyncMethodCall {
+      private int pid;
+      public getFileOrder_call(int pid, AsyncMethodCallback<getFileOrder_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.pid = pid;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.CALL, 0));
+        getFileOrder_args args = new getFileOrder_args();
+        args.setPid(pid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<Short,Integer> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getFileOrder();
+      }
+    }
+
+    public void addPackage(String name, List<String> links, Destination dest, AsyncMethodCallback<addPackage_call> resultHandler) throws TException {
+      checkReady();
+      addPackage_call method_call = new addPackage_call(name, links, dest, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class addPackage_call extends TAsyncMethodCall {
+      private String name;
+      private List<String> links;
+      private Destination dest;
+      public addPackage_call(String name, List<String> links, Destination dest, AsyncMethodCallback<addPackage_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.name = name;
+        this.links = links;
+        this.dest = dest;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("addPackage", TMessageType.CALL, 0));
+        addPackage_args args = new addPackage_args();
+        args.setName(name);
+        args.setLinks(links);
+        args.setDest(dest);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public int getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_addPackage();
+      }
+    }
+
     public void addFiles(int pid, List<String> links, AsyncMethodCallback<addFiles_call> resultHandler) throws TException {
       checkReady();
       addFiles_call method_call = new addFiles_call(pid, links, resultHandler, this, protocolFactory, transport);
@@ -3253,6 +3622,102 @@ public class Pyload {
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         (new Client(prot)).recv_addFiles();
+      }
+    }
+
+    public void uploadContainer(String filename, ByteBuffer data, AsyncMethodCallback<uploadContainer_call> resultHandler) throws TException {
+      checkReady();
+      uploadContainer_call method_call = new uploadContainer_call(filename, data, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class uploadContainer_call extends TAsyncMethodCall {
+      private String filename;
+      private ByteBuffer data;
+      public uploadContainer_call(String filename, ByteBuffer data, AsyncMethodCallback<uploadContainer_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.filename = filename;
+        this.data = data;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.CALL, 0));
+        uploadContainer_args args = new uploadContainer_args();
+        args.setFilename(filename);
+        args.setData(data);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_uploadContainer();
+      }
+    }
+
+    public void deleteFiles(List<Integer> fids, AsyncMethodCallback<deleteFiles_call> resultHandler) throws TException {
+      checkReady();
+      deleteFiles_call method_call = new deleteFiles_call(fids, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class deleteFiles_call extends TAsyncMethodCall {
+      private List<Integer> fids;
+      public deleteFiles_call(List<Integer> fids, AsyncMethodCallback<deleteFiles_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.fids = fids;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.CALL, 0));
+        deleteFiles_args args = new deleteFiles_args();
+        args.setFids(fids);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_deleteFiles();
+      }
+    }
+
+    public void deletePackages(List<Integer> pids, AsyncMethodCallback<deletePackages_call> resultHandler) throws TException {
+      checkReady();
+      deletePackages_call method_call = new deletePackages_call(pids, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class deletePackages_call extends TAsyncMethodCall {
+      private List<Integer> pids;
+      public deletePackages_call(List<Integer> pids, AsyncMethodCallback<deletePackages_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.pids = pids;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("deletePackages", TMessageType.CALL, 0));
+        deletePackages_args args = new deletePackages_args();
+        args.setPids(pids);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_deletePackages();
       }
     }
 
@@ -3538,40 +4003,6 @@ public class Pyload {
       }
     }
 
-    public void uploadContainer(String filename, ByteBuffer data, AsyncMethodCallback<uploadContainer_call> resultHandler) throws TException {
-      checkReady();
-      uploadContainer_call method_call = new uploadContainer_call(filename, data, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class uploadContainer_call extends TAsyncMethodCall {
-      private String filename;
-      private ByteBuffer data;
-      public uploadContainer_call(String filename, ByteBuffer data, AsyncMethodCallback<uploadContainer_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.filename = filename;
-        this.data = data;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.CALL, 0));
-        uploadContainer_args args = new uploadContainer_args();
-        args.setFilename(filename);
-        args.setData(data);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public void getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_uploadContainer();
-      }
-    }
-
     public void setPriority(int pid, byte priority, AsyncMethodCallback<setPriority_call> resultHandler) throws TException {
       checkReady();
       setPriority_call method_call = new setPriority_call(pid, priority, resultHandler, this, protocolFactory, transport);
@@ -3698,7 +4129,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public void getResult() throws TException {
+      public void getResult() throws PackageDoesNotExists, TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -3761,68 +4192,6 @@ public class Pyload {
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         (new Client(prot)).recv_restartFailed();
-      }
-    }
-
-    public void getPackageOrder(Destination destination, AsyncMethodCallback<getPackageOrder_call> resultHandler) throws TException {
-      checkReady();
-      getPackageOrder_call method_call = new getPackageOrder_call(destination, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class getPackageOrder_call extends TAsyncMethodCall {
-      private Destination destination;
-      public getPackageOrder_call(Destination destination, AsyncMethodCallback<getPackageOrder_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.destination = destination;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.CALL, 0));
-        getPackageOrder_args args = new getPackageOrder_args();
-        args.setDestination(destination);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public Map<Short,Integer> getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getPackageOrder();
-      }
-    }
-
-    public void getFileOrder(int pid, AsyncMethodCallback<getFileOrder_call> resultHandler) throws TException {
-      checkReady();
-      getFileOrder_call method_call = new getFileOrder_call(pid, resultHandler, this, protocolFactory, transport);
-      manager.call(method_call);
-    }
-
-    public static class getFileOrder_call extends TAsyncMethodCall {
-      private int pid;
-      public getFileOrder_call(int pid, AsyncMethodCallback<getFileOrder_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.pid = pid;
-      }
-
-      public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.CALL, 0));
-        getFileOrder_args args = new getFileOrder_args();
-        args.setPid(pid);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public Map<Short,Integer> getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
-        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getFileOrder();
       }
     }
 
@@ -4191,7 +4560,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public Map<String,ServiceInfo> getResult() throws TException {
+      public Map<String,Map<String,String>> getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -4266,6 +4635,65 @@ public class Pyload {
       }
     }
 
+    public void getAllInfo(AsyncMethodCallback<getAllInfo_call> resultHandler) throws TException {
+      checkReady();
+      getAllInfo_call method_call = new getAllInfo_call(resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class getAllInfo_call extends TAsyncMethodCall {
+      public getAllInfo_call(AsyncMethodCallback<getAllInfo_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("getAllInfo", TMessageType.CALL, 0));
+        getAllInfo_args args = new getAllInfo_args();
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,Map<String,String>> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getAllInfo();
+      }
+    }
+
+    public void getInfoByPlugin(String plugin, AsyncMethodCallback<getInfoByPlugin_call> resultHandler) throws TException {
+      checkReady();
+      getInfoByPlugin_call method_call = new getInfoByPlugin_call(plugin, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class getInfoByPlugin_call extends TAsyncMethodCall {
+      private String plugin;
+      public getInfoByPlugin_call(String plugin, AsyncMethodCallback<getInfoByPlugin_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.plugin = plugin;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("getInfoByPlugin", TMessageType.CALL, 0));
+        getInfoByPlugin_args args = new getInfoByPlugin_args();
+        args.setPlugin(plugin);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,String> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getInfoByPlugin();
+      }
+    }
+
   }
 
   public static class Processor implements TProcessor {
@@ -4286,21 +4714,28 @@ public class Pyload {
       processMap_.put("kill", new kill());
       processMap_.put("restart", new restart());
       processMap_.put("getLog", new getLog());
-      processMap_.put("checkURL", new checkURL());
       processMap_.put("isTimeDownload", new isTimeDownload());
       processMap_.put("isTimeReconnect", new isTimeReconnect());
       processMap_.put("toggleReconnect", new toggleReconnect());
+      processMap_.put("checkURLs", new checkURLs());
+      processMap_.put("parseURLs", new parseURLs());
+      processMap_.put("checkOnlineStatus", new checkOnlineStatus());
+      processMap_.put("pollResults", new pollResults());
       processMap_.put("statusDownloads", new statusDownloads());
-      processMap_.put("addPackage", new addPackage());
       processMap_.put("getPackageData", new getPackageData());
+      processMap_.put("getPackageInfo", new getPackageInfo());
       processMap_.put("getFileData", new getFileData());
-      processMap_.put("deleteFiles", new deleteFiles());
-      processMap_.put("deletePackages", new deletePackages());
       processMap_.put("getQueue", new getQueue());
       processMap_.put("getCollector", new getCollector());
       processMap_.put("getQueueData", new getQueueData());
       processMap_.put("getCollectorData", new getCollectorData());
+      processMap_.put("getPackageOrder", new getPackageOrder());
+      processMap_.put("getFileOrder", new getFileOrder());
+      processMap_.put("addPackage", new addPackage());
       processMap_.put("addFiles", new addFiles());
+      processMap_.put("uploadContainer", new uploadContainer());
+      processMap_.put("deleteFiles", new deleteFiles());
+      processMap_.put("deletePackages", new deletePackages());
       processMap_.put("pushToQueue", new pushToQueue());
       processMap_.put("pullFromQueue", new pullFromQueue());
       processMap_.put("restartPackage", new restartPackage());
@@ -4310,15 +4745,12 @@ public class Pyload {
       processMap_.put("stopDownloads", new stopDownloads());
       processMap_.put("setPackageName", new setPackageName());
       processMap_.put("movePackage", new movePackage());
-      processMap_.put("uploadContainer", new uploadContainer());
       processMap_.put("setPriority", new setPriority());
       processMap_.put("orderPackage", new orderPackage());
       processMap_.put("orderFile", new orderFile());
       processMap_.put("setPackageData", new setPackageData());
       processMap_.put("deleteFinished", new deleteFinished());
       processMap_.put("restartFailed", new restartFailed());
-      processMap_.put("getPackageOrder", new getPackageOrder());
-      processMap_.put("getFileOrder", new getFileOrder());
       processMap_.put("isCaptchaWaiting", new isCaptchaWaiting());
       processMap_.put("getCaptchaTask", new getCaptchaTask());
       processMap_.put("getCaptchaTaskStatus", new getCaptchaTaskStatus());
@@ -4333,6 +4765,8 @@ public class Pyload {
       processMap_.put("getServices", new getServices());
       processMap_.put("hasService", new hasService());
       processMap_.put("call", new call());
+      processMap_.put("getAllInfo", new getAllInfo());
+      processMap_.put("getInfoByPlugin", new getInfoByPlugin());
     }
 
     protected static interface ProcessFunction {
@@ -4700,32 +5134,6 @@ public class Pyload {
 
     }
 
-    private class checkURL implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        checkURL_args args = new checkURL_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("checkURL", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        checkURL_result result = new checkURL_result();
-        result.success = iface_.checkURL(args.urls);
-        oprot.writeMessageBegin(new TMessage("checkURL", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
     private class isTimeDownload implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -4807,6 +5215,111 @@ public class Pyload {
 
     }
 
+    private class checkURLs implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        checkURLs_args args = new checkURLs_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("checkURLs", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        checkURLs_result result = new checkURLs_result();
+        result.success = iface_.checkURLs(args.urls);
+        oprot.writeMessageBegin(new TMessage("checkURLs", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class parseURLs implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        parseURLs_args args = new parseURLs_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("parseURLs", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        parseURLs_result result = new parseURLs_result();
+        result.success = iface_.parseURLs(args.html);
+        oprot.writeMessageBegin(new TMessage("parseURLs", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class checkOnlineStatus implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        checkOnlineStatus_args args = new checkOnlineStatus_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("checkOnlineStatus", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        checkOnlineStatus_result result = new checkOnlineStatus_result();
+        result.success = iface_.checkOnlineStatus(args.urls);
+        result.setSuccessIsSet(true);
+        oprot.writeMessageBegin(new TMessage("checkOnlineStatus", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class pollResults implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        pollResults_args args = new pollResults_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("pollResults", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        pollResults_result result = new pollResults_result();
+        result.success = iface_.pollResults(args.rid);
+        oprot.writeMessageBegin(new TMessage("pollResults", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
     private class statusDownloads implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -4826,33 +5339,6 @@ public class Pyload {
         statusDownloads_result result = new statusDownloads_result();
         result.success = iface_.statusDownloads();
         oprot.writeMessageBegin(new TMessage("statusDownloads", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
-    private class addPackage implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        addPackage_args args = new addPackage_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("addPackage", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        addPackage_result result = new addPackage_result();
-        result.success = iface_.addPackage(args.name, args.links, args.dest);
-        result.setSuccessIsSet(true);
-        oprot.writeMessageBegin(new TMessage("addPackage", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -4898,6 +5384,44 @@ public class Pyload {
 
     }
 
+    private class getPackageInfo implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        getPackageInfo_args args = new getPackageInfo_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("getPackageInfo", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        getPackageInfo_result result = new getPackageInfo_result();
+        try {
+          result.success = iface_.getPackageInfo(args.pid);
+        } catch (PackageDoesNotExists e) {
+          result.e = e;
+        } catch (Throwable th) {
+          LOGGER.error("Internal error processing getPackageInfo", th);
+          TApplicationException x = new TApplicationException(TApplicationException.INTERNAL_ERROR, "Internal error processing getPackageInfo");
+          oprot.writeMessageBegin(new TMessage("getPackageInfo", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        oprot.writeMessageBegin(new TMessage("getPackageInfo", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
     private class getFileData implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -4929,58 +5453,6 @@ public class Pyload {
           return;
         }
         oprot.writeMessageBegin(new TMessage("getFileData", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
-    private class deleteFiles implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        deleteFiles_args args = new deleteFiles_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        deleteFiles_result result = new deleteFiles_result();
-        iface_.deleteFiles(args.fids);
-        oprot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
-    private class deletePackages implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        deletePackages_args args = new deletePackages_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("deletePackages", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        deletePackages_result result = new deletePackages_result();
-        iface_.deletePackages(args.pids);
-        oprot.writeMessageBegin(new TMessage("deletePackages", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -5092,6 +5564,85 @@ public class Pyload {
 
     }
 
+    private class getPackageOrder implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        getPackageOrder_args args = new getPackageOrder_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        getPackageOrder_result result = new getPackageOrder_result();
+        result.success = iface_.getPackageOrder(args.destination);
+        oprot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class getFileOrder implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        getFileOrder_args args = new getFileOrder_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        getFileOrder_result result = new getFileOrder_result();
+        result.success = iface_.getFileOrder(args.pid);
+        oprot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class addPackage implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        addPackage_args args = new addPackage_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("addPackage", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        addPackage_result result = new addPackage_result();
+        result.success = iface_.addPackage(args.name, args.links, args.dest);
+        result.setSuccessIsSet(true);
+        oprot.writeMessageBegin(new TMessage("addPackage", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
     private class addFiles implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -5111,6 +5662,84 @@ public class Pyload {
         addFiles_result result = new addFiles_result();
         iface_.addFiles(args.pid, args.links);
         oprot.writeMessageBegin(new TMessage("addFiles", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class uploadContainer implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        uploadContainer_args args = new uploadContainer_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        uploadContainer_result result = new uploadContainer_result();
+        iface_.uploadContainer(args.filename, args.data);
+        oprot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class deleteFiles implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        deleteFiles_args args = new deleteFiles_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        deleteFiles_result result = new deleteFiles_result();
+        iface_.deleteFiles(args.fids);
+        oprot.writeMessageBegin(new TMessage("deleteFiles", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class deletePackages implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        deletePackages_args args = new deletePackages_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("deletePackages", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        deletePackages_result result = new deletePackages_result();
+        iface_.deletePackages(args.pids);
+        oprot.writeMessageBegin(new TMessage("deletePackages", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -5352,32 +5981,6 @@ public class Pyload {
 
     }
 
-    private class uploadContainer implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        uploadContainer_args args = new uploadContainer_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        uploadContainer_result result = new uploadContainer_result();
-        iface_.uploadContainer(args.filename, args.data);
-        oprot.writeMessageBegin(new TMessage("uploadContainer", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
     private class setPriority implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -5473,7 +6076,19 @@ public class Pyload {
         }
         iprot.readMessageEnd();
         setPackageData_result result = new setPackageData_result();
-        iface_.setPackageData(args.pid, args.data);
+        try {
+          iface_.setPackageData(args.pid, args.data);
+        } catch (PackageDoesNotExists e) {
+          result.e = e;
+        } catch (Throwable th) {
+          LOGGER.error("Internal error processing setPackageData", th);
+          TApplicationException x = new TApplicationException(TApplicationException.INTERNAL_ERROR, "Internal error processing setPackageData");
+          oprot.writeMessageBegin(new TMessage("setPackageData", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
         oprot.writeMessageBegin(new TMessage("setPackageData", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
@@ -5527,58 +6142,6 @@ public class Pyload {
         restartFailed_result result = new restartFailed_result();
         iface_.restartFailed();
         oprot.writeMessageBegin(new TMessage("restartFailed", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
-    private class getPackageOrder implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        getPackageOrder_args args = new getPackageOrder_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        getPackageOrder_result result = new getPackageOrder_result();
-        result.success = iface_.getPackageOrder(args.destination);
-        oprot.writeMessageBegin(new TMessage("getPackageOrder", TMessageType.REPLY, seqid));
-        result.write(oprot);
-        oprot.writeMessageEnd();
-        oprot.getTransport().flush();
-      }
-
-    }
-
-    private class getFileOrder implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
-        getFileOrder_args args = new getFileOrder_args();
-        try {
-          args.read(iprot);
-        } catch (TProtocolException e) {
-          iprot.readMessageEnd();
-          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.EXCEPTION, seqid));
-          x.write(oprot);
-          oprot.writeMessageEnd();
-          oprot.getTransport().flush();
-          return;
-        }
-        iprot.readMessageEnd();
-        getFileOrder_result result = new getFileOrder_result();
-        result.success = iface_.getFileOrder(args.pid);
-        oprot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -5960,6 +6523,58 @@ public class Pyload {
           return;
         }
         oprot.writeMessageBegin(new TMessage("call", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class getAllInfo implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        getAllInfo_args args = new getAllInfo_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("getAllInfo", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        getAllInfo_result result = new getAllInfo_result();
+        result.success = iface_.getAllInfo();
+        oprot.writeMessageBegin(new TMessage("getAllInfo", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class getInfoByPlugin implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        getInfoByPlugin_args args = new getInfoByPlugin_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("getInfoByPlugin", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        getInfoByPlugin_result result = new getInfoByPlugin_result();
+        result.success = iface_.getInfoByPlugin(args.plugin);
+        oprot.writeMessageBegin(new TMessage("getInfoByPlugin", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -7878,14 +8493,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list31 = iprot.readListBegin();
-                this.success = new ArrayList<ConfigSection>(_list31.size);
-                for (int _i32 = 0; _i32 < _list31.size; ++_i32)
+                TList _list26 = iprot.readListBegin();
+                this.success = new ArrayList<ConfigSection>(_list26.size);
+                for (int _i27 = 0; _i27 < _list26.size; ++_i27)
                 {
-                  ConfigSection _elem33;
-                  _elem33 = new ConfigSection();
-                  _elem33.read(iprot);
-                  this.success.add(_elem33);
+                  ConfigSection _elem28;
+                  _elem28 = new ConfigSection();
+                  _elem28.read(iprot);
+                  this.success.add(_elem28);
                 }
                 iprot.readListEnd();
               }
@@ -7911,9 +8526,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (ConfigSection _iter34 : this.success)
+          for (ConfigSection _iter29 : this.success)
           {
-            _iter34.write(oprot);
+            _iter29.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -8382,14 +8997,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list35 = iprot.readListBegin();
-                this.success = new ArrayList<ConfigSection>(_list35.size);
-                for (int _i36 = 0; _i36 < _list35.size; ++_i36)
+                TList _list30 = iprot.readListBegin();
+                this.success = new ArrayList<ConfigSection>(_list30.size);
+                for (int _i31 = 0; _i31 < _list30.size; ++_i31)
                 {
-                  ConfigSection _elem37;
-                  _elem37 = new ConfigSection();
-                  _elem37.read(iprot);
-                  this.success.add(_elem37);
+                  ConfigSection _elem32;
+                  _elem32 = new ConfigSection();
+                  _elem32.read(iprot);
+                  this.success.add(_elem32);
                 }
                 iprot.readListEnd();
               }
@@ -8415,9 +9030,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (ConfigSection _iter38 : this.success)
+          for (ConfigSection _iter33 : this.success)
           {
-            _iter38.write(oprot);
+            _iter33.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -12328,13 +12943,13 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list39 = iprot.readListBegin();
-                this.success = new ArrayList<String>(_list39.size);
-                for (int _i40 = 0; _i40 < _list39.size; ++_i40)
+                TList _list34 = iprot.readListBegin();
+                this.success = new ArrayList<String>(_list34.size);
+                for (int _i35 = 0; _i35 < _list34.size; ++_i35)
                 {
-                  String _elem41;
-                  _elem41 = iprot.readString();
-                  this.success.add(_elem41);
+                  String _elem36;
+                  _elem36 = iprot.readString();
+                  this.success.add(_elem36);
                 }
                 iprot.readListEnd();
               }
@@ -12360,9 +12975,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.success.size()));
-          for (String _iter42 : this.success)
+          for (String _iter37 : this.success)
           {
-            oprot.writeString(_iter42);
+            oprot.writeString(_iter37);
           }
           oprot.writeListEnd();
         }
@@ -12375,644 +12990,6 @@ public class Pyload {
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getLog_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      if (this.success == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.success);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class checkURL_args implements TBase<checkURL_args, checkURL_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("checkURL_args");
-
-    private static final TField URLS_FIELD_DESC = new TField("urls", TType.LIST, (short)1);
-
-    public List<String> urls;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      URLS((short)1, "urls");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // URLS
-            return URLS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.URLS, new FieldMetaData("urls", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.LIST          , "LinkList")));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(checkURL_args.class, metaDataMap);
-    }
-
-    public checkURL_args() {
-    }
-
-    public checkURL_args(
-      List<String> urls)
-    {
-      this();
-      this.urls = urls;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public checkURL_args(checkURL_args other) {
-      if (other.isSetUrls()) {
-        this.urls = other.urls;
-      }
-    }
-
-    public checkURL_args deepCopy() {
-      return new checkURL_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.urls = null;
-    }
-
-    public int getUrlsSize() {
-      return (this.urls == null) ? 0 : this.urls.size();
-    }
-
-    public java.util.Iterator<String> getUrlsIterator() {
-      return (this.urls == null) ? null : this.urls.iterator();
-    }
-
-    public void addToUrls(String elem) {
-      if (this.urls == null) {
-        this.urls = new ArrayList<String>();
-      }
-      this.urls.add(elem);
-    }
-
-    public List<String> getUrls() {
-      return this.urls;
-    }
-
-    public checkURL_args setUrls(List<String> urls) {
-      this.urls = urls;
-      return this;
-    }
-
-    public void unsetUrls() {
-      this.urls = null;
-    }
-
-    /** Returns true if field urls is set (has been asigned a value) and false otherwise */
-    public boolean isSetUrls() {
-      return this.urls != null;
-    }
-
-    public void setUrlsIsSet(boolean value) {
-      if (!value) {
-        this.urls = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case URLS:
-        if (value == null) {
-          unsetUrls();
-        } else {
-          setUrls((List<String>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case URLS:
-        return getUrls();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case URLS:
-        return isSetUrls();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof checkURL_args)
-        return this.equals((checkURL_args)that);
-      return false;
-    }
-
-    public boolean equals(checkURL_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_urls = true && this.isSetUrls();
-      boolean that_present_urls = true && that.isSetUrls();
-      if (this_present_urls || that_present_urls) {
-        if (!(this_present_urls && that_present_urls))
-          return false;
-        if (!this.urls.equals(that.urls))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(checkURL_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      checkURL_args typedOther = (checkURL_args)other;
-
-      lastComparison = Boolean.valueOf(isSetUrls()).compareTo(typedOther.isSetUrls());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetUrls()) {
-        lastComparison = TBaseHelper.compareTo(this.urls, typedOther.urls);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // URLS
-            if (field.type == TType.LIST) {
-              {
-                TList _list43 = iprot.readListBegin();
-                this.urls = new ArrayList<String>(_list43.size);
-                for (int _i44 = 0; _i44 < _list43.size; ++_i44)
-                {
-                  String _elem45;
-                  _elem45 = iprot.readString();
-                  this.urls.add(_elem45);
-                }
-                iprot.readListEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.urls != null) {
-        oprot.writeFieldBegin(URLS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
-          for (String _iter46 : this.urls)
-          {
-            oprot.writeString(_iter46);
-          }
-          oprot.writeListEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("checkURL_args(");
-      boolean first = true;
-
-      sb.append("urls:");
-      if (this.urls == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.urls);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class checkURL_result implements TBase<checkURL_result, checkURL_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("checkURL_result");
-
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
-
-    public Map<String,String> success;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      SUCCESS((short)0, "success");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new MapMetaData(TType.MAP, 
-              new FieldValueMetaData(TType.STRING), 
-              new FieldValueMetaData(TType.STRING))));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(checkURL_result.class, metaDataMap);
-    }
-
-    public checkURL_result() {
-    }
-
-    public checkURL_result(
-      Map<String,String> success)
-    {
-      this();
-      this.success = success;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public checkURL_result(checkURL_result other) {
-      if (other.isSetSuccess()) {
-        Map<String,String> __this__success = new HashMap<String,String>();
-        for (Map.Entry<String, String> other_element : other.success.entrySet()) {
-
-          String other_element_key = other_element.getKey();
-          String other_element_value = other_element.getValue();
-
-          String __this__success_copy_key = other_element_key;
-
-          String __this__success_copy_value = other_element_value;
-
-          __this__success.put(__this__success_copy_key, __this__success_copy_value);
-        }
-        this.success = __this__success;
-      }
-    }
-
-    public checkURL_result deepCopy() {
-      return new checkURL_result(this);
-    }
-
-    @Override
-    public void clear() {
-      this.success = null;
-    }
-
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public void putToSuccess(String key, String val) {
-      if (this.success == null) {
-        this.success = new HashMap<String,String>();
-      }
-      this.success.put(key, val);
-    }
-
-    public Map<String,String> getSuccess() {
-      return this.success;
-    }
-
-    public checkURL_result setSuccess(Map<String,String> success) {
-      this.success = success;
-      return this;
-    }
-
-    public void unsetSuccess() {
-      this.success = null;
-    }
-
-    /** Returns true if field success is set (has been asigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return this.success != null;
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      if (!value) {
-        this.success = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((Map<String,String>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return getSuccess();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof checkURL_result)
-        return this.equals((checkURL_result)that);
-      return false;
-    }
-
-    public boolean equals(checkURL_result that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_success = true && this.isSetSuccess();
-      boolean that_present_success = true && that.isSetSuccess();
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (!this.success.equals(that.success))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(checkURL_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      checkURL_result typedOther = (checkURL_result)other;
-
-      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 0: // SUCCESS
-            if (field.type == TType.MAP) {
-              {
-                TMap _map47 = iprot.readMapBegin();
-                this.success = new HashMap<String,String>(2*_map47.size);
-                for (int _i48 = 0; _i48 < _map47.size; ++_i48)
-                {
-                  String _key49;
-                  String _val50;
-                  _key49 = iprot.readString();
-                  _val50 = iprot.readString();
-                  this.success.put(_key49, _val50);
-                }
-                iprot.readMapEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      if (this.isSetSuccess()) {
-        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        {
-          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.success.size()));
-          for (Map.Entry<String, String> _iter51 : this.success.entrySet())
-          {
-            oprot.writeString(_iter51.getKey());
-            oprot.writeString(_iter51.getValue());
-          }
-          oprot.writeMapEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("checkURL_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -14430,6 +14407,2503 @@ public class Pyload {
 
   }
 
+  public static class checkURLs_args implements TBase<checkURLs_args, checkURLs_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkURLs_args");
+
+    private static final TField URLS_FIELD_DESC = new TField("urls", TType.LIST, (short)1);
+
+    public List<String> urls;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      URLS((short)1, "urls");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // URLS
+            return URLS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.URLS, new FieldMetaData("urls", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkURLs_args.class, metaDataMap);
+    }
+
+    public checkURLs_args() {
+    }
+
+    public checkURLs_args(
+      List<String> urls)
+    {
+      this();
+      this.urls = urls;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkURLs_args(checkURLs_args other) {
+      if (other.isSetUrls()) {
+        this.urls = other.urls;
+      }
+    }
+
+    public checkURLs_args deepCopy() {
+      return new checkURLs_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.urls = null;
+    }
+
+    public int getUrlsSize() {
+      return (this.urls == null) ? 0 : this.urls.size();
+    }
+
+    public java.util.Iterator<String> getUrlsIterator() {
+      return (this.urls == null) ? null : this.urls.iterator();
+    }
+
+    public void addToUrls(String elem) {
+      if (this.urls == null) {
+        this.urls = new ArrayList<String>();
+      }
+      this.urls.add(elem);
+    }
+
+    public List<String> getUrls() {
+      return this.urls;
+    }
+
+    public checkURLs_args setUrls(List<String> urls) {
+      this.urls = urls;
+      return this;
+    }
+
+    public void unsetUrls() {
+      this.urls = null;
+    }
+
+    /** Returns true if field urls is set (has been asigned a value) and false otherwise */
+    public boolean isSetUrls() {
+      return this.urls != null;
+    }
+
+    public void setUrlsIsSet(boolean value) {
+      if (!value) {
+        this.urls = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case URLS:
+        if (value == null) {
+          unsetUrls();
+        } else {
+          setUrls((List<String>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case URLS:
+        return getUrls();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case URLS:
+        return isSetUrls();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkURLs_args)
+        return this.equals((checkURLs_args)that);
+      return false;
+    }
+
+    public boolean equals(checkURLs_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_urls = true && this.isSetUrls();
+      boolean that_present_urls = true && that.isSetUrls();
+      if (this_present_urls || that_present_urls) {
+        if (!(this_present_urls && that_present_urls))
+          return false;
+        if (!this.urls.equals(that.urls))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkURLs_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkURLs_args typedOther = (checkURLs_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUrls()).compareTo(typedOther.isSetUrls());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUrls()) {
+        lastComparison = TBaseHelper.compareTo(this.urls, typedOther.urls);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // URLS
+            if (field.type == TType.LIST) {
+              {
+                TList _list38 = iprot.readListBegin();
+                this.urls = new ArrayList<String>(_list38.size);
+                for (int _i39 = 0; _i39 < _list38.size; ++_i39)
+                {
+                  String _elem40;
+                  _elem40 = iprot.readString();
+                  this.urls.add(_elem40);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.urls != null) {
+        oprot.writeFieldBegin(URLS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
+          for (String _iter41 : this.urls)
+          {
+            oprot.writeString(_iter41);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkURLs_args(");
+      boolean first = true;
+
+      sb.append("urls:");
+      if (this.urls == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.urls);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class checkURLs_result implements TBase<checkURLs_result, checkURLs_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkURLs_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,List<String>> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING              , "PluginName"), 
+              new FieldValueMetaData(TType.LIST              , "LinkList"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkURLs_result.class, metaDataMap);
+    }
+
+    public checkURLs_result() {
+    }
+
+    public checkURLs_result(
+      Map<String,List<String>> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkURLs_result(checkURLs_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,List<String>> __this__success = new HashMap<String,List<String>>();
+        for (Map.Entry<String, List<String>> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          List<String> other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          List<String> __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public checkURLs_result deepCopy() {
+      return new checkURLs_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, List<String> val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,List<String>>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,List<String>> getSuccess() {
+      return this.success;
+    }
+
+    public checkURLs_result setSuccess(Map<String,List<String>> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,List<String>>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkURLs_result)
+        return this.equals((checkURLs_result)that);
+      return false;
+    }
+
+    public boolean equals(checkURLs_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkURLs_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkURLs_result typedOther = (checkURLs_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map42 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<String>>(2*_map42.size);
+                for (int _i43 = 0; _i43 < _map42.size; ++_i43)
+                {
+                  String _key44;
+                  List<String> _val45;
+                  _key44 = iprot.readString();
+                  {
+                    TList _list46 = iprot.readListBegin();
+                    _val45 = new ArrayList<String>(_list46.size);
+                    for (int _i47 = 0; _i47 < _list46.size; ++_i47)
+                    {
+                      String _elem48;
+                      _elem48 = iprot.readString();
+                      _val45.add(_elem48);
+                    }
+                    iprot.readListEnd();
+                  }
+                  this.success.put(_key44, _val45);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
+          for (Map.Entry<String, List<String>> _iter49 : this.success.entrySet())
+          {
+            oprot.writeString(_iter49.getKey());
+            {
+              oprot.writeListBegin(new TList(TType.STRING, _iter49.getValue().size()));
+              for (String _iter50 : _iter49.getValue())
+              {
+                oprot.writeString(_iter50);
+              }
+              oprot.writeListEnd();
+            }
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkURLs_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class parseURLs_args implements TBase<parseURLs_args, parseURLs_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("parseURLs_args");
+
+    private static final TField HTML_FIELD_DESC = new TField("html", TType.STRING, (short)1);
+
+    public String html;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      HTML((short)1, "html");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // HTML
+            return HTML;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.HTML, new FieldMetaData("html", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(parseURLs_args.class, metaDataMap);
+    }
+
+    public parseURLs_args() {
+    }
+
+    public parseURLs_args(
+      String html)
+    {
+      this();
+      this.html = html;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public parseURLs_args(parseURLs_args other) {
+      if (other.isSetHtml()) {
+        this.html = other.html;
+      }
+    }
+
+    public parseURLs_args deepCopy() {
+      return new parseURLs_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.html = null;
+    }
+
+    public String getHtml() {
+      return this.html;
+    }
+
+    public parseURLs_args setHtml(String html) {
+      this.html = html;
+      return this;
+    }
+
+    public void unsetHtml() {
+      this.html = null;
+    }
+
+    /** Returns true if field html is set (has been asigned a value) and false otherwise */
+    public boolean isSetHtml() {
+      return this.html != null;
+    }
+
+    public void setHtmlIsSet(boolean value) {
+      if (!value) {
+        this.html = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case HTML:
+        if (value == null) {
+          unsetHtml();
+        } else {
+          setHtml((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case HTML:
+        return getHtml();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case HTML:
+        return isSetHtml();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof parseURLs_args)
+        return this.equals((parseURLs_args)that);
+      return false;
+    }
+
+    public boolean equals(parseURLs_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_html = true && this.isSetHtml();
+      boolean that_present_html = true && that.isSetHtml();
+      if (this_present_html || that_present_html) {
+        if (!(this_present_html && that_present_html))
+          return false;
+        if (!this.html.equals(that.html))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(parseURLs_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      parseURLs_args typedOther = (parseURLs_args)other;
+
+      lastComparison = Boolean.valueOf(isSetHtml()).compareTo(typedOther.isSetHtml());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetHtml()) {
+        lastComparison = TBaseHelper.compareTo(this.html, typedOther.html);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // HTML
+            if (field.type == TType.STRING) {
+              this.html = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.html != null) {
+        oprot.writeFieldBegin(HTML_FIELD_DESC);
+        oprot.writeString(this.html);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("parseURLs_args(");
+      boolean first = true;
+
+      sb.append("html:");
+      if (this.html == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.html);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class parseURLs_result implements TBase<parseURLs_result, parseURLs_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("parseURLs_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,List<String>> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING              , "PluginName"), 
+              new FieldValueMetaData(TType.LIST              , "LinkList"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(parseURLs_result.class, metaDataMap);
+    }
+
+    public parseURLs_result() {
+    }
+
+    public parseURLs_result(
+      Map<String,List<String>> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public parseURLs_result(parseURLs_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,List<String>> __this__success = new HashMap<String,List<String>>();
+        for (Map.Entry<String, List<String>> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          List<String> other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          List<String> __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public parseURLs_result deepCopy() {
+      return new parseURLs_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, List<String> val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,List<String>>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,List<String>> getSuccess() {
+      return this.success;
+    }
+
+    public parseURLs_result setSuccess(Map<String,List<String>> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,List<String>>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof parseURLs_result)
+        return this.equals((parseURLs_result)that);
+      return false;
+    }
+
+    public boolean equals(parseURLs_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(parseURLs_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      parseURLs_result typedOther = (parseURLs_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map51 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<String>>(2*_map51.size);
+                for (int _i52 = 0; _i52 < _map51.size; ++_i52)
+                {
+                  String _key53;
+                  List<String> _val54;
+                  _key53 = iprot.readString();
+                  {
+                    TList _list55 = iprot.readListBegin();
+                    _val54 = new ArrayList<String>(_list55.size);
+                    for (int _i56 = 0; _i56 < _list55.size; ++_i56)
+                    {
+                      String _elem57;
+                      _elem57 = iprot.readString();
+                      _val54.add(_elem57);
+                    }
+                    iprot.readListEnd();
+                  }
+                  this.success.put(_key53, _val54);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
+          for (Map.Entry<String, List<String>> _iter58 : this.success.entrySet())
+          {
+            oprot.writeString(_iter58.getKey());
+            {
+              oprot.writeListBegin(new TList(TType.STRING, _iter58.getValue().size()));
+              for (String _iter59 : _iter58.getValue())
+              {
+                oprot.writeString(_iter59);
+              }
+              oprot.writeListEnd();
+            }
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("parseURLs_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class checkOnlineStatus_args implements TBase<checkOnlineStatus_args, checkOnlineStatus_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkOnlineStatus_args");
+
+    private static final TField URLS_FIELD_DESC = new TField("urls", TType.LIST, (short)1);
+
+    public List<String> urls;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      URLS((short)1, "urls");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // URLS
+            return URLS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.URLS, new FieldMetaData("urls", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkOnlineStatus_args.class, metaDataMap);
+    }
+
+    public checkOnlineStatus_args() {
+    }
+
+    public checkOnlineStatus_args(
+      List<String> urls)
+    {
+      this();
+      this.urls = urls;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkOnlineStatus_args(checkOnlineStatus_args other) {
+      if (other.isSetUrls()) {
+        this.urls = other.urls;
+      }
+    }
+
+    public checkOnlineStatus_args deepCopy() {
+      return new checkOnlineStatus_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.urls = null;
+    }
+
+    public int getUrlsSize() {
+      return (this.urls == null) ? 0 : this.urls.size();
+    }
+
+    public java.util.Iterator<String> getUrlsIterator() {
+      return (this.urls == null) ? null : this.urls.iterator();
+    }
+
+    public void addToUrls(String elem) {
+      if (this.urls == null) {
+        this.urls = new ArrayList<String>();
+      }
+      this.urls.add(elem);
+    }
+
+    public List<String> getUrls() {
+      return this.urls;
+    }
+
+    public checkOnlineStatus_args setUrls(List<String> urls) {
+      this.urls = urls;
+      return this;
+    }
+
+    public void unsetUrls() {
+      this.urls = null;
+    }
+
+    /** Returns true if field urls is set (has been asigned a value) and false otherwise */
+    public boolean isSetUrls() {
+      return this.urls != null;
+    }
+
+    public void setUrlsIsSet(boolean value) {
+      if (!value) {
+        this.urls = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case URLS:
+        if (value == null) {
+          unsetUrls();
+        } else {
+          setUrls((List<String>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case URLS:
+        return getUrls();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case URLS:
+        return isSetUrls();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkOnlineStatus_args)
+        return this.equals((checkOnlineStatus_args)that);
+      return false;
+    }
+
+    public boolean equals(checkOnlineStatus_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_urls = true && this.isSetUrls();
+      boolean that_present_urls = true && that.isSetUrls();
+      if (this_present_urls || that_present_urls) {
+        if (!(this_present_urls && that_present_urls))
+          return false;
+        if (!this.urls.equals(that.urls))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkOnlineStatus_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkOnlineStatus_args typedOther = (checkOnlineStatus_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUrls()).compareTo(typedOther.isSetUrls());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUrls()) {
+        lastComparison = TBaseHelper.compareTo(this.urls, typedOther.urls);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // URLS
+            if (field.type == TType.LIST) {
+              {
+                TList _list60 = iprot.readListBegin();
+                this.urls = new ArrayList<String>(_list60.size);
+                for (int _i61 = 0; _i61 < _list60.size; ++_i61)
+                {
+                  String _elem62;
+                  _elem62 = iprot.readString();
+                  this.urls.add(_elem62);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.urls != null) {
+        oprot.writeFieldBegin(URLS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
+          for (String _iter63 : this.urls)
+          {
+            oprot.writeString(_iter63);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkOnlineStatus_args(");
+      boolean first = true;
+
+      sb.append("urls:");
+      if (this.urls == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.urls);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class checkOnlineStatus_result implements TBase<checkOnlineStatus_result, checkOnlineStatus_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkOnlineStatus_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.I32, (short)0);
+
+    public int success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private BitSet __isset_bit_vector = new BitSet(1);
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.I32          , "ResultID")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkOnlineStatus_result.class, metaDataMap);
+    }
+
+    public checkOnlineStatus_result() {
+    }
+
+    public checkOnlineStatus_result(
+      int success)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkOnlineStatus_result(checkOnlineStatus_result other) {
+      __isset_bit_vector.clear();
+      __isset_bit_vector.or(other.__isset_bit_vector);
+      this.success = other.success;
+    }
+
+    public checkOnlineStatus_result deepCopy() {
+      return new checkOnlineStatus_result(this);
+    }
+
+    @Override
+    public void clear() {
+      setSuccessIsSet(false);
+      this.success = 0;
+    }
+
+    public int getSuccess() {
+      return this.success;
+    }
+
+    public checkOnlineStatus_result setSuccess(int success) {
+      this.success = success;
+      setSuccessIsSet(true);
+      return this;
+    }
+
+    public void unsetSuccess() {
+      __isset_bit_vector.clear(__SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return __isset_bit_vector.get(__SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bit_vector.set(__SUCCESS_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return new Integer(getSuccess());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkOnlineStatus_result)
+        return this.equals((checkOnlineStatus_result)that);
+      return false;
+    }
+
+    public boolean equals(checkOnlineStatus_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkOnlineStatus_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkOnlineStatus_result typedOther = (checkOnlineStatus_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.I32) {
+              this.success = iprot.readI32();
+              setSuccessIsSet(true);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        oprot.writeI32(this.success);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkOnlineStatus_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class pollResults_args implements TBase<pollResults_args, pollResults_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("pollResults_args");
+
+    private static final TField RID_FIELD_DESC = new TField("rid", TType.I32, (short)1);
+
+    public int rid;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      RID((short)1, "rid");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // RID
+            return RID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __RID_ISSET_ID = 0;
+    private BitSet __isset_bit_vector = new BitSet(1);
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.RID, new FieldMetaData("rid", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.I32          , "ResultID")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(pollResults_args.class, metaDataMap);
+    }
+
+    public pollResults_args() {
+    }
+
+    public pollResults_args(
+      int rid)
+    {
+      this();
+      this.rid = rid;
+      setRidIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public pollResults_args(pollResults_args other) {
+      __isset_bit_vector.clear();
+      __isset_bit_vector.or(other.__isset_bit_vector);
+      this.rid = other.rid;
+    }
+
+    public pollResults_args deepCopy() {
+      return new pollResults_args(this);
+    }
+
+    @Override
+    public void clear() {
+      setRidIsSet(false);
+      this.rid = 0;
+    }
+
+    public int getRid() {
+      return this.rid;
+    }
+
+    public pollResults_args setRid(int rid) {
+      this.rid = rid;
+      setRidIsSet(true);
+      return this;
+    }
+
+    public void unsetRid() {
+      __isset_bit_vector.clear(__RID_ISSET_ID);
+    }
+
+    /** Returns true if field rid is set (has been asigned a value) and false otherwise */
+    public boolean isSetRid() {
+      return __isset_bit_vector.get(__RID_ISSET_ID);
+    }
+
+    public void setRidIsSet(boolean value) {
+      __isset_bit_vector.set(__RID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case RID:
+        if (value == null) {
+          unsetRid();
+        } else {
+          setRid((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case RID:
+        return new Integer(getRid());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case RID:
+        return isSetRid();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof pollResults_args)
+        return this.equals((pollResults_args)that);
+      return false;
+    }
+
+    public boolean equals(pollResults_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_rid = true;
+      boolean that_present_rid = true;
+      if (this_present_rid || that_present_rid) {
+        if (!(this_present_rid && that_present_rid))
+          return false;
+        if (this.rid != that.rid)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(pollResults_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      pollResults_args typedOther = (pollResults_args)other;
+
+      lastComparison = Boolean.valueOf(isSetRid()).compareTo(typedOther.isSetRid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRid()) {
+        lastComparison = TBaseHelper.compareTo(this.rid, typedOther.rid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // RID
+            if (field.type == TType.I32) {
+              this.rid = iprot.readI32();
+              setRidIsSet(true);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      oprot.writeFieldBegin(RID_FIELD_DESC);
+      oprot.writeI32(this.rid);
+      oprot.writeFieldEnd();
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("pollResults_args(");
+      boolean first = true;
+
+      sb.append("rid:");
+      sb.append(this.rid);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class pollResults_result implements TBase<pollResults_result, pollResults_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("pollResults_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,List<OnlineStatus>> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING              , "PluginName"), 
+              new ListMetaData(TType.LIST, 
+                  new StructMetaData(TType.STRUCT, OnlineStatus.class)))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(pollResults_result.class, metaDataMap);
+    }
+
+    public pollResults_result() {
+    }
+
+    public pollResults_result(
+      Map<String,List<OnlineStatus>> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public pollResults_result(pollResults_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,List<OnlineStatus>> __this__success = new HashMap<String,List<OnlineStatus>>();
+        for (Map.Entry<String, List<OnlineStatus>> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          List<OnlineStatus> other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          List<OnlineStatus> __this__success_copy_value = new ArrayList<OnlineStatus>();
+          for (OnlineStatus other_element_value_element : other_element_value) {
+            __this__success_copy_value.add(new OnlineStatus(other_element_value_element));
+          }
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public pollResults_result deepCopy() {
+      return new pollResults_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, List<OnlineStatus> val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,List<OnlineStatus>>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,List<OnlineStatus>> getSuccess() {
+      return this.success;
+    }
+
+    public pollResults_result setSuccess(Map<String,List<OnlineStatus>> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,List<OnlineStatus>>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof pollResults_result)
+        return this.equals((pollResults_result)that);
+      return false;
+    }
+
+    public boolean equals(pollResults_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(pollResults_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      pollResults_result typedOther = (pollResults_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map64 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<OnlineStatus>>(2*_map64.size);
+                for (int _i65 = 0; _i65 < _map64.size; ++_i65)
+                {
+                  String _key66;
+                  List<OnlineStatus> _val67;
+                  _key66 = iprot.readString();
+                  {
+                    TList _list68 = iprot.readListBegin();
+                    _val67 = new ArrayList<OnlineStatus>(_list68.size);
+                    for (int _i69 = 0; _i69 < _list68.size; ++_i69)
+                    {
+                      OnlineStatus _elem70;
+                      _elem70 = new OnlineStatus();
+                      _elem70.read(iprot);
+                      _val67.add(_elem70);
+                    }
+                    iprot.readListEnd();
+                  }
+                  this.success.put(_key66, _val67);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
+          for (Map.Entry<String, List<OnlineStatus>> _iter71 : this.success.entrySet())
+          {
+            oprot.writeString(_iter71.getKey());
+            {
+              oprot.writeListBegin(new TList(TType.STRUCT, _iter71.getValue().size()));
+              for (OnlineStatus _iter72 : _iter71.getValue())
+              {
+                _iter72.write(oprot);
+              }
+              oprot.writeListEnd();
+            }
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("pollResults_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
   public static class statusDownloads_args implements TBase<statusDownloads_args, statusDownloads_args._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("statusDownloads_args");
 
@@ -14867,14 +17341,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list52 = iprot.readListBegin();
-                this.success = new ArrayList<DownloadInfo>(_list52.size);
-                for (int _i53 = 0; _i53 < _list52.size; ++_i53)
+                TList _list73 = iprot.readListBegin();
+                this.success = new ArrayList<DownloadInfo>(_list73.size);
+                for (int _i74 = 0; _i74 < _list73.size; ++_i74)
                 {
-                  DownloadInfo _elem54;
-                  _elem54 = new DownloadInfo();
-                  _elem54.read(iprot);
-                  this.success.add(_elem54);
+                  DownloadInfo _elem75;
+                  _elem75 = new DownloadInfo();
+                  _elem75.read(iprot);
+                  this.success.add(_elem75);
                 }
                 iprot.readListEnd();
               }
@@ -14900,9 +17374,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (DownloadInfo _iter55 : this.success)
+          for (DownloadInfo _iter76 : this.success)
           {
-            _iter55.write(oprot);
+            _iter76.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -14923,793 +17397,6 @@ public class Pyload {
       } else {
         sb.append(this.success);
       }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class addPackage_args implements TBase<addPackage_args, addPackage_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("addPackage_args");
-
-    private static final TField NAME_FIELD_DESC = new TField("name", TType.STRING, (short)1);
-    private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)2);
-    private static final TField DEST_FIELD_DESC = new TField("dest", TType.I32, (short)3);
-
-    public String name;
-    public List<String> links;
-    /**
-     * 
-     * @see Destination
-     */
-    public Destination dest;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      NAME((short)1, "name"),
-      LINKS((short)2, "links"),
-      /**
-       * 
-       * @see Destination
-       */
-      DEST((short)3, "dest");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // NAME
-            return NAME;
-          case 2: // LINKS
-            return LINKS;
-          case 3: // DEST
-            return DEST;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.NAME, new FieldMetaData("name", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.STRING)));
-      tmpMap.put(_Fields.LINKS, new FieldMetaData("links", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.LIST          , "LinkList")));
-      tmpMap.put(_Fields.DEST, new FieldMetaData("dest", TFieldRequirementType.DEFAULT, 
-          new EnumMetaData(TType.ENUM, Destination.class)));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(addPackage_args.class, metaDataMap);
-    }
-
-    public addPackage_args() {
-    }
-
-    public addPackage_args(
-      String name,
-      List<String> links,
-      Destination dest)
-    {
-      this();
-      this.name = name;
-      this.links = links;
-      this.dest = dest;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public addPackage_args(addPackage_args other) {
-      if (other.isSetName()) {
-        this.name = other.name;
-      }
-      if (other.isSetLinks()) {
-        this.links = other.links;
-      }
-      if (other.isSetDest()) {
-        this.dest = other.dest;
-      }
-    }
-
-    public addPackage_args deepCopy() {
-      return new addPackage_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.name = null;
-      this.links = null;
-      this.dest = null;
-    }
-
-    public String getName() {
-      return this.name;
-    }
-
-    public addPackage_args setName(String name) {
-      this.name = name;
-      return this;
-    }
-
-    public void unsetName() {
-      this.name = null;
-    }
-
-    /** Returns true if field name is set (has been asigned a value) and false otherwise */
-    public boolean isSetName() {
-      return this.name != null;
-    }
-
-    public void setNameIsSet(boolean value) {
-      if (!value) {
-        this.name = null;
-      }
-    }
-
-    public int getLinksSize() {
-      return (this.links == null) ? 0 : this.links.size();
-    }
-
-    public java.util.Iterator<String> getLinksIterator() {
-      return (this.links == null) ? null : this.links.iterator();
-    }
-
-    public void addToLinks(String elem) {
-      if (this.links == null) {
-        this.links = new ArrayList<String>();
-      }
-      this.links.add(elem);
-    }
-
-    public List<String> getLinks() {
-      return this.links;
-    }
-
-    public addPackage_args setLinks(List<String> links) {
-      this.links = links;
-      return this;
-    }
-
-    public void unsetLinks() {
-      this.links = null;
-    }
-
-    /** Returns true if field links is set (has been asigned a value) and false otherwise */
-    public boolean isSetLinks() {
-      return this.links != null;
-    }
-
-    public void setLinksIsSet(boolean value) {
-      if (!value) {
-        this.links = null;
-      }
-    }
-
-    /**
-     * 
-     * @see Destination
-     */
-    public Destination getDest() {
-      return this.dest;
-    }
-
-    /**
-     * 
-     * @see Destination
-     */
-    public addPackage_args setDest(Destination dest) {
-      this.dest = dest;
-      return this;
-    }
-
-    public void unsetDest() {
-      this.dest = null;
-    }
-
-    /** Returns true if field dest is set (has been asigned a value) and false otherwise */
-    public boolean isSetDest() {
-      return this.dest != null;
-    }
-
-    public void setDestIsSet(boolean value) {
-      if (!value) {
-        this.dest = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case NAME:
-        if (value == null) {
-          unsetName();
-        } else {
-          setName((String)value);
-        }
-        break;
-
-      case LINKS:
-        if (value == null) {
-          unsetLinks();
-        } else {
-          setLinks((List<String>)value);
-        }
-        break;
-
-      case DEST:
-        if (value == null) {
-          unsetDest();
-        } else {
-          setDest((Destination)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case NAME:
-        return getName();
-
-      case LINKS:
-        return getLinks();
-
-      case DEST:
-        return getDest();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case NAME:
-        return isSetName();
-      case LINKS:
-        return isSetLinks();
-      case DEST:
-        return isSetDest();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof addPackage_args)
-        return this.equals((addPackage_args)that);
-      return false;
-    }
-
-    public boolean equals(addPackage_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_name = true && this.isSetName();
-      boolean that_present_name = true && that.isSetName();
-      if (this_present_name || that_present_name) {
-        if (!(this_present_name && that_present_name))
-          return false;
-        if (!this.name.equals(that.name))
-          return false;
-      }
-
-      boolean this_present_links = true && this.isSetLinks();
-      boolean that_present_links = true && that.isSetLinks();
-      if (this_present_links || that_present_links) {
-        if (!(this_present_links && that_present_links))
-          return false;
-        if (!this.links.equals(that.links))
-          return false;
-      }
-
-      boolean this_present_dest = true && this.isSetDest();
-      boolean that_present_dest = true && that.isSetDest();
-      if (this_present_dest || that_present_dest) {
-        if (!(this_present_dest && that_present_dest))
-          return false;
-        if (!this.dest.equals(that.dest))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(addPackage_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      addPackage_args typedOther = (addPackage_args)other;
-
-      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetName()) {
-        lastComparison = TBaseHelper.compareTo(this.name, typedOther.name);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetLinks()).compareTo(typedOther.isSetLinks());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetLinks()) {
-        lastComparison = TBaseHelper.compareTo(this.links, typedOther.links);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetDest()).compareTo(typedOther.isSetDest());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetDest()) {
-        lastComparison = TBaseHelper.compareTo(this.dest, typedOther.dest);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // NAME
-            if (field.type == TType.STRING) {
-              this.name = iprot.readString();
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case 2: // LINKS
-            if (field.type == TType.LIST) {
-              {
-                TList _list56 = iprot.readListBegin();
-                this.links = new ArrayList<String>(_list56.size);
-                for (int _i57 = 0; _i57 < _list56.size; ++_i57)
-                {
-                  String _elem58;
-                  _elem58 = iprot.readString();
-                  this.links.add(_elem58);
-                }
-                iprot.readListEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case 3: // DEST
-            if (field.type == TType.I32) {
-              this.dest = Destination.findByValue(iprot.readI32());
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.name != null) {
-        oprot.writeFieldBegin(NAME_FIELD_DESC);
-        oprot.writeString(this.name);
-        oprot.writeFieldEnd();
-      }
-      if (this.links != null) {
-        oprot.writeFieldBegin(LINKS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
-          for (String _iter59 : this.links)
-          {
-            oprot.writeString(_iter59);
-          }
-          oprot.writeListEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      if (this.dest != null) {
-        oprot.writeFieldBegin(DEST_FIELD_DESC);
-        oprot.writeI32(this.dest.getValue());
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("addPackage_args(");
-      boolean first = true;
-
-      sb.append("name:");
-      if (this.name == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.name);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("links:");
-      if (this.links == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.links);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("dest:");
-      if (this.dest == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.dest);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class addPackage_result implements TBase<addPackage_result, addPackage_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("addPackage_result");
-
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.I32, (short)0);
-
-    public int success;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      SUCCESS((short)0, "success");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    private static final int __SUCCESS_ISSET_ID = 0;
-    private BitSet __isset_bit_vector = new BitSet(1);
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.I32          , "PackageID")));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(addPackage_result.class, metaDataMap);
-    }
-
-    public addPackage_result() {
-    }
-
-    public addPackage_result(
-      int success)
-    {
-      this();
-      this.success = success;
-      setSuccessIsSet(true);
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public addPackage_result(addPackage_result other) {
-      __isset_bit_vector.clear();
-      __isset_bit_vector.or(other.__isset_bit_vector);
-      this.success = other.success;
-    }
-
-    public addPackage_result deepCopy() {
-      return new addPackage_result(this);
-    }
-
-    @Override
-    public void clear() {
-      setSuccessIsSet(false);
-      this.success = 0;
-    }
-
-    public int getSuccess() {
-      return this.success;
-    }
-
-    public addPackage_result setSuccess(int success) {
-      this.success = success;
-      setSuccessIsSet(true);
-      return this;
-    }
-
-    public void unsetSuccess() {
-      __isset_bit_vector.clear(__SUCCESS_ISSET_ID);
-    }
-
-    /** Returns true if field success is set (has been asigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return __isset_bit_vector.get(__SUCCESS_ISSET_ID);
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      __isset_bit_vector.set(__SUCCESS_ISSET_ID, value);
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((Integer)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return new Integer(getSuccess());
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof addPackage_result)
-        return this.equals((addPackage_result)that);
-      return false;
-    }
-
-    public boolean equals(addPackage_result that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_success = true;
-      boolean that_present_success = true;
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (this.success != that.success)
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(addPackage_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      addPackage_result typedOther = (addPackage_result)other;
-
-      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 0: // SUCCESS
-            if (field.type == TType.I32) {
-              this.success = iprot.readI32();
-              setSuccessIsSet(true);
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      if (this.isSetSuccess()) {
-        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        oprot.writeI32(this.success);
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("addPackage_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      sb.append(this.success);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -16343,6 +18030,655 @@ public class Pyload {
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageData_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("e:");
+      if (this.e == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.e);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getPackageInfo_args implements TBase<getPackageInfo_args, getPackageInfo_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getPackageInfo_args");
+
+    private static final TField PID_FIELD_DESC = new TField("pid", TType.I32, (short)1);
+
+    public int pid;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      PID((short)1, "pid");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // PID
+            return PID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __PID_ISSET_ID = 0;
+    private BitSet __isset_bit_vector = new BitSet(1);
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.PID, new FieldMetaData("pid", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.I32          , "PackageID")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getPackageInfo_args.class, metaDataMap);
+    }
+
+    public getPackageInfo_args() {
+    }
+
+    public getPackageInfo_args(
+      int pid)
+    {
+      this();
+      this.pid = pid;
+      setPidIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getPackageInfo_args(getPackageInfo_args other) {
+      __isset_bit_vector.clear();
+      __isset_bit_vector.or(other.__isset_bit_vector);
+      this.pid = other.pid;
+    }
+
+    public getPackageInfo_args deepCopy() {
+      return new getPackageInfo_args(this);
+    }
+
+    @Override
+    public void clear() {
+      setPidIsSet(false);
+      this.pid = 0;
+    }
+
+    public int getPid() {
+      return this.pid;
+    }
+
+    public getPackageInfo_args setPid(int pid) {
+      this.pid = pid;
+      setPidIsSet(true);
+      return this;
+    }
+
+    public void unsetPid() {
+      __isset_bit_vector.clear(__PID_ISSET_ID);
+    }
+
+    /** Returns true if field pid is set (has been asigned a value) and false otherwise */
+    public boolean isSetPid() {
+      return __isset_bit_vector.get(__PID_ISSET_ID);
+    }
+
+    public void setPidIsSet(boolean value) {
+      __isset_bit_vector.set(__PID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case PID:
+        if (value == null) {
+          unsetPid();
+        } else {
+          setPid((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case PID:
+        return new Integer(getPid());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case PID:
+        return isSetPid();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getPackageInfo_args)
+        return this.equals((getPackageInfo_args)that);
+      return false;
+    }
+
+    public boolean equals(getPackageInfo_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_pid = true;
+      boolean that_present_pid = true;
+      if (this_present_pid || that_present_pid) {
+        if (!(this_present_pid && that_present_pid))
+          return false;
+        if (this.pid != that.pid)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getPackageInfo_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getPackageInfo_args typedOther = (getPackageInfo_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPid()).compareTo(typedOther.isSetPid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPid()) {
+        lastComparison = TBaseHelper.compareTo(this.pid, typedOther.pid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // PID
+            if (field.type == TType.I32) {
+              this.pid = iprot.readI32();
+              setPidIsSet(true);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      oprot.writeFieldBegin(PID_FIELD_DESC);
+      oprot.writeI32(this.pid);
+      oprot.writeFieldEnd();
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getPackageInfo_args(");
+      boolean first = true;
+
+      sb.append("pid:");
+      sb.append(this.pid);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getPackageInfo_result implements TBase<getPackageInfo_result, getPackageInfo_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getPackageInfo_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.STRUCT, (short)0);
+    private static final TField E_FIELD_DESC = new TField("e", TType.STRUCT, (short)1);
+
+    public PackageData success;
+    public PackageDoesNotExists e;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      E((short)1, "e");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // E
+            return E;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new StructMetaData(TType.STRUCT, PackageData.class)));
+      tmpMap.put(_Fields.E, new FieldMetaData("e", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getPackageInfo_result.class, metaDataMap);
+    }
+
+    public getPackageInfo_result() {
+    }
+
+    public getPackageInfo_result(
+      PackageData success,
+      PackageDoesNotExists e)
+    {
+      this();
+      this.success = success;
+      this.e = e;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getPackageInfo_result(getPackageInfo_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new PackageData(other.success);
+      }
+      if (other.isSetE()) {
+        this.e = new PackageDoesNotExists(other.e);
+      }
+    }
+
+    public getPackageInfo_result deepCopy() {
+      return new getPackageInfo_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.e = null;
+    }
+
+    public PackageData getSuccess() {
+      return this.success;
+    }
+
+    public getPackageInfo_result setSuccess(PackageData success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public PackageDoesNotExists getE() {
+      return this.e;
+    }
+
+    public getPackageInfo_result setE(PackageDoesNotExists e) {
+      this.e = e;
+      return this;
+    }
+
+    public void unsetE() {
+      this.e = null;
+    }
+
+    /** Returns true if field e is set (has been asigned a value) and false otherwise */
+    public boolean isSetE() {
+      return this.e != null;
+    }
+
+    public void setEIsSet(boolean value) {
+      if (!value) {
+        this.e = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((PackageData)value);
+        }
+        break;
+
+      case E:
+        if (value == null) {
+          unsetE();
+        } else {
+          setE((PackageDoesNotExists)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case E:
+        return getE();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case E:
+        return isSetE();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getPackageInfo_result)
+        return this.equals((getPackageInfo_result)that);
+      return false;
+    }
+
+    public boolean equals(getPackageInfo_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_e = true && this.isSetE();
+      boolean that_present_e = true && that.isSetE();
+      if (this_present_e || that_present_e) {
+        if (!(this_present_e && that_present_e))
+          return false;
+        if (!this.e.equals(that.e))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getPackageInfo_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getPackageInfo_result typedOther = (getPackageInfo_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetE()).compareTo(typedOther.isSetE());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetE()) {
+        lastComparison = TBaseHelper.compareTo(this.e, typedOther.e);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.STRUCT) {
+              this.success = new PackageData();
+              this.success.read(iprot);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 1: // E
+            if (field.type == TType.STRUCT) {
+              this.e = new PackageDoesNotExists();
+              this.e.read(iprot);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        this.success.write(oprot);
+        oprot.writeFieldEnd();
+      } else if (this.isSetE()) {
+        oprot.writeFieldBegin(E_FIELD_DESC);
+        this.e.write(oprot);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getPackageInfo_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -17019,1012 +19355,6 @@ public class Pyload {
 
   }
 
-  public static class deleteFiles_args implements TBase<deleteFiles_args, deleteFiles_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("deleteFiles_args");
-
-    private static final TField FIDS_FIELD_DESC = new TField("fids", TType.LIST, (short)1);
-
-    public List<Integer> fids;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      FIDS((short)1, "fids");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // FIDS
-            return FIDS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.FIDS, new FieldMetaData("fids", TFieldRequirementType.DEFAULT, 
-          new ListMetaData(TType.LIST, 
-              new FieldValueMetaData(TType.I32              , "FileID"))));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(deleteFiles_args.class, metaDataMap);
-    }
-
-    public deleteFiles_args() {
-    }
-
-    public deleteFiles_args(
-      List<Integer> fids)
-    {
-      this();
-      this.fids = fids;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deleteFiles_args(deleteFiles_args other) {
-      if (other.isSetFids()) {
-        List<Integer> __this__fids = new ArrayList<Integer>();
-        for (Integer other_element : other.fids) {
-          __this__fids.add(other_element);
-        }
-        this.fids = __this__fids;
-      }
-    }
-
-    public deleteFiles_args deepCopy() {
-      return new deleteFiles_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.fids = null;
-    }
-
-    public int getFidsSize() {
-      return (this.fids == null) ? 0 : this.fids.size();
-    }
-
-    public java.util.Iterator<Integer> getFidsIterator() {
-      return (this.fids == null) ? null : this.fids.iterator();
-    }
-
-    public void addToFids(int elem) {
-      if (this.fids == null) {
-        this.fids = new ArrayList<Integer>();
-      }
-      this.fids.add(elem);
-    }
-
-    public List<Integer> getFids() {
-      return this.fids;
-    }
-
-    public deleteFiles_args setFids(List<Integer> fids) {
-      this.fids = fids;
-      return this;
-    }
-
-    public void unsetFids() {
-      this.fids = null;
-    }
-
-    /** Returns true if field fids is set (has been asigned a value) and false otherwise */
-    public boolean isSetFids() {
-      return this.fids != null;
-    }
-
-    public void setFidsIsSet(boolean value) {
-      if (!value) {
-        this.fids = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case FIDS:
-        if (value == null) {
-          unsetFids();
-        } else {
-          setFids((List<Integer>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case FIDS:
-        return getFids();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case FIDS:
-        return isSetFids();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deleteFiles_args)
-        return this.equals((deleteFiles_args)that);
-      return false;
-    }
-
-    public boolean equals(deleteFiles_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_fids = true && this.isSetFids();
-      boolean that_present_fids = true && that.isSetFids();
-      if (this_present_fids || that_present_fids) {
-        if (!(this_present_fids && that_present_fids))
-          return false;
-        if (!this.fids.equals(that.fids))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(deleteFiles_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      deleteFiles_args typedOther = (deleteFiles_args)other;
-
-      lastComparison = Boolean.valueOf(isSetFids()).compareTo(typedOther.isSetFids());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetFids()) {
-        lastComparison = TBaseHelper.compareTo(this.fids, typedOther.fids);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // FIDS
-            if (field.type == TType.LIST) {
-              {
-                TList _list60 = iprot.readListBegin();
-                this.fids = new ArrayList<Integer>(_list60.size);
-                for (int _i61 = 0; _i61 < _list60.size; ++_i61)
-                {
-                  int _elem62;
-                  _elem62 = iprot.readI32();
-                  this.fids.add(_elem62);
-                }
-                iprot.readListEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.fids != null) {
-        oprot.writeFieldBegin(FIDS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
-          for (int _iter63 : this.fids)
-          {
-            oprot.writeI32(_iter63);
-          }
-          oprot.writeListEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("deleteFiles_args(");
-      boolean first = true;
-
-      sb.append("fids:");
-      if (this.fids == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.fids);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class deleteFiles_result implements TBase<deleteFiles_result, deleteFiles_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("deleteFiles_result");
-
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-;
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(deleteFiles_result.class, metaDataMap);
-    }
-
-    public deleteFiles_result() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deleteFiles_result(deleteFiles_result other) {
-    }
-
-    public deleteFiles_result deepCopy() {
-      return new deleteFiles_result(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deleteFiles_result)
-        return this.equals((deleteFiles_result)that);
-      return false;
-    }
-
-    public boolean equals(deleteFiles_result that) {
-      if (that == null)
-        return false;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(deleteFiles_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      deleteFiles_result typedOther = (deleteFiles_result)other;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("deleteFiles_result(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class deletePackages_args implements TBase<deletePackages_args, deletePackages_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("deletePackages_args");
-
-    private static final TField PIDS_FIELD_DESC = new TField("pids", TType.LIST, (short)1);
-
-    public List<Integer> pids;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      PIDS((short)1, "pids");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // PIDS
-            return PIDS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.PIDS, new FieldMetaData("pids", TFieldRequirementType.DEFAULT, 
-          new ListMetaData(TType.LIST, 
-              new FieldValueMetaData(TType.I32              , "PackageID"))));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(deletePackages_args.class, metaDataMap);
-    }
-
-    public deletePackages_args() {
-    }
-
-    public deletePackages_args(
-      List<Integer> pids)
-    {
-      this();
-      this.pids = pids;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deletePackages_args(deletePackages_args other) {
-      if (other.isSetPids()) {
-        List<Integer> __this__pids = new ArrayList<Integer>();
-        for (Integer other_element : other.pids) {
-          __this__pids.add(other_element);
-        }
-        this.pids = __this__pids;
-      }
-    }
-
-    public deletePackages_args deepCopy() {
-      return new deletePackages_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.pids = null;
-    }
-
-    public int getPidsSize() {
-      return (this.pids == null) ? 0 : this.pids.size();
-    }
-
-    public java.util.Iterator<Integer> getPidsIterator() {
-      return (this.pids == null) ? null : this.pids.iterator();
-    }
-
-    public void addToPids(int elem) {
-      if (this.pids == null) {
-        this.pids = new ArrayList<Integer>();
-      }
-      this.pids.add(elem);
-    }
-
-    public List<Integer> getPids() {
-      return this.pids;
-    }
-
-    public deletePackages_args setPids(List<Integer> pids) {
-      this.pids = pids;
-      return this;
-    }
-
-    public void unsetPids() {
-      this.pids = null;
-    }
-
-    /** Returns true if field pids is set (has been asigned a value) and false otherwise */
-    public boolean isSetPids() {
-      return this.pids != null;
-    }
-
-    public void setPidsIsSet(boolean value) {
-      if (!value) {
-        this.pids = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case PIDS:
-        if (value == null) {
-          unsetPids();
-        } else {
-          setPids((List<Integer>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case PIDS:
-        return getPids();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case PIDS:
-        return isSetPids();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deletePackages_args)
-        return this.equals((deletePackages_args)that);
-      return false;
-    }
-
-    public boolean equals(deletePackages_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_pids = true && this.isSetPids();
-      boolean that_present_pids = true && that.isSetPids();
-      if (this_present_pids || that_present_pids) {
-        if (!(this_present_pids && that_present_pids))
-          return false;
-        if (!this.pids.equals(that.pids))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(deletePackages_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      deletePackages_args typedOther = (deletePackages_args)other;
-
-      lastComparison = Boolean.valueOf(isSetPids()).compareTo(typedOther.isSetPids());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetPids()) {
-        lastComparison = TBaseHelper.compareTo(this.pids, typedOther.pids);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // PIDS
-            if (field.type == TType.LIST) {
-              {
-                TList _list64 = iprot.readListBegin();
-                this.pids = new ArrayList<Integer>(_list64.size);
-                for (int _i65 = 0; _i65 < _list64.size; ++_i65)
-                {
-                  int _elem66;
-                  _elem66 = iprot.readI32();
-                  this.pids.add(_elem66);
-                }
-                iprot.readListEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.pids != null) {
-        oprot.writeFieldBegin(PIDS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new TList(TType.I32, this.pids.size()));
-          for (int _iter67 : this.pids)
-          {
-            oprot.writeI32(_iter67);
-          }
-          oprot.writeListEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("deletePackages_args(");
-      boolean first = true;
-
-      sb.append("pids:");
-      if (this.pids == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.pids);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class deletePackages_result implements TBase<deletePackages_result, deletePackages_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("deletePackages_result");
-
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-;
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(deletePackages_result.class, metaDataMap);
-    }
-
-    public deletePackages_result() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deletePackages_result(deletePackages_result other) {
-    }
-
-    public deletePackages_result deepCopy() {
-      return new deletePackages_result(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deletePackages_result)
-        return this.equals((deletePackages_result)that);
-      return false;
-    }
-
-    public boolean equals(deletePackages_result that) {
-      if (that == null)
-        return false;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(deletePackages_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      deletePackages_result typedOther = (deletePackages_result)other;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("deletePackages_result(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
   public static class getQueue_args implements TBase<getQueue_args, getQueue_args._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("getQueue_args");
 
@@ -18216,7 +19546,7 @@ public class Pyload {
 
     private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.LIST, (short)0);
 
-    public List<PackageInfo> success;
+    public List<PackageData> success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -18283,7 +19613,7 @@ public class Pyload {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
           new ListMetaData(TType.LIST, 
-              new StructMetaData(TType.STRUCT, PackageInfo.class))));
+              new StructMetaData(TType.STRUCT, PackageData.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(getQueue_result.class, metaDataMap);
     }
@@ -18292,7 +19622,7 @@ public class Pyload {
     }
 
     public getQueue_result(
-      List<PackageInfo> success)
+      List<PackageData> success)
     {
       this();
       this.success = success;
@@ -18303,9 +19633,9 @@ public class Pyload {
      */
     public getQueue_result(getQueue_result other) {
       if (other.isSetSuccess()) {
-        List<PackageInfo> __this__success = new ArrayList<PackageInfo>();
-        for (PackageInfo other_element : other.success) {
-          __this__success.add(new PackageInfo(other_element));
+        List<PackageData> __this__success = new ArrayList<PackageData>();
+        for (PackageData other_element : other.success) {
+          __this__success.add(new PackageData(other_element));
         }
         this.success = __this__success;
       }
@@ -18324,22 +19654,22 @@ public class Pyload {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<PackageInfo> getSuccessIterator() {
+    public java.util.Iterator<PackageData> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(PackageInfo elem) {
+    public void addToSuccess(PackageData elem) {
       if (this.success == null) {
-        this.success = new ArrayList<PackageInfo>();
+        this.success = new ArrayList<PackageData>();
       }
       this.success.add(elem);
     }
 
-    public List<PackageInfo> getSuccess() {
+    public List<PackageData> getSuccess() {
       return this.success;
     }
 
-    public getQueue_result setSuccess(List<PackageInfo> success) {
+    public getQueue_result setSuccess(List<PackageData> success) {
       this.success = success;
       return this;
     }
@@ -18365,7 +19695,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<PackageInfo>)value);
+          setSuccess((List<PackageData>)value);
         }
         break;
 
@@ -18462,14 +19792,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list68 = iprot.readListBegin();
-                this.success = new ArrayList<PackageInfo>(_list68.size);
-                for (int _i69 = 0; _i69 < _list68.size; ++_i69)
+                TList _list77 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list77.size);
+                for (int _i78 = 0; _i78 < _list77.size; ++_i78)
                 {
-                  PackageInfo _elem70;
-                  _elem70 = new PackageInfo();
-                  _elem70.read(iprot);
-                  this.success.add(_elem70);
+                  PackageData _elem79;
+                  _elem79 = new PackageData();
+                  _elem79.read(iprot);
+                  this.success.add(_elem79);
                 }
                 iprot.readListEnd();
               }
@@ -18495,9 +19825,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageInfo _iter71 : this.success)
+          for (PackageData _iter80 : this.success)
           {
-            _iter71.write(oprot);
+            _iter80.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -18720,7 +20050,7 @@ public class Pyload {
 
     private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.LIST, (short)0);
 
-    public List<PackageInfo> success;
+    public List<PackageData> success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -18787,7 +20117,7 @@ public class Pyload {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
           new ListMetaData(TType.LIST, 
-              new StructMetaData(TType.STRUCT, PackageInfo.class))));
+              new StructMetaData(TType.STRUCT, PackageData.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(getCollector_result.class, metaDataMap);
     }
@@ -18796,7 +20126,7 @@ public class Pyload {
     }
 
     public getCollector_result(
-      List<PackageInfo> success)
+      List<PackageData> success)
     {
       this();
       this.success = success;
@@ -18807,9 +20137,9 @@ public class Pyload {
      */
     public getCollector_result(getCollector_result other) {
       if (other.isSetSuccess()) {
-        List<PackageInfo> __this__success = new ArrayList<PackageInfo>();
-        for (PackageInfo other_element : other.success) {
-          __this__success.add(new PackageInfo(other_element));
+        List<PackageData> __this__success = new ArrayList<PackageData>();
+        for (PackageData other_element : other.success) {
+          __this__success.add(new PackageData(other_element));
         }
         this.success = __this__success;
       }
@@ -18828,22 +20158,22 @@ public class Pyload {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<PackageInfo> getSuccessIterator() {
+    public java.util.Iterator<PackageData> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(PackageInfo elem) {
+    public void addToSuccess(PackageData elem) {
       if (this.success == null) {
-        this.success = new ArrayList<PackageInfo>();
+        this.success = new ArrayList<PackageData>();
       }
       this.success.add(elem);
     }
 
-    public List<PackageInfo> getSuccess() {
+    public List<PackageData> getSuccess() {
       return this.success;
     }
 
-    public getCollector_result setSuccess(List<PackageInfo> success) {
+    public getCollector_result setSuccess(List<PackageData> success) {
       this.success = success;
       return this;
     }
@@ -18869,7 +20199,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<PackageInfo>)value);
+          setSuccess((List<PackageData>)value);
         }
         break;
 
@@ -18966,14 +20296,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list72 = iprot.readListBegin();
-                this.success = new ArrayList<PackageInfo>(_list72.size);
-                for (int _i73 = 0; _i73 < _list72.size; ++_i73)
+                TList _list81 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list81.size);
+                for (int _i82 = 0; _i82 < _list81.size; ++_i82)
                 {
-                  PackageInfo _elem74;
-                  _elem74 = new PackageInfo();
-                  _elem74.read(iprot);
-                  this.success.add(_elem74);
+                  PackageData _elem83;
+                  _elem83 = new PackageData();
+                  _elem83.read(iprot);
+                  this.success.add(_elem83);
                 }
                 iprot.readListEnd();
               }
@@ -18999,9 +20329,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageInfo _iter75 : this.success)
+          for (PackageData _iter84 : this.success)
           {
-            _iter75.write(oprot);
+            _iter84.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -19470,14 +20800,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list76 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list76.size);
-                for (int _i77 = 0; _i77 < _list76.size; ++_i77)
+                TList _list85 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list85.size);
+                for (int _i86 = 0; _i86 < _list85.size; ++_i86)
                 {
-                  PackageData _elem78;
-                  _elem78 = new PackageData();
-                  _elem78.read(iprot);
-                  this.success.add(_elem78);
+                  PackageData _elem87;
+                  _elem87 = new PackageData();
+                  _elem87.read(iprot);
+                  this.success.add(_elem87);
                 }
                 iprot.readListEnd();
               }
@@ -19503,9 +20833,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter79 : this.success)
+          for (PackageData _iter88 : this.success)
           {
-            _iter79.write(oprot);
+            _iter88.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -19974,14 +21304,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list80 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list80.size);
-                for (int _i81 = 0; _i81 < _list80.size; ++_i81)
+                TList _list89 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list89.size);
+                for (int _i90 = 0; _i90 < _list89.size; ++_i90)
                 {
-                  PackageData _elem82;
-                  _elem82 = new PackageData();
-                  _elem82.read(iprot);
-                  this.success.add(_elem82);
+                  PackageData _elem91;
+                  _elem91 = new PackageData();
+                  _elem91.read(iprot);
+                  this.success.add(_elem91);
                 }
                 iprot.readListEnd();
               }
@@ -20007,9 +21337,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter83 : this.success)
+          for (PackageData _iter92 : this.success)
           {
-            _iter83.write(oprot);
+            _iter92.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -20030,6 +21360,2019 @@ public class Pyload {
       } else {
         sb.append(this.success);
       }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getPackageOrder_args implements TBase<getPackageOrder_args, getPackageOrder_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getPackageOrder_args");
+
+    private static final TField DESTINATION_FIELD_DESC = new TField("destination", TType.I32, (short)1);
+
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination destination;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      /**
+       * 
+       * @see Destination
+       */
+      DESTINATION((short)1, "destination");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DESTINATION
+            return DESTINATION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DESTINATION, new FieldMetaData("destination", TFieldRequirementType.DEFAULT, 
+          new EnumMetaData(TType.ENUM, Destination.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getPackageOrder_args.class, metaDataMap);
+    }
+
+    public getPackageOrder_args() {
+    }
+
+    public getPackageOrder_args(
+      Destination destination)
+    {
+      this();
+      this.destination = destination;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getPackageOrder_args(getPackageOrder_args other) {
+      if (other.isSetDestination()) {
+        this.destination = other.destination;
+      }
+    }
+
+    public getPackageOrder_args deepCopy() {
+      return new getPackageOrder_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.destination = null;
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination getDestination() {
+      return this.destination;
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public getPackageOrder_args setDestination(Destination destination) {
+      this.destination = destination;
+      return this;
+    }
+
+    public void unsetDestination() {
+      this.destination = null;
+    }
+
+    /** Returns true if field destination is set (has been asigned a value) and false otherwise */
+    public boolean isSetDestination() {
+      return this.destination != null;
+    }
+
+    public void setDestinationIsSet(boolean value) {
+      if (!value) {
+        this.destination = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DESTINATION:
+        if (value == null) {
+          unsetDestination();
+        } else {
+          setDestination((Destination)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DESTINATION:
+        return getDestination();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DESTINATION:
+        return isSetDestination();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getPackageOrder_args)
+        return this.equals((getPackageOrder_args)that);
+      return false;
+    }
+
+    public boolean equals(getPackageOrder_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_destination = true && this.isSetDestination();
+      boolean that_present_destination = true && that.isSetDestination();
+      if (this_present_destination || that_present_destination) {
+        if (!(this_present_destination && that_present_destination))
+          return false;
+        if (!this.destination.equals(that.destination))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getPackageOrder_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getPackageOrder_args typedOther = (getPackageOrder_args)other;
+
+      lastComparison = Boolean.valueOf(isSetDestination()).compareTo(typedOther.isSetDestination());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDestination()) {
+        lastComparison = TBaseHelper.compareTo(this.destination, typedOther.destination);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // DESTINATION
+            if (field.type == TType.I32) {
+              this.destination = Destination.findByValue(iprot.readI32());
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.destination != null) {
+        oprot.writeFieldBegin(DESTINATION_FIELD_DESC);
+        oprot.writeI32(this.destination.getValue());
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getPackageOrder_args(");
+      boolean first = true;
+
+      sb.append("destination:");
+      if (this.destination == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.destination);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getPackageOrder_result implements TBase<getPackageOrder_result, getPackageOrder_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getPackageOrder_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<Short,Integer> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.I16), 
+              new FieldValueMetaData(TType.I32              , "PackageID"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getPackageOrder_result.class, metaDataMap);
+    }
+
+    public getPackageOrder_result() {
+    }
+
+    public getPackageOrder_result(
+      Map<Short,Integer> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getPackageOrder_result(getPackageOrder_result other) {
+      if (other.isSetSuccess()) {
+        Map<Short,Integer> __this__success = new HashMap<Short,Integer>();
+        for (Map.Entry<Short, Integer> other_element : other.success.entrySet()) {
+
+          Short other_element_key = other_element.getKey();
+          Integer other_element_value = other_element.getValue();
+
+          Short __this__success_copy_key = other_element_key;
+
+          Integer __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public getPackageOrder_result deepCopy() {
+      return new getPackageOrder_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(short key, int val) {
+      if (this.success == null) {
+        this.success = new HashMap<Short,Integer>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<Short,Integer> getSuccess() {
+      return this.success;
+    }
+
+    public getPackageOrder_result setSuccess(Map<Short,Integer> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<Short,Integer>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getPackageOrder_result)
+        return this.equals((getPackageOrder_result)that);
+      return false;
+    }
+
+    public boolean equals(getPackageOrder_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getPackageOrder_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getPackageOrder_result typedOther = (getPackageOrder_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map93 = iprot.readMapBegin();
+                this.success = new HashMap<Short,Integer>(2*_map93.size);
+                for (int _i94 = 0; _i94 < _map93.size; ++_i94)
+                {
+                  short _key95;
+                  int _val96;
+                  _key95 = iprot.readI16();
+                  _val96 = iprot.readI32();
+                  this.success.put(_key95, _val96);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
+          for (Map.Entry<Short, Integer> _iter97 : this.success.entrySet())
+          {
+            oprot.writeI16(_iter97.getKey());
+            oprot.writeI32(_iter97.getValue());
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getPackageOrder_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getFileOrder_args implements TBase<getFileOrder_args, getFileOrder_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getFileOrder_args");
+
+    private static final TField PID_FIELD_DESC = new TField("pid", TType.I32, (short)1);
+
+    public int pid;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      PID((short)1, "pid");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // PID
+            return PID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __PID_ISSET_ID = 0;
+    private BitSet __isset_bit_vector = new BitSet(1);
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.PID, new FieldMetaData("pid", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.I32          , "PackageID")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getFileOrder_args.class, metaDataMap);
+    }
+
+    public getFileOrder_args() {
+    }
+
+    public getFileOrder_args(
+      int pid)
+    {
+      this();
+      this.pid = pid;
+      setPidIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getFileOrder_args(getFileOrder_args other) {
+      __isset_bit_vector.clear();
+      __isset_bit_vector.or(other.__isset_bit_vector);
+      this.pid = other.pid;
+    }
+
+    public getFileOrder_args deepCopy() {
+      return new getFileOrder_args(this);
+    }
+
+    @Override
+    public void clear() {
+      setPidIsSet(false);
+      this.pid = 0;
+    }
+
+    public int getPid() {
+      return this.pid;
+    }
+
+    public getFileOrder_args setPid(int pid) {
+      this.pid = pid;
+      setPidIsSet(true);
+      return this;
+    }
+
+    public void unsetPid() {
+      __isset_bit_vector.clear(__PID_ISSET_ID);
+    }
+
+    /** Returns true if field pid is set (has been asigned a value) and false otherwise */
+    public boolean isSetPid() {
+      return __isset_bit_vector.get(__PID_ISSET_ID);
+    }
+
+    public void setPidIsSet(boolean value) {
+      __isset_bit_vector.set(__PID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case PID:
+        if (value == null) {
+          unsetPid();
+        } else {
+          setPid((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case PID:
+        return new Integer(getPid());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case PID:
+        return isSetPid();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getFileOrder_args)
+        return this.equals((getFileOrder_args)that);
+      return false;
+    }
+
+    public boolean equals(getFileOrder_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_pid = true;
+      boolean that_present_pid = true;
+      if (this_present_pid || that_present_pid) {
+        if (!(this_present_pid && that_present_pid))
+          return false;
+        if (this.pid != that.pid)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getFileOrder_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getFileOrder_args typedOther = (getFileOrder_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPid()).compareTo(typedOther.isSetPid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPid()) {
+        lastComparison = TBaseHelper.compareTo(this.pid, typedOther.pid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // PID
+            if (field.type == TType.I32) {
+              this.pid = iprot.readI32();
+              setPidIsSet(true);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      oprot.writeFieldBegin(PID_FIELD_DESC);
+      oprot.writeI32(this.pid);
+      oprot.writeFieldEnd();
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getFileOrder_args(");
+      boolean first = true;
+
+      sb.append("pid:");
+      sb.append(this.pid);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getFileOrder_result implements TBase<getFileOrder_result, getFileOrder_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getFileOrder_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<Short,Integer> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.I16), 
+              new FieldValueMetaData(TType.I32              , "FileID"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getFileOrder_result.class, metaDataMap);
+    }
+
+    public getFileOrder_result() {
+    }
+
+    public getFileOrder_result(
+      Map<Short,Integer> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getFileOrder_result(getFileOrder_result other) {
+      if (other.isSetSuccess()) {
+        Map<Short,Integer> __this__success = new HashMap<Short,Integer>();
+        for (Map.Entry<Short, Integer> other_element : other.success.entrySet()) {
+
+          Short other_element_key = other_element.getKey();
+          Integer other_element_value = other_element.getValue();
+
+          Short __this__success_copy_key = other_element_key;
+
+          Integer __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public getFileOrder_result deepCopy() {
+      return new getFileOrder_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(short key, int val) {
+      if (this.success == null) {
+        this.success = new HashMap<Short,Integer>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<Short,Integer> getSuccess() {
+      return this.success;
+    }
+
+    public getFileOrder_result setSuccess(Map<Short,Integer> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<Short,Integer>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getFileOrder_result)
+        return this.equals((getFileOrder_result)that);
+      return false;
+    }
+
+    public boolean equals(getFileOrder_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getFileOrder_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getFileOrder_result typedOther = (getFileOrder_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map98 = iprot.readMapBegin();
+                this.success = new HashMap<Short,Integer>(2*_map98.size);
+                for (int _i99 = 0; _i99 < _map98.size; ++_i99)
+                {
+                  short _key100;
+                  int _val101;
+                  _key100 = iprot.readI16();
+                  _val101 = iprot.readI32();
+                  this.success.put(_key100, _val101);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
+          for (Map.Entry<Short, Integer> _iter102 : this.success.entrySet())
+          {
+            oprot.writeI16(_iter102.getKey());
+            oprot.writeI32(_iter102.getValue());
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getFileOrder_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class addPackage_args implements TBase<addPackage_args, addPackage_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("addPackage_args");
+
+    private static final TField NAME_FIELD_DESC = new TField("name", TType.STRING, (short)1);
+    private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)2);
+    private static final TField DEST_FIELD_DESC = new TField("dest", TType.I32, (short)3);
+
+    public String name;
+    public List<String> links;
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination dest;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      NAME((short)1, "name"),
+      LINKS((short)2, "links"),
+      /**
+       * 
+       * @see Destination
+       */
+      DEST((short)3, "dest");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // NAME
+            return NAME;
+          case 2: // LINKS
+            return LINKS;
+          case 3: // DEST
+            return DEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.NAME, new FieldMetaData("name", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      tmpMap.put(_Fields.LINKS, new FieldMetaData("links", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      tmpMap.put(_Fields.DEST, new FieldMetaData("dest", TFieldRequirementType.DEFAULT, 
+          new EnumMetaData(TType.ENUM, Destination.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(addPackage_args.class, metaDataMap);
+    }
+
+    public addPackage_args() {
+    }
+
+    public addPackage_args(
+      String name,
+      List<String> links,
+      Destination dest)
+    {
+      this();
+      this.name = name;
+      this.links = links;
+      this.dest = dest;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public addPackage_args(addPackage_args other) {
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      if (other.isSetLinks()) {
+        this.links = other.links;
+      }
+      if (other.isSetDest()) {
+        this.dest = other.dest;
+      }
+    }
+
+    public addPackage_args deepCopy() {
+      return new addPackage_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.name = null;
+      this.links = null;
+      this.dest = null;
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    public addPackage_args setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public void unsetName() {
+      this.name = null;
+    }
+
+    /** Returns true if field name is set (has been asigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
+    }
+
+    public void setNameIsSet(boolean value) {
+      if (!value) {
+        this.name = null;
+      }
+    }
+
+    public int getLinksSize() {
+      return (this.links == null) ? 0 : this.links.size();
+    }
+
+    public java.util.Iterator<String> getLinksIterator() {
+      return (this.links == null) ? null : this.links.iterator();
+    }
+
+    public void addToLinks(String elem) {
+      if (this.links == null) {
+        this.links = new ArrayList<String>();
+      }
+      this.links.add(elem);
+    }
+
+    public List<String> getLinks() {
+      return this.links;
+    }
+
+    public addPackage_args setLinks(List<String> links) {
+      this.links = links;
+      return this;
+    }
+
+    public void unsetLinks() {
+      this.links = null;
+    }
+
+    /** Returns true if field links is set (has been asigned a value) and false otherwise */
+    public boolean isSetLinks() {
+      return this.links != null;
+    }
+
+    public void setLinksIsSet(boolean value) {
+      if (!value) {
+        this.links = null;
+      }
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination getDest() {
+      return this.dest;
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public addPackage_args setDest(Destination dest) {
+      this.dest = dest;
+      return this;
+    }
+
+    public void unsetDest() {
+      this.dest = null;
+    }
+
+    /** Returns true if field dest is set (has been asigned a value) and false otherwise */
+    public boolean isSetDest() {
+      return this.dest != null;
+    }
+
+    public void setDestIsSet(boolean value) {
+      if (!value) {
+        this.dest = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case NAME:
+        if (value == null) {
+          unsetName();
+        } else {
+          setName((String)value);
+        }
+        break;
+
+      case LINKS:
+        if (value == null) {
+          unsetLinks();
+        } else {
+          setLinks((List<String>)value);
+        }
+        break;
+
+      case DEST:
+        if (value == null) {
+          unsetDest();
+        } else {
+          setDest((Destination)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case NAME:
+        return getName();
+
+      case LINKS:
+        return getLinks();
+
+      case DEST:
+        return getDest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case NAME:
+        return isSetName();
+      case LINKS:
+        return isSetLinks();
+      case DEST:
+        return isSetDest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof addPackage_args)
+        return this.equals((addPackage_args)that);
+      return false;
+    }
+
+    public boolean equals(addPackage_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
+          return false;
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_links = true && this.isSetLinks();
+      boolean that_present_links = true && that.isSetLinks();
+      if (this_present_links || that_present_links) {
+        if (!(this_present_links && that_present_links))
+          return false;
+        if (!this.links.equals(that.links))
+          return false;
+      }
+
+      boolean this_present_dest = true && this.isSetDest();
+      boolean that_present_dest = true && that.isSetDest();
+      if (this_present_dest || that_present_dest) {
+        if (!(this_present_dest && that_present_dest))
+          return false;
+        if (!this.dest.equals(that.dest))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(addPackage_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      addPackage_args typedOther = (addPackage_args)other;
+
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetName()) {
+        lastComparison = TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetLinks()).compareTo(typedOther.isSetLinks());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLinks()) {
+        lastComparison = TBaseHelper.compareTo(this.links, typedOther.links);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetDest()).compareTo(typedOther.isSetDest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDest()) {
+        lastComparison = TBaseHelper.compareTo(this.dest, typedOther.dest);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // NAME
+            if (field.type == TType.STRING) {
+              this.name = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 2: // LINKS
+            if (field.type == TType.LIST) {
+              {
+                TList _list103 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list103.size);
+                for (int _i104 = 0; _i104 < _list103.size; ++_i104)
+                {
+                  String _elem105;
+                  _elem105 = iprot.readString();
+                  this.links.add(_elem105);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 3: // DEST
+            if (field.type == TType.I32) {
+              this.dest = Destination.findByValue(iprot.readI32());
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.name != null) {
+        oprot.writeFieldBegin(NAME_FIELD_DESC);
+        oprot.writeString(this.name);
+        oprot.writeFieldEnd();
+      }
+      if (this.links != null) {
+        oprot.writeFieldBegin(LINKS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
+          for (String _iter106 : this.links)
+          {
+            oprot.writeString(_iter106);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (this.dest != null) {
+        oprot.writeFieldBegin(DEST_FIELD_DESC);
+        oprot.writeI32(this.dest.getValue());
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("addPackage_args(");
+      boolean first = true;
+
+      sb.append("name:");
+      if (this.name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("links:");
+      if (this.links == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.links);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("dest:");
+      if (this.dest == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dest);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class addPackage_result implements TBase<addPackage_result, addPackage_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("addPackage_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.I32, (short)0);
+
+    public int success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private BitSet __isset_bit_vector = new BitSet(1);
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.I32          , "PackageID")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(addPackage_result.class, metaDataMap);
+    }
+
+    public addPackage_result() {
+    }
+
+    public addPackage_result(
+      int success)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public addPackage_result(addPackage_result other) {
+      __isset_bit_vector.clear();
+      __isset_bit_vector.or(other.__isset_bit_vector);
+      this.success = other.success;
+    }
+
+    public addPackage_result deepCopy() {
+      return new addPackage_result(this);
+    }
+
+    @Override
+    public void clear() {
+      setSuccessIsSet(false);
+      this.success = 0;
+    }
+
+    public int getSuccess() {
+      return this.success;
+    }
+
+    public addPackage_result setSuccess(int success) {
+      this.success = success;
+      setSuccessIsSet(true);
+      return this;
+    }
+
+    public void unsetSuccess() {
+      __isset_bit_vector.clear(__SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return __isset_bit_vector.get(__SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bit_vector.set(__SUCCESS_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return new Integer(getSuccess());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof addPackage_result)
+        return this.equals((addPackage_result)that);
+      return false;
+    }
+
+    public boolean equals(addPackage_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(addPackage_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      addPackage_result typedOther = (addPackage_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.I32) {
+              this.success = iprot.readI32();
+              setSuccessIsSet(true);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        oprot.writeI32(this.success);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("addPackage_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      sb.append(this.success);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -20367,13 +23710,13 @@ public class Pyload {
           case 2: // LINKS
             if (field.type == TType.LIST) {
               {
-                TList _list84 = iprot.readListBegin();
-                this.links = new ArrayList<String>(_list84.size);
-                for (int _i85 = 0; _i85 < _list84.size; ++_i85)
+                TList _list107 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list107.size);
+                for (int _i108 = 0; _i108 < _list107.size; ++_i108)
                 {
-                  String _elem86;
-                  _elem86 = iprot.readString();
-                  this.links.add(_elem86);
+                  String _elem109;
+                  _elem109 = iprot.readString();
+                  this.links.add(_elem109);
                 }
                 iprot.readListEnd();
               }
@@ -20403,9 +23746,9 @@ public class Pyload {
         oprot.writeFieldBegin(LINKS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
-          for (String _iter87 : this.links)
+          for (String _iter110 : this.links)
           {
-            oprot.writeString(_iter87);
+            oprot.writeString(_iter110);
           }
           oprot.writeListEnd();
         }
@@ -20614,6 +23957,1578 @@ public class Pyload {
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("addFiles_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class uploadContainer_args implements TBase<uploadContainer_args, uploadContainer_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("uploadContainer_args");
+
+    private static final TField FILENAME_FIELD_DESC = new TField("filename", TType.STRING, (short)1);
+    private static final TField DATA_FIELD_DESC = new TField("data", TType.STRING, (short)2);
+
+    public String filename;
+    public ByteBuffer data;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      FILENAME((short)1, "filename"),
+      DATA((short)2, "data");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // FILENAME
+            return FILENAME;
+          case 2: // DATA
+            return DATA;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.FILENAME, new FieldMetaData("filename", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      tmpMap.put(_Fields.DATA, new FieldMetaData("data", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(uploadContainer_args.class, metaDataMap);
+    }
+
+    public uploadContainer_args() {
+    }
+
+    public uploadContainer_args(
+      String filename,
+      ByteBuffer data)
+    {
+      this();
+      this.filename = filename;
+      this.data = data;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public uploadContainer_args(uploadContainer_args other) {
+      if (other.isSetFilename()) {
+        this.filename = other.filename;
+      }
+      if (other.isSetData()) {
+        this.data = TBaseHelper.copyBinary(other.data);
+;
+      }
+    }
+
+    public uploadContainer_args deepCopy() {
+      return new uploadContainer_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.filename = null;
+      this.data = null;
+    }
+
+    public String getFilename() {
+      return this.filename;
+    }
+
+    public uploadContainer_args setFilename(String filename) {
+      this.filename = filename;
+      return this;
+    }
+
+    public void unsetFilename() {
+      this.filename = null;
+    }
+
+    /** Returns true if field filename is set (has been asigned a value) and false otherwise */
+    public boolean isSetFilename() {
+      return this.filename != null;
+    }
+
+    public void setFilenameIsSet(boolean value) {
+      if (!value) {
+        this.filename = null;
+      }
+    }
+
+    public byte[] getData() {
+      setData(TBaseHelper.rightSize(data));
+      return data.array();
+    }
+
+    public ByteBuffer BufferForData() {
+      return data;
+    }
+
+    public uploadContainer_args setData(byte[] data) {
+      setData(ByteBuffer.wrap(data));
+      return this;
+    }
+
+    public uploadContainer_args setData(ByteBuffer data) {
+      this.data = data;
+      return this;
+    }
+
+    public void unsetData() {
+      this.data = null;
+    }
+
+    /** Returns true if field data is set (has been asigned a value) and false otherwise */
+    public boolean isSetData() {
+      return this.data != null;
+    }
+
+    public void setDataIsSet(boolean value) {
+      if (!value) {
+        this.data = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case FILENAME:
+        if (value == null) {
+          unsetFilename();
+        } else {
+          setFilename((String)value);
+        }
+        break;
+
+      case DATA:
+        if (value == null) {
+          unsetData();
+        } else {
+          setData((ByteBuffer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case FILENAME:
+        return getFilename();
+
+      case DATA:
+        return getData();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case FILENAME:
+        return isSetFilename();
+      case DATA:
+        return isSetData();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof uploadContainer_args)
+        return this.equals((uploadContainer_args)that);
+      return false;
+    }
+
+    public boolean equals(uploadContainer_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_filename = true && this.isSetFilename();
+      boolean that_present_filename = true && that.isSetFilename();
+      if (this_present_filename || that_present_filename) {
+        if (!(this_present_filename && that_present_filename))
+          return false;
+        if (!this.filename.equals(that.filename))
+          return false;
+      }
+
+      boolean this_present_data = true && this.isSetData();
+      boolean that_present_data = true && that.isSetData();
+      if (this_present_data || that_present_data) {
+        if (!(this_present_data && that_present_data))
+          return false;
+        if (!this.data.equals(that.data))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(uploadContainer_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      uploadContainer_args typedOther = (uploadContainer_args)other;
+
+      lastComparison = Boolean.valueOf(isSetFilename()).compareTo(typedOther.isSetFilename());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFilename()) {
+        lastComparison = TBaseHelper.compareTo(this.filename, typedOther.filename);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetData()).compareTo(typedOther.isSetData());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetData()) {
+        lastComparison = TBaseHelper.compareTo(this.data, typedOther.data);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // FILENAME
+            if (field.type == TType.STRING) {
+              this.filename = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 2: // DATA
+            if (field.type == TType.STRING) {
+              this.data = iprot.readBinary();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.filename != null) {
+        oprot.writeFieldBegin(FILENAME_FIELD_DESC);
+        oprot.writeString(this.filename);
+        oprot.writeFieldEnd();
+      }
+      if (this.data != null) {
+        oprot.writeFieldBegin(DATA_FIELD_DESC);
+        oprot.writeBinary(this.data);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("uploadContainer_args(");
+      boolean first = true;
+
+      sb.append("filename:");
+      if (this.filename == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.filename);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("data:");
+      if (this.data == null) {
+        sb.append("null");
+      } else {
+        TBaseHelper.toString(this.data, sb);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class uploadContainer_result implements TBase<uploadContainer_result, uploadContainer_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("uploadContainer_result");
+
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(uploadContainer_result.class, metaDataMap);
+    }
+
+    public uploadContainer_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public uploadContainer_result(uploadContainer_result other) {
+    }
+
+    public uploadContainer_result deepCopy() {
+      return new uploadContainer_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof uploadContainer_result)
+        return this.equals((uploadContainer_result)that);
+      return false;
+    }
+
+    public boolean equals(uploadContainer_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(uploadContainer_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      uploadContainer_result typedOther = (uploadContainer_result)other;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("uploadContainer_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class deleteFiles_args implements TBase<deleteFiles_args, deleteFiles_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("deleteFiles_args");
+
+    private static final TField FIDS_FIELD_DESC = new TField("fids", TType.LIST, (short)1);
+
+    public List<Integer> fids;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      FIDS((short)1, "fids");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // FIDS
+            return FIDS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.FIDS, new FieldMetaData("fids", TFieldRequirementType.DEFAULT, 
+          new ListMetaData(TType.LIST, 
+              new FieldValueMetaData(TType.I32              , "FileID"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(deleteFiles_args.class, metaDataMap);
+    }
+
+    public deleteFiles_args() {
+    }
+
+    public deleteFiles_args(
+      List<Integer> fids)
+    {
+      this();
+      this.fids = fids;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deleteFiles_args(deleteFiles_args other) {
+      if (other.isSetFids()) {
+        List<Integer> __this__fids = new ArrayList<Integer>();
+        for (Integer other_element : other.fids) {
+          __this__fids.add(other_element);
+        }
+        this.fids = __this__fids;
+      }
+    }
+
+    public deleteFiles_args deepCopy() {
+      return new deleteFiles_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.fids = null;
+    }
+
+    public int getFidsSize() {
+      return (this.fids == null) ? 0 : this.fids.size();
+    }
+
+    public java.util.Iterator<Integer> getFidsIterator() {
+      return (this.fids == null) ? null : this.fids.iterator();
+    }
+
+    public void addToFids(int elem) {
+      if (this.fids == null) {
+        this.fids = new ArrayList<Integer>();
+      }
+      this.fids.add(elem);
+    }
+
+    public List<Integer> getFids() {
+      return this.fids;
+    }
+
+    public deleteFiles_args setFids(List<Integer> fids) {
+      this.fids = fids;
+      return this;
+    }
+
+    public void unsetFids() {
+      this.fids = null;
+    }
+
+    /** Returns true if field fids is set (has been asigned a value) and false otherwise */
+    public boolean isSetFids() {
+      return this.fids != null;
+    }
+
+    public void setFidsIsSet(boolean value) {
+      if (!value) {
+        this.fids = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case FIDS:
+        if (value == null) {
+          unsetFids();
+        } else {
+          setFids((List<Integer>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case FIDS:
+        return getFids();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case FIDS:
+        return isSetFids();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deleteFiles_args)
+        return this.equals((deleteFiles_args)that);
+      return false;
+    }
+
+    public boolean equals(deleteFiles_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_fids = true && this.isSetFids();
+      boolean that_present_fids = true && that.isSetFids();
+      if (this_present_fids || that_present_fids) {
+        if (!(this_present_fids && that_present_fids))
+          return false;
+        if (!this.fids.equals(that.fids))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deleteFiles_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deleteFiles_args typedOther = (deleteFiles_args)other;
+
+      lastComparison = Boolean.valueOf(isSetFids()).compareTo(typedOther.isSetFids());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFids()) {
+        lastComparison = TBaseHelper.compareTo(this.fids, typedOther.fids);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // FIDS
+            if (field.type == TType.LIST) {
+              {
+                TList _list111 = iprot.readListBegin();
+                this.fids = new ArrayList<Integer>(_list111.size);
+                for (int _i112 = 0; _i112 < _list111.size; ++_i112)
+                {
+                  int _elem113;
+                  _elem113 = iprot.readI32();
+                  this.fids.add(_elem113);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.fids != null) {
+        oprot.writeFieldBegin(FIDS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
+          for (int _iter114 : this.fids)
+          {
+            oprot.writeI32(_iter114);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deleteFiles_args(");
+      boolean first = true;
+
+      sb.append("fids:");
+      if (this.fids == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.fids);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class deleteFiles_result implements TBase<deleteFiles_result, deleteFiles_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("deleteFiles_result");
+
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(deleteFiles_result.class, metaDataMap);
+    }
+
+    public deleteFiles_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deleteFiles_result(deleteFiles_result other) {
+    }
+
+    public deleteFiles_result deepCopy() {
+      return new deleteFiles_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deleteFiles_result)
+        return this.equals((deleteFiles_result)that);
+      return false;
+    }
+
+    public boolean equals(deleteFiles_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deleteFiles_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deleteFiles_result typedOther = (deleteFiles_result)other;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deleteFiles_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class deletePackages_args implements TBase<deletePackages_args, deletePackages_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("deletePackages_args");
+
+    private static final TField PIDS_FIELD_DESC = new TField("pids", TType.LIST, (short)1);
+
+    public List<Integer> pids;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      PIDS((short)1, "pids");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // PIDS
+            return PIDS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.PIDS, new FieldMetaData("pids", TFieldRequirementType.DEFAULT, 
+          new ListMetaData(TType.LIST, 
+              new FieldValueMetaData(TType.I32              , "PackageID"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(deletePackages_args.class, metaDataMap);
+    }
+
+    public deletePackages_args() {
+    }
+
+    public deletePackages_args(
+      List<Integer> pids)
+    {
+      this();
+      this.pids = pids;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deletePackages_args(deletePackages_args other) {
+      if (other.isSetPids()) {
+        List<Integer> __this__pids = new ArrayList<Integer>();
+        for (Integer other_element : other.pids) {
+          __this__pids.add(other_element);
+        }
+        this.pids = __this__pids;
+      }
+    }
+
+    public deletePackages_args deepCopy() {
+      return new deletePackages_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.pids = null;
+    }
+
+    public int getPidsSize() {
+      return (this.pids == null) ? 0 : this.pids.size();
+    }
+
+    public java.util.Iterator<Integer> getPidsIterator() {
+      return (this.pids == null) ? null : this.pids.iterator();
+    }
+
+    public void addToPids(int elem) {
+      if (this.pids == null) {
+        this.pids = new ArrayList<Integer>();
+      }
+      this.pids.add(elem);
+    }
+
+    public List<Integer> getPids() {
+      return this.pids;
+    }
+
+    public deletePackages_args setPids(List<Integer> pids) {
+      this.pids = pids;
+      return this;
+    }
+
+    public void unsetPids() {
+      this.pids = null;
+    }
+
+    /** Returns true if field pids is set (has been asigned a value) and false otherwise */
+    public boolean isSetPids() {
+      return this.pids != null;
+    }
+
+    public void setPidsIsSet(boolean value) {
+      if (!value) {
+        this.pids = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case PIDS:
+        if (value == null) {
+          unsetPids();
+        } else {
+          setPids((List<Integer>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case PIDS:
+        return getPids();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case PIDS:
+        return isSetPids();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deletePackages_args)
+        return this.equals((deletePackages_args)that);
+      return false;
+    }
+
+    public boolean equals(deletePackages_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_pids = true && this.isSetPids();
+      boolean that_present_pids = true && that.isSetPids();
+      if (this_present_pids || that_present_pids) {
+        if (!(this_present_pids && that_present_pids))
+          return false;
+        if (!this.pids.equals(that.pids))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deletePackages_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deletePackages_args typedOther = (deletePackages_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPids()).compareTo(typedOther.isSetPids());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPids()) {
+        lastComparison = TBaseHelper.compareTo(this.pids, typedOther.pids);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // PIDS
+            if (field.type == TType.LIST) {
+              {
+                TList _list115 = iprot.readListBegin();
+                this.pids = new ArrayList<Integer>(_list115.size);
+                for (int _i116 = 0; _i116 < _list115.size; ++_i116)
+                {
+                  int _elem117;
+                  _elem117 = iprot.readI32();
+                  this.pids.add(_elem117);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.pids != null) {
+        oprot.writeFieldBegin(PIDS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.I32, this.pids.size()));
+          for (int _iter118 : this.pids)
+          {
+            oprot.writeI32(_iter118);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deletePackages_args(");
+      boolean first = true;
+
+      sb.append("pids:");
+      if (this.pids == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.pids);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class deletePackages_result implements TBase<deletePackages_result, deletePackages_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("deletePackages_result");
+
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(deletePackages_result.class, metaDataMap);
+    }
+
+    public deletePackages_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deletePackages_result(deletePackages_result other) {
+    }
+
+    public deletePackages_result deepCopy() {
+      return new deletePackages_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deletePackages_result)
+        return this.equals((deletePackages_result)that);
+      return false;
+    }
+
+    public boolean equals(deletePackages_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deletePackages_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deletePackages_result typedOther = (deletePackages_result)other;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deletePackages_result(");
       boolean first = true;
 
       sb.append(")");
@@ -23568,13 +28483,13 @@ public class Pyload {
           case 1: // FIDS
             if (field.type == TType.LIST) {
               {
-                TList _list88 = iprot.readListBegin();
-                this.fids = new ArrayList<Integer>(_list88.size);
-                for (int _i89 = 0; _i89 < _list88.size; ++_i89)
+                TList _list119 = iprot.readListBegin();
+                this.fids = new ArrayList<Integer>(_list119.size);
+                for (int _i120 = 0; _i120 < _list119.size; ++_i120)
                 {
-                  int _elem90;
-                  _elem90 = iprot.readI32();
-                  this.fids.add(_elem90);
+                  int _elem121;
+                  _elem121 = iprot.readI32();
+                  this.fids.add(_elem121);
                 }
                 iprot.readListEnd();
               }
@@ -23601,9 +28516,9 @@ public class Pyload {
         oprot.writeFieldBegin(FIDS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
-          for (int _iter91 : this.fids)
+          for (int _iter122 : this.fids)
           {
-            oprot.writeI32(_iter91);
+            oprot.writeI32(_iter122);
           }
           oprot.writeListEnd();
         }
@@ -24930,572 +29845,6 @@ public class Pyload {
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("movePackage_result(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class uploadContainer_args implements TBase<uploadContainer_args, uploadContainer_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("uploadContainer_args");
-
-    private static final TField FILENAME_FIELD_DESC = new TField("filename", TType.STRING, (short)1);
-    private static final TField DATA_FIELD_DESC = new TField("data", TType.STRING, (short)2);
-
-    public String filename;
-    public ByteBuffer data;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      FILENAME((short)1, "filename"),
-      DATA((short)2, "data");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // FILENAME
-            return FILENAME;
-          case 2: // DATA
-            return DATA;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.FILENAME, new FieldMetaData("filename", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.STRING)));
-      tmpMap.put(_Fields.DATA, new FieldMetaData("data", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.STRING)));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(uploadContainer_args.class, metaDataMap);
-    }
-
-    public uploadContainer_args() {
-    }
-
-    public uploadContainer_args(
-      String filename,
-      ByteBuffer data)
-    {
-      this();
-      this.filename = filename;
-      this.data = data;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public uploadContainer_args(uploadContainer_args other) {
-      if (other.isSetFilename()) {
-        this.filename = other.filename;
-      }
-      if (other.isSetData()) {
-        this.data = TBaseHelper.copyBinary(other.data);
-;
-      }
-    }
-
-    public uploadContainer_args deepCopy() {
-      return new uploadContainer_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.filename = null;
-      this.data = null;
-    }
-
-    public String getFilename() {
-      return this.filename;
-    }
-
-    public uploadContainer_args setFilename(String filename) {
-      this.filename = filename;
-      return this;
-    }
-
-    public void unsetFilename() {
-      this.filename = null;
-    }
-
-    /** Returns true if field filename is set (has been asigned a value) and false otherwise */
-    public boolean isSetFilename() {
-      return this.filename != null;
-    }
-
-    public void setFilenameIsSet(boolean value) {
-      if (!value) {
-        this.filename = null;
-      }
-    }
-
-    public byte[] getData() {
-      setData(TBaseHelper.rightSize(data));
-      return data.array();
-    }
-
-    public ByteBuffer BufferForData() {
-      return data;
-    }
-
-    public uploadContainer_args setData(byte[] data) {
-      setData(ByteBuffer.wrap(data));
-      return this;
-    }
-
-    public uploadContainer_args setData(ByteBuffer data) {
-      this.data = data;
-      return this;
-    }
-
-    public void unsetData() {
-      this.data = null;
-    }
-
-    /** Returns true if field data is set (has been asigned a value) and false otherwise */
-    public boolean isSetData() {
-      return this.data != null;
-    }
-
-    public void setDataIsSet(boolean value) {
-      if (!value) {
-        this.data = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case FILENAME:
-        if (value == null) {
-          unsetFilename();
-        } else {
-          setFilename((String)value);
-        }
-        break;
-
-      case DATA:
-        if (value == null) {
-          unsetData();
-        } else {
-          setData((ByteBuffer)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case FILENAME:
-        return getFilename();
-
-      case DATA:
-        return getData();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case FILENAME:
-        return isSetFilename();
-      case DATA:
-        return isSetData();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof uploadContainer_args)
-        return this.equals((uploadContainer_args)that);
-      return false;
-    }
-
-    public boolean equals(uploadContainer_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_filename = true && this.isSetFilename();
-      boolean that_present_filename = true && that.isSetFilename();
-      if (this_present_filename || that_present_filename) {
-        if (!(this_present_filename && that_present_filename))
-          return false;
-        if (!this.filename.equals(that.filename))
-          return false;
-      }
-
-      boolean this_present_data = true && this.isSetData();
-      boolean that_present_data = true && that.isSetData();
-      if (this_present_data || that_present_data) {
-        if (!(this_present_data && that_present_data))
-          return false;
-        if (!this.data.equals(that.data))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(uploadContainer_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      uploadContainer_args typedOther = (uploadContainer_args)other;
-
-      lastComparison = Boolean.valueOf(isSetFilename()).compareTo(typedOther.isSetFilename());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetFilename()) {
-        lastComparison = TBaseHelper.compareTo(this.filename, typedOther.filename);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetData()).compareTo(typedOther.isSetData());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetData()) {
-        lastComparison = TBaseHelper.compareTo(this.data, typedOther.data);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // FILENAME
-            if (field.type == TType.STRING) {
-              this.filename = iprot.readString();
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case 2: // DATA
-            if (field.type == TType.STRING) {
-              this.data = iprot.readBinary();
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.filename != null) {
-        oprot.writeFieldBegin(FILENAME_FIELD_DESC);
-        oprot.writeString(this.filename);
-        oprot.writeFieldEnd();
-      }
-      if (this.data != null) {
-        oprot.writeFieldBegin(DATA_FIELD_DESC);
-        oprot.writeBinary(this.data);
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("uploadContainer_args(");
-      boolean first = true;
-
-      sb.append("filename:");
-      if (this.filename == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.filename);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("data:");
-      if (this.data == null) {
-        sb.append("null");
-      } else {
-        TBaseHelper.toString(this.data, sb);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class uploadContainer_result implements TBase<uploadContainer_result, uploadContainer_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("uploadContainer_result");
-
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-;
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(uploadContainer_result.class, metaDataMap);
-    }
-
-    public uploadContainer_result() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public uploadContainer_result(uploadContainer_result other) {
-    }
-
-    public uploadContainer_result deepCopy() {
-      return new uploadContainer_result(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof uploadContainer_result)
-        return this.equals((uploadContainer_result)that);
-      return false;
-    }
-
-    public boolean equals(uploadContainer_result that) {
-      if (that == null)
-        return false;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(uploadContainer_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      uploadContainer_result typedOther = (uploadContainer_result)other;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("uploadContainer_result(");
       boolean first = true;
 
       sb.append(")");
@@ -27488,15 +31837,15 @@ public class Pyload {
           case 2: // DATA
             if (field.type == TType.MAP) {
               {
-                TMap _map92 = iprot.readMapBegin();
-                this.data = new HashMap<String,String>(2*_map92.size);
-                for (int _i93 = 0; _i93 < _map92.size; ++_i93)
+                TMap _map123 = iprot.readMapBegin();
+                this.data = new HashMap<String,String>(2*_map123.size);
+                for (int _i124 = 0; _i124 < _map123.size; ++_i124)
                 {
-                  String _key94;
-                  String _val95;
-                  _key94 = iprot.readString();
-                  _val95 = iprot.readString();
-                  this.data.put(_key94, _val95);
+                  String _key125;
+                  String _val126;
+                  _key125 = iprot.readString();
+                  _val126 = iprot.readString();
+                  this.data.put(_key125, _val126);
                 }
                 iprot.readMapEnd();
               }
@@ -27526,10 +31875,10 @@ public class Pyload {
         oprot.writeFieldBegin(DATA_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.data.size()));
-          for (Map.Entry<String, String> _iter96 : this.data.entrySet())
+          for (Map.Entry<String, String> _iter127 : this.data.entrySet())
           {
-            oprot.writeString(_iter96.getKey());
-            oprot.writeString(_iter96.getValue());
+            oprot.writeString(_iter127.getKey());
+            oprot.writeString(_iter127.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -27568,11 +31917,13 @@ public class Pyload {
   public static class setPackageData_result implements TBase<setPackageData_result, setPackageData_result._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("setPackageData_result");
 
+    private static final TField E_FIELD_DESC = new TField("e", TType.STRUCT, (short)1);
 
+    public PackageDoesNotExists e;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
-;
+      E((short)1, "e");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -27587,6 +31938,8 @@ public class Pyload {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 1: // E
+            return E;
           default:
             return null;
         }
@@ -27625,9 +31978,14 @@ public class Pyload {
         return _fieldName;
       }
     }
+
+    // isset id assignments
+
     public static final Map<_Fields, FieldMetaData> metaDataMap;
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.E, new FieldMetaData("e", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(setPackageData_result.class, metaDataMap);
     }
@@ -27635,10 +31993,20 @@ public class Pyload {
     public setPackageData_result() {
     }
 
+    public setPackageData_result(
+      PackageDoesNotExists e)
+    {
+      this();
+      this.e = e;
+    }
+
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public setPackageData_result(setPackageData_result other) {
+      if (other.isSetE()) {
+        this.e = new PackageDoesNotExists(other.e);
+      }
     }
 
     public setPackageData_result deepCopy() {
@@ -27647,15 +32015,51 @@ public class Pyload {
 
     @Override
     public void clear() {
+      this.e = null;
+    }
+
+    public PackageDoesNotExists getE() {
+      return this.e;
+    }
+
+    public setPackageData_result setE(PackageDoesNotExists e) {
+      this.e = e;
+      return this;
+    }
+
+    public void unsetE() {
+      this.e = null;
+    }
+
+    /** Returns true if field e is set (has been asigned a value) and false otherwise */
+    public boolean isSetE() {
+      return this.e != null;
+    }
+
+    public void setEIsSet(boolean value) {
+      if (!value) {
+        this.e = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
+      case E:
+        if (value == null) {
+          unsetE();
+        } else {
+          setE((PackageDoesNotExists)value);
+        }
+        break;
+
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
+      case E:
+        return getE();
+
       }
       throw new IllegalStateException();
     }
@@ -27667,6 +32071,8 @@ public class Pyload {
       }
 
       switch (field) {
+      case E:
+        return isSetE();
       }
       throw new IllegalStateException();
     }
@@ -27684,6 +32090,15 @@ public class Pyload {
       if (that == null)
         return false;
 
+      boolean this_present_e = true && this.isSetE();
+      boolean that_present_e = true && that.isSetE();
+      if (this_present_e || that_present_e) {
+        if (!(this_present_e && that_present_e))
+          return false;
+        if (!this.e.equals(that.e))
+          return false;
+      }
+
       return true;
     }
 
@@ -27700,6 +32115,16 @@ public class Pyload {
       int lastComparison = 0;
       setPackageData_result typedOther = (setPackageData_result)other;
 
+      lastComparison = Boolean.valueOf(isSetE()).compareTo(typedOther.isSetE());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetE()) {
+        lastComparison = TBaseHelper.compareTo(this.e, typedOther.e);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -27717,6 +32142,14 @@ public class Pyload {
           break;
         }
         switch (field.id) {
+          case 1: // E
+            if (field.type == TType.STRUCT) {
+              this.e = new PackageDoesNotExists();
+              this.e.read(iprot);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
           default:
             TProtocolUtil.skip(iprot, field.type);
         }
@@ -27731,6 +32164,11 @@ public class Pyload {
     public void write(TProtocol oprot) throws TException {
       oprot.writeStructBegin(STRUCT_DESC);
 
+      if (this.isSetE()) {
+        oprot.writeFieldBegin(E_FIELD_DESC);
+        this.e.write(oprot);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -27740,6 +32178,13 @@ public class Pyload {
       StringBuilder sb = new StringBuilder("setPackageData_result(");
       boolean first = true;
 
+      sb.append("e:");
+      if (this.e == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.e);
+      }
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -28482,1232 +32927,6 @@ public class Pyload {
       StringBuilder sb = new StringBuilder("restartFailed_result(");
       boolean first = true;
 
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class getPackageOrder_args implements TBase<getPackageOrder_args, getPackageOrder_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("getPackageOrder_args");
-
-    private static final TField DESTINATION_FIELD_DESC = new TField("destination", TType.I32, (short)1);
-
-    /**
-     * 
-     * @see Destination
-     */
-    public Destination destination;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      /**
-       * 
-       * @see Destination
-       */
-      DESTINATION((short)1, "destination");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // DESTINATION
-            return DESTINATION;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.DESTINATION, new FieldMetaData("destination", TFieldRequirementType.DEFAULT, 
-          new EnumMetaData(TType.ENUM, Destination.class)));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(getPackageOrder_args.class, metaDataMap);
-    }
-
-    public getPackageOrder_args() {
-    }
-
-    public getPackageOrder_args(
-      Destination destination)
-    {
-      this();
-      this.destination = destination;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getPackageOrder_args(getPackageOrder_args other) {
-      if (other.isSetDestination()) {
-        this.destination = other.destination;
-      }
-    }
-
-    public getPackageOrder_args deepCopy() {
-      return new getPackageOrder_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.destination = null;
-    }
-
-    /**
-     * 
-     * @see Destination
-     */
-    public Destination getDestination() {
-      return this.destination;
-    }
-
-    /**
-     * 
-     * @see Destination
-     */
-    public getPackageOrder_args setDestination(Destination destination) {
-      this.destination = destination;
-      return this;
-    }
-
-    public void unsetDestination() {
-      this.destination = null;
-    }
-
-    /** Returns true if field destination is set (has been asigned a value) and false otherwise */
-    public boolean isSetDestination() {
-      return this.destination != null;
-    }
-
-    public void setDestinationIsSet(boolean value) {
-      if (!value) {
-        this.destination = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case DESTINATION:
-        if (value == null) {
-          unsetDestination();
-        } else {
-          setDestination((Destination)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case DESTINATION:
-        return getDestination();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case DESTINATION:
-        return isSetDestination();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getPackageOrder_args)
-        return this.equals((getPackageOrder_args)that);
-      return false;
-    }
-
-    public boolean equals(getPackageOrder_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_destination = true && this.isSetDestination();
-      boolean that_present_destination = true && that.isSetDestination();
-      if (this_present_destination || that_present_destination) {
-        if (!(this_present_destination && that_present_destination))
-          return false;
-        if (!this.destination.equals(that.destination))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getPackageOrder_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getPackageOrder_args typedOther = (getPackageOrder_args)other;
-
-      lastComparison = Boolean.valueOf(isSetDestination()).compareTo(typedOther.isSetDestination());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetDestination()) {
-        lastComparison = TBaseHelper.compareTo(this.destination, typedOther.destination);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // DESTINATION
-            if (field.type == TType.I32) {
-              this.destination = Destination.findByValue(iprot.readI32());
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (this.destination != null) {
-        oprot.writeFieldBegin(DESTINATION_FIELD_DESC);
-        oprot.writeI32(this.destination.getValue());
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getPackageOrder_args(");
-      boolean first = true;
-
-      sb.append("destination:");
-      if (this.destination == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.destination);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class getPackageOrder_result implements TBase<getPackageOrder_result, getPackageOrder_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("getPackageOrder_result");
-
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
-
-    public Map<Short,Integer> success;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      SUCCESS((short)0, "success");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new MapMetaData(TType.MAP, 
-              new FieldValueMetaData(TType.I16), 
-              new FieldValueMetaData(TType.I32              , "PackageID"))));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(getPackageOrder_result.class, metaDataMap);
-    }
-
-    public getPackageOrder_result() {
-    }
-
-    public getPackageOrder_result(
-      Map<Short,Integer> success)
-    {
-      this();
-      this.success = success;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getPackageOrder_result(getPackageOrder_result other) {
-      if (other.isSetSuccess()) {
-        Map<Short,Integer> __this__success = new HashMap<Short,Integer>();
-        for (Map.Entry<Short, Integer> other_element : other.success.entrySet()) {
-
-          Short other_element_key = other_element.getKey();
-          Integer other_element_value = other_element.getValue();
-
-          Short __this__success_copy_key = other_element_key;
-
-          Integer __this__success_copy_value = other_element_value;
-
-          __this__success.put(__this__success_copy_key, __this__success_copy_value);
-        }
-        this.success = __this__success;
-      }
-    }
-
-    public getPackageOrder_result deepCopy() {
-      return new getPackageOrder_result(this);
-    }
-
-    @Override
-    public void clear() {
-      this.success = null;
-    }
-
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public void putToSuccess(short key, int val) {
-      if (this.success == null) {
-        this.success = new HashMap<Short,Integer>();
-      }
-      this.success.put(key, val);
-    }
-
-    public Map<Short,Integer> getSuccess() {
-      return this.success;
-    }
-
-    public getPackageOrder_result setSuccess(Map<Short,Integer> success) {
-      this.success = success;
-      return this;
-    }
-
-    public void unsetSuccess() {
-      this.success = null;
-    }
-
-    /** Returns true if field success is set (has been asigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return this.success != null;
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      if (!value) {
-        this.success = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((Map<Short,Integer>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return getSuccess();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getPackageOrder_result)
-        return this.equals((getPackageOrder_result)that);
-      return false;
-    }
-
-    public boolean equals(getPackageOrder_result that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_success = true && this.isSetSuccess();
-      boolean that_present_success = true && that.isSetSuccess();
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (!this.success.equals(that.success))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getPackageOrder_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getPackageOrder_result typedOther = (getPackageOrder_result)other;
-
-      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 0: // SUCCESS
-            if (field.type == TType.MAP) {
-              {
-                TMap _map97 = iprot.readMapBegin();
-                this.success = new HashMap<Short,Integer>(2*_map97.size);
-                for (int _i98 = 0; _i98 < _map97.size; ++_i98)
-                {
-                  short _key99;
-                  int _val100;
-                  _key99 = iprot.readI16();
-                  _val100 = iprot.readI32();
-                  this.success.put(_key99, _val100);
-                }
-                iprot.readMapEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      if (this.isSetSuccess()) {
-        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        {
-          oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
-          for (Map.Entry<Short, Integer> _iter101 : this.success.entrySet())
-          {
-            oprot.writeI16(_iter101.getKey());
-            oprot.writeI32(_iter101.getValue());
-          }
-          oprot.writeMapEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getPackageOrder_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      if (this.success == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.success);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class getFileOrder_args implements TBase<getFileOrder_args, getFileOrder_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("getFileOrder_args");
-
-    private static final TField PID_FIELD_DESC = new TField("pid", TType.I32, (short)1);
-
-    public int pid;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      PID((short)1, "pid");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // PID
-            return PID;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    private static final int __PID_ISSET_ID = 0;
-    private BitSet __isset_bit_vector = new BitSet(1);
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.PID, new FieldMetaData("pid", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.I32          , "PackageID")));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(getFileOrder_args.class, metaDataMap);
-    }
-
-    public getFileOrder_args() {
-    }
-
-    public getFileOrder_args(
-      int pid)
-    {
-      this();
-      this.pid = pid;
-      setPidIsSet(true);
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getFileOrder_args(getFileOrder_args other) {
-      __isset_bit_vector.clear();
-      __isset_bit_vector.or(other.__isset_bit_vector);
-      this.pid = other.pid;
-    }
-
-    public getFileOrder_args deepCopy() {
-      return new getFileOrder_args(this);
-    }
-
-    @Override
-    public void clear() {
-      setPidIsSet(false);
-      this.pid = 0;
-    }
-
-    public int getPid() {
-      return this.pid;
-    }
-
-    public getFileOrder_args setPid(int pid) {
-      this.pid = pid;
-      setPidIsSet(true);
-      return this;
-    }
-
-    public void unsetPid() {
-      __isset_bit_vector.clear(__PID_ISSET_ID);
-    }
-
-    /** Returns true if field pid is set (has been asigned a value) and false otherwise */
-    public boolean isSetPid() {
-      return __isset_bit_vector.get(__PID_ISSET_ID);
-    }
-
-    public void setPidIsSet(boolean value) {
-      __isset_bit_vector.set(__PID_ISSET_ID, value);
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case PID:
-        if (value == null) {
-          unsetPid();
-        } else {
-          setPid((Integer)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case PID:
-        return new Integer(getPid());
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case PID:
-        return isSetPid();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getFileOrder_args)
-        return this.equals((getFileOrder_args)that);
-      return false;
-    }
-
-    public boolean equals(getFileOrder_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_pid = true;
-      boolean that_present_pid = true;
-      if (this_present_pid || that_present_pid) {
-        if (!(this_present_pid && that_present_pid))
-          return false;
-        if (this.pid != that.pid)
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getFileOrder_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getFileOrder_args typedOther = (getFileOrder_args)other;
-
-      lastComparison = Boolean.valueOf(isSetPid()).compareTo(typedOther.isSetPid());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetPid()) {
-        lastComparison = TBaseHelper.compareTo(this.pid, typedOther.pid);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 1: // PID
-            if (field.type == TType.I32) {
-              this.pid = iprot.readI32();
-              setPidIsSet(true);
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      validate();
-
-      oprot.writeStructBegin(STRUCT_DESC);
-      oprot.writeFieldBegin(PID_FIELD_DESC);
-      oprot.writeI32(this.pid);
-      oprot.writeFieldEnd();
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getFileOrder_args(");
-      boolean first = true;
-
-      sb.append("pid:");
-      sb.append(this.pid);
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws TException {
-      // check for required fields
-    }
-
-  }
-
-  public static class getFileOrder_result implements TBase<getFileOrder_result, getFileOrder_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("getFileOrder_result");
-
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
-
-    public Map<Short,Integer> success;
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements TFieldIdEnum {
-      SUCCESS((short)0, "success");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-
-    public static final Map<_Fields, FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new MapMetaData(TType.MAP, 
-              new FieldValueMetaData(TType.I16), 
-              new FieldValueMetaData(TType.I32              , "FileID"))));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(getFileOrder_result.class, metaDataMap);
-    }
-
-    public getFileOrder_result() {
-    }
-
-    public getFileOrder_result(
-      Map<Short,Integer> success)
-    {
-      this();
-      this.success = success;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getFileOrder_result(getFileOrder_result other) {
-      if (other.isSetSuccess()) {
-        Map<Short,Integer> __this__success = new HashMap<Short,Integer>();
-        for (Map.Entry<Short, Integer> other_element : other.success.entrySet()) {
-
-          Short other_element_key = other_element.getKey();
-          Integer other_element_value = other_element.getValue();
-
-          Short __this__success_copy_key = other_element_key;
-
-          Integer __this__success_copy_value = other_element_value;
-
-          __this__success.put(__this__success_copy_key, __this__success_copy_value);
-        }
-        this.success = __this__success;
-      }
-    }
-
-    public getFileOrder_result deepCopy() {
-      return new getFileOrder_result(this);
-    }
-
-    @Override
-    public void clear() {
-      this.success = null;
-    }
-
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public void putToSuccess(short key, int val) {
-      if (this.success == null) {
-        this.success = new HashMap<Short,Integer>();
-      }
-      this.success.put(key, val);
-    }
-
-    public Map<Short,Integer> getSuccess() {
-      return this.success;
-    }
-
-    public getFileOrder_result setSuccess(Map<Short,Integer> success) {
-      this.success = success;
-      return this;
-    }
-
-    public void unsetSuccess() {
-      this.success = null;
-    }
-
-    /** Returns true if field success is set (has been asigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return this.success != null;
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      if (!value) {
-        this.success = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((Map<Short,Integer>)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return getSuccess();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getFileOrder_result)
-        return this.equals((getFileOrder_result)that);
-      return false;
-    }
-
-    public boolean equals(getFileOrder_result that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_success = true && this.isSetSuccess();
-      boolean that_present_success = true && that.isSetSuccess();
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (!this.success.equals(that.success))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getFileOrder_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getFileOrder_result typedOther = (getFileOrder_result)other;
-
-      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(TProtocol iprot) throws TException {
-      TField field;
-      iprot.readStructBegin();
-      while (true)
-      {
-        field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
-          break;
-        }
-        switch (field.id) {
-          case 0: // SUCCESS
-            if (field.type == TType.MAP) {
-              {
-                TMap _map102 = iprot.readMapBegin();
-                this.success = new HashMap<Short,Integer>(2*_map102.size);
-                for (int _i103 = 0; _i103 < _map102.size; ++_i103)
-                {
-                  short _key104;
-                  int _val105;
-                  _key104 = iprot.readI16();
-                  _val105 = iprot.readI32();
-                  this.success.put(_key104, _val105);
-                }
-                iprot.readMapEnd();
-              }
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
-            TProtocolUtil.skip(iprot, field.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
-
-      // check for required fields of primitive type, which can't be checked in the validate method
-      validate();
-    }
-
-    public void write(TProtocol oprot) throws TException {
-      oprot.writeStructBegin(STRUCT_DESC);
-
-      if (this.isSetSuccess()) {
-        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        {
-          oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
-          for (Map.Entry<Short, Integer> _iter106 : this.success.entrySet())
-          {
-            oprot.writeI16(_iter106.getKey());
-            oprot.writeI32(_iter106.getValue());
-          }
-          oprot.writeMapEnd();
-        }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getFileOrder_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      if (this.success == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.success);
-      }
-      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -32388,14 +35607,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list107 = iprot.readListBegin();
-                this.success = new ArrayList<Event>(_list107.size);
-                for (int _i108 = 0; _i108 < _list107.size; ++_i108)
+                TList _list128 = iprot.readListBegin();
+                this.success = new ArrayList<Event>(_list128.size);
+                for (int _i129 = 0; _i129 < _list128.size; ++_i129)
                 {
-                  Event _elem109;
-                  _elem109 = new Event();
-                  _elem109.read(iprot);
-                  this.success.add(_elem109);
+                  Event _elem130;
+                  _elem130 = new Event();
+                  _elem130.read(iprot);
+                  this.success.add(_elem130);
                 }
                 iprot.readListEnd();
               }
@@ -32421,9 +35640,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (Event _iter110 : this.success)
+          for (Event _iter131 : this.success)
           {
-            _iter110.write(oprot);
+            _iter131.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -32985,14 +36204,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list111 = iprot.readListBegin();
-                this.success = new ArrayList<AccountInfo>(_list111.size);
-                for (int _i112 = 0; _i112 < _list111.size; ++_i112)
+                TList _list132 = iprot.readListBegin();
+                this.success = new ArrayList<AccountInfo>(_list132.size);
+                for (int _i133 = 0; _i133 < _list132.size; ++_i133)
                 {
-                  AccountInfo _elem113;
-                  _elem113 = new AccountInfo();
-                  _elem113.read(iprot);
-                  this.success.add(_elem113);
+                  AccountInfo _elem134;
+                  _elem134 = new AccountInfo();
+                  _elem134.read(iprot);
+                  this.success.add(_elem134);
                 }
                 iprot.readListEnd();
               }
@@ -33018,9 +36237,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (AccountInfo _iter114 : this.success)
+          for (AccountInfo _iter135 : this.success)
           {
-            _iter114.write(oprot);
+            _iter135.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -33489,13 +36708,13 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list115 = iprot.readListBegin();
-                this.success = new ArrayList<String>(_list115.size);
-                for (int _i116 = 0; _i116 < _list115.size; ++_i116)
+                TList _list136 = iprot.readListBegin();
+                this.success = new ArrayList<String>(_list136.size);
+                for (int _i137 = 0; _i137 < _list136.size; ++_i137)
                 {
-                  String _elem117;
-                  _elem117 = iprot.readString();
-                  this.success.add(_elem117);
+                  String _elem138;
+                  _elem138 = iprot.readString();
+                  this.success.add(_elem138);
                 }
                 iprot.readListEnd();
               }
@@ -33521,9 +36740,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.success.size()));
-          for (String _iter118 : this.success)
+          for (String _iter139 : this.success)
           {
-            oprot.writeString(_iter118);
+            oprot.writeString(_iter139);
           }
           oprot.writeListEnd();
         }
@@ -34098,7 +37317,7 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.STRING)));
+          new FieldValueMetaData(TType.STRING          , "PluginName")));
       tmpMap.put(_Fields.ACCOUNT, new FieldMetaData("account", TFieldRequirementType.DEFAULT, 
           new FieldValueMetaData(TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -36069,7 +39288,7 @@ public class Pyload {
 
     private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
 
-    public Map<String,ServiceInfo> success;
+    public Map<String,Map<String,String>> success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -36136,8 +39355,10 @@ public class Pyload {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
           new MapMetaData(TType.MAP, 
-              new FieldValueMetaData(TType.STRING), 
-              new StructMetaData(TType.STRUCT, ServiceInfo.class))));
+              new FieldValueMetaData(TType.STRING              , "PluginName"), 
+              new MapMetaData(TType.MAP, 
+                  new FieldValueMetaData(TType.STRING), 
+                  new FieldValueMetaData(TType.STRING)))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(getServices_result.class, metaDataMap);
     }
@@ -36146,7 +39367,7 @@ public class Pyload {
     }
 
     public getServices_result(
-      Map<String,ServiceInfo> success)
+      Map<String,Map<String,String>> success)
     {
       this();
       this.success = success;
@@ -36157,15 +39378,26 @@ public class Pyload {
      */
     public getServices_result(getServices_result other) {
       if (other.isSetSuccess()) {
-        Map<String,ServiceInfo> __this__success = new HashMap<String,ServiceInfo>();
-        for (Map.Entry<String, ServiceInfo> other_element : other.success.entrySet()) {
+        Map<String,Map<String,String>> __this__success = new HashMap<String,Map<String,String>>();
+        for (Map.Entry<String, Map<String,String>> other_element : other.success.entrySet()) {
 
           String other_element_key = other_element.getKey();
-          ServiceInfo other_element_value = other_element.getValue();
+          Map<String,String> other_element_value = other_element.getValue();
 
           String __this__success_copy_key = other_element_key;
 
-          ServiceInfo __this__success_copy_value = new ServiceInfo(other_element_value);
+          Map<String,String> __this__success_copy_value = new HashMap<String,String>();
+          for (Map.Entry<String, String> other_element_value_element : other_element_value.entrySet()) {
+
+            String other_element_value_element_key = other_element_value_element.getKey();
+            String other_element_value_element_value = other_element_value_element.getValue();
+
+            String __this__success_copy_value_copy_key = other_element_value_element_key;
+
+            String __this__success_copy_value_copy_value = other_element_value_element_value;
+
+            __this__success_copy_value.put(__this__success_copy_value_copy_key, __this__success_copy_value_copy_value);
+          }
 
           __this__success.put(__this__success_copy_key, __this__success_copy_value);
         }
@@ -36186,18 +39418,18 @@ public class Pyload {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public void putToSuccess(String key, ServiceInfo val) {
+    public void putToSuccess(String key, Map<String,String> val) {
       if (this.success == null) {
-        this.success = new HashMap<String,ServiceInfo>();
+        this.success = new HashMap<String,Map<String,String>>();
       }
       this.success.put(key, val);
     }
 
-    public Map<String,ServiceInfo> getSuccess() {
+    public Map<String,Map<String,String>> getSuccess() {
       return this.success;
     }
 
-    public getServices_result setSuccess(Map<String,ServiceInfo> success) {
+    public getServices_result setSuccess(Map<String,Map<String,String>> success) {
       this.success = success;
       return this;
     }
@@ -36223,7 +39455,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Map<String,ServiceInfo>)value);
+          setSuccess((Map<String,Map<String,String>>)value);
         }
         break;
 
@@ -36320,16 +39552,27 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map119 = iprot.readMapBegin();
-                this.success = new HashMap<String,ServiceInfo>(2*_map119.size);
-                for (int _i120 = 0; _i120 < _map119.size; ++_i120)
+                TMap _map140 = iprot.readMapBegin();
+                this.success = new HashMap<String,Map<String,String>>(2*_map140.size);
+                for (int _i141 = 0; _i141 < _map140.size; ++_i141)
                 {
-                  String _key121;
-                  ServiceInfo _val122;
-                  _key121 = iprot.readString();
-                  _val122 = new ServiceInfo();
-                  _val122.read(iprot);
-                  this.success.put(_key121, _val122);
+                  String _key142;
+                  Map<String,String> _val143;
+                  _key142 = iprot.readString();
+                  {
+                    TMap _map144 = iprot.readMapBegin();
+                    _val143 = new HashMap<String,String>(2*_map144.size);
+                    for (int _i145 = 0; _i145 < _map144.size; ++_i145)
+                    {
+                      String _key146;
+                      String _val147;
+                      _key146 = iprot.readString();
+                      _val147 = iprot.readString();
+                      _val143.put(_key146, _val147);
+                    }
+                    iprot.readMapEnd();
+                  }
+                  this.success.put(_key142, _val143);
                 }
                 iprot.readMapEnd();
               }
@@ -36354,11 +39597,19 @@ public class Pyload {
       if (this.isSetSuccess()) {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
-          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRUCT, this.success.size()));
-          for (Map.Entry<String, ServiceInfo> _iter123 : this.success.entrySet())
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.MAP, this.success.size()));
+          for (Map.Entry<String, Map<String,String>> _iter148 : this.success.entrySet())
           {
-            oprot.writeString(_iter123.getKey());
-            _iter123.getValue().write(oprot);
+            oprot.writeString(_iter148.getKey());
+            {
+              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter148.getValue().size()));
+              for (Map.Entry<String, String> _iter149 : _iter148.getValue().entrySet())
+              {
+                oprot.writeString(_iter149.getKey());
+                oprot.writeString(_iter149.getValue());
+              }
+              oprot.writeMapEnd();
+            }
           }
           oprot.writeMapEnd();
         }
@@ -36466,7 +39717,7 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.STRING)));
+          new FieldValueMetaData(TType.STRING          , "PluginName")));
       tmpMap.put(_Fields.FUNC, new FieldMetaData("func", TFieldRequirementType.DEFAULT, 
           new FieldValueMetaData(TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -37768,6 +41019,1156 @@ public class Pyload {
         sb.append("null");
       } else {
         sb.append(this.e);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getAllInfo_args implements TBase<getAllInfo_args, getAllInfo_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getAllInfo_args");
+
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getAllInfo_args.class, metaDataMap);
+    }
+
+    public getAllInfo_args() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getAllInfo_args(getAllInfo_args other) {
+    }
+
+    public getAllInfo_args deepCopy() {
+      return new getAllInfo_args(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getAllInfo_args)
+        return this.equals((getAllInfo_args)that);
+      return false;
+    }
+
+    public boolean equals(getAllInfo_args that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getAllInfo_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getAllInfo_args typedOther = (getAllInfo_args)other;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getAllInfo_args(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getAllInfo_result implements TBase<getAllInfo_result, getAllInfo_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getAllInfo_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,Map<String,String>> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING              , "PluginName"), 
+              new MapMetaData(TType.MAP, 
+                  new FieldValueMetaData(TType.STRING), 
+                  new FieldValueMetaData(TType.STRING)))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getAllInfo_result.class, metaDataMap);
+    }
+
+    public getAllInfo_result() {
+    }
+
+    public getAllInfo_result(
+      Map<String,Map<String,String>> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getAllInfo_result(getAllInfo_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,Map<String,String>> __this__success = new HashMap<String,Map<String,String>>();
+        for (Map.Entry<String, Map<String,String>> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          Map<String,String> other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          Map<String,String> __this__success_copy_value = new HashMap<String,String>();
+          for (Map.Entry<String, String> other_element_value_element : other_element_value.entrySet()) {
+
+            String other_element_value_element_key = other_element_value_element.getKey();
+            String other_element_value_element_value = other_element_value_element.getValue();
+
+            String __this__success_copy_value_copy_key = other_element_value_element_key;
+
+            String __this__success_copy_value_copy_value = other_element_value_element_value;
+
+            __this__success_copy_value.put(__this__success_copy_value_copy_key, __this__success_copy_value_copy_value);
+          }
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public getAllInfo_result deepCopy() {
+      return new getAllInfo_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, Map<String,String> val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,Map<String,String>>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,Map<String,String>> getSuccess() {
+      return this.success;
+    }
+
+    public getAllInfo_result setSuccess(Map<String,Map<String,String>> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,Map<String,String>>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getAllInfo_result)
+        return this.equals((getAllInfo_result)that);
+      return false;
+    }
+
+    public boolean equals(getAllInfo_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getAllInfo_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getAllInfo_result typedOther = (getAllInfo_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map150 = iprot.readMapBegin();
+                this.success = new HashMap<String,Map<String,String>>(2*_map150.size);
+                for (int _i151 = 0; _i151 < _map150.size; ++_i151)
+                {
+                  String _key152;
+                  Map<String,String> _val153;
+                  _key152 = iprot.readString();
+                  {
+                    TMap _map154 = iprot.readMapBegin();
+                    _val153 = new HashMap<String,String>(2*_map154.size);
+                    for (int _i155 = 0; _i155 < _map154.size; ++_i155)
+                    {
+                      String _key156;
+                      String _val157;
+                      _key156 = iprot.readString();
+                      _val157 = iprot.readString();
+                      _val153.put(_key156, _val157);
+                    }
+                    iprot.readMapEnd();
+                  }
+                  this.success.put(_key152, _val153);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.MAP, this.success.size()));
+          for (Map.Entry<String, Map<String,String>> _iter158 : this.success.entrySet())
+          {
+            oprot.writeString(_iter158.getKey());
+            {
+              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter158.getValue().size()));
+              for (Map.Entry<String, String> _iter159 : _iter158.getValue().entrySet())
+              {
+                oprot.writeString(_iter159.getKey());
+                oprot.writeString(_iter159.getValue());
+              }
+              oprot.writeMapEnd();
+            }
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getAllInfo_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getInfoByPlugin_args implements TBase<getInfoByPlugin_args, getInfoByPlugin_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getInfoByPlugin_args");
+
+    private static final TField PLUGIN_FIELD_DESC = new TField("plugin", TType.STRING, (short)1);
+
+    public String plugin;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      PLUGIN((short)1, "plugin");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // PLUGIN
+            return PLUGIN;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING          , "PluginName")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getInfoByPlugin_args.class, metaDataMap);
+    }
+
+    public getInfoByPlugin_args() {
+    }
+
+    public getInfoByPlugin_args(
+      String plugin)
+    {
+      this();
+      this.plugin = plugin;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getInfoByPlugin_args(getInfoByPlugin_args other) {
+      if (other.isSetPlugin()) {
+        this.plugin = other.plugin;
+      }
+    }
+
+    public getInfoByPlugin_args deepCopy() {
+      return new getInfoByPlugin_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.plugin = null;
+    }
+
+    public String getPlugin() {
+      return this.plugin;
+    }
+
+    public getInfoByPlugin_args setPlugin(String plugin) {
+      this.plugin = plugin;
+      return this;
+    }
+
+    public void unsetPlugin() {
+      this.plugin = null;
+    }
+
+    /** Returns true if field plugin is set (has been asigned a value) and false otherwise */
+    public boolean isSetPlugin() {
+      return this.plugin != null;
+    }
+
+    public void setPluginIsSet(boolean value) {
+      if (!value) {
+        this.plugin = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case PLUGIN:
+        if (value == null) {
+          unsetPlugin();
+        } else {
+          setPlugin((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case PLUGIN:
+        return getPlugin();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case PLUGIN:
+        return isSetPlugin();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getInfoByPlugin_args)
+        return this.equals((getInfoByPlugin_args)that);
+      return false;
+    }
+
+    public boolean equals(getInfoByPlugin_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_plugin = true && this.isSetPlugin();
+      boolean that_present_plugin = true && that.isSetPlugin();
+      if (this_present_plugin || that_present_plugin) {
+        if (!(this_present_plugin && that_present_plugin))
+          return false;
+        if (!this.plugin.equals(that.plugin))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getInfoByPlugin_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getInfoByPlugin_args typedOther = (getInfoByPlugin_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPlugin()).compareTo(typedOther.isSetPlugin());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPlugin()) {
+        lastComparison = TBaseHelper.compareTo(this.plugin, typedOther.plugin);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // PLUGIN
+            if (field.type == TType.STRING) {
+              this.plugin = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.plugin != null) {
+        oprot.writeFieldBegin(PLUGIN_FIELD_DESC);
+        oprot.writeString(this.plugin);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getInfoByPlugin_args(");
+      boolean first = true;
+
+      sb.append("plugin:");
+      if (this.plugin == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.plugin);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class getInfoByPlugin_result implements TBase<getInfoByPlugin_result, getInfoByPlugin_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("getInfoByPlugin_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,String> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING), 
+              new FieldValueMetaData(TType.STRING))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(getInfoByPlugin_result.class, metaDataMap);
+    }
+
+    public getInfoByPlugin_result() {
+    }
+
+    public getInfoByPlugin_result(
+      Map<String,String> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getInfoByPlugin_result(getInfoByPlugin_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,String> __this__success = new HashMap<String,String>();
+        for (Map.Entry<String, String> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          String other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          String __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public getInfoByPlugin_result deepCopy() {
+      return new getInfoByPlugin_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, String val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,String>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,String> getSuccess() {
+      return this.success;
+    }
+
+    public getInfoByPlugin_result setSuccess(Map<String,String> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,String>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getInfoByPlugin_result)
+        return this.equals((getInfoByPlugin_result)that);
+      return false;
+    }
+
+    public boolean equals(getInfoByPlugin_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getInfoByPlugin_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getInfoByPlugin_result typedOther = (getInfoByPlugin_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map160 = iprot.readMapBegin();
+                this.success = new HashMap<String,String>(2*_map160.size);
+                for (int _i161 = 0; _i161 < _map160.size; ++_i161)
+                {
+                  String _key162;
+                  String _val163;
+                  _key162 = iprot.readString();
+                  _val163 = iprot.readString();
+                  this.success.put(_key162, _val163);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.success.size()));
+          for (Map.Entry<String, String> _iter164 : this.success.entrySet())
+          {
+            oprot.writeString(_iter164.getKey());
+            oprot.writeString(_iter164.getValue());
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getInfoByPlugin_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
       }
       first = false;
       sb.append(")");

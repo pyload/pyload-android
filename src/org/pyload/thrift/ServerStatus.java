@@ -33,7 +33,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
   private static final TField ACTIVE_FIELD_DESC = new TField("active", TType.I16, (short)2);
   private static final TField QUEUE_FIELD_DESC = new TField("queue", TType.I16, (short)3);
   private static final TField TOTAL_FIELD_DESC = new TField("total", TType.I16, (short)4);
-  private static final TField SPEED_FIELD_DESC = new TField("speed", TType.I32, (short)5);
+  private static final TField SPEED_FIELD_DESC = new TField("speed", TType.I64, (short)5);
   private static final TField DOWNLOAD_FIELD_DESC = new TField("download", TType.BOOL, (short)6);
   private static final TField RECONNECT_FIELD_DESC = new TField("reconnect", TType.BOOL, (short)7);
 
@@ -41,7 +41,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
   public short active;
   public short queue;
   public short total;
-  public int speed;
+  public long speed;
   public boolean download;
   public boolean reconnect;
 
@@ -143,7 +143,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     tmpMap.put(_Fields.TOTAL, new FieldMetaData("total", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.I16)));
     tmpMap.put(_Fields.SPEED, new FieldMetaData("speed", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.I32)));
+        new FieldValueMetaData(TType.I64)));
     tmpMap.put(_Fields.DOWNLOAD, new FieldMetaData("download", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.BOOL)));
     tmpMap.put(_Fields.RECONNECT, new FieldMetaData("reconnect", TFieldRequirementType.DEFAULT, 
@@ -160,7 +160,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     short active,
     short queue,
     short total,
-    int speed,
+    long speed,
     boolean download,
     boolean reconnect)
   {
@@ -310,11 +310,11 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     __isset_bit_vector.set(__TOTAL_ISSET_ID, value);
   }
 
-  public int getSpeed() {
+  public long getSpeed() {
     return this.speed;
   }
 
-  public ServerStatus setSpeed(int speed) {
+  public ServerStatus setSpeed(long speed) {
     this.speed = speed;
     setSpeedIsSet(true);
     return this;
@@ -417,7 +417,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
       if (value == null) {
         unsetSpeed();
       } else {
-        setSpeed((Integer)value);
+        setSpeed((Long)value);
       }
       break;
 
@@ -455,7 +455,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
       return new Short(getTotal());
 
     case SPEED:
-      return new Integer(getSpeed());
+      return new Long(getSpeed());
 
     case DOWNLOAD:
       return new Boolean(isDownload());
@@ -704,8 +704,8 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
           }
           break;
         case 5: // SPEED
-          if (field.type == TType.I32) {
-            this.speed = iprot.readI32();
+          if (field.type == TType.I64) {
+            this.speed = iprot.readI64();
             setSpeedIsSet(true);
           } else { 
             TProtocolUtil.skip(iprot, field.type);
@@ -755,7 +755,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     oprot.writeI16(this.total);
     oprot.writeFieldEnd();
     oprot.writeFieldBegin(SPEED_FIELD_DESC);
-    oprot.writeI32(this.speed);
+    oprot.writeI64(this.speed);
     oprot.writeFieldEnd();
     oprot.writeFieldBegin(DOWNLOAD_FIELD_DESC);
     oprot.writeBool(this.download);
