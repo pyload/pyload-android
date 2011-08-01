@@ -19,7 +19,7 @@ public class GuiTask {
 		// Nop
 		this.success = new Runnable() {
 			
-			@Override
+			
 			public void run() {				
 			}
 		};

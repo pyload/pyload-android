@@ -316,7 +316,7 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     return new DownloadInfo(this);
   }
 
-  @Override
+  
   public void clear() {
     setFidIsSet(false);
     this.fid = 0;
@@ -958,7 +958,7 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -1118,7 +1118,7 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -1511,7 +1511,7 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("DownloadInfo(");
     boolean first = true;

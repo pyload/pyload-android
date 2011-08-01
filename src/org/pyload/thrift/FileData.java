@@ -268,7 +268,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     return new FileData(this);
   }
 
-  @Override
+  
   public void clear() {
     setFidIsSet(false);
     this.fid = 0;
@@ -758,7 +758,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -882,7 +882,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -1190,7 +1190,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("FileData(");
     boolean first = true;

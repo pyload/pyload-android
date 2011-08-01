@@ -25,7 +25,7 @@ public class FileChooser extends ListActivity {
 	private File currentDir;
 	private FileArrayAdapter adapter;
 
-	@Override
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		currentDir = new File("/sdcard/");
@@ -60,7 +60,7 @@ public class FileChooser extends ListActivity {
 		this.setListAdapter(adapter);
 	}
 
-	@Override
+	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
@@ -106,7 +106,7 @@ class Option implements Comparable<Option> {
 		return path;
 	}
 
-	@Override
+	
 	public int compareTo(Option o) {
 		if (this.name != null)
 			return this.name.toLowerCase().compareTo(o.getName().toLowerCase());
@@ -133,7 +133,7 @@ class FileArrayAdapter extends ArrayAdapter<Option> {
 		return items.get(i);
 	}
 
-	@Override
+	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		if (v == null) {

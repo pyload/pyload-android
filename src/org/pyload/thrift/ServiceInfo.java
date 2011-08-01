@@ -139,7 +139,7 @@ public class ServiceInfo implements TBase<ServiceInfo, ServiceInfo._Fields>, jav
     return new ServiceInfo(this);
   }
 
-  @Override
+  
   public void clear() {
     this.funcs = null;
   }
@@ -214,7 +214,7 @@ public class ServiceInfo implements TBase<ServiceInfo, ServiceInfo._Fields>, jav
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -239,7 +239,7 @@ public class ServiceInfo implements TBase<ServiceInfo, ServiceInfo._Fields>, jav
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -330,7 +330,7 @@ public class ServiceInfo implements TBase<ServiceInfo, ServiceInfo._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ServiceInfo(");
     boolean first = true;

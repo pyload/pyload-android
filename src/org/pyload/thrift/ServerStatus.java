@@ -200,7 +200,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     return new ServerStatus(this);
   }
 
-  @Override
+  
   public void clear() {
     setPauseIsSet(false);
     this.pause = false;
@@ -492,7 +492,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -571,7 +571,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -767,7 +767,7 @@ public class ServerStatus implements TBase<ServerStatus, ServerStatus._Fields>, 
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ServerStatus(");
     boolean first = true;

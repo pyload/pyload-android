@@ -164,7 +164,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     return new ServiceCall(this);
   }
 
-  @Override
+  
   public void clear() {
     this.plugin = null;
     this.func = null;
@@ -357,7 +357,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -409,7 +409,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -566,7 +566,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ServiceCall(");
     boolean first = true;

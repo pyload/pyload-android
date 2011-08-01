@@ -173,7 +173,7 @@ public class Event implements TBase<Event, Event._Fields>, java.io.Serializable,
     return new Event(this);
   }
 
-  @Override
+  
   public void clear() {
     this.event = null;
     setIdIsSet(false);
@@ -367,7 +367,7 @@ public class Event implements TBase<Event, Event._Fields>, java.io.Serializable,
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -419,7 +419,7 @@ public class Event implements TBase<Event, Event._Fields>, java.io.Serializable,
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -561,7 +561,7 @@ public class Event implements TBase<Event, Event._Fields>, java.io.Serializable,
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("Event(");
     boolean first = true;

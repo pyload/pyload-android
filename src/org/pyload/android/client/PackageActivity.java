@@ -49,7 +49,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 	private final Runnable mUpdateResults = new Runnable() {
 
-		@Override
+		
 		public void run() {
 			onDataReceived();
 		}
@@ -69,19 +69,19 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 		registerForContextMenu(getExpandableListView());
 	}
 
-	@Override
+	
 	protected void onPause() {
 		super.onPause();
 		app.clearTasks();
 	}
 
-	@Override
+	
 	protected void onResume() {
 		super.onResume();
 		refresh();
 	}
 
-	@Override
+	
 	public boolean onChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
 
@@ -92,7 +92,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 		return true;
 	}
 
-	@Override
+	
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case FILEINFO_DIALOG:
@@ -111,7 +111,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 			Button button = (Button) dialog.findViewById(R.id.close);
 			button.setOnClickListener(new OnClickListener() {
-				@Override
+				
 				public void onClick(View arg0) {
 					dialog.dismiss();
 				}
@@ -124,7 +124,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 		}
 	}
 
-	@Override
+	
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		switch (id) {
 		case FILEINFO_DIALOG:
@@ -183,7 +183,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 		GuiTask task = new GuiTask(new Runnable() {
 
-			@Override
+			
 			public void run() {
 				client = app.getClient();
 				if (dest == 0)
@@ -208,7 +208,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 				Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
+	
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		MenuInflater inflater = getMenuInflater();
@@ -216,7 +216,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 		menu.setHeaderTitle(R.string.choose_action);
 	}
 
-	@Override
+	
 	public boolean onContextItemSelected(MenuItem item) {
 
 		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item
@@ -236,7 +236,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.restart:
 
 				app.addTask(new GuiTask(new Runnable() {
-					@Override
+					
 					public void run() {
 						client = app.getClient();
 						client.restartFile(file.fid);
@@ -247,7 +247,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.delete:
 
 				app.addTask(new GuiTask(new Runnable() {
-					@Override
+					
 					public void run() {
 						client = app.getClient();
 						ArrayList<Integer> fids = new ArrayList<Integer>();
@@ -279,7 +279,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.restart:
 
 				app.addTask(new GuiTask(new Runnable() {
-					@Override
+					
 					public void run() {
 						client = app.getClient();
 						client.restartPackage(pack.pid);
@@ -290,7 +290,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.delete:
 
 				app.addTask(new GuiTask(new Runnable() {
-					@Override
+					
 					public void run() {
 						client = app.getClient();
 						ArrayList<Integer> pids = new ArrayList<Integer>();
@@ -304,7 +304,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.move:
 
 				app.addTask(new GuiTask(new Runnable() {
-					@Override
+					
 					public void run() {
 						client = app.getClient();
 						Destination newDest;
@@ -371,37 +371,37 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		notifyDataSetChanged();
 	}
 
-	@Override
+	
 	public Object getChild(int group, int child) {
 		return data.get(group).links.get(child);
 	}
 
-	@Override
+	
 	public long getChildId(int group, int child) {
 		return child;
 	}
 
-	@Override
+	
 	public int getChildrenCount(int group) {
 		return data.get(group).links.size();
 	}
 
-	@Override
+	
 	public Object getGroup(int group) {
 		return data.get(group);
 	}
 
-	@Override
+	
 	public int getGroupCount() {
 		return data.size();
 	}
 
-	@Override
+	
 	public long getGroupId(int group) {
 		return group;
 	}
 
-	@Override
+	
 	public View getGroupView(int group, boolean isExpanded, View convertView,
 			ViewGroup parent) {
 
@@ -419,7 +419,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	@Override
+	
 	public View getChildView(int group, int child, boolean isLastChild,
 			View convertView, ViewGroup parent) {
 
@@ -466,12 +466,12 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	@Override
+	
 	public boolean hasStableIds() {
 		return false;
 	}
 
-	@Override
+	
 	public boolean isChildSelectable(int group, int child) {
 		return true;
 	}

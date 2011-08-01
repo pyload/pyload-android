@@ -33,7 +33,7 @@ public class pyLoad extends TabActivity {
 	private TabHost tabHost;
 
 	/** Called when the activity is first created. */
-	@Override
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -91,7 +91,7 @@ public class pyLoad extends TabActivity {
 		tabHost.setCurrentTab(0);
 	}
 
-	@Override
+	
 	protected void onStart() {
 		super.onStart();
 		Intent intent = getIntent();
@@ -112,14 +112,14 @@ public class pyLoad extends TabActivity {
 		}
 	}
 
-	@Override
+	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
 
-	@Override
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add_links:
@@ -149,7 +149,7 @@ public class pyLoad extends TabActivity {
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				@Override
+				
 				public void run() {
 					Client client = app.getClient();
 					client.togglePause();
@@ -162,7 +162,7 @@ public class pyLoad extends TabActivity {
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				@Override
+				
 				public void run() {
 					Client client = app.getClient();
 					client.toggleReconnect();
@@ -171,12 +171,30 @@ public class pyLoad extends TabActivity {
 
 			return true;
 
+		
+		case R.id.toggle_limit_speed:
+			
+			app.addTask(new GuiTask(new Runnable() {
+				
+				
+				public void run() {
+					Client client = app.getClient();
+					
+					String limitspeed = client.getConfigValue("download", "limit_speed", "core");
+
+					if(limitspeed.equals("True")) 
+						{client.setConfigValue("download", "limit_speed", "False", "core");}
+					else
+						{client.setConfigValue("download", "limit_speed", "True", "core");}
+				}
+			}, app.handleSuccess));
+		
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	@Override
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		switch (requestCode) {
@@ -205,7 +223,7 @@ public class pyLoad extends TabActivity {
 
 				app.addTask(new GuiTask(new Runnable() {
 
-					@Override
+					
 					public void run() {
 						Client client = app.getClient();
 
@@ -260,7 +278,7 @@ public class pyLoad extends TabActivity {
 
 	}
 
-	@Override
+	
 	protected void onNewIntent(Intent intent) {
 		Log.d("pyLoad", "got Intent");
 		super.onNewIntent(intent);

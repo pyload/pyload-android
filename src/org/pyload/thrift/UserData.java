@@ -176,7 +176,7 @@ public class UserData implements TBase<UserData, UserData._Fields>, java.io.Seri
     return new UserData(this);
   }
 
-  @Override
+  
   public void clear() {
     this.name = null;
     this.email = null;
@@ -392,7 +392,7 @@ public class UserData implements TBase<UserData, UserData._Fields>, java.io.Seri
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -453,7 +453,7 @@ public class UserData implements TBase<UserData, UserData._Fields>, java.io.Seri
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -610,7 +610,7 @@ public class UserData implements TBase<UserData, UserData._Fields>, java.io.Seri
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("UserData(");
     boolean first = true;

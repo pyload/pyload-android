@@ -5,29 +5,22 @@
  */
 package org.pyload.thrift;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.EnumMap;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.EnumSet;
 import java.util.Collections;
-import java.util.BitSet;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.apache.thrift.*;
-import org.apache.thrift.async.*;
 import org.apache.thrift.meta_data.*;
-import org.apache.thrift.transport.*;
 import org.apache.thrift.protocol.*;
 
 public class AccountData implements TBase<AccountData, AccountData._Fields>, java.io.Serializable, Cloneable {
-  private static final TStruct STRUCT_DESC = new TStruct("AccountData");
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+private static final TStruct STRUCT_DESC = new TStruct("AccountData");
 
   private static final TField TYPE_FIELD_DESC = new TField("type", TType.STRING, (short)1);
   private static final TField LOGIN_FIELD_DESC = new TField("login", TType.STRING, (short)2);
@@ -171,7 +164,7 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
     return new AccountData(this);
   }
 
-  @Override
+  
   public void clear() {
     this.type = null;
     this.login = null;
@@ -360,7 +353,7 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -412,7 +405,7 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -573,7 +566,7 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("AccountData(");
     boolean first = true;

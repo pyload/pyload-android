@@ -146,7 +146,7 @@ public class pyLoadApp extends Application {
 	}
 
 	final public Runnable handleException = new Runnable() {
-		@Override
+		
 		public void run() {
 			onException();
 		}
@@ -179,7 +179,7 @@ public class pyLoadApp extends Application {
 
 	final public Runnable handleSuccess = new Runnable() {
 
-		@Override
+		
 		public void run() {
 			onSuccess();
 		}

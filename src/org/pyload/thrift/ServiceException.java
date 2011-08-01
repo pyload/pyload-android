@@ -125,7 +125,7 @@ public class ServiceException extends Exception implements TBase<ServiceExceptio
     return new ServiceException(this);
   }
 
-  @Override
+  
   public void clear() {
     this.msg = null;
   }
@@ -189,7 +189,7 @@ public class ServiceException extends Exception implements TBase<ServiceExceptio
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -214,7 +214,7 @@ public class ServiceException extends Exception implements TBase<ServiceExceptio
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -285,7 +285,7 @@ public class ServiceException extends Exception implements TBase<ServiceExceptio
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ServiceException(");
     boolean first = true;

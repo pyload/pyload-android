@@ -38,17 +38,18 @@ public final class R {
         public static final int inbox=0x7f020015;
         public static final int menu_clock=0x7f020016;
         public static final int redo=0x7f020017;
-        public static final int stop=0x7f020018;
-        public static final int tag=0x7f020019;
-        public static final int tick=0x7f02001a;
-        public static final int todo=0x7f02001b;
+        public static final int stat_sys_throttled=0x7f020018;
+        public static final int stop=0x7f020019;
+        public static final int tag=0x7f02001a;
+        public static final int tick=0x7f02001b;
+        public static final int todo=0x7f02001c;
     }
     public static final class id {
         public static final int ScrollView01=0x7f080000;
         public static final int TextView01=0x7f080011;
         public static final int TextView02=0x7f080012;
         public static final int TextViewTitle=0x7f080001;
-        public static final int abort=0x7f080037;
+        public static final int abort=0x7f080038;
         public static final int active=0x7f08002a;
         public static final int add_links=0x7f080032;
         public static final int button_add=0x7f08000a;
@@ -56,7 +57,7 @@ public final class R {
         public static final int button_pick=0x7f080008;
         public static final int cancel=0x7f080010;
         public static final int close=0x7f080022;
-        public static final int delete=0x7f080039;
+        public static final int delete=0x7f08003a;
         public static final int destination=0x7f080005;
         public static final int enter=0x7f08000f;
         public static final int error=0x7f08001d;
@@ -81,7 +82,7 @@ public final class R {
         public static final int linearLayout1=0x7f080006;
         public static final int linearLayout2=0x7f080009;
         public static final int links=0x7f080003;
-        public static final int move=0x7f08003a;
+        public static final int move=0x7f08003b;
         public static final int name=0x7f080015;
         public static final int new_packname=0x7f080002;
         public static final int packageValue=0x7f08001f;
@@ -90,10 +91,10 @@ public final class R {
         public static final int plugin=0x7f080017;
         public static final int progress=0x7f08002b;
         public static final int reconnect=0x7f080026;
-        public static final int refresh=0x7f080035;
+        public static final int refresh=0x7f080036;
         public static final int relativeLayout=0x7f080013;
-        public static final int restart=0x7f080038;
-        public static final int settings=0x7f080036;
+        public static final int restart=0x7f080039;
+        public static final int settings=0x7f080037;
         public static final int size=0x7f08001b;
         public static final int size_done=0x7f08002c;
         public static final int speed=0x7f080028;
@@ -101,6 +102,7 @@ public final class R {
         public static final int status_icon=0x7f08002f;
         public static final int status_server=0x7f080024;
         public static final int text=0x7f08000e;
+        public static final int toggle_limit_speed=0x7f080035;
         public static final int toggle_reconnect=0x7f080034;
         public static final int toggle_server=0x7f080033;
     }
@@ -186,6 +188,7 @@ public final class R {
         public static final int ssl_desc=0x7f050030;
         public static final int status=0x7f05003f;
         public static final int success=0x7f05001b;
+        public static final int toggle_limit_speed=0x7f050044;
         public static final int toggle_reconnect=0x7f050027;
         public static final int toggle_server=0x7f050026;
         public static final int username=0x7f050010;

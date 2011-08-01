@@ -2,8 +2,9 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add_links" android:titleCondensed="@string/add_links" android:title="@string/add_links" android:icon="@drawable/ic_menu_add"></item>
-    <item android:icon="@drawable/ic_lock_power_off" android:title="@string/toggle_server" android:id="@+id/toggle_server"></item><item android:id="@+id/toggle_reconnect" android:icon="@drawable/ic_menu_rotate" android:title="@string/toggle_reconnect"></item><item android:id="@+id/refresh" android:titleCondensed="@string/refresh" android:title="@string/refresh" android:icon="@drawable/ic_menu_refresh"></item>
+    <item android:icon="@drawable/ic_lock_power_off" android:title="@string/toggle_server" android:id="@+id/toggle_server"></item><item android:id="@+id/toggle_reconnect" android:icon="@drawable/ic_menu_rotate" android:title="@string/toggle_reconnect"></item><item android:title="@string/toggle_limit_speed" android:id="@+id/toggle_limit_speed" android:icon="@drawable/stat_sys_throttled"></item><item android:id="@+id/refresh" android:titleCondensed="@string/refresh" android:title="@string/refresh" android:icon="@drawable/ic_menu_refresh"></item>
     <item android:id="@+id/settings" android:titleCondensed="@string/settings" android:title="@string/settings" android:icon="@drawable/ic_menu_manage"></item>
+    
     
     
 </menu>

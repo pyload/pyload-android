@@ -30,9 +30,13 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TProtocolException;
 import org.apache.thrift.protocol.TStruct;
 
-public abstract class TUnion<T extends TUnion, F extends TFieldIdEnum> implements TBase<T, F> {
+public abstract class TUnion<T extends TUnion<?, ?>, F extends TFieldIdEnum> implements TBase<T, F> {
 
-  protected Object value_;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+protected Object value_;
   protected F setField_;
 
   protected TUnion() {
@@ -52,40 +56,41 @@ public abstract class TUnion<T extends TUnion, F extends TFieldIdEnum> implement
     value_ = deepCopyObject(other.value_);
   }
 
-  private static Object deepCopyObject(Object o) {
+  @SuppressWarnings("unchecked")
+private static Object deepCopyObject(Object o) {
     if (o instanceof TBase) {
-      return ((TBase)o).deepCopy();
+      return ((TBase<?, ?>)o).deepCopy();
     } else if (o instanceof ByteBuffer) {
       return TBaseHelper.copyBinary((ByteBuffer)o);
     } else if (o instanceof List) {
-      return deepCopyList((List)o);
+      return deepCopyList((List<?>)o);
     } else if (o instanceof Set) {
-      return deepCopySet((Set)o);
+      return deepCopySet((Set<?>)o);
     } else if (o instanceof Map) {
-      return deepCopyMap((Map)o);
+      return deepCopyMap((Map<Object, Object>)o);
     } else {
       return o;
     }
   }
 
-  private static Map deepCopyMap(Map<Object, Object> map) {
-    Map copy = new HashMap();
+  private static Map<Object, Object> deepCopyMap(Map<Object, Object> map) {
+    Map<Object, Object> copy = new HashMap<Object, Object>();
     for (Map.Entry<Object, Object> entry : map.entrySet()) {
       copy.put(deepCopyObject(entry.getKey()), deepCopyObject(entry.getValue()));
     }
     return copy;
   }
 
-  private static Set deepCopySet(Set set) {
-    Set copy = new HashSet();
+  private static Set<Object> deepCopySet(Set<?> set) {
+    Set<Object> copy = new HashSet<Object>();
     for (Object o : set) {
       copy.add(deepCopyObject(o));
     }
     return copy;
   }
 
-  private static List deepCopyList(List list) {
-    List copy = new ArrayList(list.size());
+  private static List<Object> deepCopyList(List<?> list) {
+    List<Object> copy = new ArrayList<Object>(list.size());
     for (Object o : list) {
       copy.add(deepCopyObject(o));
     }

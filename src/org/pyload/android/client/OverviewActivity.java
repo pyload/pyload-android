@@ -62,14 +62,14 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	private final Handler mHandler = new Handler();
 	private final Runnable mUpdateResults = new Runnable() {
-		@Override
+		
 		public void run() {
 			onDataReceived();
 		}
 	};
 	private final Runnable runUpdate = new Runnable() {
 
-		@Override
+		
 		public void run() {
 			client = app.getClient();
 			downloads = client.statusDownloads();
@@ -84,7 +84,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	private final Runnable cancelUpdate = new Runnable() {
 
-		@Override
+		
 		public void run() {
 			stopUpdate();
 		}
@@ -98,7 +98,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		}
 	};
 
-	@Override
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.overview);	
@@ -120,7 +120,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		
 	}
 
-	@Override
+	
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		MenuInflater inflater = getMenuInflater();
@@ -128,7 +128,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		menu.setHeaderTitle(R.string.choose_action);
 	}
 
-	@Override
+	
 	public boolean onContextItemSelected(MenuItem item) {
 
 		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
@@ -140,7 +140,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				@Override
+				
 				public void run() {
 					client = app.getClient();
 					ArrayList<Integer> fids = new ArrayList<Integer>();
@@ -148,7 +148,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 					client.stopDownloads(fids);
 				}
 			}, new Runnable() {
-				@Override
+				
 				public void run() {
 					refresh();
 				}
@@ -203,14 +203,14 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		app.addTask(task);
 	}
 
-	@Override
+	
 	protected void onResume() {
 		super.onResume();
 
 		startUpdate();
 	}
 
-	@Override
+	
 	protected void onPause() {
 		super.onPause();
 
@@ -218,7 +218,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		stopUpdate();
 	}
 
-	@Override
+	
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case CAPTCHA_DIALOG:
@@ -241,10 +241,10 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 			enter.setOnClickListener(new OnClickListener() {
 
-				@Override
+				
 				public void onClick(View arg0) {
 					app.addTask(new GuiTask(new Runnable() {
-						@Override
+						
 						public void run() {
 							String result = text.getText().toString();
 							Client client = app.getClient();
@@ -261,7 +261,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 			Button cancel = (Button) dialog.findViewById(R.id.cancel);
 
 			cancel.setOnClickListener(new OnClickListener() {
-				@Override
+				
 				public void onClick(View arg0) {
 					dialog.dismiss();
 				}
@@ -278,7 +278,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	}
 
-	@Override
+	
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		switch (id) {
 		case CAPTCHA_DIALOG:
@@ -296,7 +296,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		}
 	}
 
-	@Override
+	
 	public void onDismiss(DialogInterface arg0) {
 		captcha = null;
 		dialogOpen = false;
@@ -341,22 +341,22 @@ class OverviewAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	@Override
+	
 	public int getCount() {
 		return downloads.size();
 	}
 
-	@Override
+	
 	public Object getItem(int id) {
 		return downloads.get(id);
 	}
 
-	@Override
+	
 	public long getItemId(int pos) {
 		return pos;
 	}
 
-	@Override
+	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		DownloadInfo info = downloads.get(position);
 		if (convertView == null) {
@@ -411,7 +411,7 @@ class OverviewAdapter extends BaseAdapter {
 
 	}
 
-	@Override
+	
 	public boolean hasStableIds() {
 		return false;
 	}
