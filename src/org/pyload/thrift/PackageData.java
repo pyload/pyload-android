@@ -36,9 +36,12 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
   private static final TField PASSWORD_FIELD_DESC = new TField("password", TType.STRING, (short)5);
   private static final TField DEST_FIELD_DESC = new TField("dest", TType.I32, (short)6);
   private static final TField ORDER_FIELD_DESC = new TField("order", TType.I16, (short)7);
-  private static final TField PRIORITY_FIELD_DESC = new TField("priority", TType.BYTE, (short)8);
-  private static final TField FIDS_FIELD_DESC = new TField("fids", TType.LIST, (short)9);
-  private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)10);
+  private static final TField LINKSDONE_FIELD_DESC = new TField("linksdone", TType.I16, (short)8);
+  private static final TField SIZEDONE_FIELD_DESC = new TField("sizedone", TType.I64, (short)9);
+  private static final TField SIZETOTAL_FIELD_DESC = new TField("sizetotal", TType.I64, (short)10);
+  private static final TField LINKSTOTAL_FIELD_DESC = new TField("linkstotal", TType.I16, (short)11);
+  private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)12);
+  private static final TField FIDS_FIELD_DESC = new TField("fids", TType.LIST, (short)13);
 
   public int pid;
   public String name;
@@ -51,9 +54,12 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
    */
   public Destination dest;
   public short order;
-  public byte priority;
-  public List<Integer> fids;
+  public short linksdone;
+  public long sizedone;
+  public long sizetotal;
+  public short linkstotal;
   public List<FileData> links;
+  public List<Integer> fids;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -68,9 +74,12 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
      */
     DEST((short)6, "dest"),
     ORDER((short)7, "order"),
-    PRIORITY((short)8, "priority"),
-    FIDS((short)9, "fids"),
-    LINKS((short)10, "links");
+    LINKSDONE((short)8, "linksdone"),
+    SIZEDONE((short)9, "sizedone"),
+    SIZETOTAL((short)10, "sizetotal"),
+    LINKSTOTAL((short)11, "linkstotal"),
+    LINKS((short)12, "links"),
+    FIDS((short)13, "fids");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -99,12 +108,18 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
           return DEST;
         case 7: // ORDER
           return ORDER;
-        case 8: // PRIORITY
-          return PRIORITY;
-        case 9: // FIDS
-          return FIDS;
-        case 10: // LINKS
+        case 8: // LINKSDONE
+          return LINKSDONE;
+        case 9: // SIZEDONE
+          return SIZEDONE;
+        case 10: // SIZETOTAL
+          return SIZETOTAL;
+        case 11: // LINKSTOTAL
+          return LINKSTOTAL;
+        case 12: // LINKS
           return LINKS;
+        case 13: // FIDS
+          return FIDS;
         default:
           return null;
       }
@@ -147,8 +162,11 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
   // isset id assignments
   private static final int __PID_ISSET_ID = 0;
   private static final int __ORDER_ISSET_ID = 1;
-  private static final int __PRIORITY_ISSET_ID = 2;
-  private BitSet __isset_bit_vector = new BitSet(3);
+  private static final int __LINKSDONE_ISSET_ID = 2;
+  private static final int __SIZEDONE_ISSET_ID = 3;
+  private static final int __SIZETOTAL_ISSET_ID = 4;
+  private static final int __LINKSTOTAL_ISSET_ID = 5;
+  private BitSet __isset_bit_vector = new BitSet(6);
 
   public static final Map<_Fields, FieldMetaData> metaDataMap;
   static {
@@ -167,14 +185,20 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         new EnumMetaData(TType.ENUM, Destination.class)));
     tmpMap.put(_Fields.ORDER, new FieldMetaData("order", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.I16)));
-    tmpMap.put(_Fields.PRIORITY, new FieldMetaData("priority", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.BYTE        , "Priority")));
-    tmpMap.put(_Fields.FIDS, new FieldMetaData("fids", TFieldRequirementType.OPTIONAL, 
-        new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.I32            , "FileID"))));
+    tmpMap.put(_Fields.LINKSDONE, new FieldMetaData("linksdone", TFieldRequirementType.OPTIONAL, 
+        new FieldValueMetaData(TType.I16)));
+    tmpMap.put(_Fields.SIZEDONE, new FieldMetaData("sizedone", TFieldRequirementType.OPTIONAL, 
+        new FieldValueMetaData(TType.I64)));
+    tmpMap.put(_Fields.SIZETOTAL, new FieldMetaData("sizetotal", TFieldRequirementType.OPTIONAL, 
+        new FieldValueMetaData(TType.I64)));
+    tmpMap.put(_Fields.LINKSTOTAL, new FieldMetaData("linkstotal", TFieldRequirementType.OPTIONAL, 
+        new FieldValueMetaData(TType.I16)));
     tmpMap.put(_Fields.LINKS, new FieldMetaData("links", TFieldRequirementType.OPTIONAL, 
         new ListMetaData(TType.LIST, 
             new StructMetaData(TType.STRUCT, FileData.class))));
+    tmpMap.put(_Fields.FIDS, new FieldMetaData("fids", TFieldRequirementType.OPTIONAL, 
+        new ListMetaData(TType.LIST, 
+            new FieldValueMetaData(TType.I32            , "FileID"))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     FieldMetaData.addStructMetaDataMap(PackageData.class, metaDataMap);
   }
@@ -189,8 +213,7 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     String site,
     String password,
     Destination dest,
-    short order,
-    byte priority)
+    short order)
   {
     this();
     this.pid = pid;
@@ -202,8 +225,6 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     this.dest = dest;
     this.order = order;
     setOrderIsSet(true);
-    this.priority = priority;
-    setPriorityIsSet(true);
   }
 
   /**
@@ -229,14 +250,10 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
       this.dest = other.dest;
     }
     this.order = other.order;
-    this.priority = other.priority;
-    if (other.isSetFids()) {
-      List<Integer> __this__fids = new ArrayList<Integer>();
-      for (Integer other_element : other.fids) {
-        __this__fids.add(other_element);
-      }
-      this.fids = __this__fids;
-    }
+    this.linksdone = other.linksdone;
+    this.sizedone = other.sizedone;
+    this.sizetotal = other.sizetotal;
+    this.linkstotal = other.linkstotal;
     if (other.isSetLinks()) {
       List<FileData> __this__links = new ArrayList<FileData>();
       for (FileData other_element : other.links) {
@@ -244,13 +261,20 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
       }
       this.links = __this__links;
     }
+    if (other.isSetFids()) {
+      List<Integer> __this__fids = new ArrayList<Integer>();
+      for (Integer other_element : other.fids) {
+        __this__fids.add(other_element);
+      }
+      this.fids = __this__fids;
+    }
   }
 
   public PackageData deepCopy() {
     return new PackageData(this);
   }
 
-  
+  @Override
   public void clear() {
     setPidIsSet(false);
     this.pid = 0;
@@ -261,10 +285,16 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     this.dest = null;
     setOrderIsSet(false);
     this.order = 0;
-    setPriorityIsSet(false);
-    this.priority = 0;
-    this.fids = null;
+    setLinksdoneIsSet(false);
+    this.linksdone = 0;
+    setSizedoneIsSet(false);
+    this.sizedone = 0;
+    setSizetotalIsSet(false);
+    this.sizetotal = 0;
+    setLinkstotalIsSet(false);
+    this.linkstotal = 0;
     this.links = null;
+    this.fids = null;
   }
 
   public int getPid() {
@@ -441,66 +471,96 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     __isset_bit_vector.set(__ORDER_ISSET_ID, value);
   }
 
-  public byte getPriority() {
-    return this.priority;
+  public short getLinksdone() {
+    return this.linksdone;
   }
 
-  public PackageData setPriority(byte priority) {
-    this.priority = priority;
-    setPriorityIsSet(true);
+  public PackageData setLinksdone(short linksdone) {
+    this.linksdone = linksdone;
+    setLinksdoneIsSet(true);
     return this;
   }
 
-  public void unsetPriority() {
-    __isset_bit_vector.clear(__PRIORITY_ISSET_ID);
+  public void unsetLinksdone() {
+    __isset_bit_vector.clear(__LINKSDONE_ISSET_ID);
   }
 
-  /** Returns true if field priority is set (has been asigned a value) and false otherwise */
-  public boolean isSetPriority() {
-    return __isset_bit_vector.get(__PRIORITY_ISSET_ID);
+  /** Returns true if field linksdone is set (has been asigned a value) and false otherwise */
+  public boolean isSetLinksdone() {
+    return __isset_bit_vector.get(__LINKSDONE_ISSET_ID);
   }
 
-  public void setPriorityIsSet(boolean value) {
-    __isset_bit_vector.set(__PRIORITY_ISSET_ID, value);
+  public void setLinksdoneIsSet(boolean value) {
+    __isset_bit_vector.set(__LINKSDONE_ISSET_ID, value);
   }
 
-  public int getFidsSize() {
-    return (this.fids == null) ? 0 : this.fids.size();
+  public long getSizedone() {
+    return this.sizedone;
   }
 
-  public java.util.Iterator<Integer> getFidsIterator() {
-    return (this.fids == null) ? null : this.fids.iterator();
-  }
-
-  public void addToFids(int elem) {
-    if (this.fids == null) {
-      this.fids = new ArrayList<Integer>();
-    }
-    this.fids.add(elem);
-  }
-
-  public List<Integer> getFids() {
-    return this.fids;
-  }
-
-  public PackageData setFids(List<Integer> fids) {
-    this.fids = fids;
+  public PackageData setSizedone(long sizedone) {
+    this.sizedone = sizedone;
+    setSizedoneIsSet(true);
     return this;
   }
 
-  public void unsetFids() {
-    this.fids = null;
+  public void unsetSizedone() {
+    __isset_bit_vector.clear(__SIZEDONE_ISSET_ID);
   }
 
-  /** Returns true if field fids is set (has been asigned a value) and false otherwise */
-  public boolean isSetFids() {
-    return this.fids != null;
+  /** Returns true if field sizedone is set (has been asigned a value) and false otherwise */
+  public boolean isSetSizedone() {
+    return __isset_bit_vector.get(__SIZEDONE_ISSET_ID);
   }
 
-  public void setFidsIsSet(boolean value) {
-    if (!value) {
-      this.fids = null;
-    }
+  public void setSizedoneIsSet(boolean value) {
+    __isset_bit_vector.set(__SIZEDONE_ISSET_ID, value);
+  }
+
+  public long getSizetotal() {
+    return this.sizetotal;
+  }
+
+  public PackageData setSizetotal(long sizetotal) {
+    this.sizetotal = sizetotal;
+    setSizetotalIsSet(true);
+    return this;
+  }
+
+  public void unsetSizetotal() {
+    __isset_bit_vector.clear(__SIZETOTAL_ISSET_ID);
+  }
+
+  /** Returns true if field sizetotal is set (has been asigned a value) and false otherwise */
+  public boolean isSetSizetotal() {
+    return __isset_bit_vector.get(__SIZETOTAL_ISSET_ID);
+  }
+
+  public void setSizetotalIsSet(boolean value) {
+    __isset_bit_vector.set(__SIZETOTAL_ISSET_ID, value);
+  }
+
+  public short getLinkstotal() {
+    return this.linkstotal;
+  }
+
+  public PackageData setLinkstotal(short linkstotal) {
+    this.linkstotal = linkstotal;
+    setLinkstotalIsSet(true);
+    return this;
+  }
+
+  public void unsetLinkstotal() {
+    __isset_bit_vector.clear(__LINKSTOTAL_ISSET_ID);
+  }
+
+  /** Returns true if field linkstotal is set (has been asigned a value) and false otherwise */
+  public boolean isSetLinkstotal() {
+    return __isset_bit_vector.get(__LINKSTOTAL_ISSET_ID);
+  }
+
+  public void setLinkstotalIsSet(boolean value) {
+    __isset_bit_vector.set(__LINKSTOTAL_ISSET_ID, value);
   }
 
   public int getLinksSize() {
@@ -539,6 +599,45 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
   public void setLinksIsSet(boolean value) {
     if (!value) {
       this.links = null;
+    }
+  }
+
+  public int getFidsSize() {
+    return (this.fids == null) ? 0 : this.fids.size();
+  }
+
+  public java.util.Iterator<Integer> getFidsIterator() {
+    return (this.fids == null) ? null : this.fids.iterator();
+  }
+
+  public void addToFids(int elem) {
+    if (this.fids == null) {
+      this.fids = new ArrayList<Integer>();
+    }
+    this.fids.add(elem);
+  }
+
+  public List<Integer> getFids() {
+    return this.fids;
+  }
+
+  public PackageData setFids(List<Integer> fids) {
+    this.fids = fids;
+    return this;
+  }
+
+  public void unsetFids() {
+    this.fids = null;
+  }
+
+  /** Returns true if field fids is set (has been asigned a value) and false otherwise */
+  public boolean isSetFids() {
+    return this.fids != null;
+  }
+
+  public void setFidsIsSet(boolean value) {
+    if (!value) {
+      this.fids = null;
     }
   }
 
@@ -600,19 +699,35 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
       }
       break;
 
-    case PRIORITY:
+    case LINKSDONE:
       if (value == null) {
-        unsetPriority();
+        unsetLinksdone();
       } else {
-        setPriority((Byte)value);
+        setLinksdone((Short)value);
       }
       break;
 
-    case FIDS:
+    case SIZEDONE:
       if (value == null) {
-        unsetFids();
+        unsetSizedone();
       } else {
-        setFids((List<Integer>)value);
+        setSizedone((Long)value);
+      }
+      break;
+
+    case SIZETOTAL:
+      if (value == null) {
+        unsetSizetotal();
+      } else {
+        setSizetotal((Long)value);
+      }
+      break;
+
+    case LINKSTOTAL:
+      if (value == null) {
+        unsetLinkstotal();
+      } else {
+        setLinkstotal((Short)value);
       }
       break;
 
@@ -621,6 +736,14 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         unsetLinks();
       } else {
         setLinks((List<FileData>)value);
+      }
+      break;
+
+    case FIDS:
+      if (value == null) {
+        unsetFids();
+      } else {
+        setFids((List<Integer>)value);
       }
       break;
 
@@ -650,14 +773,23 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     case ORDER:
       return new Short(getOrder());
 
-    case PRIORITY:
-      return new Byte(getPriority());
+    case LINKSDONE:
+      return new Short(getLinksdone());
 
-    case FIDS:
-      return getFids();
+    case SIZEDONE:
+      return new Long(getSizedone());
+
+    case SIZETOTAL:
+      return new Long(getSizetotal());
+
+    case LINKSTOTAL:
+      return new Short(getLinkstotal());
 
     case LINKS:
       return getLinks();
+
+    case FIDS:
+      return getFids();
 
     }
     throw new IllegalStateException();
@@ -684,17 +816,23 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
       return isSetDest();
     case ORDER:
       return isSetOrder();
-    case PRIORITY:
-      return isSetPriority();
-    case FIDS:
-      return isSetFids();
+    case LINKSDONE:
+      return isSetLinksdone();
+    case SIZEDONE:
+      return isSetSizedone();
+    case SIZETOTAL:
+      return isSetSizetotal();
+    case LINKSTOTAL:
+      return isSetLinkstotal();
     case LINKS:
       return isSetLinks();
+    case FIDS:
+      return isSetFids();
     }
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -770,21 +908,39 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         return false;
     }
 
-    boolean this_present_priority = true;
-    boolean that_present_priority = true;
-    if (this_present_priority || that_present_priority) {
-      if (!(this_present_priority && that_present_priority))
+    boolean this_present_linksdone = true && this.isSetLinksdone();
+    boolean that_present_linksdone = true && that.isSetLinksdone();
+    if (this_present_linksdone || that_present_linksdone) {
+      if (!(this_present_linksdone && that_present_linksdone))
         return false;
-      if (this.priority != that.priority)
+      if (this.linksdone != that.linksdone)
         return false;
     }
 
-    boolean this_present_fids = true && this.isSetFids();
-    boolean that_present_fids = true && that.isSetFids();
-    if (this_present_fids || that_present_fids) {
-      if (!(this_present_fids && that_present_fids))
+    boolean this_present_sizedone = true && this.isSetSizedone();
+    boolean that_present_sizedone = true && that.isSetSizedone();
+    if (this_present_sizedone || that_present_sizedone) {
+      if (!(this_present_sizedone && that_present_sizedone))
         return false;
-      if (!this.fids.equals(that.fids))
+      if (this.sizedone != that.sizedone)
+        return false;
+    }
+
+    boolean this_present_sizetotal = true && this.isSetSizetotal();
+    boolean that_present_sizetotal = true && that.isSetSizetotal();
+    if (this_present_sizetotal || that_present_sizetotal) {
+      if (!(this_present_sizetotal && that_present_sizetotal))
+        return false;
+      if (this.sizetotal != that.sizetotal)
+        return false;
+    }
+
+    boolean this_present_linkstotal = true && this.isSetLinkstotal();
+    boolean that_present_linkstotal = true && that.isSetLinkstotal();
+    if (this_present_linkstotal || that_present_linkstotal) {
+      if (!(this_present_linkstotal && that_present_linkstotal))
+        return false;
+      if (this.linkstotal != that.linkstotal)
         return false;
     }
 
@@ -797,10 +953,19 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         return false;
     }
 
+    boolean this_present_fids = true && this.isSetFids();
+    boolean that_present_fids = true && that.isSetFids();
+    if (this_present_fids || that_present_fids) {
+      if (!(this_present_fids && that_present_fids))
+        return false;
+      if (!this.fids.equals(that.fids))
+        return false;
+    }
+
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -883,22 +1048,42 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetPriority()).compareTo(typedOther.isSetPriority());
+    lastComparison = Boolean.valueOf(isSetLinksdone()).compareTo(typedOther.isSetLinksdone());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetPriority()) {
-      lastComparison = TBaseHelper.compareTo(this.priority, typedOther.priority);
+    if (isSetLinksdone()) {
+      lastComparison = TBaseHelper.compareTo(this.linksdone, typedOther.linksdone);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetFids()).compareTo(typedOther.isSetFids());
+    lastComparison = Boolean.valueOf(isSetSizedone()).compareTo(typedOther.isSetSizedone());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetFids()) {
-      lastComparison = TBaseHelper.compareTo(this.fids, typedOther.fids);
+    if (isSetSizedone()) {
+      lastComparison = TBaseHelper.compareTo(this.sizedone, typedOther.sizedone);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetSizetotal()).compareTo(typedOther.isSetSizetotal());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetSizetotal()) {
+      lastComparison = TBaseHelper.compareTo(this.sizetotal, typedOther.sizetotal);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetLinkstotal()).compareTo(typedOther.isSetLinkstotal());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetLinkstotal()) {
+      lastComparison = TBaseHelper.compareTo(this.linkstotal, typedOther.linkstotal);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -909,6 +1094,16 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     }
     if (isSetLinks()) {
       lastComparison = TBaseHelper.compareTo(this.links, typedOther.links);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetFids()).compareTo(typedOther.isSetFids());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetFids()) {
+      lastComparison = TBaseHelper.compareTo(this.fids, typedOther.fids);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -981,24 +1176,49 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 8: // PRIORITY
-          if (field.type == TType.BYTE) {
-            this.priority = iprot.readByte();
-            setPriorityIsSet(true);
+        case 8: // LINKSDONE
+          if (field.type == TType.I16) {
+            this.linksdone = iprot.readI16();
+            setLinksdoneIsSet(true);
           } else { 
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 9: // FIDS
+        case 9: // SIZEDONE
+          if (field.type == TType.I64) {
+            this.sizedone = iprot.readI64();
+            setSizedoneIsSet(true);
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 10: // SIZETOTAL
+          if (field.type == TType.I64) {
+            this.sizetotal = iprot.readI64();
+            setSizetotalIsSet(true);
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 11: // LINKSTOTAL
+          if (field.type == TType.I16) {
+            this.linkstotal = iprot.readI16();
+            setLinkstotalIsSet(true);
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 12: // LINKS
           if (field.type == TType.LIST) {
             {
               TList _list4 = iprot.readListBegin();
-              this.fids = new ArrayList<Integer>(_list4.size);
+              this.links = new ArrayList<FileData>(_list4.size);
               for (int _i5 = 0; _i5 < _list4.size; ++_i5)
               {
-                int _elem6;
-                _elem6 = iprot.readI32();
-                this.fids.add(_elem6);
+                FileData _elem6;
+                _elem6 = new FileData();
+                _elem6.read(iprot);
+                this.links.add(_elem6);
               }
               iprot.readListEnd();
             }
@@ -1006,17 +1226,16 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 10: // LINKS
+        case 13: // FIDS
           if (field.type == TType.LIST) {
             {
               TList _list7 = iprot.readListBegin();
-              this.links = new ArrayList<FileData>(_list7.size);
+              this.fids = new ArrayList<Integer>(_list7.size);
               for (int _i8 = 0; _i8 < _list7.size; ++_i8)
               {
-                FileData _elem9;
-                _elem9 = new FileData();
-                _elem9.read(iprot);
-                this.links.add(_elem9);
+                int _elem9;
+                _elem9 = iprot.readI32();
+                this.fids.add(_elem9);
               }
               iprot.readListEnd();
             }
@@ -1070,31 +1289,48 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     oprot.writeFieldBegin(ORDER_FIELD_DESC);
     oprot.writeI16(this.order);
     oprot.writeFieldEnd();
-    oprot.writeFieldBegin(PRIORITY_FIELD_DESC);
-    oprot.writeByte(this.priority);
-    oprot.writeFieldEnd();
-    if (this.fids != null) {
-      if (isSetFids()) {
-        oprot.writeFieldBegin(FIDS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
-          for (int _iter10 : this.fids)
-          {
-            oprot.writeI32(_iter10);
-          }
-          oprot.writeListEnd();
-        }
-        oprot.writeFieldEnd();
-      }
+    if (isSetLinksdone()) {
+      oprot.writeFieldBegin(LINKSDONE_FIELD_DESC);
+      oprot.writeI16(this.linksdone);
+      oprot.writeFieldEnd();
+    }
+    if (isSetSizedone()) {
+      oprot.writeFieldBegin(SIZEDONE_FIELD_DESC);
+      oprot.writeI64(this.sizedone);
+      oprot.writeFieldEnd();
+    }
+    if (isSetSizetotal()) {
+      oprot.writeFieldBegin(SIZETOTAL_FIELD_DESC);
+      oprot.writeI64(this.sizetotal);
+      oprot.writeFieldEnd();
+    }
+    if (isSetLinkstotal()) {
+      oprot.writeFieldBegin(LINKSTOTAL_FIELD_DESC);
+      oprot.writeI16(this.linkstotal);
+      oprot.writeFieldEnd();
     }
     if (this.links != null) {
       if (isSetLinks()) {
         oprot.writeFieldBegin(LINKS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.links.size()));
-          for (FileData _iter11 : this.links)
+          for (FileData _iter10 : this.links)
           {
-            _iter11.write(oprot);
+            _iter10.write(oprot);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+    }
+    if (this.fids != null) {
+      if (isSetFids()) {
+        oprot.writeFieldBegin(FIDS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
+          for (int _iter11 : this.fids)
+          {
+            oprot.writeI32(_iter11);
           }
           oprot.writeListEnd();
         }
@@ -1105,7 +1341,7 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("PackageData(");
     boolean first = true;
@@ -1157,18 +1393,28 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
     sb.append("order:");
     sb.append(this.order);
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("priority:");
-    sb.append(this.priority);
-    first = false;
-    if (isSetFids()) {
+    if (isSetLinksdone()) {
       if (!first) sb.append(", ");
-      sb.append("fids:");
-      if (this.fids == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.fids);
-      }
+      sb.append("linksdone:");
+      sb.append(this.linksdone);
+      first = false;
+    }
+    if (isSetSizedone()) {
+      if (!first) sb.append(", ");
+      sb.append("sizedone:");
+      sb.append(this.sizedone);
+      first = false;
+    }
+    if (isSetSizetotal()) {
+      if (!first) sb.append(", ");
+      sb.append("sizetotal:");
+      sb.append(this.sizetotal);
+      first = false;
+    }
+    if (isSetLinkstotal()) {
+      if (!first) sb.append(", ");
+      sb.append("linkstotal:");
+      sb.append(this.linkstotal);
       first = false;
     }
     if (isSetLinks()) {
@@ -1178,6 +1424,16 @@ public class PackageData implements TBase<PackageData, PackageData._Fields>, jav
         sb.append("null");
       } else {
         sb.append(this.links);
+      }
+      first = false;
+    }
+    if (isSetFids()) {
+      if (!first) sb.append(", ");
+      sb.append("fids:");
+      if (this.fids == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.fids);
       }
       first = false;
     }

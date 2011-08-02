@@ -32,16 +32,19 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
   private static final TField NAME_FIELD_DESC = new TField("name", TType.STRING, (short)1);
   private static final TField DESCRIPTION_FIELD_DESC = new TField("description", TType.STRING, (short)2);
   private static final TField ITEMS_FIELD_DESC = new TField("items", TType.LIST, (short)3);
+  private static final TField OUTLINE_FIELD_DESC = new TField("outline", TType.STRING, (short)4);
 
   public String name;
   public String description;
   public List<ConfigItem> items;
+  public String outline;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
     NAME((short)1, "name"),
     DESCRIPTION((short)2, "description"),
-    ITEMS((short)3, "items");
+    ITEMS((short)3, "items"),
+    OUTLINE((short)4, "outline");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -62,6 +65,8 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
           return DESCRIPTION;
         case 3: // ITEMS
           return ITEMS;
+        case 4: // OUTLINE
+          return OUTLINE;
         default:
           return null;
       }
@@ -113,6 +118,8 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     tmpMap.put(_Fields.ITEMS, new FieldMetaData("items", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
             new StructMetaData(TType.STRUCT, ConfigItem.class))));
+    tmpMap.put(_Fields.OUTLINE, new FieldMetaData("outline", TFieldRequirementType.OPTIONAL, 
+        new FieldValueMetaData(TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     FieldMetaData.addStructMetaDataMap(ConfigSection.class, metaDataMap);
   }
@@ -148,17 +155,21 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
       }
       this.items = __this__items;
     }
+    if (other.isSetOutline()) {
+      this.outline = other.outline;
+    }
   }
 
   public ConfigSection deepCopy() {
     return new ConfigSection(this);
   }
 
-  
+  @Override
   public void clear() {
     this.name = null;
     this.description = null;
     this.items = null;
+    this.outline = null;
   }
 
   public String getName() {
@@ -248,6 +259,30 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     }
   }
 
+  public String getOutline() {
+    return this.outline;
+  }
+
+  public ConfigSection setOutline(String outline) {
+    this.outline = outline;
+    return this;
+  }
+
+  public void unsetOutline() {
+    this.outline = null;
+  }
+
+  /** Returns true if field outline is set (has been asigned a value) and false otherwise */
+  public boolean isSetOutline() {
+    return this.outline != null;
+  }
+
+  public void setOutlineIsSet(boolean value) {
+    if (!value) {
+      this.outline = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case NAME:
@@ -274,6 +309,14 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
       }
       break;
 
+    case OUTLINE:
+      if (value == null) {
+        unsetOutline();
+      } else {
+        setOutline((String)value);
+      }
+      break;
+
     }
   }
 
@@ -287,6 +330,9 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
 
     case ITEMS:
       return getItems();
+
+    case OUTLINE:
+      return getOutline();
 
     }
     throw new IllegalStateException();
@@ -305,11 +351,13 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
       return isSetDescription();
     case ITEMS:
       return isSetItems();
+    case OUTLINE:
+      return isSetOutline();
     }
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -349,10 +397,19 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
         return false;
     }
 
+    boolean this_present_outline = true && this.isSetOutline();
+    boolean that_present_outline = true && that.isSetOutline();
+    if (this_present_outline || that_present_outline) {
+      if (!(this_present_outline && that_present_outline))
+        return false;
+      if (!this.outline.equals(that.outline))
+        return false;
+    }
+
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -391,6 +448,16 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     }
     if (isSetItems()) {
       lastComparison = TBaseHelper.compareTo(this.items, typedOther.items);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetOutline()).compareTo(typedOther.isSetOutline());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetOutline()) {
+      lastComparison = TBaseHelper.compareTo(this.outline, typedOther.outline);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -444,6 +511,13 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
+        case 4: // OUTLINE
+          if (field.type == TType.STRING) {
+            this.outline = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
         default:
           TProtocolUtil.skip(iprot, field.type);
       }
@@ -481,11 +555,18 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
       }
       oprot.writeFieldEnd();
     }
+    if (this.outline != null) {
+      if (isSetOutline()) {
+        oprot.writeFieldBegin(OUTLINE_FIELD_DESC);
+        oprot.writeString(this.outline);
+        oprot.writeFieldEnd();
+      }
+    }
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("ConfigSection(");
     boolean first = true;
@@ -513,6 +594,16 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
       sb.append(this.items);
     }
     first = false;
+    if (isSetOutline()) {
+      if (!first) sb.append(", ");
+      sb.append("outline:");
+      if (this.outline == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.outline);
+      }
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }

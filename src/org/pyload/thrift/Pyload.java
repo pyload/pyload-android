@@ -34,9 +34,9 @@ public class Pyload {
 
     public void setConfigValue(String category, String option, String value, String section) throws TException;
 
-    public List<ConfigSection> getConfig() throws TException;
+    public Map<String,ConfigSection> getConfig() throws TException;
 
-    public List<ConfigSection> getPluginConfig() throws TException;
+    public Map<String,ConfigSection> getPluginConfig() throws TException;
 
     public void pauseServer() throws TException;
 
@@ -62,13 +62,17 @@ public class Pyload {
 
     public boolean toggleReconnect() throws TException;
 
+    public Map<String,List<String>> generatePackages(List<String> links) throws TException;
+
     public Map<String,List<String>> checkURLs(List<String> urls) throws TException;
 
     public Map<String,List<String>> parseURLs(String html) throws TException;
 
-    public int checkOnlineStatus(List<String> urls) throws TException;
+    public OnlineCheck checkOnlineStatus(List<String> urls) throws TException;
 
-    public Map<String,List<OnlineStatus>> pollResults(int rid) throws TException;
+    public OnlineCheck checkOnlineStatusContainer(List<String> urls, String filename, ByteBuffer data) throws TException;
+
+    public OnlineCheck pollResults(int rid) throws TException;
 
     public List<DownloadInfo> statusDownloads() throws TException;
 
@@ -89,6 +93,8 @@ public class Pyload {
     public Map<Short,Integer> getPackageOrder(Destination destination) throws TException;
 
     public Map<Short,Integer> getFileOrder(int pid) throws TException;
+
+    public List<Integer> generateAndAddPackages(List<String> links, Destination dest) throws TException;
 
     public int addPackage(String name, List<String> links, Destination dest) throws TException;
 
@@ -118,7 +124,7 @@ public class Pyload {
 
     public void movePackage(Destination destination, int pid) throws TException;
 
-    public void setPriority(int pid, byte priority) throws TException;
+    public void moveFiles(List<Integer> fids, int pid) throws TException;
 
     public void orderPackage(int pid, short position) throws TException;
 
@@ -144,7 +150,7 @@ public class Pyload {
 
     public List<String> getAccountTypes() throws TException;
 
-    public void updateAccounts(AccountData data) throws TException;
+    public void updateAccount(String plugin, String account, String password, Map<String,String> options) throws TException;
 
     public void removeAccount(String plugin, String account) throws TException;
 
@@ -198,11 +204,15 @@ public class Pyload {
 
     public void toggleReconnect(AsyncMethodCallback<AsyncClient.toggleReconnect_call> resultHandler) throws TException;
 
+    public void generatePackages(List<String> links, AsyncMethodCallback<AsyncClient.generatePackages_call> resultHandler) throws TException;
+
     public void checkURLs(List<String> urls, AsyncMethodCallback<AsyncClient.checkURLs_call> resultHandler) throws TException;
 
     public void parseURLs(String html, AsyncMethodCallback<AsyncClient.parseURLs_call> resultHandler) throws TException;
 
     public void checkOnlineStatus(List<String> urls, AsyncMethodCallback<AsyncClient.checkOnlineStatus_call> resultHandler) throws TException;
+
+    public void checkOnlineStatusContainer(List<String> urls, String filename, ByteBuffer data, AsyncMethodCallback<AsyncClient.checkOnlineStatusContainer_call> resultHandler) throws TException;
 
     public void pollResults(int rid, AsyncMethodCallback<AsyncClient.pollResults_call> resultHandler) throws TException;
 
@@ -225,6 +235,8 @@ public class Pyload {
     public void getPackageOrder(Destination destination, AsyncMethodCallback<AsyncClient.getPackageOrder_call> resultHandler) throws TException;
 
     public void getFileOrder(int pid, AsyncMethodCallback<AsyncClient.getFileOrder_call> resultHandler) throws TException;
+
+    public void generateAndAddPackages(List<String> links, Destination dest, AsyncMethodCallback<AsyncClient.generateAndAddPackages_call> resultHandler) throws TException;
 
     public void addPackage(String name, List<String> links, Destination dest, AsyncMethodCallback<AsyncClient.addPackage_call> resultHandler) throws TException;
 
@@ -254,7 +266,7 @@ public class Pyload {
 
     public void movePackage(Destination destination, int pid, AsyncMethodCallback<AsyncClient.movePackage_call> resultHandler) throws TException;
 
-    public void setPriority(int pid, byte priority, AsyncMethodCallback<AsyncClient.setPriority_call> resultHandler) throws TException;
+    public void moveFiles(List<Integer> fids, int pid, AsyncMethodCallback<AsyncClient.moveFiles_call> resultHandler) throws TException;
 
     public void orderPackage(int pid, short position, AsyncMethodCallback<AsyncClient.orderPackage_call> resultHandler) throws TException;
 
@@ -280,7 +292,7 @@ public class Pyload {
 
     public void getAccountTypes(AsyncMethodCallback<AsyncClient.getAccountTypes_call> resultHandler) throws TException;
 
-    public void updateAccounts(AccountData data, AsyncMethodCallback<AsyncClient.updateAccounts_call> resultHandler) throws TException;
+    public void updateAccount(String plugin, String account, String password, Map<String,String> options, AsyncMethodCallback<AsyncClient.updateAccount_call> resultHandler) throws TException;
 
     public void removeAccount(String plugin, String account, AsyncMethodCallback<AsyncClient.removeAccount_call> resultHandler) throws TException;
 
@@ -411,7 +423,7 @@ public class Pyload {
       return;
     }
 
-    public List<ConfigSection> getConfig() throws TException
+    public Map<String,ConfigSection> getConfig() throws TException
     {
       send_getConfig();
       return recv_getConfig();
@@ -426,7 +438,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public List<ConfigSection> recv_getConfig() throws TException
+    public Map<String,ConfigSection> recv_getConfig() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -446,7 +458,7 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getConfig failed: unknown result");
     }
 
-    public List<ConfigSection> getPluginConfig() throws TException
+    public Map<String,ConfigSection> getPluginConfig() throws TException
     {
       send_getPluginConfig();
       return recv_getPluginConfig();
@@ -461,7 +473,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public List<ConfigSection> recv_getPluginConfig() throws TException
+    public Map<String,ConfigSection> recv_getPluginConfig() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -890,6 +902,42 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "toggleReconnect failed: unknown result");
     }
 
+    public Map<String,List<String>> generatePackages(List<String> links) throws TException
+    {
+      send_generatePackages(links);
+      return recv_generatePackages();
+    }
+
+    public void send_generatePackages(List<String> links) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("generatePackages", TMessageType.CALL, ++seqid_));
+      generatePackages_args args = new generatePackages_args();
+      args.setLinks(links);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public Map<String,List<String>> recv_generatePackages() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "generatePackages failed: out of sequence response");
+      }
+      generatePackages_result result = new generatePackages_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "generatePackages failed: unknown result");
+    }
+
     public Map<String,List<String>> checkURLs(List<String> urls) throws TException
     {
       send_checkURLs(urls);
@@ -962,7 +1010,7 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "parseURLs failed: unknown result");
     }
 
-    public int checkOnlineStatus(List<String> urls) throws TException
+    public OnlineCheck checkOnlineStatus(List<String> urls) throws TException
     {
       send_checkOnlineStatus(urls);
       return recv_checkOnlineStatus();
@@ -978,7 +1026,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public int recv_checkOnlineStatus() throws TException
+    public OnlineCheck recv_checkOnlineStatus() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -998,7 +1046,45 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "checkOnlineStatus failed: unknown result");
     }
 
-    public Map<String,List<OnlineStatus>> pollResults(int rid) throws TException
+    public OnlineCheck checkOnlineStatusContainer(List<String> urls, String filename, ByteBuffer data) throws TException
+    {
+      send_checkOnlineStatusContainer(urls, filename, data);
+      return recv_checkOnlineStatusContainer();
+    }
+
+    public void send_checkOnlineStatusContainer(List<String> urls, String filename, ByteBuffer data) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("checkOnlineStatusContainer", TMessageType.CALL, ++seqid_));
+      checkOnlineStatusContainer_args args = new checkOnlineStatusContainer_args();
+      args.setUrls(urls);
+      args.setFilename(filename);
+      args.setData(data);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public OnlineCheck recv_checkOnlineStatusContainer() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "checkOnlineStatusContainer failed: out of sequence response");
+      }
+      checkOnlineStatusContainer_result result = new checkOnlineStatusContainer_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "checkOnlineStatusContainer failed: unknown result");
+    }
+
+    public OnlineCheck pollResults(int rid) throws TException
     {
       send_pollResults(rid);
       return recv_pollResults();
@@ -1014,7 +1100,7 @@ public class Pyload {
       oprot_.getTransport().flush();
     }
 
-    public Map<String,List<OnlineStatus>> recv_pollResults() throws TException
+    public OnlineCheck recv_pollResults() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -1396,6 +1482,43 @@ public class Pyload {
         return result.success;
       }
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getFileOrder failed: unknown result");
+    }
+
+    public List<Integer> generateAndAddPackages(List<String> links, Destination dest) throws TException
+    {
+      send_generateAndAddPackages(links, dest);
+      return recv_generateAndAddPackages();
+    }
+
+    public void send_generateAndAddPackages(List<String> links, Destination dest) throws TException
+    {
+      oprot_.writeMessageBegin(new TMessage("generateAndAddPackages", TMessageType.CALL, ++seqid_));
+      generateAndAddPackages_args args = new generateAndAddPackages_args();
+      args.setLinks(links);
+      args.setDest(dest);
+      args.write(oprot_);
+      oprot_.writeMessageEnd();
+      oprot_.getTransport().flush();
+    }
+
+    public List<Integer> recv_generateAndAddPackages() throws TException
+    {
+      TMessage msg = iprot_.readMessageBegin();
+      if (msg.type == TMessageType.EXCEPTION) {
+        TApplicationException x = TApplicationException.read(iprot_);
+        iprot_.readMessageEnd();
+        throw x;
+      }
+      if (msg.seqid != seqid_) {
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "generateAndAddPackages failed: out of sequence response");
+      }
+      generateAndAddPackages_result result = new generateAndAddPackages_result();
+      result.read(iprot_);
+      iprot_.readMessageEnd();
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new TApplicationException(TApplicationException.MISSING_RESULT, "generateAndAddPackages failed: unknown result");
     }
 
     public int addPackage(String name, List<String> links, Destination dest) throws TException
@@ -1868,24 +1991,24 @@ public class Pyload {
       return;
     }
 
-    public void setPriority(int pid, byte priority) throws TException
+    public void moveFiles(List<Integer> fids, int pid) throws TException
     {
-      send_setPriority(pid, priority);
-      recv_setPriority();
+      send_moveFiles(fids, pid);
+      recv_moveFiles();
     }
 
-    public void send_setPriority(int pid, byte priority) throws TException
+    public void send_moveFiles(List<Integer> fids, int pid) throws TException
     {
-      oprot_.writeMessageBegin(new TMessage("setPriority", TMessageType.CALL, ++seqid_));
-      setPriority_args args = new setPriority_args();
+      oprot_.writeMessageBegin(new TMessage("moveFiles", TMessageType.CALL, ++seqid_));
+      moveFiles_args args = new moveFiles_args();
+      args.setFids(fids);
       args.setPid(pid);
-      args.setPriority(priority);
       args.write(oprot_);
       oprot_.writeMessageEnd();
       oprot_.getTransport().flush();
     }
 
-    public void recv_setPriority() throws TException
+    public void recv_moveFiles() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -1894,9 +2017,9 @@ public class Pyload {
         throw x;
       }
       if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "setPriority failed: out of sequence response");
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "moveFiles failed: out of sequence response");
       }
-      setPriority_result result = new setPriority_result();
+      moveFiles_result result = new moveFiles_result();
       result.read(iprot_);
       iprot_.readMessageEnd();
       return;
@@ -2319,23 +2442,26 @@ public class Pyload {
       throw new TApplicationException(TApplicationException.MISSING_RESULT, "getAccountTypes failed: unknown result");
     }
 
-    public void updateAccounts(AccountData data) throws TException
+    public void updateAccount(String plugin, String account, String password, Map<String,String> options) throws TException
     {
-      send_updateAccounts(data);
-      recv_updateAccounts();
+      send_updateAccount(plugin, account, password, options);
+      recv_updateAccount();
     }
 
-    public void send_updateAccounts(AccountData data) throws TException
+    public void send_updateAccount(String plugin, String account, String password, Map<String,String> options) throws TException
     {
-      oprot_.writeMessageBegin(new TMessage("updateAccounts", TMessageType.CALL, ++seqid_));
-      updateAccounts_args args = new updateAccounts_args();
-      args.setData(data);
+      oprot_.writeMessageBegin(new TMessage("updateAccount", TMessageType.CALL, ++seqid_));
+      updateAccount_args args = new updateAccount_args();
+      args.setPlugin(plugin);
+      args.setAccount(account);
+      args.setPassword(password);
+      args.setOptions(options);
       args.write(oprot_);
       oprot_.writeMessageEnd();
       oprot_.getTransport().flush();
     }
 
-    public void recv_updateAccounts() throws TException
+    public void recv_updateAccount() throws TException
     {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
@@ -2344,9 +2470,9 @@ public class Pyload {
         throw x;
       }
       if (msg.seqid != seqid_) {
-        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "updateAccounts failed: out of sequence response");
+        throw new TApplicationException(TApplicationException.BAD_SEQUENCE_ID, "updateAccount failed: out of sequence response");
       }
-      updateAccounts_result result = new updateAccounts_result();
+      updateAccount_result result = new updateAccount_result();
       result.read(iprot_);
       iprot_.readMessageEnd();
       return;
@@ -2758,7 +2884,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public List<ConfigSection> getResult() throws TException {
+      public Map<String,ConfigSection> getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -2786,7 +2912,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public List<ConfigSection> getResult() throws TException {
+      public Map<String,ConfigSection> getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -3135,6 +3261,37 @@ public class Pyload {
       }
     }
 
+    public void generatePackages(List<String> links, AsyncMethodCallback<generatePackages_call> resultHandler) throws TException {
+      checkReady();
+      generatePackages_call method_call = new generatePackages_call(links, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class generatePackages_call extends TAsyncMethodCall {
+      private List<String> links;
+      public generatePackages_call(List<String> links, AsyncMethodCallback<generatePackages_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.links = links;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("generatePackages", TMessageType.CALL, 0));
+        generatePackages_args args = new generatePackages_args();
+        args.setLinks(links);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Map<String,List<String>> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_generatePackages();
+      }
+    }
+
     public void checkURLs(List<String> urls, AsyncMethodCallback<checkURLs_call> resultHandler) throws TException {
       checkReady();
       checkURLs_call method_call = new checkURLs_call(urls, resultHandler, this, protocolFactory, transport);
@@ -3218,13 +3375,50 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public int getResult() throws TException {
+      public OnlineCheck getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_checkOnlineStatus();
+      }
+    }
+
+    public void checkOnlineStatusContainer(List<String> urls, String filename, ByteBuffer data, AsyncMethodCallback<checkOnlineStatusContainer_call> resultHandler) throws TException {
+      checkReady();
+      checkOnlineStatusContainer_call method_call = new checkOnlineStatusContainer_call(urls, filename, data, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class checkOnlineStatusContainer_call extends TAsyncMethodCall {
+      private List<String> urls;
+      private String filename;
+      private ByteBuffer data;
+      public checkOnlineStatusContainer_call(List<String> urls, String filename, ByteBuffer data, AsyncMethodCallback<checkOnlineStatusContainer_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.urls = urls;
+        this.filename = filename;
+        this.data = data;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("checkOnlineStatusContainer", TMessageType.CALL, 0));
+        checkOnlineStatusContainer_args args = new checkOnlineStatusContainer_args();
+        args.setUrls(urls);
+        args.setFilename(filename);
+        args.setData(data);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public OnlineCheck getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_checkOnlineStatusContainer();
       }
     }
 
@@ -3249,7 +3443,7 @@ public class Pyload {
         prot.writeMessageEnd();
       }
 
-      public Map<String,List<OnlineStatus>> getResult() throws TException {
+      public OnlineCheck getResult() throws TException {
         if (getState() != State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -3551,6 +3745,40 @@ public class Pyload {
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_getFileOrder();
+      }
+    }
+
+    public void generateAndAddPackages(List<String> links, Destination dest, AsyncMethodCallback<generateAndAddPackages_call> resultHandler) throws TException {
+      checkReady();
+      generateAndAddPackages_call method_call = new generateAndAddPackages_call(links, dest, resultHandler, this, protocolFactory, transport);
+      manager.call(method_call);
+    }
+
+    public static class generateAndAddPackages_call extends TAsyncMethodCall {
+      private List<String> links;
+      private Destination dest;
+      public generateAndAddPackages_call(List<String> links, Destination dest, AsyncMethodCallback<generateAndAddPackages_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.links = links;
+        this.dest = dest;
+      }
+
+      public void write_args(TProtocol prot) throws TException {
+        prot.writeMessageBegin(new TMessage("generateAndAddPackages", TMessageType.CALL, 0));
+        generateAndAddPackages_args args = new generateAndAddPackages_args();
+        args.setLinks(links);
+        args.setDest(dest);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public List<Integer> getResult() throws TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
+        TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_generateAndAddPackages();
       }
     }
 
@@ -4003,26 +4231,26 @@ public class Pyload {
       }
     }
 
-    public void setPriority(int pid, byte priority, AsyncMethodCallback<setPriority_call> resultHandler) throws TException {
+    public void moveFiles(List<Integer> fids, int pid, AsyncMethodCallback<moveFiles_call> resultHandler) throws TException {
       checkReady();
-      setPriority_call method_call = new setPriority_call(pid, priority, resultHandler, this, protocolFactory, transport);
+      moveFiles_call method_call = new moveFiles_call(fids, pid, resultHandler, this, protocolFactory, transport);
       manager.call(method_call);
     }
 
-    public static class setPriority_call extends TAsyncMethodCall {
+    public static class moveFiles_call extends TAsyncMethodCall {
+      private List<Integer> fids;
       private int pid;
-      private byte priority;
-      public setPriority_call(int pid, byte priority, AsyncMethodCallback<setPriority_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+      public moveFiles_call(List<Integer> fids, int pid, AsyncMethodCallback<moveFiles_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
         super(client, protocolFactory, transport, resultHandler, false);
+        this.fids = fids;
         this.pid = pid;
-        this.priority = priority;
       }
 
       public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("setPriority", TMessageType.CALL, 0));
-        setPriority_args args = new setPriority_args();
+        prot.writeMessageBegin(new TMessage("moveFiles", TMessageType.CALL, 0));
+        moveFiles_args args = new moveFiles_args();
+        args.setFids(fids);
         args.setPid(pid);
-        args.setPriority(priority);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -4033,7 +4261,7 @@ public class Pyload {
         }
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_setPriority();
+        (new Client(prot)).recv_moveFiles();
       }
     }
 
@@ -4409,23 +4637,32 @@ public class Pyload {
       }
     }
 
-    public void updateAccounts(AccountData data, AsyncMethodCallback<updateAccounts_call> resultHandler) throws TException {
+    public void updateAccount(String plugin, String account, String password, Map<String,String> options, AsyncMethodCallback<updateAccount_call> resultHandler) throws TException {
       checkReady();
-      updateAccounts_call method_call = new updateAccounts_call(data, resultHandler, this, protocolFactory, transport);
+      updateAccount_call method_call = new updateAccount_call(plugin, account, password, options, resultHandler, this, protocolFactory, transport);
       manager.call(method_call);
     }
 
-    public static class updateAccounts_call extends TAsyncMethodCall {
-      private AccountData data;
-      public updateAccounts_call(AccountData data, AsyncMethodCallback<updateAccounts_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
+    public static class updateAccount_call extends TAsyncMethodCall {
+      private String plugin;
+      private String account;
+      private String password;
+      private Map<String,String> options;
+      public updateAccount_call(String plugin, String account, String password, Map<String,String> options, AsyncMethodCallback<updateAccount_call> resultHandler, TAsyncClient client, TProtocolFactory protocolFactory, TNonblockingTransport transport) throws TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.data = data;
+        this.plugin = plugin;
+        this.account = account;
+        this.password = password;
+        this.options = options;
       }
 
       public void write_args(TProtocol prot) throws TException {
-        prot.writeMessageBegin(new TMessage("updateAccounts", TMessageType.CALL, 0));
-        updateAccounts_args args = new updateAccounts_args();
-        args.setData(data);
+        prot.writeMessageBegin(new TMessage("updateAccount", TMessageType.CALL, 0));
+        updateAccount_args args = new updateAccount_args();
+        args.setPlugin(plugin);
+        args.setAccount(account);
+        args.setPassword(password);
+        args.setOptions(options);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -4436,7 +4673,7 @@ public class Pyload {
         }
         TMemoryInputTransport memoryTransport = new TMemoryInputTransport(getFrameBuffer().array());
         TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_updateAccounts();
+        (new Client(prot)).recv_updateAccount();
       }
     }
 
@@ -4717,9 +4954,11 @@ public class Pyload {
       processMap_.put("isTimeDownload", new isTimeDownload());
       processMap_.put("isTimeReconnect", new isTimeReconnect());
       processMap_.put("toggleReconnect", new toggleReconnect());
+      processMap_.put("generatePackages", new generatePackages());
       processMap_.put("checkURLs", new checkURLs());
       processMap_.put("parseURLs", new parseURLs());
       processMap_.put("checkOnlineStatus", new checkOnlineStatus());
+      processMap_.put("checkOnlineStatusContainer", new checkOnlineStatusContainer());
       processMap_.put("pollResults", new pollResults());
       processMap_.put("statusDownloads", new statusDownloads());
       processMap_.put("getPackageData", new getPackageData());
@@ -4731,6 +4970,7 @@ public class Pyload {
       processMap_.put("getCollectorData", new getCollectorData());
       processMap_.put("getPackageOrder", new getPackageOrder());
       processMap_.put("getFileOrder", new getFileOrder());
+      processMap_.put("generateAndAddPackages", new generateAndAddPackages());
       processMap_.put("addPackage", new addPackage());
       processMap_.put("addFiles", new addFiles());
       processMap_.put("uploadContainer", new uploadContainer());
@@ -4745,7 +4985,7 @@ public class Pyload {
       processMap_.put("stopDownloads", new stopDownloads());
       processMap_.put("setPackageName", new setPackageName());
       processMap_.put("movePackage", new movePackage());
-      processMap_.put("setPriority", new setPriority());
+      processMap_.put("moveFiles", new moveFiles());
       processMap_.put("orderPackage", new orderPackage());
       processMap_.put("orderFile", new orderFile());
       processMap_.put("setPackageData", new setPackageData());
@@ -4758,7 +4998,7 @@ public class Pyload {
       processMap_.put("getEvents", new getEvents());
       processMap_.put("getAccounts", new getAccounts());
       processMap_.put("getAccountTypes", new getAccountTypes());
-      processMap_.put("updateAccounts", new updateAccounts());
+      processMap_.put("updateAccount", new updateAccount());
       processMap_.put("removeAccount", new removeAccount());
       processMap_.put("login", new login());
       processMap_.put("getUserData", new getUserData());
@@ -5215,6 +5455,32 @@ public class Pyload {
 
     }
 
+    private class generatePackages implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        generatePackages_args args = new generatePackages_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("generatePackages", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        generatePackages_result result = new generatePackages_result();
+        result.success = iface_.generatePackages(args.links);
+        oprot.writeMessageBegin(new TMessage("generatePackages", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
     private class checkURLs implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
@@ -5285,8 +5551,33 @@ public class Pyload {
         iprot.readMessageEnd();
         checkOnlineStatus_result result = new checkOnlineStatus_result();
         result.success = iface_.checkOnlineStatus(args.urls);
-        result.setSuccessIsSet(true);
         oprot.writeMessageBegin(new TMessage("checkOnlineStatus", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class checkOnlineStatusContainer implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        checkOnlineStatusContainer_args args = new checkOnlineStatusContainer_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("checkOnlineStatusContainer", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        checkOnlineStatusContainer_result result = new checkOnlineStatusContainer_result();
+        result.success = iface_.checkOnlineStatusContainer(args.urls, args.filename, args.data);
+        oprot.writeMessageBegin(new TMessage("checkOnlineStatusContainer", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -5609,6 +5900,32 @@ public class Pyload {
         getFileOrder_result result = new getFileOrder_result();
         result.success = iface_.getFileOrder(args.pid);
         oprot.writeMessageBegin(new TMessage("getFileOrder", TMessageType.REPLY, seqid));
+        result.write(oprot);
+        oprot.writeMessageEnd();
+        oprot.getTransport().flush();
+      }
+
+    }
+
+    private class generateAndAddPackages implements ProcessFunction {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
+      {
+        generateAndAddPackages_args args = new generateAndAddPackages_args();
+        try {
+          args.read(iprot);
+        } catch (TProtocolException e) {
+          iprot.readMessageEnd();
+          TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
+          oprot.writeMessageBegin(new TMessage("generateAndAddPackages", TMessageType.EXCEPTION, seqid));
+          x.write(oprot);
+          oprot.writeMessageEnd();
+          oprot.getTransport().flush();
+          return;
+        }
+        iprot.readMessageEnd();
+        generateAndAddPackages_result result = new generateAndAddPackages_result();
+        result.success = iface_.generateAndAddPackages(args.links, args.dest);
+        oprot.writeMessageBegin(new TMessage("generateAndAddPackages", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -5981,25 +6298,25 @@ public class Pyload {
 
     }
 
-    private class setPriority implements ProcessFunction {
+    private class moveFiles implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
-        setPriority_args args = new setPriority_args();
+        moveFiles_args args = new moveFiles_args();
         try {
           args.read(iprot);
         } catch (TProtocolException e) {
           iprot.readMessageEnd();
           TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("setPriority", TMessageType.EXCEPTION, seqid));
+          oprot.writeMessageBegin(new TMessage("moveFiles", TMessageType.EXCEPTION, seqid));
           x.write(oprot);
           oprot.writeMessageEnd();
           oprot.getTransport().flush();
           return;
         }
         iprot.readMessageEnd();
-        setPriority_result result = new setPriority_result();
-        iface_.setPriority(args.pid, args.priority);
-        oprot.writeMessageBegin(new TMessage("setPriority", TMessageType.REPLY, seqid));
+        moveFiles_result result = new moveFiles_result();
+        iface_.moveFiles(args.fids, args.pid);
+        oprot.writeMessageBegin(new TMessage("moveFiles", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -6332,25 +6649,25 @@ public class Pyload {
 
     }
 
-    private class updateAccounts implements ProcessFunction {
+    private class updateAccount implements ProcessFunction {
       public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
       {
-        updateAccounts_args args = new updateAccounts_args();
+        updateAccount_args args = new updateAccount_args();
         try {
           args.read(iprot);
         } catch (TProtocolException e) {
           iprot.readMessageEnd();
           TApplicationException x = new TApplicationException(TApplicationException.PROTOCOL_ERROR, e.getMessage());
-          oprot.writeMessageBegin(new TMessage("updateAccounts", TMessageType.EXCEPTION, seqid));
+          oprot.writeMessageBegin(new TMessage("updateAccount", TMessageType.EXCEPTION, seqid));
           x.write(oprot);
           oprot.writeMessageEnd();
           oprot.getTransport().flush();
           return;
         }
         iprot.readMessageEnd();
-        updateAccounts_result result = new updateAccounts_result();
-        iface_.updateAccounts(args.data);
-        oprot.writeMessageBegin(new TMessage("updateAccounts", TMessageType.REPLY, seqid));
+        updateAccount_result result = new updateAccount_result();
+        iface_.updateAccount(args.plugin, args.account, args.password, args.options);
+        oprot.writeMessageBegin(new TMessage("updateAccount", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -6707,7 +7024,7 @@ public class Pyload {
       return new getConfigValue_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.category = null;
       this.option = null;
@@ -6847,7 +7164,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -6890,7 +7207,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -7005,7 +7322,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getConfigValue_args(");
       boolean first = true;
@@ -7142,7 +7459,7 @@ public class Pyload {
       return new getConfigValue_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -7206,7 +7523,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -7231,7 +7548,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -7301,7 +7618,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getConfigValue_result(");
       boolean first = true;
@@ -7458,7 +7775,7 @@ public class Pyload {
       return new setConfigValue_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.category = null;
       this.option = null;
@@ -7636,7 +7953,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -7688,7 +8005,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -7825,7 +8142,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setConfigValue_args(");
       boolean first = true;
@@ -7951,7 +8268,7 @@ public class Pyload {
       return new setConfigValue_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -7977,7 +8294,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -7993,7 +8310,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -8041,7 +8358,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setConfigValue_result(");
       boolean first = true;
@@ -8136,7 +8453,7 @@ public class Pyload {
       return new getConfig_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -8162,7 +8479,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -8178,7 +8495,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -8227,7 +8544,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getConfig_args(");
       boolean first = true;
@@ -8245,9 +8562,9 @@ public class Pyload {
   public static class getConfig_result implements TBase<getConfig_result, getConfig_result._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("getConfig_result");
 
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.LIST, (short)0);
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
 
-    public List<ConfigSection> success;
+    public Map<String,ConfigSection> success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -8313,7 +8630,8 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new ListMetaData(TType.LIST, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING), 
               new StructMetaData(TType.STRUCT, ConfigSection.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(getConfig_result.class, metaDataMap);
@@ -8323,7 +8641,7 @@ public class Pyload {
     }
 
     public getConfig_result(
-      List<ConfigSection> success)
+      Map<String,ConfigSection> success)
     {
       this();
       this.success = success;
@@ -8334,9 +8652,17 @@ public class Pyload {
      */
     public getConfig_result(getConfig_result other) {
       if (other.isSetSuccess()) {
-        List<ConfigSection> __this__success = new ArrayList<ConfigSection>();
-        for (ConfigSection other_element : other.success) {
-          __this__success.add(new ConfigSection(other_element));
+        Map<String,ConfigSection> __this__success = new HashMap<String,ConfigSection>();
+        for (Map.Entry<String, ConfigSection> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          ConfigSection other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          ConfigSection __this__success_copy_value = new ConfigSection(other_element_value);
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
         }
         this.success = __this__success;
       }
@@ -8346,7 +8672,7 @@ public class Pyload {
       return new getConfig_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -8355,22 +8681,18 @@ public class Pyload {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<ConfigSection> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(ConfigSection elem) {
+    public void putToSuccess(String key, ConfigSection val) {
       if (this.success == null) {
-        this.success = new ArrayList<ConfigSection>();
+        this.success = new HashMap<String,ConfigSection>();
       }
-      this.success.add(elem);
+      this.success.put(key, val);
     }
 
-    public List<ConfigSection> getSuccess() {
+    public Map<String,ConfigSection> getSuccess() {
       return this.success;
     }
 
-    public getConfig_result setSuccess(List<ConfigSection> success) {
+    public getConfig_result setSuccess(Map<String,ConfigSection> success) {
       this.success = success;
       return this;
     }
@@ -8396,7 +8718,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<ConfigSection>)value);
+          setSuccess((Map<String,ConfigSection>)value);
         }
         break;
 
@@ -8425,7 +8747,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -8450,7 +8772,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -8491,18 +8813,20 @@ public class Pyload {
         }
         switch (field.id) {
           case 0: // SUCCESS
-            if (field.type == TType.LIST) {
+            if (field.type == TType.MAP) {
               {
-                TList _list26 = iprot.readListBegin();
-                this.success = new ArrayList<ConfigSection>(_list26.size);
-                for (int _i27 = 0; _i27 < _list26.size; ++_i27)
+                TMap _map31 = iprot.readMapBegin();
+                this.success = new HashMap<String,ConfigSection>(2*_map31.size);
+                for (int _i32 = 0; _i32 < _map31.size; ++_i32)
                 {
-                  ConfigSection _elem28;
-                  _elem28 = new ConfigSection();
-                  _elem28.read(iprot);
-                  this.success.add(_elem28);
+                  String _key33;
+                  ConfigSection _val34;
+                  _key33 = iprot.readString();
+                  _val34 = new ConfigSection();
+                  _val34.read(iprot);
+                  this.success.put(_key33, _val34);
                 }
-                iprot.readListEnd();
+                iprot.readMapEnd();
               }
             } else { 
               TProtocolUtil.skip(iprot, field.type);
@@ -8525,12 +8849,13 @@ public class Pyload {
       if (this.isSetSuccess()) {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
-          oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (ConfigSection _iter29 : this.success)
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRUCT, this.success.size()));
+          for (Map.Entry<String, ConfigSection> _iter35 : this.success.entrySet())
           {
-            _iter29.write(oprot);
+            oprot.writeString(_iter35.getKey());
+            _iter35.getValue().write(oprot);
           }
-          oprot.writeListEnd();
+          oprot.writeMapEnd();
         }
         oprot.writeFieldEnd();
       }
@@ -8538,7 +8863,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getConfig_result(");
       boolean first = true;
@@ -8640,7 +8965,7 @@ public class Pyload {
       return new getPluginConfig_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -8666,7 +8991,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -8682,7 +9007,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -8731,7 +9056,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPluginConfig_args(");
       boolean first = true;
@@ -8749,9 +9074,9 @@ public class Pyload {
   public static class getPluginConfig_result implements TBase<getPluginConfig_result, getPluginConfig_result._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("getPluginConfig_result");
 
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.LIST, (short)0);
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
 
-    public List<ConfigSection> success;
+    public Map<String,ConfigSection> success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -8817,7 +9142,8 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new ListMetaData(TType.LIST, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING), 
               new StructMetaData(TType.STRUCT, ConfigSection.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(getPluginConfig_result.class, metaDataMap);
@@ -8827,7 +9153,7 @@ public class Pyload {
     }
 
     public getPluginConfig_result(
-      List<ConfigSection> success)
+      Map<String,ConfigSection> success)
     {
       this();
       this.success = success;
@@ -8838,9 +9164,17 @@ public class Pyload {
      */
     public getPluginConfig_result(getPluginConfig_result other) {
       if (other.isSetSuccess()) {
-        List<ConfigSection> __this__success = new ArrayList<ConfigSection>();
-        for (ConfigSection other_element : other.success) {
-          __this__success.add(new ConfigSection(other_element));
+        Map<String,ConfigSection> __this__success = new HashMap<String,ConfigSection>();
+        for (Map.Entry<String, ConfigSection> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          ConfigSection other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          ConfigSection __this__success_copy_value = new ConfigSection(other_element_value);
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
         }
         this.success = __this__success;
       }
@@ -8850,7 +9184,7 @@ public class Pyload {
       return new getPluginConfig_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -8859,22 +9193,18 @@ public class Pyload {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<ConfigSection> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(ConfigSection elem) {
+    public void putToSuccess(String key, ConfigSection val) {
       if (this.success == null) {
-        this.success = new ArrayList<ConfigSection>();
+        this.success = new HashMap<String,ConfigSection>();
       }
-      this.success.add(elem);
+      this.success.put(key, val);
     }
 
-    public List<ConfigSection> getSuccess() {
+    public Map<String,ConfigSection> getSuccess() {
       return this.success;
     }
 
-    public getPluginConfig_result setSuccess(List<ConfigSection> success) {
+    public getPluginConfig_result setSuccess(Map<String,ConfigSection> success) {
       this.success = success;
       return this;
     }
@@ -8900,7 +9230,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<ConfigSection>)value);
+          setSuccess((Map<String,ConfigSection>)value);
         }
         break;
 
@@ -8929,7 +9259,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -8954,7 +9284,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -8995,18 +9325,20 @@ public class Pyload {
         }
         switch (field.id) {
           case 0: // SUCCESS
-            if (field.type == TType.LIST) {
+            if (field.type == TType.MAP) {
               {
-                TList _list30 = iprot.readListBegin();
-                this.success = new ArrayList<ConfigSection>(_list30.size);
-                for (int _i31 = 0; _i31 < _list30.size; ++_i31)
+                TMap _map36 = iprot.readMapBegin();
+                this.success = new HashMap<String,ConfigSection>(2*_map36.size);
+                for (int _i37 = 0; _i37 < _map36.size; ++_i37)
                 {
-                  ConfigSection _elem32;
-                  _elem32 = new ConfigSection();
-                  _elem32.read(iprot);
-                  this.success.add(_elem32);
+                  String _key38;
+                  ConfigSection _val39;
+                  _key38 = iprot.readString();
+                  _val39 = new ConfigSection();
+                  _val39.read(iprot);
+                  this.success.put(_key38, _val39);
                 }
-                iprot.readListEnd();
+                iprot.readMapEnd();
               }
             } else { 
               TProtocolUtil.skip(iprot, field.type);
@@ -9029,12 +9361,13 @@ public class Pyload {
       if (this.isSetSuccess()) {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
-          oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (ConfigSection _iter33 : this.success)
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRUCT, this.success.size()));
+          for (Map.Entry<String, ConfigSection> _iter40 : this.success.entrySet())
           {
-            _iter33.write(oprot);
+            oprot.writeString(_iter40.getKey());
+            _iter40.getValue().write(oprot);
           }
-          oprot.writeListEnd();
+          oprot.writeMapEnd();
         }
         oprot.writeFieldEnd();
       }
@@ -9042,7 +9375,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPluginConfig_result(");
       boolean first = true;
@@ -9144,7 +9477,7 @@ public class Pyload {
       return new pauseServer_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -9170,7 +9503,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -9186,7 +9519,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -9235,7 +9568,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pauseServer_args(");
       boolean first = true;
@@ -9330,7 +9663,7 @@ public class Pyload {
       return new pauseServer_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -9356,7 +9689,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -9372,7 +9705,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -9420,7 +9753,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pauseServer_result(");
       boolean first = true;
@@ -9515,7 +9848,7 @@ public class Pyload {
       return new unpauseServer_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -9541,7 +9874,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -9557,7 +9890,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -9606,7 +9939,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("unpauseServer_args(");
       boolean first = true;
@@ -9701,7 +10034,7 @@ public class Pyload {
       return new unpauseServer_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -9727,7 +10060,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -9743,7 +10076,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -9791,7 +10124,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("unpauseServer_result(");
       boolean first = true;
@@ -9886,7 +10219,7 @@ public class Pyload {
       return new togglePause_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -9912,7 +10245,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -9928,7 +10261,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -9977,7 +10310,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("togglePause_args(");
       boolean first = true;
@@ -10094,7 +10427,7 @@ public class Pyload {
       return new togglePause_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -10158,7 +10491,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -10183,7 +10516,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -10254,7 +10587,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("togglePause_result(");
       boolean first = true;
@@ -10352,7 +10685,7 @@ public class Pyload {
       return new statusServer_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -10378,7 +10711,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -10394,7 +10727,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -10443,7 +10776,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("statusServer_args(");
       boolean first = true;
@@ -10557,7 +10890,7 @@ public class Pyload {
       return new statusServer_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -10621,7 +10954,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -10646,7 +10979,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -10717,7 +11050,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("statusServer_result(");
       boolean first = true;
@@ -10819,7 +11152,7 @@ public class Pyload {
       return new freeSpace_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -10845,7 +11178,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -10861,7 +11194,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -10910,7 +11243,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("freeSpace_args(");
       boolean first = true;
@@ -11027,7 +11360,7 @@ public class Pyload {
       return new freeSpace_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = 0;
@@ -11091,7 +11424,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -11116,7 +11449,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -11187,7 +11520,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("freeSpace_result(");
       boolean first = true;
@@ -11285,7 +11618,7 @@ public class Pyload {
       return new getServerVersion_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -11311,7 +11644,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -11327,7 +11660,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -11376,7 +11709,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getServerVersion_args(");
       boolean first = true;
@@ -11490,7 +11823,7 @@ public class Pyload {
       return new getServerVersion_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -11554,7 +11887,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -11579,7 +11912,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -11649,7 +11982,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getServerVersion_result(");
       boolean first = true;
@@ -11751,7 +12084,7 @@ public class Pyload {
       return new kill_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -11777,7 +12110,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -11793,7 +12126,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -11842,7 +12175,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("kill_args(");
       boolean first = true;
@@ -11937,7 +12270,7 @@ public class Pyload {
       return new kill_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -11963,7 +12296,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -11979,7 +12312,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -12027,7 +12360,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("kill_result(");
       boolean first = true;
@@ -12122,7 +12455,7 @@ public class Pyload {
       return new restart_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -12148,7 +12481,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -12164,7 +12497,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -12213,7 +12546,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restart_args(");
       boolean first = true;
@@ -12308,7 +12641,7 @@ public class Pyload {
       return new restart_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -12334,7 +12667,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -12350,7 +12683,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -12398,7 +12731,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restart_result(");
       boolean first = true;
@@ -12515,7 +12848,7 @@ public class Pyload {
       return new getLog_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setOffsetIsSet(false);
       this.offset = 0;
@@ -12579,7 +12912,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -12604,7 +12937,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -12674,7 +13007,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getLog_args(");
       boolean first = true;
@@ -12796,7 +13129,7 @@ public class Pyload {
       return new getLog_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -12875,7 +13208,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -12900,7 +13233,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -12943,13 +13276,13 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list34 = iprot.readListBegin();
-                this.success = new ArrayList<String>(_list34.size);
-                for (int _i35 = 0; _i35 < _list34.size; ++_i35)
+                TList _list41 = iprot.readListBegin();
+                this.success = new ArrayList<String>(_list41.size);
+                for (int _i42 = 0; _i42 < _list41.size; ++_i42)
                 {
-                  String _elem36;
-                  _elem36 = iprot.readString();
-                  this.success.add(_elem36);
+                  String _elem43;
+                  _elem43 = iprot.readString();
+                  this.success.add(_elem43);
                 }
                 iprot.readListEnd();
               }
@@ -12975,9 +13308,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.success.size()));
-          for (String _iter37 : this.success)
+          for (String _iter44 : this.success)
           {
-            oprot.writeString(_iter37);
+            oprot.writeString(_iter44);
           }
           oprot.writeListEnd();
         }
@@ -12987,7 +13320,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getLog_result(");
       boolean first = true;
@@ -13089,7 +13422,7 @@ public class Pyload {
       return new isTimeDownload_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -13115,7 +13448,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -13131,7 +13464,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -13180,7 +13513,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isTimeDownload_args(");
       boolean first = true;
@@ -13297,7 +13630,7 @@ public class Pyload {
       return new isTimeDownload_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -13361,7 +13694,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -13386,7 +13719,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -13457,7 +13790,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isTimeDownload_result(");
       boolean first = true;
@@ -13555,7 +13888,7 @@ public class Pyload {
       return new isTimeReconnect_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -13581,7 +13914,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -13597,7 +13930,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -13646,7 +13979,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isTimeReconnect_args(");
       boolean first = true;
@@ -13763,7 +14096,7 @@ public class Pyload {
       return new isTimeReconnect_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -13827,7 +14160,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -13852,7 +14185,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -13923,7 +14256,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isTimeReconnect_result(");
       boolean first = true;
@@ -14021,7 +14354,7 @@ public class Pyload {
       return new toggleReconnect_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -14047,7 +14380,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -14063,7 +14396,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -14112,7 +14445,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("toggleReconnect_args(");
       boolean first = true;
@@ -14229,7 +14562,7 @@ public class Pyload {
       return new toggleReconnect_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -14293,7 +14626,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -14318,7 +14651,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -14389,13 +14722,668 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("toggleReconnect_result(");
       boolean first = true;
 
       sb.append("success:");
       sb.append(this.success);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class generatePackages_args implements TBase<generatePackages_args, generatePackages_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("generatePackages_args");
+
+    private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)1);
+
+    public List<String> links;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      LINKS((short)1, "links");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LINKS
+            return LINKS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LINKS, new FieldMetaData("links", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(generatePackages_args.class, metaDataMap);
+    }
+
+    public generatePackages_args() {
+    }
+
+    public generatePackages_args(
+      List<String> links)
+    {
+      this();
+      this.links = links;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public generatePackages_args(generatePackages_args other) {
+      if (other.isSetLinks()) {
+        this.links = other.links;
+      }
+    }
+
+    public generatePackages_args deepCopy() {
+      return new generatePackages_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.links = null;
+    }
+
+    public int getLinksSize() {
+      return (this.links == null) ? 0 : this.links.size();
+    }
+
+    public java.util.Iterator<String> getLinksIterator() {
+      return (this.links == null) ? null : this.links.iterator();
+    }
+
+    public void addToLinks(String elem) {
+      if (this.links == null) {
+        this.links = new ArrayList<String>();
+      }
+      this.links.add(elem);
+    }
+
+    public List<String> getLinks() {
+      return this.links;
+    }
+
+    public generatePackages_args setLinks(List<String> links) {
+      this.links = links;
+      return this;
+    }
+
+    public void unsetLinks() {
+      this.links = null;
+    }
+
+    /** Returns true if field links is set (has been asigned a value) and false otherwise */
+    public boolean isSetLinks() {
+      return this.links != null;
+    }
+
+    public void setLinksIsSet(boolean value) {
+      if (!value) {
+        this.links = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LINKS:
+        if (value == null) {
+          unsetLinks();
+        } else {
+          setLinks((List<String>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LINKS:
+        return getLinks();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LINKS:
+        return isSetLinks();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof generatePackages_args)
+        return this.equals((generatePackages_args)that);
+      return false;
+    }
+
+    public boolean equals(generatePackages_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_links = true && this.isSetLinks();
+      boolean that_present_links = true && that.isSetLinks();
+      if (this_present_links || that_present_links) {
+        if (!(this_present_links && that_present_links))
+          return false;
+        if (!this.links.equals(that.links))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(generatePackages_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      generatePackages_args typedOther = (generatePackages_args)other;
+
+      lastComparison = Boolean.valueOf(isSetLinks()).compareTo(typedOther.isSetLinks());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLinks()) {
+        lastComparison = TBaseHelper.compareTo(this.links, typedOther.links);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // LINKS
+            if (field.type == TType.LIST) {
+              {
+                TList _list45 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list45.size);
+                for (int _i46 = 0; _i46 < _list45.size; ++_i46)
+                {
+                  String _elem47;
+                  _elem47 = iprot.readString();
+                  this.links.add(_elem47);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.links != null) {
+        oprot.writeFieldBegin(LINKS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
+          for (String _iter48 : this.links)
+          {
+            oprot.writeString(_iter48);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("generatePackages_args(");
+      boolean first = true;
+
+      sb.append("links:");
+      if (this.links == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.links);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class generatePackages_result implements TBase<generatePackages_result, generatePackages_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("generatePackages_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+
+    public Map<String,List<String>> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING), 
+              new FieldValueMetaData(TType.LIST              , "LinkList"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(generatePackages_result.class, metaDataMap);
+    }
+
+    public generatePackages_result() {
+    }
+
+    public generatePackages_result(
+      Map<String,List<String>> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public generatePackages_result(generatePackages_result other) {
+      if (other.isSetSuccess()) {
+        Map<String,List<String>> __this__success = new HashMap<String,List<String>>();
+        for (Map.Entry<String, List<String>> other_element : other.success.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          List<String> other_element_value = other_element.getValue();
+
+          String __this__success_copy_key = other_element_key;
+
+          List<String> __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public generatePackages_result deepCopy() {
+      return new generatePackages_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(String key, List<String> val) {
+      if (this.success == null) {
+        this.success = new HashMap<String,List<String>>();
+      }
+      this.success.put(key, val);
+    }
+
+    public Map<String,List<String>> getSuccess() {
+      return this.success;
+    }
+
+    public generatePackages_result setSuccess(Map<String,List<String>> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Map<String,List<String>>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof generatePackages_result)
+        return this.equals((generatePackages_result)that);
+      return false;
+    }
+
+    public boolean equals(generatePackages_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(generatePackages_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      generatePackages_result typedOther = (generatePackages_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map49 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<String>>(2*_map49.size);
+                for (int _i50 = 0; _i50 < _map49.size; ++_i50)
+                {
+                  String _key51;
+                  List<String> _val52;
+                  _key51 = iprot.readString();
+                  {
+                    TList _list53 = iprot.readListBegin();
+                    _val52 = new ArrayList<String>(_list53.size);
+                    for (int _i54 = 0; _i54 < _list53.size; ++_i54)
+                    {
+                      String _elem55;
+                      _elem55 = iprot.readString();
+                      _val52.add(_elem55);
+                    }
+                    iprot.readListEnd();
+                  }
+                  this.success.put(_key51, _val52);
+                }
+                iprot.readMapEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
+          for (Map.Entry<String, List<String>> _iter56 : this.success.entrySet())
+          {
+            oprot.writeString(_iter56.getKey());
+            {
+              oprot.writeListBegin(new TList(TType.STRING, _iter56.getValue().size()));
+              for (String _iter57 : _iter56.getValue())
+              {
+                oprot.writeString(_iter57);
+              }
+              oprot.writeListEnd();
+            }
+          }
+          oprot.writeMapEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("generatePackages_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -14506,7 +15494,7 @@ public class Pyload {
       return new checkURLs_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.urls = null;
     }
@@ -14585,7 +15573,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -14610,7 +15598,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -14653,13 +15641,13 @@ public class Pyload {
           case 1: // URLS
             if (field.type == TType.LIST) {
               {
-                TList _list38 = iprot.readListBegin();
-                this.urls = new ArrayList<String>(_list38.size);
-                for (int _i39 = 0; _i39 < _list38.size; ++_i39)
+                TList _list58 = iprot.readListBegin();
+                this.urls = new ArrayList<String>(_list58.size);
+                for (int _i59 = 0; _i59 < _list58.size; ++_i59)
                 {
-                  String _elem40;
-                  _elem40 = iprot.readString();
-                  this.urls.add(_elem40);
+                  String _elem60;
+                  _elem60 = iprot.readString();
+                  this.urls.add(_elem60);
                 }
                 iprot.readListEnd();
               }
@@ -14686,9 +15674,9 @@ public class Pyload {
         oprot.writeFieldBegin(URLS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
-          for (String _iter41 : this.urls)
+          for (String _iter61 : this.urls)
           {
-            oprot.writeString(_iter41);
+            oprot.writeString(_iter61);
           }
           oprot.writeListEnd();
         }
@@ -14698,7 +15686,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("checkURLs_args(");
       boolean first = true;
@@ -14833,7 +15821,7 @@ public class Pyload {
       return new checkURLs_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -14908,7 +15896,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -14933,7 +15921,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -14976,25 +15964,25 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map42 = iprot.readMapBegin();
-                this.success = new HashMap<String,List<String>>(2*_map42.size);
-                for (int _i43 = 0; _i43 < _map42.size; ++_i43)
+                TMap _map62 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<String>>(2*_map62.size);
+                for (int _i63 = 0; _i63 < _map62.size; ++_i63)
                 {
-                  String _key44;
-                  List<String> _val45;
-                  _key44 = iprot.readString();
+                  String _key64;
+                  List<String> _val65;
+                  _key64 = iprot.readString();
                   {
-                    TList _list46 = iprot.readListBegin();
-                    _val45 = new ArrayList<String>(_list46.size);
-                    for (int _i47 = 0; _i47 < _list46.size; ++_i47)
+                    TList _list66 = iprot.readListBegin();
+                    _val65 = new ArrayList<String>(_list66.size);
+                    for (int _i67 = 0; _i67 < _list66.size; ++_i67)
                     {
-                      String _elem48;
-                      _elem48 = iprot.readString();
-                      _val45.add(_elem48);
+                      String _elem68;
+                      _elem68 = iprot.readString();
+                      _val65.add(_elem68);
                     }
                     iprot.readListEnd();
                   }
-                  this.success.put(_key44, _val45);
+                  this.success.put(_key64, _val65);
                 }
                 iprot.readMapEnd();
               }
@@ -15020,14 +16008,14 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
-          for (Map.Entry<String, List<String>> _iter49 : this.success.entrySet())
+          for (Map.Entry<String, List<String>> _iter69 : this.success.entrySet())
           {
-            oprot.writeString(_iter49.getKey());
+            oprot.writeString(_iter69.getKey());
             {
-              oprot.writeListBegin(new TList(TType.STRING, _iter49.getValue().size()));
-              for (String _iter50 : _iter49.getValue())
+              oprot.writeListBegin(new TList(TType.STRING, _iter69.getValue().size()));
+              for (String _iter70 : _iter69.getValue())
               {
-                oprot.writeString(_iter50);
+                oprot.writeString(_iter70);
               }
               oprot.writeListEnd();
             }
@@ -15040,7 +16028,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("checkURLs_result(");
       boolean first = true;
@@ -15161,7 +16149,7 @@ public class Pyload {
       return new parseURLs_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.html = null;
     }
@@ -15225,7 +16213,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -15250,7 +16238,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -15321,7 +16309,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("parseURLs_args(");
       boolean first = true;
@@ -15456,7 +16444,7 @@ public class Pyload {
       return new parseURLs_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -15531,7 +16519,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -15556,7 +16544,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -15599,25 +16587,25 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map51 = iprot.readMapBegin();
-                this.success = new HashMap<String,List<String>>(2*_map51.size);
-                for (int _i52 = 0; _i52 < _map51.size; ++_i52)
+                TMap _map71 = iprot.readMapBegin();
+                this.success = new HashMap<String,List<String>>(2*_map71.size);
+                for (int _i72 = 0; _i72 < _map71.size; ++_i72)
                 {
-                  String _key53;
-                  List<String> _val54;
-                  _key53 = iprot.readString();
+                  String _key73;
+                  List<String> _val74;
+                  _key73 = iprot.readString();
                   {
-                    TList _list55 = iprot.readListBegin();
-                    _val54 = new ArrayList<String>(_list55.size);
-                    for (int _i56 = 0; _i56 < _list55.size; ++_i56)
+                    TList _list75 = iprot.readListBegin();
+                    _val74 = new ArrayList<String>(_list75.size);
+                    for (int _i76 = 0; _i76 < _list75.size; ++_i76)
                     {
-                      String _elem57;
-                      _elem57 = iprot.readString();
-                      _val54.add(_elem57);
+                      String _elem77;
+                      _elem77 = iprot.readString();
+                      _val74.add(_elem77);
                     }
                     iprot.readListEnd();
                   }
-                  this.success.put(_key53, _val54);
+                  this.success.put(_key73, _val74);
                 }
                 iprot.readMapEnd();
               }
@@ -15643,14 +16631,14 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
-          for (Map.Entry<String, List<String>> _iter58 : this.success.entrySet())
+          for (Map.Entry<String, List<String>> _iter78 : this.success.entrySet())
           {
-            oprot.writeString(_iter58.getKey());
+            oprot.writeString(_iter78.getKey());
             {
-              oprot.writeListBegin(new TList(TType.STRING, _iter58.getValue().size()));
-              for (String _iter59 : _iter58.getValue())
+              oprot.writeListBegin(new TList(TType.STRING, _iter78.getValue().size()));
+              for (String _iter79 : _iter78.getValue())
               {
-                oprot.writeString(_iter59);
+                oprot.writeString(_iter79);
               }
               oprot.writeListEnd();
             }
@@ -15663,7 +16651,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("parseURLs_result(");
       boolean first = true;
@@ -15784,7 +16772,7 @@ public class Pyload {
       return new checkOnlineStatus_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.urls = null;
     }
@@ -15863,7 +16851,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -15888,7 +16876,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -15931,13 +16919,13 @@ public class Pyload {
           case 1: // URLS
             if (field.type == TType.LIST) {
               {
-                TList _list60 = iprot.readListBegin();
-                this.urls = new ArrayList<String>(_list60.size);
-                for (int _i61 = 0; _i61 < _list60.size; ++_i61)
+                TList _list80 = iprot.readListBegin();
+                this.urls = new ArrayList<String>(_list80.size);
+                for (int _i81 = 0; _i81 < _list80.size; ++_i81)
                 {
-                  String _elem62;
-                  _elem62 = iprot.readString();
-                  this.urls.add(_elem62);
+                  String _elem82;
+                  _elem82 = iprot.readString();
+                  this.urls.add(_elem82);
                 }
                 iprot.readListEnd();
               }
@@ -15964,9 +16952,9 @@ public class Pyload {
         oprot.writeFieldBegin(URLS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
-          for (String _iter63 : this.urls)
+          for (String _iter83 : this.urls)
           {
-            oprot.writeString(_iter63);
+            oprot.writeString(_iter83);
           }
           oprot.writeListEnd();
         }
@@ -15976,7 +16964,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("checkOnlineStatus_args(");
       boolean first = true;
@@ -16001,9 +16989,9 @@ public class Pyload {
   public static class checkOnlineStatus_result implements TBase<checkOnlineStatus_result, checkOnlineStatus_result._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("checkOnlineStatus_result");
 
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.I32, (short)0);
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.STRUCT, (short)0);
 
-    public int success;
+    public OnlineCheck success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -16064,14 +17052,12 @@ public class Pyload {
     }
 
     // isset id assignments
-    private static final int __SUCCESS_ISSET_ID = 0;
-    private BitSet __isset_bit_vector = new BitSet(1);
 
     public static final Map<_Fields, FieldMetaData> metaDataMap;
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.I32          , "ResultID")));
+          new StructMetaData(TType.STRUCT, OnlineCheck.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(checkOnlineStatus_result.class, metaDataMap);
     }
@@ -16080,53 +17066,52 @@ public class Pyload {
     }
 
     public checkOnlineStatus_result(
-      int success)
+      OnlineCheck success)
     {
       this();
       this.success = success;
-      setSuccessIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public checkOnlineStatus_result(checkOnlineStatus_result other) {
-      __isset_bit_vector.clear();
-      __isset_bit_vector.or(other.__isset_bit_vector);
-      this.success = other.success;
+      if (other.isSetSuccess()) {
+        this.success = new OnlineCheck(other.success);
+      }
     }
 
     public checkOnlineStatus_result deepCopy() {
       return new checkOnlineStatus_result(this);
     }
 
-    
+    @Override
     public void clear() {
-      setSuccessIsSet(false);
-      this.success = 0;
+      this.success = null;
     }
 
-    public int getSuccess() {
+    public OnlineCheck getSuccess() {
       return this.success;
     }
 
-    public checkOnlineStatus_result setSuccess(int success) {
+    public checkOnlineStatus_result setSuccess(OnlineCheck success) {
       this.success = success;
-      setSuccessIsSet(true);
       return this;
     }
 
     public void unsetSuccess() {
-      __isset_bit_vector.clear(__SUCCESS_ISSET_ID);
+      this.success = null;
     }
 
     /** Returns true if field success is set (has been asigned a value) and false otherwise */
     public boolean isSetSuccess() {
-      return __isset_bit_vector.get(__SUCCESS_ISSET_ID);
+      return this.success != null;
     }
 
     public void setSuccessIsSet(boolean value) {
-      __isset_bit_vector.set(__SUCCESS_ISSET_ID, value);
+      if (!value) {
+        this.success = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
@@ -16135,7 +17120,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Integer)value);
+          setSuccess((OnlineCheck)value);
         }
         break;
 
@@ -16145,7 +17130,7 @@ public class Pyload {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SUCCESS:
-        return new Integer(getSuccess());
+        return getSuccess();
 
       }
       throw new IllegalStateException();
@@ -16164,7 +17149,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -16177,19 +17162,19 @@ public class Pyload {
       if (that == null)
         return false;
 
-      boolean this_present_success = true;
-      boolean that_present_success = true;
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
       if (this_present_success || that_present_success) {
         if (!(this_present_success && that_present_success))
           return false;
-        if (this.success != that.success)
+        if (!this.success.equals(that.success))
           return false;
       }
 
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -16230,9 +17215,9 @@ public class Pyload {
         }
         switch (field.id) {
           case 0: // SUCCESS
-            if (field.type == TType.I32) {
-              this.success = iprot.readI32();
-              setSuccessIsSet(true);
+            if (field.type == TType.STRUCT) {
+              this.success = new OnlineCheck();
+              this.success.read(iprot);
             } else { 
               TProtocolUtil.skip(iprot, field.type);
             }
@@ -16253,20 +17238,807 @@ public class Pyload {
 
       if (this.isSetSuccess()) {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        oprot.writeI32(this.success);
+        this.success.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("checkOnlineStatus_result(");
       boolean first = true;
 
       sb.append("success:");
-      sb.append(this.success);
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class checkOnlineStatusContainer_args implements TBase<checkOnlineStatusContainer_args, checkOnlineStatusContainer_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkOnlineStatusContainer_args");
+
+    private static final TField URLS_FIELD_DESC = new TField("urls", TType.LIST, (short)1);
+    private static final TField FILENAME_FIELD_DESC = new TField("filename", TType.STRING, (short)2);
+    private static final TField DATA_FIELD_DESC = new TField("data", TType.STRING, (short)3);
+
+    public List<String> urls;
+    public String filename;
+    public ByteBuffer data;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      URLS((short)1, "urls"),
+      FILENAME((short)2, "filename"),
+      DATA((short)3, "data");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // URLS
+            return URLS;
+          case 2: // FILENAME
+            return FILENAME;
+          case 3: // DATA
+            return DATA;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.URLS, new FieldMetaData("urls", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      tmpMap.put(_Fields.FILENAME, new FieldMetaData("filename", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      tmpMap.put(_Fields.DATA, new FieldMetaData("data", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkOnlineStatusContainer_args.class, metaDataMap);
+    }
+
+    public checkOnlineStatusContainer_args() {
+    }
+
+    public checkOnlineStatusContainer_args(
+      List<String> urls,
+      String filename,
+      ByteBuffer data)
+    {
+      this();
+      this.urls = urls;
+      this.filename = filename;
+      this.data = data;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkOnlineStatusContainer_args(checkOnlineStatusContainer_args other) {
+      if (other.isSetUrls()) {
+        this.urls = other.urls;
+      }
+      if (other.isSetFilename()) {
+        this.filename = other.filename;
+      }
+      if (other.isSetData()) {
+        this.data = TBaseHelper.copyBinary(other.data);
+;
+      }
+    }
+
+    public checkOnlineStatusContainer_args deepCopy() {
+      return new checkOnlineStatusContainer_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.urls = null;
+      this.filename = null;
+      this.data = null;
+    }
+
+    public int getUrlsSize() {
+      return (this.urls == null) ? 0 : this.urls.size();
+    }
+
+    public java.util.Iterator<String> getUrlsIterator() {
+      return (this.urls == null) ? null : this.urls.iterator();
+    }
+
+    public void addToUrls(String elem) {
+      if (this.urls == null) {
+        this.urls = new ArrayList<String>();
+      }
+      this.urls.add(elem);
+    }
+
+    public List<String> getUrls() {
+      return this.urls;
+    }
+
+    public checkOnlineStatusContainer_args setUrls(List<String> urls) {
+      this.urls = urls;
+      return this;
+    }
+
+    public void unsetUrls() {
+      this.urls = null;
+    }
+
+    /** Returns true if field urls is set (has been asigned a value) and false otherwise */
+    public boolean isSetUrls() {
+      return this.urls != null;
+    }
+
+    public void setUrlsIsSet(boolean value) {
+      if (!value) {
+        this.urls = null;
+      }
+    }
+
+    public String getFilename() {
+      return this.filename;
+    }
+
+    public checkOnlineStatusContainer_args setFilename(String filename) {
+      this.filename = filename;
+      return this;
+    }
+
+    public void unsetFilename() {
+      this.filename = null;
+    }
+
+    /** Returns true if field filename is set (has been asigned a value) and false otherwise */
+    public boolean isSetFilename() {
+      return this.filename != null;
+    }
+
+    public void setFilenameIsSet(boolean value) {
+      if (!value) {
+        this.filename = null;
+      }
+    }
+
+    public byte[] getData() {
+      setData(TBaseHelper.rightSize(data));
+      return data.array();
+    }
+
+    public ByteBuffer BufferForData() {
+      return data;
+    }
+
+    public checkOnlineStatusContainer_args setData(byte[] data) {
+      setData(ByteBuffer.wrap(data));
+      return this;
+    }
+
+    public checkOnlineStatusContainer_args setData(ByteBuffer data) {
+      this.data = data;
+      return this;
+    }
+
+    public void unsetData() {
+      this.data = null;
+    }
+
+    /** Returns true if field data is set (has been asigned a value) and false otherwise */
+    public boolean isSetData() {
+      return this.data != null;
+    }
+
+    public void setDataIsSet(boolean value) {
+      if (!value) {
+        this.data = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case URLS:
+        if (value == null) {
+          unsetUrls();
+        } else {
+          setUrls((List<String>)value);
+        }
+        break;
+
+      case FILENAME:
+        if (value == null) {
+          unsetFilename();
+        } else {
+          setFilename((String)value);
+        }
+        break;
+
+      case DATA:
+        if (value == null) {
+          unsetData();
+        } else {
+          setData((ByteBuffer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case URLS:
+        return getUrls();
+
+      case FILENAME:
+        return getFilename();
+
+      case DATA:
+        return getData();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case URLS:
+        return isSetUrls();
+      case FILENAME:
+        return isSetFilename();
+      case DATA:
+        return isSetData();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkOnlineStatusContainer_args)
+        return this.equals((checkOnlineStatusContainer_args)that);
+      return false;
+    }
+
+    public boolean equals(checkOnlineStatusContainer_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_urls = true && this.isSetUrls();
+      boolean that_present_urls = true && that.isSetUrls();
+      if (this_present_urls || that_present_urls) {
+        if (!(this_present_urls && that_present_urls))
+          return false;
+        if (!this.urls.equals(that.urls))
+          return false;
+      }
+
+      boolean this_present_filename = true && this.isSetFilename();
+      boolean that_present_filename = true && that.isSetFilename();
+      if (this_present_filename || that_present_filename) {
+        if (!(this_present_filename && that_present_filename))
+          return false;
+        if (!this.filename.equals(that.filename))
+          return false;
+      }
+
+      boolean this_present_data = true && this.isSetData();
+      boolean that_present_data = true && that.isSetData();
+      if (this_present_data || that_present_data) {
+        if (!(this_present_data && that_present_data))
+          return false;
+        if (!this.data.equals(that.data))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkOnlineStatusContainer_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkOnlineStatusContainer_args typedOther = (checkOnlineStatusContainer_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUrls()).compareTo(typedOther.isSetUrls());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUrls()) {
+        lastComparison = TBaseHelper.compareTo(this.urls, typedOther.urls);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetFilename()).compareTo(typedOther.isSetFilename());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFilename()) {
+        lastComparison = TBaseHelper.compareTo(this.filename, typedOther.filename);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetData()).compareTo(typedOther.isSetData());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetData()) {
+        lastComparison = TBaseHelper.compareTo(this.data, typedOther.data);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // URLS
+            if (field.type == TType.LIST) {
+              {
+                TList _list84 = iprot.readListBegin();
+                this.urls = new ArrayList<String>(_list84.size);
+                for (int _i85 = 0; _i85 < _list84.size; ++_i85)
+                {
+                  String _elem86;
+                  _elem86 = iprot.readString();
+                  this.urls.add(_elem86);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 2: // FILENAME
+            if (field.type == TType.STRING) {
+              this.filename = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 3: // DATA
+            if (field.type == TType.STRING) {
+              this.data = iprot.readBinary();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.urls != null) {
+        oprot.writeFieldBegin(URLS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.urls.size()));
+          for (String _iter87 : this.urls)
+          {
+            oprot.writeString(_iter87);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (this.filename != null) {
+        oprot.writeFieldBegin(FILENAME_FIELD_DESC);
+        oprot.writeString(this.filename);
+        oprot.writeFieldEnd();
+      }
+      if (this.data != null) {
+        oprot.writeFieldBegin(DATA_FIELD_DESC);
+        oprot.writeBinary(this.data);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkOnlineStatusContainer_args(");
+      boolean first = true;
+
+      sb.append("urls:");
+      if (this.urls == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.urls);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("filename:");
+      if (this.filename == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.filename);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("data:");
+      if (this.data == null) {
+        sb.append("null");
+      } else {
+        TBaseHelper.toString(this.data, sb);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class checkOnlineStatusContainer_result implements TBase<checkOnlineStatusContainer_result, checkOnlineStatusContainer_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("checkOnlineStatusContainer_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.STRUCT, (short)0);
+
+    public OnlineCheck success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new StructMetaData(TType.STRUCT, OnlineCheck.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(checkOnlineStatusContainer_result.class, metaDataMap);
+    }
+
+    public checkOnlineStatusContainer_result() {
+    }
+
+    public checkOnlineStatusContainer_result(
+      OnlineCheck success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkOnlineStatusContainer_result(checkOnlineStatusContainer_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new OnlineCheck(other.success);
+      }
+    }
+
+    public checkOnlineStatusContainer_result deepCopy() {
+      return new checkOnlineStatusContainer_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public OnlineCheck getSuccess() {
+      return this.success;
+    }
+
+    public checkOnlineStatusContainer_result setSuccess(OnlineCheck success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((OnlineCheck)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkOnlineStatusContainer_result)
+        return this.equals((checkOnlineStatusContainer_result)that);
+      return false;
+    }
+
+    public boolean equals(checkOnlineStatusContainer_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(checkOnlineStatusContainer_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      checkOnlineStatusContainer_result typedOther = (checkOnlineStatusContainer_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.STRUCT) {
+              this.success = new OnlineCheck();
+              this.success.read(iprot);
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        this.success.write(oprot);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("checkOnlineStatusContainer_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -16380,7 +18152,7 @@ public class Pyload {
       return new pollResults_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setRidIsSet(false);
       this.rid = 0;
@@ -16444,7 +18216,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -16469,7 +18241,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -16539,7 +18311,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pollResults_args(");
       boolean first = true;
@@ -16560,9 +18332,9 @@ public class Pyload {
   public static class pollResults_result implements TBase<pollResults_result, pollResults_result._Fields>, java.io.Serializable, Cloneable   {
     private static final TStruct STRUCT_DESC = new TStruct("pollResults_result");
 
-    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.MAP, (short)0);
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.STRUCT, (short)0);
 
-    public Map<String,List<OnlineStatus>> success;
+    public OnlineCheck success;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
@@ -16628,10 +18400,7 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
-          new MapMetaData(TType.MAP, 
-              new FieldValueMetaData(TType.STRING              , "PluginName"), 
-              new ListMetaData(TType.LIST, 
-                  new StructMetaData(TType.STRUCT, OnlineStatus.class)))));
+          new StructMetaData(TType.STRUCT, OnlineCheck.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       FieldMetaData.addStructMetaDataMap(pollResults_result.class, metaDataMap);
     }
@@ -16640,7 +18409,7 @@ public class Pyload {
     }
 
     public pollResults_result(
-      Map<String,List<OnlineStatus>> success)
+      OnlineCheck success)
     {
       this();
       this.success = success;
@@ -16651,22 +18420,7 @@ public class Pyload {
      */
     public pollResults_result(pollResults_result other) {
       if (other.isSetSuccess()) {
-        Map<String,List<OnlineStatus>> __this__success = new HashMap<String,List<OnlineStatus>>();
-        for (Map.Entry<String, List<OnlineStatus>> other_element : other.success.entrySet()) {
-
-          String other_element_key = other_element.getKey();
-          List<OnlineStatus> other_element_value = other_element.getValue();
-
-          String __this__success_copy_key = other_element_key;
-
-          List<OnlineStatus> __this__success_copy_value = new ArrayList<OnlineStatus>();
-          for (OnlineStatus other_element_value_element : other_element_value) {
-            __this__success_copy_value.add(new OnlineStatus(other_element_value_element));
-          }
-
-          __this__success.put(__this__success_copy_key, __this__success_copy_value);
-        }
-        this.success = __this__success;
+        this.success = new OnlineCheck(other.success);
       }
     }
 
@@ -16674,27 +18428,16 @@ public class Pyload {
       return new pollResults_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
 
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public void putToSuccess(String key, List<OnlineStatus> val) {
-      if (this.success == null) {
-        this.success = new HashMap<String,List<OnlineStatus>>();
-      }
-      this.success.put(key, val);
-    }
-
-    public Map<String,List<OnlineStatus>> getSuccess() {
+    public OnlineCheck getSuccess() {
       return this.success;
     }
 
-    public pollResults_result setSuccess(Map<String,List<OnlineStatus>> success) {
+    public pollResults_result setSuccess(OnlineCheck success) {
       this.success = success;
       return this;
     }
@@ -16720,7 +18463,7 @@ public class Pyload {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Map<String,List<OnlineStatus>>)value);
+          setSuccess((OnlineCheck)value);
         }
         break;
 
@@ -16749,7 +18492,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -16774,7 +18517,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -16815,31 +18558,9 @@ public class Pyload {
         }
         switch (field.id) {
           case 0: // SUCCESS
-            if (field.type == TType.MAP) {
-              {
-                TMap _map64 = iprot.readMapBegin();
-                this.success = new HashMap<String,List<OnlineStatus>>(2*_map64.size);
-                for (int _i65 = 0; _i65 < _map64.size; ++_i65)
-                {
-                  String _key66;
-                  List<OnlineStatus> _val67;
-                  _key66 = iprot.readString();
-                  {
-                    TList _list68 = iprot.readListBegin();
-                    _val67 = new ArrayList<OnlineStatus>(_list68.size);
-                    for (int _i69 = 0; _i69 < _list68.size; ++_i69)
-                    {
-                      OnlineStatus _elem70;
-                      _elem70 = new OnlineStatus();
-                      _elem70.read(iprot);
-                      _val67.add(_elem70);
-                    }
-                    iprot.readListEnd();
-                  }
-                  this.success.put(_key66, _val67);
-                }
-                iprot.readMapEnd();
-              }
+            if (field.type == TType.STRUCT) {
+              this.success = new OnlineCheck();
+              this.success.read(iprot);
             } else { 
               TProtocolUtil.skip(iprot, field.type);
             }
@@ -16860,29 +18581,14 @@ public class Pyload {
 
       if (this.isSetSuccess()) {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-        {
-          oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.success.size()));
-          for (Map.Entry<String, List<OnlineStatus>> _iter71 : this.success.entrySet())
-          {
-            oprot.writeString(_iter71.getKey());
-            {
-              oprot.writeListBegin(new TList(TType.STRUCT, _iter71.getValue().size()));
-              for (OnlineStatus _iter72 : _iter71.getValue())
-              {
-                _iter72.write(oprot);
-              }
-              oprot.writeListEnd();
-            }
-          }
-          oprot.writeMapEnd();
-        }
+        this.success.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pollResults_result(");
       boolean first = true;
@@ -16984,7 +18690,7 @@ public class Pyload {
       return new statusDownloads_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -17010,7 +18716,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -17026,7 +18732,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -17075,7 +18781,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("statusDownloads_args(");
       boolean first = true;
@@ -17194,7 +18900,7 @@ public class Pyload {
       return new statusDownloads_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -17273,7 +18979,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -17298,7 +19004,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -17341,14 +19047,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list73 = iprot.readListBegin();
-                this.success = new ArrayList<DownloadInfo>(_list73.size);
-                for (int _i74 = 0; _i74 < _list73.size; ++_i74)
+                TList _list88 = iprot.readListBegin();
+                this.success = new ArrayList<DownloadInfo>(_list88.size);
+                for (int _i89 = 0; _i89 < _list88.size; ++_i89)
                 {
-                  DownloadInfo _elem75;
-                  _elem75 = new DownloadInfo();
-                  _elem75.read(iprot);
-                  this.success.add(_elem75);
+                  DownloadInfo _elem90;
+                  _elem90 = new DownloadInfo();
+                  _elem90.read(iprot);
+                  this.success.add(_elem90);
                 }
                 iprot.readListEnd();
               }
@@ -17374,9 +19080,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (DownloadInfo _iter76 : this.success)
+          for (DownloadInfo _iter91 : this.success)
           {
-            _iter76.write(oprot);
+            _iter91.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -17386,7 +19092,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("statusDownloads_result(");
       boolean first = true;
@@ -17510,7 +19216,7 @@ public class Pyload {
       return new getPackageData_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -17574,7 +19280,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -17599,7 +19305,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -17669,7 +19375,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageData_args(");
       boolean first = true;
@@ -17798,7 +19504,7 @@ public class Pyload {
       return new getPackageData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
       this.e = null;
@@ -17900,7 +19606,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -17934,7 +19640,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -18027,7 +19733,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageData_result(");
       boolean first = true;
@@ -18159,7 +19865,7 @@ public class Pyload {
       return new getPackageInfo_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -18223,7 +19929,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -18248,7 +19954,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -18318,7 +20024,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageInfo_args(");
       boolean first = true;
@@ -18447,7 +20153,7 @@ public class Pyload {
       return new getPackageInfo_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
       this.e = null;
@@ -18549,7 +20255,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -18583,7 +20289,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -18676,7 +20382,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageInfo_result(");
       boolean first = true;
@@ -18808,7 +20514,7 @@ public class Pyload {
       return new getFileData_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setFidIsSet(false);
       this.fid = 0;
@@ -18872,7 +20578,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -18897,7 +20603,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -18967,7 +20673,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getFileData_args(");
       boolean first = true;
@@ -19096,7 +20802,7 @@ public class Pyload {
       return new getFileData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
       this.e = null;
@@ -19198,7 +20904,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -19232,7 +20938,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -19325,7 +21031,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getFileData_result(");
       boolean first = true;
@@ -19435,7 +21141,7 @@ public class Pyload {
       return new getQueue_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -19461,7 +21167,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -19477,7 +21183,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -19526,7 +21232,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getQueue_args(");
       boolean first = true;
@@ -19645,7 +21351,7 @@ public class Pyload {
       return new getQueue_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -19724,7 +21430,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -19749,7 +21455,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -19792,14 +21498,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list77 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list77.size);
-                for (int _i78 = 0; _i78 < _list77.size; ++_i78)
+                TList _list92 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list92.size);
+                for (int _i93 = 0; _i93 < _list92.size; ++_i93)
                 {
-                  PackageData _elem79;
-                  _elem79 = new PackageData();
-                  _elem79.read(iprot);
-                  this.success.add(_elem79);
+                  PackageData _elem94;
+                  _elem94 = new PackageData();
+                  _elem94.read(iprot);
+                  this.success.add(_elem94);
                 }
                 iprot.readListEnd();
               }
@@ -19825,9 +21531,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter80 : this.success)
+          for (PackageData _iter95 : this.success)
           {
-            _iter80.write(oprot);
+            _iter95.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -19837,7 +21543,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getQueue_result(");
       boolean first = true;
@@ -19939,7 +21645,7 @@ public class Pyload {
       return new getCollector_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -19965,7 +21671,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -19981,7 +21687,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -20030,7 +21736,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCollector_args(");
       boolean first = true;
@@ -20149,7 +21855,7 @@ public class Pyload {
       return new getCollector_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -20228,7 +21934,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -20253,7 +21959,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -20296,14 +22002,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list81 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list81.size);
-                for (int _i82 = 0; _i82 < _list81.size; ++_i82)
+                TList _list96 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list96.size);
+                for (int _i97 = 0; _i97 < _list96.size; ++_i97)
                 {
-                  PackageData _elem83;
-                  _elem83 = new PackageData();
-                  _elem83.read(iprot);
-                  this.success.add(_elem83);
+                  PackageData _elem98;
+                  _elem98 = new PackageData();
+                  _elem98.read(iprot);
+                  this.success.add(_elem98);
                 }
                 iprot.readListEnd();
               }
@@ -20329,9 +22035,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter84 : this.success)
+          for (PackageData _iter99 : this.success)
           {
-            _iter84.write(oprot);
+            _iter99.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -20341,7 +22047,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCollector_result(");
       boolean first = true;
@@ -20443,7 +22149,7 @@ public class Pyload {
       return new getQueueData_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -20469,7 +22175,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -20485,7 +22191,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -20534,7 +22240,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getQueueData_args(");
       boolean first = true;
@@ -20653,7 +22359,7 @@ public class Pyload {
       return new getQueueData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -20732,7 +22438,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -20757,7 +22463,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -20800,14 +22506,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list85 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list85.size);
-                for (int _i86 = 0; _i86 < _list85.size; ++_i86)
+                TList _list100 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list100.size);
+                for (int _i101 = 0; _i101 < _list100.size; ++_i101)
                 {
-                  PackageData _elem87;
-                  _elem87 = new PackageData();
-                  _elem87.read(iprot);
-                  this.success.add(_elem87);
+                  PackageData _elem102;
+                  _elem102 = new PackageData();
+                  _elem102.read(iprot);
+                  this.success.add(_elem102);
                 }
                 iprot.readListEnd();
               }
@@ -20833,9 +22539,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter88 : this.success)
+          for (PackageData _iter103 : this.success)
           {
-            _iter88.write(oprot);
+            _iter103.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -20845,7 +22551,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getQueueData_result(");
       boolean first = true;
@@ -20947,7 +22653,7 @@ public class Pyload {
       return new getCollectorData_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -20973,7 +22679,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -20989,7 +22695,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -21038,7 +22744,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCollectorData_args(");
       boolean first = true;
@@ -21157,7 +22863,7 @@ public class Pyload {
       return new getCollectorData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -21236,7 +22942,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -21261,7 +22967,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -21304,14 +23010,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list89 = iprot.readListBegin();
-                this.success = new ArrayList<PackageData>(_list89.size);
-                for (int _i90 = 0; _i90 < _list89.size; ++_i90)
+                TList _list104 = iprot.readListBegin();
+                this.success = new ArrayList<PackageData>(_list104.size);
+                for (int _i105 = 0; _i105 < _list104.size; ++_i105)
                 {
-                  PackageData _elem91;
-                  _elem91 = new PackageData();
-                  _elem91.read(iprot);
-                  this.success.add(_elem91);
+                  PackageData _elem106;
+                  _elem106 = new PackageData();
+                  _elem106.read(iprot);
+                  this.success.add(_elem106);
                 }
                 iprot.readListEnd();
               }
@@ -21337,9 +23043,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (PackageData _iter92 : this.success)
+          for (PackageData _iter107 : this.success)
           {
-            _iter92.write(oprot);
+            _iter107.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -21349,7 +23055,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCollectorData_result(");
       boolean first = true;
@@ -21478,7 +23184,7 @@ public class Pyload {
       return new getPackageOrder_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.destination = null;
     }
@@ -21550,7 +23256,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -21575,7 +23281,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -21646,7 +23352,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageOrder_args(");
       boolean first = true;
@@ -21781,7 +23487,7 @@ public class Pyload {
       return new getPackageOrder_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -21856,7 +23562,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -21881,7 +23587,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -21924,15 +23630,15 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map93 = iprot.readMapBegin();
-                this.success = new HashMap<Short,Integer>(2*_map93.size);
-                for (int _i94 = 0; _i94 < _map93.size; ++_i94)
+                TMap _map108 = iprot.readMapBegin();
+                this.success = new HashMap<Short,Integer>(2*_map108.size);
+                for (int _i109 = 0; _i109 < _map108.size; ++_i109)
                 {
-                  short _key95;
-                  int _val96;
-                  _key95 = iprot.readI16();
-                  _val96 = iprot.readI32();
-                  this.success.put(_key95, _val96);
+                  short _key110;
+                  int _val111;
+                  _key110 = iprot.readI16();
+                  _val111 = iprot.readI32();
+                  this.success.put(_key110, _val111);
                 }
                 iprot.readMapEnd();
               }
@@ -21958,10 +23664,10 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
-          for (Map.Entry<Short, Integer> _iter97 : this.success.entrySet())
+          for (Map.Entry<Short, Integer> _iter112 : this.success.entrySet())
           {
-            oprot.writeI16(_iter97.getKey());
-            oprot.writeI32(_iter97.getValue());
+            oprot.writeI16(_iter112.getKey());
+            oprot.writeI32(_iter112.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -21971,7 +23677,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getPackageOrder_result(");
       boolean first = true;
@@ -22095,7 +23801,7 @@ public class Pyload {
       return new getFileOrder_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -22159,7 +23865,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -22184,7 +23890,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -22254,7 +23960,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getFileOrder_args(");
       boolean first = true;
@@ -22385,7 +24091,7 @@ public class Pyload {
       return new getFileOrder_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -22460,7 +24166,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -22485,7 +24191,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -22528,15 +24234,15 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map98 = iprot.readMapBegin();
-                this.success = new HashMap<Short,Integer>(2*_map98.size);
-                for (int _i99 = 0; _i99 < _map98.size; ++_i99)
+                TMap _map113 = iprot.readMapBegin();
+                this.success = new HashMap<Short,Integer>(2*_map113.size);
+                for (int _i114 = 0; _i114 < _map113.size; ++_i114)
                 {
-                  short _key100;
-                  int _val101;
-                  _key100 = iprot.readI16();
-                  _val101 = iprot.readI32();
-                  this.success.put(_key100, _val101);
+                  short _key115;
+                  int _val116;
+                  _key115 = iprot.readI16();
+                  _val116 = iprot.readI32();
+                  this.success.put(_key115, _val116);
                 }
                 iprot.readMapEnd();
               }
@@ -22562,10 +24268,10 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.I16, TType.I32, this.success.size()));
-          for (Map.Entry<Short, Integer> _iter102 : this.success.entrySet())
+          for (Map.Entry<Short, Integer> _iter117 : this.success.entrySet())
           {
-            oprot.writeI16(_iter102.getKey());
-            oprot.writeI32(_iter102.getValue());
+            oprot.writeI16(_iter117.getKey());
+            oprot.writeI32(_iter117.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -22575,9 +24281,744 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getFileOrder_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class generateAndAddPackages_args implements TBase<generateAndAddPackages_args, generateAndAddPackages_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("generateAndAddPackages_args");
+
+    private static final TField LINKS_FIELD_DESC = new TField("links", TType.LIST, (short)1);
+    private static final TField DEST_FIELD_DESC = new TField("dest", TType.I32, (short)2);
+
+    public List<String> links;
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination dest;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      LINKS((short)1, "links"),
+      /**
+       * 
+       * @see Destination
+       */
+      DEST((short)2, "dest");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LINKS
+            return LINKS;
+          case 2: // DEST
+            return DEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LINKS, new FieldMetaData("links", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.LIST          , "LinkList")));
+      tmpMap.put(_Fields.DEST, new FieldMetaData("dest", TFieldRequirementType.DEFAULT, 
+          new EnumMetaData(TType.ENUM, Destination.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(generateAndAddPackages_args.class, metaDataMap);
+    }
+
+    public generateAndAddPackages_args() {
+    }
+
+    public generateAndAddPackages_args(
+      List<String> links,
+      Destination dest)
+    {
+      this();
+      this.links = links;
+      this.dest = dest;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public generateAndAddPackages_args(generateAndAddPackages_args other) {
+      if (other.isSetLinks()) {
+        this.links = other.links;
+      }
+      if (other.isSetDest()) {
+        this.dest = other.dest;
+      }
+    }
+
+    public generateAndAddPackages_args deepCopy() {
+      return new generateAndAddPackages_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.links = null;
+      this.dest = null;
+    }
+
+    public int getLinksSize() {
+      return (this.links == null) ? 0 : this.links.size();
+    }
+
+    public java.util.Iterator<String> getLinksIterator() {
+      return (this.links == null) ? null : this.links.iterator();
+    }
+
+    public void addToLinks(String elem) {
+      if (this.links == null) {
+        this.links = new ArrayList<String>();
+      }
+      this.links.add(elem);
+    }
+
+    public List<String> getLinks() {
+      return this.links;
+    }
+
+    public generateAndAddPackages_args setLinks(List<String> links) {
+      this.links = links;
+      return this;
+    }
+
+    public void unsetLinks() {
+      this.links = null;
+    }
+
+    /** Returns true if field links is set (has been asigned a value) and false otherwise */
+    public boolean isSetLinks() {
+      return this.links != null;
+    }
+
+    public void setLinksIsSet(boolean value) {
+      if (!value) {
+        this.links = null;
+      }
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public Destination getDest() {
+      return this.dest;
+    }
+
+    /**
+     * 
+     * @see Destination
+     */
+    public generateAndAddPackages_args setDest(Destination dest) {
+      this.dest = dest;
+      return this;
+    }
+
+    public void unsetDest() {
+      this.dest = null;
+    }
+
+    /** Returns true if field dest is set (has been asigned a value) and false otherwise */
+    public boolean isSetDest() {
+      return this.dest != null;
+    }
+
+    public void setDestIsSet(boolean value) {
+      if (!value) {
+        this.dest = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LINKS:
+        if (value == null) {
+          unsetLinks();
+        } else {
+          setLinks((List<String>)value);
+        }
+        break;
+
+      case DEST:
+        if (value == null) {
+          unsetDest();
+        } else {
+          setDest((Destination)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LINKS:
+        return getLinks();
+
+      case DEST:
+        return getDest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LINKS:
+        return isSetLinks();
+      case DEST:
+        return isSetDest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof generateAndAddPackages_args)
+        return this.equals((generateAndAddPackages_args)that);
+      return false;
+    }
+
+    public boolean equals(generateAndAddPackages_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_links = true && this.isSetLinks();
+      boolean that_present_links = true && that.isSetLinks();
+      if (this_present_links || that_present_links) {
+        if (!(this_present_links && that_present_links))
+          return false;
+        if (!this.links.equals(that.links))
+          return false;
+      }
+
+      boolean this_present_dest = true && this.isSetDest();
+      boolean that_present_dest = true && that.isSetDest();
+      if (this_present_dest || that_present_dest) {
+        if (!(this_present_dest && that_present_dest))
+          return false;
+        if (!this.dest.equals(that.dest))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(generateAndAddPackages_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      generateAndAddPackages_args typedOther = (generateAndAddPackages_args)other;
+
+      lastComparison = Boolean.valueOf(isSetLinks()).compareTo(typedOther.isSetLinks());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLinks()) {
+        lastComparison = TBaseHelper.compareTo(this.links, typedOther.links);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetDest()).compareTo(typedOther.isSetDest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDest()) {
+        lastComparison = TBaseHelper.compareTo(this.dest, typedOther.dest);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 1: // LINKS
+            if (field.type == TType.LIST) {
+              {
+                TList _list118 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list118.size);
+                for (int _i119 = 0; _i119 < _list118.size; ++_i119)
+                {
+                  String _elem120;
+                  _elem120 = iprot.readString();
+                  this.links.add(_elem120);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 2: // DEST
+            if (field.type == TType.I32) {
+              this.dest = Destination.findByValue(iprot.readI32());
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (this.links != null) {
+        oprot.writeFieldBegin(LINKS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
+          for (String _iter121 : this.links)
+          {
+            oprot.writeString(_iter121);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (this.dest != null) {
+        oprot.writeFieldBegin(DEST_FIELD_DESC);
+        oprot.writeI32(this.dest.getValue());
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("generateAndAddPackages_args(");
+      boolean first = true;
+
+      sb.append("links:");
+      if (this.links == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.links);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("dest:");
+      if (this.dest == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dest);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+    }
+
+  }
+
+  public static class generateAndAddPackages_result implements TBase<generateAndAddPackages_result, generateAndAddPackages_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("generateAndAddPackages_result");
+
+    private static final TField SUCCESS_FIELD_DESC = new TField("success", TType.LIST, (short)0);
+
+    public List<Integer> success;
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+
+    public static final Map<_Fields, FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new FieldMetaData("success", TFieldRequirementType.DEFAULT, 
+          new ListMetaData(TType.LIST, 
+              new FieldValueMetaData(TType.I32              , "PackageID"))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      FieldMetaData.addStructMetaDataMap(generateAndAddPackages_result.class, metaDataMap);
+    }
+
+    public generateAndAddPackages_result() {
+    }
+
+    public generateAndAddPackages_result(
+      List<Integer> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public generateAndAddPackages_result(generateAndAddPackages_result other) {
+      if (other.isSetSuccess()) {
+        List<Integer> __this__success = new ArrayList<Integer>();
+        for (Integer other_element : other.success) {
+          __this__success.add(other_element);
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public generateAndAddPackages_result deepCopy() {
+      return new generateAndAddPackages_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<Integer> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(int elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<Integer>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<Integer> getSuccess() {
+      return this.success;
+    }
+
+    public generateAndAddPackages_result setSuccess(List<Integer> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been asigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((List<Integer>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof generateAndAddPackages_result)
+        return this.equals((generateAndAddPackages_result)that);
+      return false;
+    }
+
+    public boolean equals(generateAndAddPackages_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(generateAndAddPackages_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      generateAndAddPackages_result typedOther = (generateAndAddPackages_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(TProtocol iprot) throws TException {
+      TField field;
+      iprot.readStructBegin();
+      while (true)
+      {
+        field = iprot.readFieldBegin();
+        if (field.type == TType.STOP) { 
+          break;
+        }
+        switch (field.id) {
+          case 0: // SUCCESS
+            if (field.type == TType.LIST) {
+              {
+                TList _list122 = iprot.readListBegin();
+                this.success = new ArrayList<Integer>(_list122.size);
+                for (int _i123 = 0; _i123 < _list122.size; ++_i123)
+                {
+                  int _elem124;
+                  _elem124 = iprot.readI32();
+                  this.success.add(_elem124);
+                }
+                iprot.readListEnd();
+              }
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          default:
+            TProtocolUtil.skip(iprot, field.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      validate();
+    }
+
+    public void write(TProtocol oprot) throws TException {
+      oprot.writeStructBegin(STRUCT_DESC);
+
+      if (this.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.I32, this.success.size()));
+          for (int _iter125 : this.success)
+          {
+            oprot.writeI32(_iter125);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("generateAndAddPackages_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -22728,7 +25169,7 @@ public class Pyload {
       return new addPackage_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.name = null;
       this.links = null;
@@ -22891,7 +25332,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -22934,7 +25375,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -23004,13 +25445,13 @@ public class Pyload {
           case 2: // LINKS
             if (field.type == TType.LIST) {
               {
-                TList _list103 = iprot.readListBegin();
-                this.links = new ArrayList<String>(_list103.size);
-                for (int _i104 = 0; _i104 < _list103.size; ++_i104)
+                TList _list126 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list126.size);
+                for (int _i127 = 0; _i127 < _list126.size; ++_i127)
                 {
-                  String _elem105;
-                  _elem105 = iprot.readString();
-                  this.links.add(_elem105);
+                  String _elem128;
+                  _elem128 = iprot.readString();
+                  this.links.add(_elem128);
                 }
                 iprot.readListEnd();
               }
@@ -23049,9 +25490,9 @@ public class Pyload {
         oprot.writeFieldBegin(LINKS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
-          for (String _iter106 : this.links)
+          for (String _iter129 : this.links)
           {
-            oprot.writeString(_iter106);
+            oprot.writeString(_iter129);
           }
           oprot.writeListEnd();
         }
@@ -23066,7 +25507,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("addPackage_args(");
       boolean first = true;
@@ -23206,7 +25647,7 @@ public class Pyload {
       return new addPackage_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = 0;
@@ -23270,7 +25711,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -23295,7 +25736,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -23366,7 +25807,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("addPackage_result(");
       boolean first = true;
@@ -23498,7 +25939,7 @@ public class Pyload {
       return new addFiles_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -23615,7 +26056,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -23649,7 +26090,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -23710,13 +26151,13 @@ public class Pyload {
           case 2: // LINKS
             if (field.type == TType.LIST) {
               {
-                TList _list107 = iprot.readListBegin();
-                this.links = new ArrayList<String>(_list107.size);
-                for (int _i108 = 0; _i108 < _list107.size; ++_i108)
+                TList _list130 = iprot.readListBegin();
+                this.links = new ArrayList<String>(_list130.size);
+                for (int _i131 = 0; _i131 < _list130.size; ++_i131)
                 {
-                  String _elem109;
-                  _elem109 = iprot.readString();
-                  this.links.add(_elem109);
+                  String _elem132;
+                  _elem132 = iprot.readString();
+                  this.links.add(_elem132);
                 }
                 iprot.readListEnd();
               }
@@ -23746,9 +26187,9 @@ public class Pyload {
         oprot.writeFieldBegin(LINKS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.links.size()));
-          for (String _iter110 : this.links)
+          for (String _iter133 : this.links)
           {
-            oprot.writeString(_iter110);
+            oprot.writeString(_iter133);
           }
           oprot.writeListEnd();
         }
@@ -23758,7 +26199,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("addFiles_args(");
       boolean first = true;
@@ -23864,7 +26305,7 @@ public class Pyload {
       return new addFiles_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -23890,7 +26331,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -23906,7 +26347,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -23954,7 +26395,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("addFiles_result(");
       boolean first = true;
@@ -24081,7 +26522,7 @@ public class Pyload {
       return new uploadContainer_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.filename = null;
       this.data = null;
@@ -24193,7 +26634,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -24227,7 +26668,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -24320,7 +26761,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("uploadContainer_args(");
       boolean first = true;
@@ -24430,7 +26871,7 @@ public class Pyload {
       return new uploadContainer_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -24456,7 +26897,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -24472,7 +26913,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -24520,7 +26961,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("uploadContainer_result(");
       boolean first = true;
@@ -24639,7 +27080,7 @@ public class Pyload {
       return new deleteFiles_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.fids = null;
     }
@@ -24718,7 +27159,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -24743,7 +27184,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -24786,13 +27227,13 @@ public class Pyload {
           case 1: // FIDS
             if (field.type == TType.LIST) {
               {
-                TList _list111 = iprot.readListBegin();
-                this.fids = new ArrayList<Integer>(_list111.size);
-                for (int _i112 = 0; _i112 < _list111.size; ++_i112)
+                TList _list134 = iprot.readListBegin();
+                this.fids = new ArrayList<Integer>(_list134.size);
+                for (int _i135 = 0; _i135 < _list134.size; ++_i135)
                 {
-                  int _elem113;
-                  _elem113 = iprot.readI32();
-                  this.fids.add(_elem113);
+                  int _elem136;
+                  _elem136 = iprot.readI32();
+                  this.fids.add(_elem136);
                 }
                 iprot.readListEnd();
               }
@@ -24819,9 +27260,9 @@ public class Pyload {
         oprot.writeFieldBegin(FIDS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
-          for (int _iter114 : this.fids)
+          for (int _iter137 : this.fids)
           {
-            oprot.writeI32(_iter114);
+            oprot.writeI32(_iter137);
           }
           oprot.writeListEnd();
         }
@@ -24831,7 +27272,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deleteFiles_args(");
       boolean first = true;
@@ -24933,7 +27374,7 @@ public class Pyload {
       return new deleteFiles_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -24959,7 +27400,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -24975,7 +27416,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -25023,7 +27464,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deleteFiles_result(");
       boolean first = true;
@@ -25142,7 +27583,7 @@ public class Pyload {
       return new deletePackages_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.pids = null;
     }
@@ -25221,7 +27662,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -25246,7 +27687,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -25289,13 +27730,13 @@ public class Pyload {
           case 1: // PIDS
             if (field.type == TType.LIST) {
               {
-                TList _list115 = iprot.readListBegin();
-                this.pids = new ArrayList<Integer>(_list115.size);
-                for (int _i116 = 0; _i116 < _list115.size; ++_i116)
+                TList _list138 = iprot.readListBegin();
+                this.pids = new ArrayList<Integer>(_list138.size);
+                for (int _i139 = 0; _i139 < _list138.size; ++_i139)
                 {
-                  int _elem117;
-                  _elem117 = iprot.readI32();
-                  this.pids.add(_elem117);
+                  int _elem140;
+                  _elem140 = iprot.readI32();
+                  this.pids.add(_elem140);
                 }
                 iprot.readListEnd();
               }
@@ -25322,9 +27763,9 @@ public class Pyload {
         oprot.writeFieldBegin(PIDS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.I32, this.pids.size()));
-          for (int _iter118 : this.pids)
+          for (int _iter141 : this.pids)
           {
-            oprot.writeI32(_iter118);
+            oprot.writeI32(_iter141);
           }
           oprot.writeListEnd();
         }
@@ -25334,7 +27775,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deletePackages_args(");
       boolean first = true;
@@ -25436,7 +27877,7 @@ public class Pyload {
       return new deletePackages_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -25462,7 +27903,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -25478,7 +27919,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -25526,7 +27967,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deletePackages_result(");
       boolean first = true;
@@ -25643,7 +28084,7 @@ public class Pyload {
       return new pushToQueue_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -25707,7 +28148,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -25732,7 +28173,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -25802,7 +28243,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pushToQueue_args(");
       boolean first = true;
@@ -25900,7 +28341,7 @@ public class Pyload {
       return new pushToQueue_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -25926,7 +28367,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -25942,7 +28383,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -25990,7 +28431,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pushToQueue_result(");
       boolean first = true;
@@ -26107,7 +28548,7 @@ public class Pyload {
       return new pullFromQueue_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -26171,7 +28612,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -26196,7 +28637,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -26266,7 +28707,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pullFromQueue_args(");
       boolean first = true;
@@ -26364,7 +28805,7 @@ public class Pyload {
       return new pullFromQueue_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -26390,7 +28831,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -26406,7 +28847,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -26454,7 +28895,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("pullFromQueue_result(");
       boolean first = true;
@@ -26571,7 +29012,7 @@ public class Pyload {
       return new restartPackage_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -26635,7 +29076,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -26660,7 +29101,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -26730,7 +29171,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartPackage_args(");
       boolean first = true;
@@ -26828,7 +29269,7 @@ public class Pyload {
       return new restartPackage_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -26854,7 +29295,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -26870,7 +29311,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -26918,7 +29359,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartPackage_result(");
       boolean first = true;
@@ -27035,7 +29476,7 @@ public class Pyload {
       return new restartFile_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setFidIsSet(false);
       this.fid = 0;
@@ -27099,7 +29540,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -27124,7 +29565,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -27194,7 +29635,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartFile_args(");
       boolean first = true;
@@ -27292,7 +29733,7 @@ public class Pyload {
       return new restartFile_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -27318,7 +29759,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -27334,7 +29775,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -27382,7 +29823,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartFile_result(");
       boolean first = true;
@@ -27499,7 +29940,7 @@ public class Pyload {
       return new recheckPackage_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -27563,7 +30004,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -27588,7 +30029,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -27658,7 +30099,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("recheckPackage_args(");
       boolean first = true;
@@ -27756,7 +30197,7 @@ public class Pyload {
       return new recheckPackage_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -27782,7 +30223,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -27798,7 +30239,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -27846,7 +30287,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("recheckPackage_result(");
       boolean first = true;
@@ -27941,7 +30382,7 @@ public class Pyload {
       return new stopAllDownloads_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -27967,7 +30408,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -27983,7 +30424,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -28032,7 +30473,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("stopAllDownloads_args(");
       boolean first = true;
@@ -28127,7 +30568,7 @@ public class Pyload {
       return new stopAllDownloads_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -28153,7 +30594,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -28169,7 +30610,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -28217,7 +30658,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("stopAllDownloads_result(");
       boolean first = true;
@@ -28336,7 +30777,7 @@ public class Pyload {
       return new stopDownloads_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.fids = null;
     }
@@ -28415,7 +30856,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -28440,7 +30881,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -28483,13 +30924,13 @@ public class Pyload {
           case 1: // FIDS
             if (field.type == TType.LIST) {
               {
-                TList _list119 = iprot.readListBegin();
-                this.fids = new ArrayList<Integer>(_list119.size);
-                for (int _i120 = 0; _i120 < _list119.size; ++_i120)
+                TList _list142 = iprot.readListBegin();
+                this.fids = new ArrayList<Integer>(_list142.size);
+                for (int _i143 = 0; _i143 < _list142.size; ++_i143)
                 {
-                  int _elem121;
-                  _elem121 = iprot.readI32();
-                  this.fids.add(_elem121);
+                  int _elem144;
+                  _elem144 = iprot.readI32();
+                  this.fids.add(_elem144);
                 }
                 iprot.readListEnd();
               }
@@ -28516,9 +30957,9 @@ public class Pyload {
         oprot.writeFieldBegin(FIDS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
-          for (int _iter122 : this.fids)
+          for (int _iter145 : this.fids)
           {
-            oprot.writeI32(_iter122);
+            oprot.writeI32(_iter145);
           }
           oprot.writeListEnd();
         }
@@ -28528,7 +30969,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("stopDownloads_args(");
       boolean first = true;
@@ -28630,7 +31071,7 @@ public class Pyload {
       return new stopDownloads_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -28656,7 +31097,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -28672,7 +31113,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -28720,7 +31161,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("stopDownloads_result(");
       boolean first = true;
@@ -28849,7 +31290,7 @@ public class Pyload {
       return new setPackageName_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -28951,7 +31392,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -28985,7 +31426,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -29077,7 +31518,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setPackageName_args(");
       boolean first = true;
@@ -29183,7 +31624,7 @@ public class Pyload {
       return new setPackageName_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -29209,7 +31650,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -29225,7 +31666,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -29273,7 +31714,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setPackageName_result(");
       boolean first = true;
@@ -29410,7 +31851,7 @@ public class Pyload {
       return new movePackage_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.destination = null;
       setPidIsSet(false);
@@ -29520,7 +31961,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -29554,7 +31995,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -29646,7 +32087,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("movePackage_args(");
       boolean first = true;
@@ -29752,7 +32193,7 @@ public class Pyload {
       return new movePackage_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -29778,7 +32219,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -29794,7 +32235,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -29842,7 +32283,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("movePackage_result(");
       boolean first = true;
@@ -29857,19 +32298,19 @@ public class Pyload {
 
   }
 
-  public static class setPriority_args implements TBase<setPriority_args, setPriority_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("setPriority_args");
+  public static class moveFiles_args implements TBase<moveFiles_args, moveFiles_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("moveFiles_args");
 
-    private static final TField PID_FIELD_DESC = new TField("pid", TType.I32, (short)1);
-    private static final TField PRIORITY_FIELD_DESC = new TField("priority", TType.BYTE, (short)2);
+    private static final TField FIDS_FIELD_DESC = new TField("fids", TType.LIST, (short)1);
+    private static final TField PID_FIELD_DESC = new TField("pid", TType.I32, (short)2);
 
+    public List<Integer> fids;
     public int pid;
-    public byte priority;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
-      PID((short)1, "pid"),
-      PRIORITY((short)2, "priority");
+      FIDS((short)1, "fids"),
+      PID((short)2, "pid");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -29884,10 +32325,10 @@ public class Pyload {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // PID
+          case 1: // FIDS
+            return FIDS;
+          case 2: // PID
             return PID;
-          case 2: // PRIORITY
-            return PRIORITY;
           default:
             return null;
         }
@@ -29929,61 +32370,104 @@ public class Pyload {
 
     // isset id assignments
     private static final int __PID_ISSET_ID = 0;
-    private static final int __PRIORITY_ISSET_ID = 1;
-    private BitSet __isset_bit_vector = new BitSet(2);
+    private BitSet __isset_bit_vector = new BitSet(1);
 
     public static final Map<_Fields, FieldMetaData> metaDataMap;
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.FIDS, new FieldMetaData("fids", TFieldRequirementType.DEFAULT, 
+          new ListMetaData(TType.LIST, 
+              new FieldValueMetaData(TType.I32              , "FileID"))));
       tmpMap.put(_Fields.PID, new FieldMetaData("pid", TFieldRequirementType.DEFAULT, 
           new FieldValueMetaData(TType.I32          , "PackageID")));
-      tmpMap.put(_Fields.PRIORITY, new FieldMetaData("priority", TFieldRequirementType.DEFAULT, 
-          new FieldValueMetaData(TType.BYTE          , "Priority")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(setPriority_args.class, metaDataMap);
+      FieldMetaData.addStructMetaDataMap(moveFiles_args.class, metaDataMap);
     }
 
-    public setPriority_args() {
+    public moveFiles_args() {
     }
 
-    public setPriority_args(
-      int pid,
-      byte priority)
+    public moveFiles_args(
+      List<Integer> fids,
+      int pid)
     {
       this();
+      this.fids = fids;
       this.pid = pid;
       setPidIsSet(true);
-      this.priority = priority;
-      setPriorityIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public setPriority_args(setPriority_args other) {
+    public moveFiles_args(moveFiles_args other) {
       __isset_bit_vector.clear();
       __isset_bit_vector.or(other.__isset_bit_vector);
+      if (other.isSetFids()) {
+        List<Integer> __this__fids = new ArrayList<Integer>();
+        for (Integer other_element : other.fids) {
+          __this__fids.add(other_element);
+        }
+        this.fids = __this__fids;
+      }
       this.pid = other.pid;
-      this.priority = other.priority;
     }
 
-    public setPriority_args deepCopy() {
-      return new setPriority_args(this);
+    public moveFiles_args deepCopy() {
+      return new moveFiles_args(this);
     }
 
-    
+    @Override
     public void clear() {
+      this.fids = null;
       setPidIsSet(false);
       this.pid = 0;
-      setPriorityIsSet(false);
-      this.priority = 0;
+    }
+
+    public int getFidsSize() {
+      return (this.fids == null) ? 0 : this.fids.size();
+    }
+
+    public java.util.Iterator<Integer> getFidsIterator() {
+      return (this.fids == null) ? null : this.fids.iterator();
+    }
+
+    public void addToFids(int elem) {
+      if (this.fids == null) {
+        this.fids = new ArrayList<Integer>();
+      }
+      this.fids.add(elem);
+    }
+
+    public List<Integer> getFids() {
+      return this.fids;
+    }
+
+    public moveFiles_args setFids(List<Integer> fids) {
+      this.fids = fids;
+      return this;
+    }
+
+    public void unsetFids() {
+      this.fids = null;
+    }
+
+    /** Returns true if field fids is set (has been asigned a value) and false otherwise */
+    public boolean isSetFids() {
+      return this.fids != null;
+    }
+
+    public void setFidsIsSet(boolean value) {
+      if (!value) {
+        this.fids = null;
+      }
     }
 
     public int getPid() {
       return this.pid;
     }
 
-    public setPriority_args setPid(int pid) {
+    public moveFiles_args setPid(int pid) {
       this.pid = pid;
       setPidIsSet(true);
       return this;
@@ -30002,31 +32486,16 @@ public class Pyload {
       __isset_bit_vector.set(__PID_ISSET_ID, value);
     }
 
-    public byte getPriority() {
-      return this.priority;
-    }
-
-    public setPriority_args setPriority(byte priority) {
-      this.priority = priority;
-      setPriorityIsSet(true);
-      return this;
-    }
-
-    public void unsetPriority() {
-      __isset_bit_vector.clear(__PRIORITY_ISSET_ID);
-    }
-
-    /** Returns true if field priority is set (has been asigned a value) and false otherwise */
-    public boolean isSetPriority() {
-      return __isset_bit_vector.get(__PRIORITY_ISSET_ID);
-    }
-
-    public void setPriorityIsSet(boolean value) {
-      __isset_bit_vector.set(__PRIORITY_ISSET_ID, value);
-    }
-
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
+      case FIDS:
+        if (value == null) {
+          unsetFids();
+        } else {
+          setFids((List<Integer>)value);
+        }
+        break;
+
       case PID:
         if (value == null) {
           unsetPid();
@@ -30035,24 +32504,16 @@ public class Pyload {
         }
         break;
 
-      case PRIORITY:
-        if (value == null) {
-          unsetPriority();
-        } else {
-          setPriority((Byte)value);
-        }
-        break;
-
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
+      case FIDS:
+        return getFids();
+
       case PID:
         return new Integer(getPid());
-
-      case PRIORITY:
-        return new Byte(getPriority());
 
       }
       throw new IllegalStateException();
@@ -30065,26 +32526,35 @@ public class Pyload {
       }
 
       switch (field) {
+      case FIDS:
+        return isSetFids();
       case PID:
         return isSetPid();
-      case PRIORITY:
-        return isSetPriority();
       }
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof setPriority_args)
-        return this.equals((setPriority_args)that);
+      if (that instanceof moveFiles_args)
+        return this.equals((moveFiles_args)that);
       return false;
     }
 
-    public boolean equals(setPriority_args that) {
+    public boolean equals(moveFiles_args that) {
       if (that == null)
         return false;
+
+      boolean this_present_fids = true && this.isSetFids();
+      boolean that_present_fids = true && that.isSetFids();
+      if (this_present_fids || that_present_fids) {
+        if (!(this_present_fids && that_present_fids))
+          return false;
+        if (!this.fids.equals(that.fids))
+          return false;
+      }
 
       boolean this_present_pid = true;
       boolean that_present_pid = true;
@@ -30095,47 +32565,38 @@ public class Pyload {
           return false;
       }
 
-      boolean this_present_priority = true;
-      boolean that_present_priority = true;
-      if (this_present_priority || that_present_priority) {
-        if (!(this_present_priority && that_present_priority))
-          return false;
-        if (this.priority != that.priority)
-          return false;
-      }
-
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
 
-    public int compareTo(setPriority_args other) {
+    public int compareTo(moveFiles_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      setPriority_args typedOther = (setPriority_args)other;
+      moveFiles_args typedOther = (moveFiles_args)other;
 
+      lastComparison = Boolean.valueOf(isSetFids()).compareTo(typedOther.isSetFids());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFids()) {
+        lastComparison = TBaseHelper.compareTo(this.fids, typedOther.fids);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       lastComparison = Boolean.valueOf(isSetPid()).compareTo(typedOther.isSetPid());
       if (lastComparison != 0) {
         return lastComparison;
       }
       if (isSetPid()) {
         lastComparison = TBaseHelper.compareTo(this.pid, typedOther.pid);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetPriority()).compareTo(typedOther.isSetPriority());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetPriority()) {
-        lastComparison = TBaseHelper.compareTo(this.priority, typedOther.priority);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -30157,18 +32618,27 @@ public class Pyload {
           break;
         }
         switch (field.id) {
-          case 1: // PID
-            if (field.type == TType.I32) {
-              this.pid = iprot.readI32();
-              setPidIsSet(true);
+          case 1: // FIDS
+            if (field.type == TType.LIST) {
+              {
+                TList _list146 = iprot.readListBegin();
+                this.fids = new ArrayList<Integer>(_list146.size);
+                for (int _i147 = 0; _i147 < _list146.size; ++_i147)
+                {
+                  int _elem148;
+                  _elem148 = iprot.readI32();
+                  this.fids.add(_elem148);
+                }
+                iprot.readListEnd();
+              }
             } else { 
               TProtocolUtil.skip(iprot, field.type);
             }
             break;
-          case 2: // PRIORITY
-            if (field.type == TType.BYTE) {
-              this.priority = iprot.readByte();
-              setPriorityIsSet(true);
+          case 2: // PID
+            if (field.type == TType.I32) {
+              this.pid = iprot.readI32();
+              setPidIsSet(true);
             } else { 
               TProtocolUtil.skip(iprot, field.type);
             }
@@ -30188,27 +32658,40 @@ public class Pyload {
       validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
+      if (this.fids != null) {
+        oprot.writeFieldBegin(FIDS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new TList(TType.I32, this.fids.size()));
+          for (int _iter149 : this.fids)
+          {
+            oprot.writeI32(_iter149);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldBegin(PID_FIELD_DESC);
       oprot.writeI32(this.pid);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(PRIORITY_FIELD_DESC);
-      oprot.writeByte(this.priority);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("setPriority_args(");
+      StringBuilder sb = new StringBuilder("moveFiles_args(");
       boolean first = true;
 
-      sb.append("pid:");
-      sb.append(this.pid);
+      sb.append("fids:");
+      if (this.fids == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.fids);
+      }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("priority:");
-      sb.append(this.priority);
+      sb.append("pid:");
+      sb.append(this.pid);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -30220,8 +32703,8 @@ public class Pyload {
 
   }
 
-  public static class setPriority_result implements TBase<setPriority_result, setPriority_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("setPriority_result");
+  public static class moveFiles_result implements TBase<moveFiles_result, moveFiles_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("moveFiles_result");
 
 
 
@@ -30284,23 +32767,23 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(setPriority_result.class, metaDataMap);
+      FieldMetaData.addStructMetaDataMap(moveFiles_result.class, metaDataMap);
     }
 
-    public setPriority_result() {
+    public moveFiles_result() {
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public setPriority_result(setPriority_result other) {
+    public moveFiles_result(moveFiles_result other) {
     }
 
-    public setPriority_result deepCopy() {
-      return new setPriority_result(this);
+    public moveFiles_result deepCopy() {
+      return new moveFiles_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -30326,34 +32809,34 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof setPriority_result)
-        return this.equals((setPriority_result)that);
+      if (that instanceof moveFiles_result)
+        return this.equals((moveFiles_result)that);
       return false;
     }
 
-    public boolean equals(setPriority_result that) {
+    public boolean equals(moveFiles_result that) {
       if (that == null)
         return false;
 
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
 
-    public int compareTo(setPriority_result other) {
+    public int compareTo(moveFiles_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      setPriority_result typedOther = (setPriority_result)other;
+      moveFiles_result typedOther = (moveFiles_result)other;
 
       return 0;
     }
@@ -30390,9 +32873,9 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("setPriority_result(");
+      StringBuilder sb = new StringBuilder("moveFiles_result(");
       boolean first = true;
 
       sb.append(")");
@@ -30519,7 +33002,7 @@ public class Pyload {
       return new orderPackage_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -30621,7 +33104,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -30655,7 +33138,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -30746,7 +33229,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("orderPackage_args(");
       boolean first = true;
@@ -30848,7 +33331,7 @@ public class Pyload {
       return new orderPackage_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -30874,7 +33357,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -30890,7 +33373,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -30938,7 +33421,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("orderPackage_result(");
       boolean first = true;
@@ -31067,7 +33550,7 @@ public class Pyload {
       return new orderFile_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setFidIsSet(false);
       this.fid = 0;
@@ -31169,7 +33652,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -31203,7 +33686,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -31294,7 +33777,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("orderFile_args(");
       boolean first = true;
@@ -31396,7 +33879,7 @@ public class Pyload {
       return new orderFile_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -31422,7 +33905,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -31438,7 +33921,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -31486,7 +33969,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("orderFile_result(");
       boolean first = true;
@@ -31629,7 +34112,7 @@ public class Pyload {
       return new setPackageData_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setPidIsSet(false);
       this.pid = 0;
@@ -31742,7 +34225,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -31776,7 +34259,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -31837,15 +34320,15 @@ public class Pyload {
           case 2: // DATA
             if (field.type == TType.MAP) {
               {
-                TMap _map123 = iprot.readMapBegin();
-                this.data = new HashMap<String,String>(2*_map123.size);
-                for (int _i124 = 0; _i124 < _map123.size; ++_i124)
+                TMap _map150 = iprot.readMapBegin();
+                this.data = new HashMap<String,String>(2*_map150.size);
+                for (int _i151 = 0; _i151 < _map150.size; ++_i151)
                 {
-                  String _key125;
-                  String _val126;
-                  _key125 = iprot.readString();
-                  _val126 = iprot.readString();
-                  this.data.put(_key125, _val126);
+                  String _key152;
+                  String _val153;
+                  _key152 = iprot.readString();
+                  _val153 = iprot.readString();
+                  this.data.put(_key152, _val153);
                 }
                 iprot.readMapEnd();
               }
@@ -31875,10 +34358,10 @@ public class Pyload {
         oprot.writeFieldBegin(DATA_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.data.size()));
-          for (Map.Entry<String, String> _iter127 : this.data.entrySet())
+          for (Map.Entry<String, String> _iter154 : this.data.entrySet())
           {
-            oprot.writeString(_iter127.getKey());
-            oprot.writeString(_iter127.getValue());
+            oprot.writeString(_iter154.getKey());
+            oprot.writeString(_iter154.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -31888,7 +34371,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setPackageData_args(");
       boolean first = true;
@@ -32013,7 +34496,7 @@ public class Pyload {
       return new setPackageData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.e = null;
     }
@@ -32077,7 +34560,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -32102,7 +34585,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -32173,7 +34656,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setPackageData_result(");
       boolean first = true;
@@ -32275,7 +34758,7 @@ public class Pyload {
       return new deleteFinished_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -32301,7 +34784,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -32317,7 +34800,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -32366,7 +34849,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deleteFinished_args(");
       boolean first = true;
@@ -32461,7 +34944,7 @@ public class Pyload {
       return new deleteFinished_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -32487,7 +34970,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -32503,7 +34986,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -32551,7 +35034,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("deleteFinished_result(");
       boolean first = true;
@@ -32646,7 +35129,7 @@ public class Pyload {
       return new restartFailed_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -32672,7 +35155,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -32688,7 +35171,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -32737,7 +35220,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartFailed_args(");
       boolean first = true;
@@ -32832,7 +35315,7 @@ public class Pyload {
       return new restartFailed_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -32858,7 +35341,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -32874,7 +35357,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -32922,7 +35405,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("restartFailed_result(");
       boolean first = true;
@@ -33017,7 +35500,7 @@ public class Pyload {
       return new isCaptchaWaiting_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -33043,7 +35526,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -33059,7 +35542,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -33108,7 +35591,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isCaptchaWaiting_args(");
       boolean first = true;
@@ -33225,7 +35708,7 @@ public class Pyload {
       return new isCaptchaWaiting_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -33289,7 +35772,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -33314,7 +35797,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -33385,7 +35868,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("isCaptchaWaiting_result(");
       boolean first = true;
@@ -33505,7 +35988,7 @@ public class Pyload {
       return new getCaptchaTask_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setExclusiveIsSet(false);
       this.exclusive = false;
@@ -33569,7 +36052,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -33594,7 +36077,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -33664,7 +36147,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCaptchaTask_args(");
       boolean first = true;
@@ -33781,7 +36264,7 @@ public class Pyload {
       return new getCaptchaTask_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -33845,7 +36328,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -33870,7 +36353,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -33941,7 +36424,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCaptchaTask_result(");
       boolean first = true;
@@ -34065,7 +36548,7 @@ public class Pyload {
       return new getCaptchaTaskStatus_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setTidIsSet(false);
       this.tid = 0;
@@ -34129,7 +36612,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -34154,7 +36637,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -34224,7 +36707,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCaptchaTaskStatus_args(");
       boolean first = true;
@@ -34341,7 +36824,7 @@ public class Pyload {
       return new getCaptchaTaskStatus_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -34405,7 +36888,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -34430,7 +36913,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -34500,7 +36983,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getCaptchaTaskStatus_result(");
       boolean first = true;
@@ -34636,7 +37119,7 @@ public class Pyload {
       return new setCaptchaResult_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setTidIsSet(false);
       this.tid = 0;
@@ -34738,7 +37221,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -34772,7 +37255,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -34864,7 +37347,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setCaptchaResult_args(");
       boolean first = true;
@@ -34970,7 +37453,7 @@ public class Pyload {
       return new setCaptchaResult_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -34996,7 +37479,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -35012,7 +37495,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -35060,7 +37543,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("setCaptchaResult_result(");
       boolean first = true;
@@ -35174,7 +37657,7 @@ public class Pyload {
       return new getEvents_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.uuid = null;
     }
@@ -35238,7 +37721,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -35263,7 +37746,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -35334,7 +37817,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getEvents_args(");
       boolean first = true;
@@ -35460,7 +37943,7 @@ public class Pyload {
       return new getEvents_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -35539,7 +38022,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -35564,7 +38047,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -35607,14 +38090,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list128 = iprot.readListBegin();
-                this.success = new ArrayList<Event>(_list128.size);
-                for (int _i129 = 0; _i129 < _list128.size; ++_i129)
+                TList _list155 = iprot.readListBegin();
+                this.success = new ArrayList<Event>(_list155.size);
+                for (int _i156 = 0; _i156 < _list155.size; ++_i156)
                 {
-                  Event _elem130;
-                  _elem130 = new Event();
-                  _elem130.read(iprot);
-                  this.success.add(_elem130);
+                  Event _elem157;
+                  _elem157 = new Event();
+                  _elem157.read(iprot);
+                  this.success.add(_elem157);
                 }
                 iprot.readListEnd();
               }
@@ -35640,9 +38123,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (Event _iter131 : this.success)
+          for (Event _iter158 : this.success)
           {
-            _iter131.write(oprot);
+            _iter158.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -35652,7 +38135,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getEvents_result(");
       boolean first = true;
@@ -35776,7 +38259,7 @@ public class Pyload {
       return new getAccounts_args(this);
     }
 
-    
+    @Override
     public void clear() {
       setRefreshIsSet(false);
       this.refresh = false;
@@ -35840,7 +38323,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -35865,7 +38348,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -35935,7 +38418,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAccounts_args(");
       boolean first = true;
@@ -36057,7 +38540,7 @@ public class Pyload {
       return new getAccounts_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -36136,7 +38619,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -36161,7 +38644,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -36204,14 +38687,14 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list132 = iprot.readListBegin();
-                this.success = new ArrayList<AccountInfo>(_list132.size);
-                for (int _i133 = 0; _i133 < _list132.size; ++_i133)
+                TList _list159 = iprot.readListBegin();
+                this.success = new ArrayList<AccountInfo>(_list159.size);
+                for (int _i160 = 0; _i160 < _list159.size; ++_i160)
                 {
-                  AccountInfo _elem134;
-                  _elem134 = new AccountInfo();
-                  _elem134.read(iprot);
-                  this.success.add(_elem134);
+                  AccountInfo _elem161;
+                  _elem161 = new AccountInfo();
+                  _elem161.read(iprot);
+                  this.success.add(_elem161);
                 }
                 iprot.readListEnd();
               }
@@ -36237,9 +38720,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-          for (AccountInfo _iter135 : this.success)
+          for (AccountInfo _iter162 : this.success)
           {
-            _iter135.write(oprot);
+            _iter162.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -36249,7 +38732,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAccounts_result(");
       boolean first = true;
@@ -36351,7 +38834,7 @@ public class Pyload {
       return new getAccountTypes_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -36377,7 +38860,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -36393,7 +38876,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -36442,7 +38925,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAccountTypes_args(");
       boolean first = true;
@@ -36561,7 +39044,7 @@ public class Pyload {
       return new getAccountTypes_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -36640,7 +39123,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -36665,7 +39148,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -36708,13 +39191,13 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.LIST) {
               {
-                TList _list136 = iprot.readListBegin();
-                this.success = new ArrayList<String>(_list136.size);
-                for (int _i137 = 0; _i137 < _list136.size; ++_i137)
+                TList _list163 = iprot.readListBegin();
+                this.success = new ArrayList<String>(_list163.size);
+                for (int _i164 = 0; _i164 < _list163.size; ++_i164)
                 {
-                  String _elem138;
-                  _elem138 = iprot.readString();
-                  this.success.add(_elem138);
+                  String _elem165;
+                  _elem165 = iprot.readString();
+                  this.success.add(_elem165);
                 }
                 iprot.readListEnd();
               }
@@ -36740,9 +39223,9 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.success.size()));
-          for (String _iter139 : this.success)
+          for (String _iter166 : this.success)
           {
-            oprot.writeString(_iter139);
+            oprot.writeString(_iter166);
           }
           oprot.writeListEnd();
         }
@@ -36752,7 +39235,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAccountTypes_result(");
       boolean first = true;
@@ -36774,16 +39257,25 @@ public class Pyload {
 
   }
 
-  public static class updateAccounts_args implements TBase<updateAccounts_args, updateAccounts_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("updateAccounts_args");
+  public static class updateAccount_args implements TBase<updateAccount_args, updateAccount_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("updateAccount_args");
 
-    private static final TField DATA_FIELD_DESC = new TField("data", TType.STRUCT, (short)1);
+    private static final TField PLUGIN_FIELD_DESC = new TField("plugin", TType.STRING, (short)1);
+    private static final TField ACCOUNT_FIELD_DESC = new TField("account", TType.STRING, (short)2);
+    private static final TField PASSWORD_FIELD_DESC = new TField("password", TType.STRING, (short)3);
+    private static final TField OPTIONS_FIELD_DESC = new TField("options", TType.MAP, (short)4);
 
-    public AccountData data;
+    public String plugin;
+    public String account;
+    public String password;
+    public Map<String,String> options;
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements TFieldIdEnum {
-      DATA((short)1, "data");
+      PLUGIN((short)1, "plugin"),
+      ACCOUNT((short)2, "account"),
+      PASSWORD((short)3, "password"),
+      OPTIONS((short)4, "options");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -36798,8 +39290,14 @@ public class Pyload {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // DATA
-            return DATA;
+          case 1: // PLUGIN
+            return PLUGIN;
+          case 2: // ACCOUNT
+            return ACCOUNT;
+          case 3: // PASSWORD
+            return PASSWORD;
+          case 4: // OPTIONS
+            return OPTIONS;
           default:
             return null;
         }
@@ -36844,71 +39342,216 @@ public class Pyload {
     public static final Map<_Fields, FieldMetaData> metaDataMap;
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.DATA, new FieldMetaData("data", TFieldRequirementType.DEFAULT, 
-          new StructMetaData(TType.STRUCT, AccountData.class)));
+      tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING          , "PluginName")));
+      tmpMap.put(_Fields.ACCOUNT, new FieldMetaData("account", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      tmpMap.put(_Fields.PASSWORD, new FieldMetaData("password", TFieldRequirementType.DEFAULT, 
+          new FieldValueMetaData(TType.STRING)));
+      tmpMap.put(_Fields.OPTIONS, new FieldMetaData("options", TFieldRequirementType.DEFAULT, 
+          new MapMetaData(TType.MAP, 
+              new FieldValueMetaData(TType.STRING), 
+              new FieldValueMetaData(TType.STRING))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(updateAccounts_args.class, metaDataMap);
+      FieldMetaData.addStructMetaDataMap(updateAccount_args.class, metaDataMap);
     }
 
-    public updateAccounts_args() {
+    public updateAccount_args() {
     }
 
-    public updateAccounts_args(
-      AccountData data)
+    public updateAccount_args(
+      String plugin,
+      String account,
+      String password,
+      Map<String,String> options)
     {
       this();
-      this.data = data;
+      this.plugin = plugin;
+      this.account = account;
+      this.password = password;
+      this.options = options;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public updateAccounts_args(updateAccounts_args other) {
-      if (other.isSetData()) {
-        this.data = new AccountData(other.data);
+    public updateAccount_args(updateAccount_args other) {
+      if (other.isSetPlugin()) {
+        this.plugin = other.plugin;
+      }
+      if (other.isSetAccount()) {
+        this.account = other.account;
+      }
+      if (other.isSetPassword()) {
+        this.password = other.password;
+      }
+      if (other.isSetOptions()) {
+        Map<String,String> __this__options = new HashMap<String,String>();
+        for (Map.Entry<String, String> other_element : other.options.entrySet()) {
+
+          String other_element_key = other_element.getKey();
+          String other_element_value = other_element.getValue();
+
+          String __this__options_copy_key = other_element_key;
+
+          String __this__options_copy_value = other_element_value;
+
+          __this__options.put(__this__options_copy_key, __this__options_copy_value);
+        }
+        this.options = __this__options;
       }
     }
 
-    public updateAccounts_args deepCopy() {
-      return new updateAccounts_args(this);
+    public updateAccount_args deepCopy() {
+      return new updateAccount_args(this);
     }
 
-    
+    @Override
     public void clear() {
-      this.data = null;
+      this.plugin = null;
+      this.account = null;
+      this.password = null;
+      this.options = null;
     }
 
-    public AccountData getData() {
-      return this.data;
+    public String getPlugin() {
+      return this.plugin;
     }
 
-    public updateAccounts_args setData(AccountData data) {
-      this.data = data;
+    public updateAccount_args setPlugin(String plugin) {
+      this.plugin = plugin;
       return this;
     }
 
-    public void unsetData() {
-      this.data = null;
+    public void unsetPlugin() {
+      this.plugin = null;
     }
 
-    /** Returns true if field data is set (has been asigned a value) and false otherwise */
-    public boolean isSetData() {
-      return this.data != null;
+    /** Returns true if field plugin is set (has been asigned a value) and false otherwise */
+    public boolean isSetPlugin() {
+      return this.plugin != null;
     }
 
-    public void setDataIsSet(boolean value) {
+    public void setPluginIsSet(boolean value) {
       if (!value) {
-        this.data = null;
+        this.plugin = null;
+      }
+    }
+
+    public String getAccount() {
+      return this.account;
+    }
+
+    public updateAccount_args setAccount(String account) {
+      this.account = account;
+      return this;
+    }
+
+    public void unsetAccount() {
+      this.account = null;
+    }
+
+    /** Returns true if field account is set (has been asigned a value) and false otherwise */
+    public boolean isSetAccount() {
+      return this.account != null;
+    }
+
+    public void setAccountIsSet(boolean value) {
+      if (!value) {
+        this.account = null;
+      }
+    }
+
+    public String getPassword() {
+      return this.password;
+    }
+
+    public updateAccount_args setPassword(String password) {
+      this.password = password;
+      return this;
+    }
+
+    public void unsetPassword() {
+      this.password = null;
+    }
+
+    /** Returns true if field password is set (has been asigned a value) and false otherwise */
+    public boolean isSetPassword() {
+      return this.password != null;
+    }
+
+    public void setPasswordIsSet(boolean value) {
+      if (!value) {
+        this.password = null;
+      }
+    }
+
+    public int getOptionsSize() {
+      return (this.options == null) ? 0 : this.options.size();
+    }
+
+    public void putToOptions(String key, String val) {
+      if (this.options == null) {
+        this.options = new HashMap<String,String>();
+      }
+      this.options.put(key, val);
+    }
+
+    public Map<String,String> getOptions() {
+      return this.options;
+    }
+
+    public updateAccount_args setOptions(Map<String,String> options) {
+      this.options = options;
+      return this;
+    }
+
+    public void unsetOptions() {
+      this.options = null;
+    }
+
+    /** Returns true if field options is set (has been asigned a value) and false otherwise */
+    public boolean isSetOptions() {
+      return this.options != null;
+    }
+
+    public void setOptionsIsSet(boolean value) {
+      if (!value) {
+        this.options = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case DATA:
+      case PLUGIN:
         if (value == null) {
-          unsetData();
+          unsetPlugin();
         } else {
-          setData((AccountData)value);
+          setPlugin((String)value);
+        }
+        break;
+
+      case ACCOUNT:
+        if (value == null) {
+          unsetAccount();
+        } else {
+          setAccount((String)value);
+        }
+        break;
+
+      case PASSWORD:
+        if (value == null) {
+          unsetPassword();
+        } else {
+          setPassword((String)value);
+        }
+        break;
+
+      case OPTIONS:
+        if (value == null) {
+          unsetOptions();
+        } else {
+          setOptions((Map<String,String>)value);
         }
         break;
 
@@ -36917,8 +39560,17 @@ public class Pyload {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case DATA:
-        return getData();
+      case PLUGIN:
+        return getPlugin();
+
+      case ACCOUNT:
+        return getAccount();
+
+      case PASSWORD:
+        return getPassword();
+
+      case OPTIONS:
+        return getOptions();
 
       }
       throw new IllegalStateException();
@@ -36931,56 +39583,119 @@ public class Pyload {
       }
 
       switch (field) {
-      case DATA:
-        return isSetData();
+      case PLUGIN:
+        return isSetPlugin();
+      case ACCOUNT:
+        return isSetAccount();
+      case PASSWORD:
+        return isSetPassword();
+      case OPTIONS:
+        return isSetOptions();
       }
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof updateAccounts_args)
-        return this.equals((updateAccounts_args)that);
+      if (that instanceof updateAccount_args)
+        return this.equals((updateAccount_args)that);
       return false;
     }
 
-    public boolean equals(updateAccounts_args that) {
+    public boolean equals(updateAccount_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_data = true && this.isSetData();
-      boolean that_present_data = true && that.isSetData();
-      if (this_present_data || that_present_data) {
-        if (!(this_present_data && that_present_data))
+      boolean this_present_plugin = true && this.isSetPlugin();
+      boolean that_present_plugin = true && that.isSetPlugin();
+      if (this_present_plugin || that_present_plugin) {
+        if (!(this_present_plugin && that_present_plugin))
           return false;
-        if (!this.data.equals(that.data))
+        if (!this.plugin.equals(that.plugin))
+          return false;
+      }
+
+      boolean this_present_account = true && this.isSetAccount();
+      boolean that_present_account = true && that.isSetAccount();
+      if (this_present_account || that_present_account) {
+        if (!(this_present_account && that_present_account))
+          return false;
+        if (!this.account.equals(that.account))
+          return false;
+      }
+
+      boolean this_present_password = true && this.isSetPassword();
+      boolean that_present_password = true && that.isSetPassword();
+      if (this_present_password || that_present_password) {
+        if (!(this_present_password && that_present_password))
+          return false;
+        if (!this.password.equals(that.password))
+          return false;
+      }
+
+      boolean this_present_options = true && this.isSetOptions();
+      boolean that_present_options = true && that.isSetOptions();
+      if (this_present_options || that_present_options) {
+        if (!(this_present_options && that_present_options))
+          return false;
+        if (!this.options.equals(that.options))
           return false;
       }
 
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
 
-    public int compareTo(updateAccounts_args other) {
+    public int compareTo(updateAccount_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      updateAccounts_args typedOther = (updateAccounts_args)other;
+      updateAccount_args typedOther = (updateAccount_args)other;
 
-      lastComparison = Boolean.valueOf(isSetData()).compareTo(typedOther.isSetData());
+      lastComparison = Boolean.valueOf(isSetPlugin()).compareTo(typedOther.isSetPlugin());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetData()) {
-        lastComparison = TBaseHelper.compareTo(this.data, typedOther.data);
+      if (isSetPlugin()) {
+        lastComparison = TBaseHelper.compareTo(this.plugin, typedOther.plugin);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAccount()).compareTo(typedOther.isSetAccount());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAccount()) {
+        lastComparison = TBaseHelper.compareTo(this.account, typedOther.account);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetPassword()).compareTo(typedOther.isSetPassword());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPassword()) {
+        lastComparison = TBaseHelper.compareTo(this.password, typedOther.password);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetOptions()).compareTo(typedOther.isSetOptions());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetOptions()) {
+        lastComparison = TBaseHelper.compareTo(this.options, typedOther.options);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -37002,10 +39717,42 @@ public class Pyload {
           break;
         }
         switch (field.id) {
-          case 1: // DATA
-            if (field.type == TType.STRUCT) {
-              this.data = new AccountData();
-              this.data.read(iprot);
+          case 1: // PLUGIN
+            if (field.type == TType.STRING) {
+              this.plugin = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 2: // ACCOUNT
+            if (field.type == TType.STRING) {
+              this.account = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 3: // PASSWORD
+            if (field.type == TType.STRING) {
+              this.password = iprot.readString();
+            } else { 
+              TProtocolUtil.skip(iprot, field.type);
+            }
+            break;
+          case 4: // OPTIONS
+            if (field.type == TType.MAP) {
+              {
+                TMap _map167 = iprot.readMapBegin();
+                this.options = new HashMap<String,String>(2*_map167.size);
+                for (int _i168 = 0; _i168 < _map167.size; ++_i168)
+                {
+                  String _key169;
+                  String _val170;
+                  _key169 = iprot.readString();
+                  _val170 = iprot.readString();
+                  this.options.put(_key169, _val170);
+                }
+                iprot.readMapEnd();
+              }
             } else { 
               TProtocolUtil.skip(iprot, field.type);
             }
@@ -37025,25 +39772,72 @@ public class Pyload {
       validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (this.data != null) {
-        oprot.writeFieldBegin(DATA_FIELD_DESC);
-        this.data.write(oprot);
+      if (this.plugin != null) {
+        oprot.writeFieldBegin(PLUGIN_FIELD_DESC);
+        oprot.writeString(this.plugin);
+        oprot.writeFieldEnd();
+      }
+      if (this.account != null) {
+        oprot.writeFieldBegin(ACCOUNT_FIELD_DESC);
+        oprot.writeString(this.account);
+        oprot.writeFieldEnd();
+      }
+      if (this.password != null) {
+        oprot.writeFieldBegin(PASSWORD_FIELD_DESC);
+        oprot.writeString(this.password);
+        oprot.writeFieldEnd();
+      }
+      if (this.options != null) {
+        oprot.writeFieldBegin(OPTIONS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.options.size()));
+          for (Map.Entry<String, String> _iter171 : this.options.entrySet())
+          {
+            oprot.writeString(_iter171.getKey());
+            oprot.writeString(_iter171.getValue());
+          }
+          oprot.writeMapEnd();
+        }
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("updateAccounts_args(");
+      StringBuilder sb = new StringBuilder("updateAccount_args(");
       boolean first = true;
 
-      sb.append("data:");
-      if (this.data == null) {
+      sb.append("plugin:");
+      if (this.plugin == null) {
         sb.append("null");
       } else {
-        sb.append(this.data);
+        sb.append(this.plugin);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("account:");
+      if (this.account == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.account);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("password:");
+      if (this.password == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.password);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("options:");
+      if (this.options == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.options);
       }
       first = false;
       sb.append(")");
@@ -37056,8 +39850,8 @@ public class Pyload {
 
   }
 
-  public static class updateAccounts_result implements TBase<updateAccounts_result, updateAccounts_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final TStruct STRUCT_DESC = new TStruct("updateAccounts_result");
+  public static class updateAccount_result implements TBase<updateAccount_result, updateAccount_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final TStruct STRUCT_DESC = new TStruct("updateAccount_result");
 
 
 
@@ -37120,23 +39914,23 @@ public class Pyload {
     static {
       Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      FieldMetaData.addStructMetaDataMap(updateAccounts_result.class, metaDataMap);
+      FieldMetaData.addStructMetaDataMap(updateAccount_result.class, metaDataMap);
     }
 
-    public updateAccounts_result() {
+    public updateAccount_result() {
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public updateAccounts_result(updateAccounts_result other) {
+    public updateAccount_result(updateAccount_result other) {
     }
 
-    public updateAccounts_result deepCopy() {
-      return new updateAccounts_result(this);
+    public updateAccount_result deepCopy() {
+      return new updateAccount_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -37162,34 +39956,34 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof updateAccounts_result)
-        return this.equals((updateAccounts_result)that);
+      if (that instanceof updateAccount_result)
+        return this.equals((updateAccount_result)that);
       return false;
     }
 
-    public boolean equals(updateAccounts_result that) {
+    public boolean equals(updateAccount_result that) {
       if (that == null)
         return false;
 
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
 
-    public int compareTo(updateAccounts_result other) {
+    public int compareTo(updateAccount_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      updateAccounts_result typedOther = (updateAccounts_result)other;
+      updateAccount_result typedOther = (updateAccount_result)other;
 
       return 0;
     }
@@ -37226,9 +40020,9 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("updateAccounts_result(");
+      StringBuilder sb = new StringBuilder("updateAccount_result(");
       boolean first = true;
 
       sb.append(")");
@@ -37352,7 +40146,7 @@ public class Pyload {
       return new removeAccount_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.plugin = null;
       this.account = null;
@@ -37454,7 +40248,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -37488,7 +40282,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -37581,7 +40375,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("removeAccount_args(");
       boolean first = true;
@@ -37691,7 +40485,7 @@ public class Pyload {
       return new removeAccount_result(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -37717,7 +40511,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -37733,7 +40527,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -37781,7 +40575,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("removeAccount_result(");
       boolean first = true;
@@ -37907,7 +40701,7 @@ public class Pyload {
       return new login_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.username = null;
       this.password = null;
@@ -38009,7 +40803,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -38043,7 +40837,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -38136,7 +40930,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("login_args(");
       boolean first = true;
@@ -38268,7 +41062,7 @@ public class Pyload {
       return new login_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -38332,7 +41126,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -38357,7 +41151,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -38428,7 +41222,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("login_result(");
       boolean first = true;
@@ -38557,7 +41351,7 @@ public class Pyload {
       return new getUserData_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.username = null;
       this.password = null;
@@ -38659,7 +41453,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -38693,7 +41487,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -38786,7 +41580,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getUserData_args(");
       boolean first = true;
@@ -38915,7 +41709,7 @@ public class Pyload {
       return new getUserData_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -38979,7 +41773,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -39004,7 +41798,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -39075,7 +41869,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getUserData_result(");
       boolean first = true;
@@ -39177,7 +41971,7 @@ public class Pyload {
       return new getServices_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -39203,7 +41997,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -39219,7 +42013,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -39268,7 +42062,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getServices_args(");
       boolean first = true;
@@ -39409,7 +42203,7 @@ public class Pyload {
       return new getServices_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -39484,7 +42278,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -39509,7 +42303,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -39552,27 +42346,27 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map140 = iprot.readMapBegin();
-                this.success = new HashMap<String,Map<String,String>>(2*_map140.size);
-                for (int _i141 = 0; _i141 < _map140.size; ++_i141)
+                TMap _map172 = iprot.readMapBegin();
+                this.success = new HashMap<String,Map<String,String>>(2*_map172.size);
+                for (int _i173 = 0; _i173 < _map172.size; ++_i173)
                 {
-                  String _key142;
-                  Map<String,String> _val143;
-                  _key142 = iprot.readString();
+                  String _key174;
+                  Map<String,String> _val175;
+                  _key174 = iprot.readString();
                   {
-                    TMap _map144 = iprot.readMapBegin();
-                    _val143 = new HashMap<String,String>(2*_map144.size);
-                    for (int _i145 = 0; _i145 < _map144.size; ++_i145)
+                    TMap _map176 = iprot.readMapBegin();
+                    _val175 = new HashMap<String,String>(2*_map176.size);
+                    for (int _i177 = 0; _i177 < _map176.size; ++_i177)
                     {
-                      String _key146;
-                      String _val147;
-                      _key146 = iprot.readString();
-                      _val147 = iprot.readString();
-                      _val143.put(_key146, _val147);
+                      String _key178;
+                      String _val179;
+                      _key178 = iprot.readString();
+                      _val179 = iprot.readString();
+                      _val175.put(_key178, _val179);
                     }
                     iprot.readMapEnd();
                   }
-                  this.success.put(_key142, _val143);
+                  this.success.put(_key174, _val175);
                 }
                 iprot.readMapEnd();
               }
@@ -39598,15 +42392,15 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.MAP, this.success.size()));
-          for (Map.Entry<String, Map<String,String>> _iter148 : this.success.entrySet())
+          for (Map.Entry<String, Map<String,String>> _iter180 : this.success.entrySet())
           {
-            oprot.writeString(_iter148.getKey());
+            oprot.writeString(_iter180.getKey());
             {
-              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter148.getValue().size()));
-              for (Map.Entry<String, String> _iter149 : _iter148.getValue().entrySet())
+              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter180.getValue().size()));
+              for (Map.Entry<String, String> _iter181 : _iter180.getValue().entrySet())
               {
-                oprot.writeString(_iter149.getKey());
-                oprot.writeString(_iter149.getValue());
+                oprot.writeString(_iter181.getKey());
+                oprot.writeString(_iter181.getValue());
               }
               oprot.writeMapEnd();
             }
@@ -39619,7 +42413,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getServices_result(");
       boolean first = true;
@@ -39752,7 +42546,7 @@ public class Pyload {
       return new hasService_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.plugin = null;
       this.func = null;
@@ -39854,7 +42648,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -39888,7 +42682,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -39981,7 +42775,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("hasService_args(");
       boolean first = true;
@@ -40113,7 +42907,7 @@ public class Pyload {
       return new hasService_result(this);
     }
 
-    
+    @Override
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
@@ -40177,7 +42971,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -40202,7 +42996,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -40273,7 +43067,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("hasService_result(");
       boolean first = true;
@@ -40390,7 +43184,7 @@ public class Pyload {
       return new call_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.info = null;
     }
@@ -40454,7 +43248,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -40479,7 +43273,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -40551,7 +43345,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("call_args(");
       boolean first = true;
@@ -40696,7 +43490,7 @@ public class Pyload {
       return new call_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
       this.ex = null;
@@ -40836,7 +43630,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -40879,7 +43673,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -40993,7 +43787,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("call_result(");
       boolean first = true;
@@ -41111,7 +43905,7 @@ public class Pyload {
       return new getAllInfo_args(this);
     }
 
-    
+    @Override
     public void clear() {
     }
 
@@ -41137,7 +43931,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -41153,7 +43947,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -41202,7 +43996,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAllInfo_args(");
       boolean first = true;
@@ -41343,7 +44137,7 @@ public class Pyload {
       return new getAllInfo_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -41418,7 +44212,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -41443,7 +44237,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -41486,27 +44280,27 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map150 = iprot.readMapBegin();
-                this.success = new HashMap<String,Map<String,String>>(2*_map150.size);
-                for (int _i151 = 0; _i151 < _map150.size; ++_i151)
+                TMap _map182 = iprot.readMapBegin();
+                this.success = new HashMap<String,Map<String,String>>(2*_map182.size);
+                for (int _i183 = 0; _i183 < _map182.size; ++_i183)
                 {
-                  String _key152;
-                  Map<String,String> _val153;
-                  _key152 = iprot.readString();
+                  String _key184;
+                  Map<String,String> _val185;
+                  _key184 = iprot.readString();
                   {
-                    TMap _map154 = iprot.readMapBegin();
-                    _val153 = new HashMap<String,String>(2*_map154.size);
-                    for (int _i155 = 0; _i155 < _map154.size; ++_i155)
+                    TMap _map186 = iprot.readMapBegin();
+                    _val185 = new HashMap<String,String>(2*_map186.size);
+                    for (int _i187 = 0; _i187 < _map186.size; ++_i187)
                     {
-                      String _key156;
-                      String _val157;
-                      _key156 = iprot.readString();
-                      _val157 = iprot.readString();
-                      _val153.put(_key156, _val157);
+                      String _key188;
+                      String _val189;
+                      _key188 = iprot.readString();
+                      _val189 = iprot.readString();
+                      _val185.put(_key188, _val189);
                     }
                     iprot.readMapEnd();
                   }
-                  this.success.put(_key152, _val153);
+                  this.success.put(_key184, _val185);
                 }
                 iprot.readMapEnd();
               }
@@ -41532,15 +44326,15 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.MAP, this.success.size()));
-          for (Map.Entry<String, Map<String,String>> _iter158 : this.success.entrySet())
+          for (Map.Entry<String, Map<String,String>> _iter190 : this.success.entrySet())
           {
-            oprot.writeString(_iter158.getKey());
+            oprot.writeString(_iter190.getKey());
             {
-              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter158.getValue().size()));
-              for (Map.Entry<String, String> _iter159 : _iter158.getValue().entrySet())
+              oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, _iter190.getValue().size()));
+              for (Map.Entry<String, String> _iter191 : _iter190.getValue().entrySet())
               {
-                oprot.writeString(_iter159.getKey());
-                oprot.writeString(_iter159.getValue());
+                oprot.writeString(_iter191.getKey());
+                oprot.writeString(_iter191.getValue());
               }
               oprot.writeMapEnd();
             }
@@ -41553,7 +44347,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getAllInfo_result(");
       boolean first = true;
@@ -41674,7 +44468,7 @@ public class Pyload {
       return new getInfoByPlugin_args(this);
     }
 
-    
+    @Override
     public void clear() {
       this.plugin = null;
     }
@@ -41738,7 +44532,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -41763,7 +44557,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -41834,7 +44628,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getInfoByPlugin_args(");
       boolean first = true;
@@ -41969,7 +44763,7 @@ public class Pyload {
       return new getInfoByPlugin_result(this);
     }
 
-    
+    @Override
     public void clear() {
       this.success = null;
     }
@@ -42044,7 +44838,7 @@ public class Pyload {
       throw new IllegalStateException();
     }
 
-    
+    @Override
     public boolean equals(Object that) {
       if (that == null)
         return false;
@@ -42069,7 +44863,7 @@ public class Pyload {
       return true;
     }
 
-    
+    @Override
     public int hashCode() {
       return 0;
     }
@@ -42112,15 +44906,15 @@ public class Pyload {
           case 0: // SUCCESS
             if (field.type == TType.MAP) {
               {
-                TMap _map160 = iprot.readMapBegin();
-                this.success = new HashMap<String,String>(2*_map160.size);
-                for (int _i161 = 0; _i161 < _map160.size; ++_i161)
+                TMap _map192 = iprot.readMapBegin();
+                this.success = new HashMap<String,String>(2*_map192.size);
+                for (int _i193 = 0; _i193 < _map192.size; ++_i193)
                 {
-                  String _key162;
-                  String _val163;
-                  _key162 = iprot.readString();
-                  _val163 = iprot.readString();
-                  this.success.put(_key162, _val163);
+                  String _key194;
+                  String _val195;
+                  _key194 = iprot.readString();
+                  _val195 = iprot.readString();
+                  this.success.put(_key194, _val195);
                 }
                 iprot.readMapEnd();
               }
@@ -42146,10 +44940,10 @@ public class Pyload {
         oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
         {
           oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.success.size()));
-          for (Map.Entry<String, String> _iter164 : this.success.entrySet())
+          for (Map.Entry<String, String> _iter196 : this.success.entrySet())
           {
-            oprot.writeString(_iter164.getKey());
-            oprot.writeString(_iter164.getValue());
+            oprot.writeString(_iter196.getKey());
+            oprot.writeString(_iter196.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -42159,7 +44953,7 @@ public class Pyload {
       oprot.writeStructEnd();
     }
 
-    
+    @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("getInfoByPlugin_result(");
       boolean first = true;

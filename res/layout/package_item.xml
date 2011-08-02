@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:layout_gravity="right"
   android:layout_weight="1"
-  android:padding="6dip"
-  android:marqueeRepeatLimit="marquee_forever"
-  android:ellipsize="marquee">
+  android:padding="6dip">
   
   <org.pyload.android.client.components.ScrollingTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/name"
@@ -22,5 +21,32 @@
 	android:maxLines="1"
 	android:textColor="@android:color/white"
   />
+    	
+  <ProgressBar style="?android:attr/progressBarStyleHorizontal"
+  android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
+  android:id="@+id/package_progress"
+  android:maxHeight="8dip"
+  android:minHeight="8dip"
+  android:max="100"/>
+  
+  	<LinearLayout android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_height="wrap_content"
+		android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft">
+
+		<TextView android:text="@string/n_a" android:id="@+id/size_stats"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+				
+
+		<TextView android:text="@string/n_a" android:id="@+id/link_stats"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+	
+	</LinearLayout>
+  
  
 </LinearLayout>

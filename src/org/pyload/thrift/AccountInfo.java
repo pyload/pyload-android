@@ -226,7 +226,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     return new AccountInfo(this);
   }
 
-  
+  @Override
   public void clear() {
     setValiduntilIsSet(false);
     this.validuntil = 0;
@@ -567,7 +567,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -655,7 +655,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -895,7 +895,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("AccountInfo(");
     boolean first = true;

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -336,6 +337,9 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 	static class GroupViewHolder {
 		private TextView name;
+		private ProgressBar progress;
+		private TextView size;
+		private TextView links;
 	}
 
 	static class ChildViewHolder {
@@ -410,11 +414,18 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			convertView = layoutInflater.inflate(groupRes, null);
 			GroupViewHolder holder = new GroupViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.name);
+			holder.progress = (ProgressBar) convertView.findViewById(R.id.package_progress);
+			holder.size = (TextView) convertView.findViewById(R.id.size_stats);
+			holder.links = (TextView) convertView.findViewById(R.id.link_stats);
 			convertView.setTag(holder);
 		}
 
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.name);
+		
+		holder.progress.setProgress((int) ((pack.sizedone * 100) / pack.sizetotal));
+		holder.size.setText(app.formatSize(pack.sizedone) + " / " + app.formatSize(pack.sizetotal));
+		holder.links.setText(pack.linksdone + " / " + pack.links.size());
 
 		return convertView;
 	}

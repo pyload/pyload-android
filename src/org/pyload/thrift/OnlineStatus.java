@@ -29,13 +29,15 @@ import org.apache.thrift.protocol.*;
 public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, java.io.Serializable, Cloneable {
   private static final TStruct STRUCT_DESC = new TStruct("OnlineStatus");
 
-  private static final TField URL_FIELD_DESC = new TField("url", TType.STRING, (short)1);
-  private static final TField NAME_FIELD_DESC = new TField("name", TType.STRING, (short)2);
-  private static final TField STATUS_FIELD_DESC = new TField("status", TType.I32, (short)3);
-  private static final TField SIZE_FIELD_DESC = new TField("size", TType.I64, (short)4);
+  private static final TField NAME_FIELD_DESC = new TField("name", TType.STRING, (short)1);
+  private static final TField PLUGIN_FIELD_DESC = new TField("plugin", TType.STRING, (short)2);
+  private static final TField PACKAGENAME_FIELD_DESC = new TField("packagename", TType.STRING, (short)3);
+  private static final TField STATUS_FIELD_DESC = new TField("status", TType.I32, (short)4);
+  private static final TField SIZE_FIELD_DESC = new TField("size", TType.I64, (short)5);
 
-  public String url;
   public String name;
+  public String plugin;
+  public String packagename;
   /**
    * 
    * @see DownloadStatus
@@ -45,14 +47,15 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
-    URL((short)1, "url"),
-    NAME((short)2, "name"),
+    NAME((short)1, "name"),
+    PLUGIN((short)2, "plugin"),
+    PACKAGENAME((short)3, "packagename"),
     /**
      * 
      * @see DownloadStatus
      */
-    STATUS((short)3, "status"),
-    SIZE((short)4, "size");
+    STATUS((short)4, "status"),
+    SIZE((short)5, "size");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -67,13 +70,15 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // URL
-          return URL;
-        case 2: // NAME
+        case 1: // NAME
           return NAME;
-        case 3: // STATUS
+        case 2: // PLUGIN
+          return PLUGIN;
+        case 3: // PACKAGENAME
+          return PACKAGENAME;
+        case 4: // STATUS
           return STATUS;
-        case 4: // SIZE
+        case 5: // SIZE
           return SIZE;
         default:
           return null;
@@ -121,9 +126,11 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
   public static final Map<_Fields, FieldMetaData> metaDataMap;
   static {
     Map<_Fields, FieldMetaData> tmpMap = new EnumMap<_Fields, FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.URL, new FieldMetaData("url", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.NAME, new FieldMetaData("name", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.STRING)));
+    tmpMap.put(_Fields.PLUGIN, new FieldMetaData("plugin", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.STRING        , "PluginName")));
+    tmpMap.put(_Fields.PACKAGENAME, new FieldMetaData("packagename", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.STATUS, new FieldMetaData("status", TFieldRequirementType.DEFAULT, 
         new EnumMetaData(TType.ENUM, DownloadStatus.class)));
@@ -137,14 +144,16 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
   }
 
   public OnlineStatus(
-    String url,
     String name,
+    String plugin,
+    String packagename,
     DownloadStatus status,
     long size)
   {
     this();
-    this.url = url;
     this.name = name;
+    this.plugin = plugin;
+    this.packagename = packagename;
     this.status = status;
     this.size = size;
     setSizeIsSet(true);
@@ -156,11 +165,14 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
   public OnlineStatus(OnlineStatus other) {
     __isset_bit_vector.clear();
     __isset_bit_vector.or(other.__isset_bit_vector);
-    if (other.isSetUrl()) {
-      this.url = other.url;
-    }
     if (other.isSetName()) {
       this.name = other.name;
+    }
+    if (other.isSetPlugin()) {
+      this.plugin = other.plugin;
+    }
+    if (other.isSetPackagename()) {
+      this.packagename = other.packagename;
     }
     if (other.isSetStatus()) {
       this.status = other.status;
@@ -172,37 +184,14 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     return new OnlineStatus(this);
   }
 
-  
+  @Override
   public void clear() {
-    this.url = null;
     this.name = null;
+    this.plugin = null;
+    this.packagename = null;
     this.status = null;
     setSizeIsSet(false);
     this.size = 0;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public OnlineStatus setUrl(String url) {
-    this.url = url;
-    return this;
-  }
-
-  public void unsetUrl() {
-    this.url = null;
-  }
-
-  /** Returns true if field url is set (has been asigned a value) and false otherwise */
-  public boolean isSetUrl() {
-    return this.url != null;
-  }
-
-  public void setUrlIsSet(boolean value) {
-    if (!value) {
-      this.url = null;
-    }
   }
 
   public String getName() {
@@ -226,6 +215,54 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
   public void setNameIsSet(boolean value) {
     if (!value) {
       this.name = null;
+    }
+  }
+
+  public String getPlugin() {
+    return this.plugin;
+  }
+
+  public OnlineStatus setPlugin(String plugin) {
+    this.plugin = plugin;
+    return this;
+  }
+
+  public void unsetPlugin() {
+    this.plugin = null;
+  }
+
+  /** Returns true if field plugin is set (has been asigned a value) and false otherwise */
+  public boolean isSetPlugin() {
+    return this.plugin != null;
+  }
+
+  public void setPluginIsSet(boolean value) {
+    if (!value) {
+      this.plugin = null;
+    }
+  }
+
+  public String getPackagename() {
+    return this.packagename;
+  }
+
+  public OnlineStatus setPackagename(String packagename) {
+    this.packagename = packagename;
+    return this;
+  }
+
+  public void unsetPackagename() {
+    this.packagename = null;
+  }
+
+  /** Returns true if field packagename is set (has been asigned a value) and false otherwise */
+  public boolean isSetPackagename() {
+    return this.packagename != null;
+  }
+
+  public void setPackagenameIsSet(boolean value) {
+    if (!value) {
+      this.packagename = null;
     }
   }
 
@@ -286,19 +323,27 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case URL:
-      if (value == null) {
-        unsetUrl();
-      } else {
-        setUrl((String)value);
-      }
-      break;
-
     case NAME:
       if (value == null) {
         unsetName();
       } else {
         setName((String)value);
+      }
+      break;
+
+    case PLUGIN:
+      if (value == null) {
+        unsetPlugin();
+      } else {
+        setPlugin((String)value);
+      }
+      break;
+
+    case PACKAGENAME:
+      if (value == null) {
+        unsetPackagename();
+      } else {
+        setPackagename((String)value);
       }
       break;
 
@@ -323,11 +368,14 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case URL:
-      return getUrl();
-
     case NAME:
       return getName();
+
+    case PLUGIN:
+      return getPlugin();
+
+    case PACKAGENAME:
+      return getPackagename();
 
     case STATUS:
       return getStatus();
@@ -346,10 +394,12 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     }
 
     switch (field) {
-    case URL:
-      return isSetUrl();
     case NAME:
       return isSetName();
+    case PLUGIN:
+      return isSetPlugin();
+    case PACKAGENAME:
+      return isSetPackagename();
     case STATUS:
       return isSetStatus();
     case SIZE:
@@ -358,7 +408,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -371,21 +421,30 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     if (that == null)
       return false;
 
-    boolean this_present_url = true && this.isSetUrl();
-    boolean that_present_url = true && that.isSetUrl();
-    if (this_present_url || that_present_url) {
-      if (!(this_present_url && that_present_url))
-        return false;
-      if (!this.url.equals(that.url))
-        return false;
-    }
-
     boolean this_present_name = true && this.isSetName();
     boolean that_present_name = true && that.isSetName();
     if (this_present_name || that_present_name) {
       if (!(this_present_name && that_present_name))
         return false;
       if (!this.name.equals(that.name))
+        return false;
+    }
+
+    boolean this_present_plugin = true && this.isSetPlugin();
+    boolean that_present_plugin = true && that.isSetPlugin();
+    if (this_present_plugin || that_present_plugin) {
+      if (!(this_present_plugin && that_present_plugin))
+        return false;
+      if (!this.plugin.equals(that.plugin))
+        return false;
+    }
+
+    boolean this_present_packagename = true && this.isSetPackagename();
+    boolean that_present_packagename = true && that.isSetPackagename();
+    if (this_present_packagename || that_present_packagename) {
+      if (!(this_present_packagename && that_present_packagename))
+        return false;
+      if (!this.packagename.equals(that.packagename))
         return false;
     }
 
@@ -410,7 +469,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -423,22 +482,32 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     int lastComparison = 0;
     OnlineStatus typedOther = (OnlineStatus)other;
 
-    lastComparison = Boolean.valueOf(isSetUrl()).compareTo(typedOther.isSetUrl());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetUrl()) {
-      lastComparison = TBaseHelper.compareTo(this.url, typedOther.url);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
     if (lastComparison != 0) {
       return lastComparison;
     }
     if (isSetName()) {
       lastComparison = TBaseHelper.compareTo(this.name, typedOther.name);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetPlugin()).compareTo(typedOther.isSetPlugin());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPlugin()) {
+      lastComparison = TBaseHelper.compareTo(this.plugin, typedOther.plugin);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetPackagename()).compareTo(typedOther.isSetPackagename());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPackagename()) {
+      lastComparison = TBaseHelper.compareTo(this.packagename, typedOther.packagename);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -480,28 +549,35 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
         break;
       }
       switch (field.id) {
-        case 1: // URL
-          if (field.type == TType.STRING) {
-            this.url = iprot.readString();
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2: // NAME
+        case 1: // NAME
           if (field.type == TType.STRING) {
             this.name = iprot.readString();
           } else { 
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 3: // STATUS
+        case 2: // PLUGIN
+          if (field.type == TType.STRING) {
+            this.plugin = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 3: // PACKAGENAME
+          if (field.type == TType.STRING) {
+            this.packagename = iprot.readString();
+          } else { 
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case 4: // STATUS
           if (field.type == TType.I32) {
             this.status = DownloadStatus.findByValue(iprot.readI32());
           } else { 
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 4: // SIZE
+        case 5: // SIZE
           if (field.type == TType.I64) {
             this.size = iprot.readI64();
             setSizeIsSet(true);
@@ -524,14 +600,19 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     validate();
 
     oprot.writeStructBegin(STRUCT_DESC);
-    if (this.url != null) {
-      oprot.writeFieldBegin(URL_FIELD_DESC);
-      oprot.writeString(this.url);
-      oprot.writeFieldEnd();
-    }
     if (this.name != null) {
       oprot.writeFieldBegin(NAME_FIELD_DESC);
       oprot.writeString(this.name);
+      oprot.writeFieldEnd();
+    }
+    if (this.plugin != null) {
+      oprot.writeFieldBegin(PLUGIN_FIELD_DESC);
+      oprot.writeString(this.plugin);
+      oprot.writeFieldEnd();
+    }
+    if (this.packagename != null) {
+      oprot.writeFieldBegin(PACKAGENAME_FIELD_DESC);
+      oprot.writeString(this.packagename);
       oprot.writeFieldEnd();
     }
     if (this.status != null) {
@@ -546,24 +627,32 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("OnlineStatus(");
     boolean first = true;
 
-    sb.append("url:");
-    if (this.url == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.url);
-    }
-    first = false;
-    if (!first) sb.append(", ");
     sb.append("name:");
     if (this.name == null) {
       sb.append("null");
     } else {
       sb.append(this.name);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("plugin:");
+    if (this.plugin == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.plugin);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("packagename:");
+    if (this.packagename == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.packagename);
     }
     first = false;
     if (!first) sb.append(", ");

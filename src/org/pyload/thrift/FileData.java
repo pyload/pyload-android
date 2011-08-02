@@ -40,7 +40,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
   private static final TField PACKAGE_ID_FIELD_DESC = new TField("packageID", TType.I32, (short)9);
   private static final TField ERROR_FIELD_DESC = new TField("error", TType.STRING, (short)10);
   private static final TField ORDER_FIELD_DESC = new TField("order", TType.I16, (short)11);
-  private static final TField PROGRESS_FIELD_DESC = new TField("progress", TType.BYTE, (short)12);
 
   public int fid;
   public String url;
@@ -57,7 +56,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
   public int packageID;
   public String error;
   public short order;
-  public byte progress;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -75,8 +73,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     STATUSMSG((short)8, "statusmsg"),
     PACKAGE_ID((short)9, "packageID"),
     ERROR((short)10, "error"),
-    ORDER((short)11, "order"),
-    PROGRESS((short)12, "progress");
+    ORDER((short)11, "order");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -113,8 +110,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
           return ERROR;
         case 11: // ORDER
           return ORDER;
-        case 12: // PROGRESS
-          return PROGRESS;
         default:
           return null;
       }
@@ -159,8 +154,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
   private static final int __SIZE_ISSET_ID = 1;
   private static final int __PACKAGEID_ISSET_ID = 2;
   private static final int __ORDER_ISSET_ID = 3;
-  private static final int __PROGRESS_ISSET_ID = 4;
-  private BitSet __isset_bit_vector = new BitSet(5);
+  private BitSet __isset_bit_vector = new BitSet(4);
 
   public static final Map<_Fields, FieldMetaData> metaDataMap;
   static {
@@ -187,8 +181,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
         new FieldValueMetaData(TType.STRING)));
     tmpMap.put(_Fields.ORDER, new FieldMetaData("order", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.I16)));
-    tmpMap.put(_Fields.PROGRESS, new FieldMetaData("progress", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.BYTE        , "Progress")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     FieldMetaData.addStructMetaDataMap(FileData.class, metaDataMap);
   }
@@ -207,8 +199,7 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     String statusmsg,
     int packageID,
     String error,
-    short order,
-    byte progress)
+    short order)
   {
     this();
     this.fid = fid;
@@ -226,8 +217,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     this.error = error;
     this.order = order;
     setOrderIsSet(true);
-    this.progress = progress;
-    setProgressIsSet(true);
   }
 
   /**
@@ -261,14 +250,13 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
       this.error = other.error;
     }
     this.order = other.order;
-    this.progress = other.progress;
   }
 
   public FileData deepCopy() {
     return new FileData(this);
   }
 
-  
+  @Override
   public void clear() {
     setFidIsSet(false);
     this.fid = 0;
@@ -285,8 +273,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     this.error = null;
     setOrderIsSet(false);
     this.order = 0;
-    setProgressIsSet(false);
-    this.progress = 0;
   }
 
   public int getFid() {
@@ -557,29 +543,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     __isset_bit_vector.set(__ORDER_ISSET_ID, value);
   }
 
-  public byte getProgress() {
-    return this.progress;
-  }
-
-  public FileData setProgress(byte progress) {
-    this.progress = progress;
-    setProgressIsSet(true);
-    return this;
-  }
-
-  public void unsetProgress() {
-    __isset_bit_vector.clear(__PROGRESS_ISSET_ID);
-  }
-
-  /** Returns true if field progress is set (has been asigned a value) and false otherwise */
-  public boolean isSetProgress() {
-    return __isset_bit_vector.get(__PROGRESS_ISSET_ID);
-  }
-
-  public void setProgressIsSet(boolean value) {
-    __isset_bit_vector.set(__PROGRESS_ISSET_ID, value);
-  }
-
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case FID:
@@ -670,14 +633,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
       }
       break;
 
-    case PROGRESS:
-      if (value == null) {
-        unsetProgress();
-      } else {
-        setProgress((Byte)value);
-      }
-      break;
-
     }
   }
 
@@ -716,9 +671,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     case ORDER:
       return new Short(getOrder());
 
-    case PROGRESS:
-      return new Byte(getProgress());
-
     }
     throw new IllegalStateException();
   }
@@ -752,13 +704,11 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
       return isSetError();
     case ORDER:
       return isSetOrder();
-    case PROGRESS:
-      return isSetProgress();
     }
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -870,19 +820,10 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
         return false;
     }
 
-    boolean this_present_progress = true;
-    boolean that_present_progress = true;
-    if (this_present_progress || that_present_progress) {
-      if (!(this_present_progress && that_present_progress))
-        return false;
-      if (this.progress != that.progress)
-        return false;
-    }
-
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -1005,16 +946,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetProgress()).compareTo(typedOther.isSetProgress());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetProgress()) {
-      lastComparison = TBaseHelper.compareTo(this.progress, typedOther.progress);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     return 0;
   }
 
@@ -1113,14 +1044,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
             TProtocolUtil.skip(iprot, field.type);
           }
           break;
-        case 12: // PROGRESS
-          if (field.type == TType.BYTE) {
-            this.progress = iprot.readByte();
-            setProgressIsSet(true);
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
         default:
           TProtocolUtil.skip(iprot, field.type);
       }
@@ -1183,14 +1106,11 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     oprot.writeFieldBegin(ORDER_FIELD_DESC);
     oprot.writeI16(this.order);
     oprot.writeFieldEnd();
-    oprot.writeFieldBegin(PROGRESS_FIELD_DESC);
-    oprot.writeByte(this.progress);
-    oprot.writeFieldEnd();
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("FileData(");
     boolean first = true;
@@ -1265,10 +1185,6 @@ public class FileData implements TBase<FileData, FileData._Fields>, java.io.Seri
     if (!first) sb.append(", ");
     sb.append("order:");
     sb.append(this.order);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("progress:");
-    sb.append(this.progress);
     first = false;
     sb.append(")");
     return sb.toString();
