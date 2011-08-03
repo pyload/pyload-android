@@ -12,7 +12,6 @@ import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
 
 import android.app.TabActivity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -172,10 +171,11 @@ public class pyLoad extends TabActivity {
 			return true;
 
 		
-		case R.id.toggle_server_settings:
+		case R.id.server_settings:
 			
-			Intent serverSettingsActivity = new Intent(app, ServerSettings.class);
-			startActivity(serverSettingsActivity);
+			//TODO start within tabhost
+			Intent intent = new Intent(app, SettingsActivity.class);
+			startActivity(intent);
 
 			return true;
 		
