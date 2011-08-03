@@ -7,21 +7,16 @@ import org.pyload.thrift.ConfigSection;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class ConfigSectionActivity extends Activity {

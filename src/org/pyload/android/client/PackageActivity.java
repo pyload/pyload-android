@@ -423,7 +423,10 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.name);
 		
-		holder.progress.setProgress((int) ((pack.sizedone * 100) / pack.sizetotal));
+		if (pack.linkstotal == 0)
+			pack.linkstotal = 1;
+		
+		holder.progress.setProgress((int) ((pack.linksdone * 100) / pack.links.size()));
 		holder.size.setText(app.formatSize(pack.sizedone) + " / " + app.formatSize(pack.sizetotal));
 		holder.links.setText(pack.linksdone + " / " + pack.links.size());
 
