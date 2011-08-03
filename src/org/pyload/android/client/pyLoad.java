@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
@@ -13,6 +12,7 @@ import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
 
 import android.app.TabActivity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -172,22 +172,12 @@ public class pyLoad extends TabActivity {
 			return true;
 
 		
-		case R.id.toggle_limit_speed:
+		case R.id.toggle_server_settings:
 			
-			app.addTask(new GuiTask(new Runnable() {
-				
-				
-				public void run() {
-					Client client = app.getClient();
-					
-					String limitspeed = client.getConfigValue("download", "limit_speed", "core");
+			Intent serverSettingsActivity = new Intent(app, ServerSettings.class);
+			startActivity(serverSettingsActivity);
 
-					if(limitspeed.equals("True")) 
-						{client.setConfigValue("download", "limit_speed", "False", "core");}
-					else
-						{client.setConfigValue("download", "limit_speed", "True", "core");}
-				}
-			}, app.handleSuccess));
+			return true;
 		
 		default:
 			return super.onOptionsItemSelected(item);

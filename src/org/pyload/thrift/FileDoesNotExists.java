@@ -128,7 +128,7 @@ public class FileDoesNotExists extends Exception implements TBase<FileDoesNotExi
     return new FileDoesNotExists(this);
   }
 
-  @Override
+  
   public void clear() {
     setFidIsSet(false);
     this.fid = 0;
@@ -192,7 +192,7 @@ public class FileDoesNotExists extends Exception implements TBase<FileDoesNotExi
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -217,7 +217,7 @@ public class FileDoesNotExists extends Exception implements TBase<FileDoesNotExi
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -287,7 +287,7 @@ public class FileDoesNotExists extends Exception implements TBase<FileDoesNotExi
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("FileDoesNotExists(");
     boolean first = true;

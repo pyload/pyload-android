@@ -164,7 +164,7 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     return new ConfigSection(this);
   }
 
-  @Override
+  
   public void clear() {
     this.name = null;
     this.description = null;
@@ -357,7 +357,7 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -409,7 +409,7 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -566,7 +566,7 @@ public class ConfigSection implements TBase<ConfigSection, ConfigSection._Fields
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ConfigSection(");
     boolean first = true;

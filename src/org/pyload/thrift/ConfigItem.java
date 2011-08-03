@@ -161,7 +161,7 @@ public class ConfigItem implements TBase<ConfigItem, ConfigItem._Fields>, java.i
     return new ConfigItem(this);
   }
 
-  @Override
+  
   public void clear() {
     this.name = null;
     this.description = null;
@@ -339,7 +339,7 @@ public class ConfigItem implements TBase<ConfigItem, ConfigItem._Fields>, java.i
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -391,7 +391,7 @@ public class ConfigItem implements TBase<ConfigItem, ConfigItem._Fields>, java.i
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -528,7 +528,7 @@ public class ConfigItem implements TBase<ConfigItem, ConfigItem._Fields>, java.i
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("ConfigItem(");
     boolean first = true;

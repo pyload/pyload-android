@@ -28,9 +28,10 @@
         <activity android:name="QueueActivity"></activity>
         <activity android:name="CollectorActivity"></activity>
         <activity android:name="Preferences" android:label="@string/pref_name"></activity>
-        <activity android:name="AddLinksActivity">
-        </activity>
+        <activity android:name="AddLinksActivity"></activity>
         <activity android:name=".module.FileChooser"></activity>
+        
+        <activity android:name="ServerSettings"></activity>
 
     </application>
 </manifest>

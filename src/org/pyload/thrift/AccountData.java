@@ -171,7 +171,6 @@ public class AccountData implements TBase<AccountData, AccountData._Fields>, jav
     return new AccountData(this);
   }
 
-  @Override
   public void clear() {
     this.type = null;
     this.login = null;

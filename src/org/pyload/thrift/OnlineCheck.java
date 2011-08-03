@@ -154,7 +154,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     return new OnlineCheck(this);
   }
 
-  @Override
+  
   public void clear() {
     setRidIsSet(false);
     this.rid = 0;
@@ -267,7 +267,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -301,7 +301,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -414,7 +414,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("OnlineCheck(");
     boolean first = true;

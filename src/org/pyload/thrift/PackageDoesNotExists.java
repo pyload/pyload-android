@@ -128,7 +128,7 @@ public class PackageDoesNotExists extends Exception implements TBase<PackageDoes
     return new PackageDoesNotExists(this);
   }
 
-  @Override
+  
   public void clear() {
     setPidIsSet(false);
     this.pid = 0;
@@ -192,7 +192,7 @@ public class PackageDoesNotExists extends Exception implements TBase<PackageDoes
     throw new IllegalStateException();
   }
 
-  @Override
+  
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -217,7 +217,7 @@ public class PackageDoesNotExists extends Exception implements TBase<PackageDoes
     return true;
   }
 
-  @Override
+  
   public int hashCode() {
     return 0;
   }
@@ -287,7 +287,7 @@ public class PackageDoesNotExists extends Exception implements TBase<PackageDoes
     oprot.writeStructEnd();
   }
 
-  @Override
+  
   public String toString() {
     StringBuilder sb = new StringBuilder("PackageDoesNotExists(");
     boolean first = true;
