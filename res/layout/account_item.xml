@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:text="TextView" android:id="@+id/type" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    
+    
+    <LinearLayout android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_height="wrap_content"
+		android:paddingBottom="5dip">
+
+		<TextView android:text="@string/n_a" android:id="@+id/name"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+				
+
+		<TextView android:text="@string/n_a" android:id="@+id/valid"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_height="wrap_content"
+		android:paddingBottom="5dip">
+
+		<TextView android:text="@string/validuntil"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+				
+		<TextView android:text="@string/n_a" android:id="@+id/validuntil"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+		
+		<TextView android:text="@string/trafficleft"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+		
+		<TextView android:text="@string/n_a" android:id="@+id/trafficleft"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:layout_weight="1"/>
+	
+	</LinearLayout>
+    
+</LinearLayout>

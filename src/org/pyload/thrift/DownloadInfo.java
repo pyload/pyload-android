@@ -316,6 +316,7 @@ public class DownloadInfo implements TBase<DownloadInfo, DownloadInfo._Fields>, 
     return new DownloadInfo(this);
   }
 
+  @Override
   public void clear() {
     setFidIsSet(false);
     this.fid = 0;

@@ -164,7 +164,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     return new ServiceCall(this);
   }
 
-  
+  @Override
   public void clear() {
     this.plugin = null;
     this.func = null;
@@ -357,7 +357,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -409,7 +409,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -496,13 +496,13 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
         case 3: // ARGUMENTS
           if (field.type == TType.LIST) {
             {
-              TList _list22 = iprot.readListBegin();
-              this.arguments = new ArrayList<String>(_list22.size);
-              for (int _i23 = 0; _i23 < _list22.size; ++_i23)
+              TList _list21 = iprot.readListBegin();
+              this.arguments = new ArrayList<String>(_list21.size);
+              for (int _i22 = 0; _i22 < _list21.size; ++_i22)
               {
-                String _elem24;
-                _elem24 = iprot.readString();
-                this.arguments.add(_elem24);
+                String _elem23;
+                _elem23 = iprot.readString();
+                this.arguments.add(_elem23);
               }
               iprot.readListEnd();
             }
@@ -548,9 +548,9 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
         oprot.writeFieldBegin(ARGUMENTS_FIELD_DESC);
         {
           oprot.writeListBegin(new TList(TType.STRING, this.arguments.size()));
-          for (String _iter25 : this.arguments)
+          for (String _iter24 : this.arguments)
           {
-            oprot.writeString(_iter25);
+            oprot.writeString(_iter24);
           }
           oprot.writeListEnd();
         }
@@ -566,7 +566,7 @@ public class ServiceCall implements TBase<ServiceCall, ServiceCall._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("ServiceCall(");
     boolean first = true;

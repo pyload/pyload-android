@@ -184,7 +184,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     return new OnlineStatus(this);
   }
 
-  
+  @Override
   public void clear() {
     this.name = null;
     this.plugin = null;
@@ -408,7 +408,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -469,7 +469,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -627,7 +627,7 @@ public class OnlineStatus implements TBase<OnlineStatus, OnlineStatus._Fields>, 
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("OnlineStatus(");
     boolean first = true;

@@ -154,7 +154,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     return new OnlineCheck(this);
   }
 
-  
+  @Override
   public void clear() {
     setRidIsSet(false);
     this.rid = 0;
@@ -267,7 +267,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -301,7 +301,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -362,16 +362,16 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
         case 2: // DATA
           if (field.type == TType.MAP) {
             {
-              TMap _map26 = iprot.readMapBegin();
-              this.data = new HashMap<String,OnlineStatus>(2*_map26.size);
-              for (int _i27 = 0; _i27 < _map26.size; ++_i27)
+              TMap _map25 = iprot.readMapBegin();
+              this.data = new HashMap<String,OnlineStatus>(2*_map25.size);
+              for (int _i26 = 0; _i26 < _map25.size; ++_i26)
               {
-                String _key28;
-                OnlineStatus _val29;
-                _key28 = iprot.readString();
-                _val29 = new OnlineStatus();
-                _val29.read(iprot);
-                this.data.put(_key28, _val29);
+                String _key27;
+                OnlineStatus _val28;
+                _key27 = iprot.readString();
+                _val28 = new OnlineStatus();
+                _val28.read(iprot);
+                this.data.put(_key27, _val28);
               }
               iprot.readMapEnd();
             }
@@ -401,10 +401,10 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
       oprot.writeFieldBegin(DATA_FIELD_DESC);
       {
         oprot.writeMapBegin(new TMap(TType.STRING, TType.STRUCT, this.data.size()));
-        for (Map.Entry<String, OnlineStatus> _iter30 : this.data.entrySet())
+        for (Map.Entry<String, OnlineStatus> _iter29 : this.data.entrySet())
         {
-          oprot.writeString(_iter30.getKey());
-          _iter30.getValue().write(oprot);
+          oprot.writeString(_iter29.getKey());
+          _iter29.getValue().write(oprot);
         }
         oprot.writeMapEnd();
       }
@@ -414,7 +414,7 @@ public class OnlineCheck implements TBase<OnlineCheck, OnlineCheck._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("OnlineCheck(");
     boolean first = true;

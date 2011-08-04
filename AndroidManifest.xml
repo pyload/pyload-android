@@ -32,6 +32,7 @@
         <activity android:name=".module.FileChooser"></activity>        
         <activity android:name="SettingsActivity" android:label="@string/server_settings"></activity>
         <activity android:name="ConfigSectionActivity" android:label="@string/server_settings"></activity>
+        <activity android:name="AccountActivity"></activity>
 
     </application>
 </manifest>

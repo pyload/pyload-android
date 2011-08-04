@@ -54,13 +54,13 @@ public class SettingsActivity extends ListActivity {
 		adp.addSection(getString(R.string.general_config), general);
 		adp.addSection(getString(R.string.plugin_config), plugins);
 
+		setListAdapter(adp);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
-		setListAdapter(adp);
 
 		if (!app.hasConnection())
 			return;
@@ -89,7 +89,10 @@ public class SettingsActivity extends ListActivity {
 		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) adp.getItem(position);
 		
 		Intent intent = new Intent(app, ConfigSectionActivity.class);
-		intent.putExtra("type", "general");
+		if(position > generalData.size())
+			intent.putExtra("type", "plugin");
+		else
+			intent.putExtra("type", "core");
 		intent.putExtra("section", item.getValue());
 		startActivity(intent);
 		

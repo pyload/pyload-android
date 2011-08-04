@@ -165,7 +165,7 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     return new CaptchaTask(this);
   }
 
-  
+  @Override
   public void clear() {
     setTidIsSet(false);
     this.tid = 0;
@@ -353,7 +353,7 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -405,7 +405,7 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -541,7 +541,7 @@ public class CaptchaTask implements TBase<CaptchaTask, CaptchaTask._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("CaptchaTask(");
     boolean first = true;

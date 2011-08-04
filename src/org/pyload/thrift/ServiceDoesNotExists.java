@@ -137,7 +137,7 @@ public class ServiceDoesNotExists extends Exception implements TBase<ServiceDoes
     return new ServiceDoesNotExists(this);
   }
 
-  
+  @Override
   public void clear() {
     this.plugin = null;
     this.func = null;
@@ -239,7 +239,7 @@ public class ServiceDoesNotExists extends Exception implements TBase<ServiceDoes
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -273,7 +273,7 @@ public class ServiceDoesNotExists extends Exception implements TBase<ServiceDoes
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -366,7 +366,7 @@ public class ServiceDoesNotExists extends Exception implements TBase<ServiceDoes
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("ServiceDoesNotExists(");
     boolean first = true;

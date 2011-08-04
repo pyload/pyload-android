@@ -76,4 +76,10 @@
     <string name="general_config">General config</string>
     <string name="plugin_config">Plugin config</string>
     <string name="submit">Submit</string>
+    <string name="accounts">Accounts</string>
+    <string name="unlimited">unlimited</string>
+    <string name="valid">valid</string>
+    <string name="invalid">invalid</string>
+    <string name="trafficleft">Traffic left:</string>
+    <string name="validuntil">Valid until:</string>
 </resources>

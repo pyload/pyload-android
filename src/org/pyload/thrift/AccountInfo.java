@@ -40,7 +40,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
 
   public long validuntil;
   public String login;
-  public Map<String,String> options;
+  public Map<String,List<String>> options;
   public boolean valid;
   public long trafficleft;
   public long maxtraffic;
@@ -144,7 +144,8 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     tmpMap.put(_Fields.OPTIONS, new FieldMetaData("options", TFieldRequirementType.DEFAULT, 
         new MapMetaData(TType.MAP, 
             new FieldValueMetaData(TType.STRING), 
-            new FieldValueMetaData(TType.STRING))));
+            new ListMetaData(TType.LIST, 
+                new FieldValueMetaData(TType.STRING)))));
     tmpMap.put(_Fields.VALID, new FieldMetaData("valid", TFieldRequirementType.DEFAULT, 
         new FieldValueMetaData(TType.BOOL)));
     tmpMap.put(_Fields.TRAFFICLEFT, new FieldMetaData("trafficleft", TFieldRequirementType.DEFAULT, 
@@ -165,7 +166,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
   public AccountInfo(
     long validuntil,
     String login,
-    Map<String,String> options,
+    Map<String,List<String>> options,
     boolean valid,
     long trafficleft,
     long maxtraffic,
@@ -199,15 +200,18 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
       this.login = other.login;
     }
     if (other.isSetOptions()) {
-      Map<String,String> __this__options = new HashMap<String,String>();
-      for (Map.Entry<String, String> other_element : other.options.entrySet()) {
+      Map<String,List<String>> __this__options = new HashMap<String,List<String>>();
+      for (Map.Entry<String, List<String>> other_element : other.options.entrySet()) {
 
         String other_element_key = other_element.getKey();
-        String other_element_value = other_element.getValue();
+        List<String> other_element_value = other_element.getValue();
 
         String __this__options_copy_key = other_element_key;
 
-        String __this__options_copy_value = other_element_value;
+        List<String> __this__options_copy_value = new ArrayList<String>();
+        for (String other_element_value_element : other_element_value) {
+          __this__options_copy_value.add(other_element_value_element);
+        }
 
         __this__options.put(__this__options_copy_key, __this__options_copy_value);
       }
@@ -226,7 +230,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     return new AccountInfo(this);
   }
 
-  
+  @Override
   public void clear() {
     setValiduntilIsSet(false);
     this.validuntil = 0;
@@ -294,18 +298,18 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     return (this.options == null) ? 0 : this.options.size();
   }
 
-  public void putToOptions(String key, String val) {
+  public void putToOptions(String key, List<String> val) {
     if (this.options == null) {
-      this.options = new HashMap<String,String>();
+      this.options = new HashMap<String,List<String>>();
     }
     this.options.put(key, val);
   }
 
-  public Map<String,String> getOptions() {
+  public Map<String,List<String>> getOptions() {
     return this.options;
   }
 
-  public AccountInfo setOptions(Map<String,String> options) {
+  public AccountInfo setOptions(Map<String,List<String>> options) {
     this.options = options;
     return this;
   }
@@ -463,7 +467,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
       if (value == null) {
         unsetOptions();
       } else {
-        setOptions((Map<String,String>)value);
+        setOptions((Map<String,List<String>>)value);
       }
       break;
 
@@ -567,7 +571,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     throw new IllegalStateException();
   }
 
-  
+  @Override
   public boolean equals(Object that) {
     if (that == null)
       return false;
@@ -655,7 +659,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     return true;
   }
 
-  
+  @Override
   public int hashCode() {
     return 0;
   }
@@ -784,13 +788,23 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
           if (field.type == TType.MAP) {
             {
               TMap _map12 = iprot.readMapBegin();
-              this.options = new HashMap<String,String>(2*_map12.size);
+              this.options = new HashMap<String,List<String>>(2*_map12.size);
               for (int _i13 = 0; _i13 < _map12.size; ++_i13)
               {
                 String _key14;
-                String _val15;
+                List<String> _val15;
                 _key14 = iprot.readString();
-                _val15 = iprot.readString();
+                {
+                  TList _list16 = iprot.readListBegin();
+                  _val15 = new ArrayList<String>(_list16.size);
+                  for (int _i17 = 0; _i17 < _list16.size; ++_i17)
+                  {
+                    String _elem18;
+                    _elem18 = iprot.readString();
+                    _val15.add(_elem18);
+                  }
+                  iprot.readListEnd();
+                }
                 this.options.put(_key14, _val15);
               }
               iprot.readMapEnd();
@@ -864,11 +878,18 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     if (this.options != null) {
       oprot.writeFieldBegin(OPTIONS_FIELD_DESC);
       {
-        oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.options.size()));
-        for (Map.Entry<String, String> _iter16 : this.options.entrySet())
+        oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.options.size()));
+        for (Map.Entry<String, List<String>> _iter19 : this.options.entrySet())
         {
-          oprot.writeString(_iter16.getKey());
-          oprot.writeString(_iter16.getValue());
+          oprot.writeString(_iter19.getKey());
+          {
+            oprot.writeListBegin(new TList(TType.STRING, _iter19.getValue().size()));
+            for (String _iter20 : _iter19.getValue())
+            {
+              oprot.writeString(_iter20);
+            }
+            oprot.writeListEnd();
+          }
         }
         oprot.writeMapEnd();
       }
@@ -895,7 +916,7 @@ public class AccountInfo implements TBase<AccountInfo, AccountInfo._Fields>, jav
     oprot.writeStructEnd();
   }
 
-  
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("AccountInfo(");
     boolean first = true;

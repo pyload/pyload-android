@@ -53,15 +53,19 @@ public class pyLoad extends TabActivity {
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		Intent intent; // Reusable Intent for each tab
 
-		int tab_pyload, tab_queue, tab_collector;
+		int tab_pyload, tab_queue, tab_collector, tab_settings, tab_accounts;
 		if (app.prefs.getBoolean("invert_tabs", false)) {
 			tab_pyload = R.drawable.ic_tab_pyload_inverted;
 			tab_queue = R.drawable.ic_tab_queue_inverted;
 			tab_collector = R.drawable.ic_tab_collector_inverted;
+			tab_settings = R.drawable.ic_tab_settings;
+			tab_accounts = R.drawable.ic_tab_accounts;
 		} else {
 			tab_pyload = R.drawable.ic_tab_pyload;
 			tab_queue = R.drawable.ic_tab_queue;
 			tab_collector = R.drawable.ic_tab_collector;
+			tab_settings = R.drawable.ic_tab_settings;
+			tab_accounts = R.drawable.ic_tab_accounts;
 		}
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
@@ -84,6 +88,20 @@ public class pyLoad extends TabActivity {
 		intent = new Intent().setClass(this, CollectorActivity.class);
 		spec = tabHost.newTabSpec(collector)
 				.setIndicator(collector, res.getDrawable(tab_collector))
+				.setContent(intent);
+		tabHost.addTab(spec);
+		
+		collector = app.getString(R.string.settings);
+		intent = new Intent().setClass(this, SettingsActivity.class);
+		spec = tabHost.newTabSpec(collector)
+				.setIndicator(collector, res.getDrawable(tab_settings))
+				.setContent(intent);
+		tabHost.addTab(spec);
+		
+		collector = app.getString(R.string.accounts);
+		intent = new Intent().setClass(this, AccountActivity.class);
+		spec = tabHost.newTabSpec(collector)
+				.setIndicator(collector, res.getDrawable(tab_accounts))
 				.setContent(intent);
 		tabHost.addTab(spec);
 
@@ -167,15 +185,6 @@ public class pyLoad extends TabActivity {
 					client.toggleReconnect();
 				}
 			}, app.handleSuccess));
-
-			return true;
-
-		
-		case R.id.server_settings:
-			
-			//TODO start within tabhost
-			Intent intent = new Intent(app, SettingsActivity.class);
-			startActivity(intent);
 
 			return true;
 		
