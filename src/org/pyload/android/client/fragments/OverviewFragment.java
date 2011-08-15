@@ -1,9 +1,12 @@
-package org.pyload.android.client;
+package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
+import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.components.TabHandler;
+import org.pyload.android.client.dialogs.CaptchaDialog;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.CaptchaTask;
 import org.pyload.thrift.DownloadInfo;
@@ -11,15 +14,12 @@ import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.Pyload.Client;
 import org.pyload.thrift.ServerStatus;
 
-import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -27,21 +27,20 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class OverviewActivity extends ListActivity implements OnDismissListener {
+public class OverviewFragment extends ListFragment implements
+		OnDismissListener, TabHandler {
 
 	public final static int CAPTCHA_DIALOG = 0;
 
 	private pyLoadApp app;
 	private Client client;
+	private OverviewAdapter adp;
 
 	private List<DownloadInfo> downloads;
 	private ServerStatus status;
@@ -50,11 +49,12 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 	private int interval = 5;
 	private boolean update = false;
 	private boolean dialogOpen = false;
-	
+	// tab position
+	private int pos = -1;
+
 	/**
 	 * GUI Elements
 	 */
-	
 	private TextView statusServer;
 	private TextView reconnect;
 	private TextView speed;
@@ -62,14 +62,13 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	private final Handler mHandler = new Handler();
 	private final Runnable mUpdateResults = new Runnable() {
-		
+
 		public void run() {
 			onDataReceived();
 		}
 	};
 	private final Runnable runUpdate = new Runnable() {
 
-		
 		public void run() {
 			client = app.getClient();
 			downloads = client.statusDownloads();
@@ -84,7 +83,6 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	private final Runnable cancelUpdate = new Runnable() {
 
-		
 		public void run() {
 			stopUpdate();
 		}
@@ -98,38 +96,59 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		}
 	};
 
-	
-	protected void onCreate(Bundle savedInstanceState) {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.overview);	
 
-	    
-		app = (pyLoadApp) getApplicationContext();
-		app.setOverview(this);
+		app = (pyLoadApp) getActivity().getApplicationContext();
 
 		downloads = new ArrayList<DownloadInfo>();
-		OverviewAdapter adapter = new OverviewAdapter(app,
-				R.layout.overview_item, downloads);
-		setListAdapter(adapter);
-		registerForContextMenu(getListView());
-
-		statusServer = (TextView) findViewById(R.id.status_server);
-		reconnect = (TextView) findViewById(R.id.reconnect);
-		speed = (TextView) findViewById(R.id.speed);
-		active = (TextView) findViewById(R.id.active);
-		
+		adp = new OverviewAdapter(app, R.layout.overview_item, downloads);
 	}
 
-	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View v = inflater.inflate(R.layout.overview, null, false);
+
+		statusServer = (TextView) v.findViewById(R.id.status_server);
+		reconnect = (TextView) v.findViewById(R.id.reconnect);
+		speed = (TextView) v.findViewById(R.id.speed);
+		active = (TextView) v.findViewById(R.id.active);
+
+		if (status != null && downloads != null)
+			onDataReceived();
+
+		registerForContextMenu(v.findViewById(android.R.id.list));
+
+		return v;
+	};
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setListAdapter(adp);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		onSelected();
+	}
+
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.overview_context_menu, menu);
 		menu.setHeaderTitle(R.string.choose_action);
 	}
 
-	
+	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+
+		if (!app.isCurrentTab(pos))
+			return false;
 
 		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
 				.getMenuInfo();
@@ -140,7 +159,6 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				
 				public void run() {
 					client = app.getClient();
 					ArrayList<Integer> fids = new ArrayList<Integer>();
@@ -148,7 +166,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 					client.stopDownloads(fids);
 				}
 			}, new Runnable() {
-				
+
 				public void run() {
 					refresh();
 				}
@@ -161,7 +179,20 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 
 	}
 
+	@Override
+	public void onSelected() {
+		startUpdate();
+	}
+
+	@Override
+	public void onDeselected() {
+		stopUpdate();
+	}
+
 	private void startUpdate() {
+		// already update running
+		if (update)
+			return;
 		interval = Integer.parseInt(app.prefs.getString("refresh_rate", "5"));
 		update = true;
 		mHandler.post(mUpdateTimeTask);
@@ -177,7 +208,7 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 	 */
 	protected void onDataReceived() {
 		OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
-		
+
 		adapter.setDownloads(downloads);
 
 		statusServer.setText(app.verboseBool(status.download));
@@ -185,15 +216,15 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		speed.setText(app.formatSize(status.speed) + "/s");
 		active.setText(String.format("%d / %d", status.active, status.total));
 
-		if (captcha != null && app.prefs.getBoolean("pull_captcha", true) &&
-				captcha.resultType.equals("textual") && lastCaptcha != captcha.tid) {
-			showDialog(CAPTCHA_DIALOG);
+		if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
+				&& captcha.resultType.equals("textual")
+				&& lastCaptcha != captcha.tid) {
+			showDialog();
 		}
 
 	}
 
 	public void refresh() {
-
 		if (!app.hasConnection())
 			return;
 
@@ -203,103 +234,32 @@ public class OverviewActivity extends ListActivity implements OnDismissListener 
 		app.addTask(task);
 	}
 
-	
-	protected void onResume() {
-		super.onResume();
+	private void showDialog() {
 
-		startUpdate();
-	}
+		if (dialogOpen || captcha == null)
+			return;
 
-	
-	protected void onPause() {
-		super.onPause();
+		CaptchaDialog dialog = CaptchaDialog.newInstance(captcha);
+		lastCaptcha = captcha.tid;
 
-		app.clearTasks();
-		stopUpdate();
-	}
+		Log.d("pyLoad", "Got Captcha Task");
 
-	
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case CAPTCHA_DIALOG:
+		dialog.setOnDismissListener(this);
 
-			if (dialogOpen || captcha == null)
-				return null;
-
-			final Dialog dialog = new Dialog(this);
-			dialog.setContentView(R.layout.captcha_dialog);
-			dialog.setTitle(getString(R.string.captcha_dialog_titel));
-
-			final TextView text = (TextView) dialog.findViewById(R.id.text);
-
-			final int tid = captcha.tid;
-			lastCaptcha = tid;
-
-			Log.d("pyLoad", "Got Captcha Task");
-
-			Button enter = (Button) dialog.findViewById(R.id.enter);
-
-			enter.setOnClickListener(new OnClickListener() {
-
-				
-				public void onClick(View arg0) {
-					app.addTask(new GuiTask(new Runnable() {
-						
-						public void run() {
-							String result = text.getText().toString();
-							Client client = app.getClient();
-							Log.d("pyLoad", "Send Captcha result: " + tid + " "
-									+ result);
-							client.setCaptchaResult(tid, result);
-
-						}
-					}));
-					dialog.dismiss();
-				}
-			});
-
-			Button cancel = (Button) dialog.findViewById(R.id.cancel);
-
-			cancel.setOnClickListener(new OnClickListener() {
-				
-				public void onClick(View arg0) {
-					dialog.dismiss();
-				}
-			});
-
-			dialog.setOnDismissListener(this);
-
-			dialogOpen = true;
-			return dialog;
-
-		default:
-			return null;
-		}
+		dialogOpen = true;
+		dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
 
 	}
 
-	
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		switch (id) {
-		case CAPTCHA_DIALOG:
-			ImageView image = (ImageView) dialog.findViewById(R.id.image);
 
-			byte[] decoded = Base64.decodeBase64(captcha.getData());
-
-			Bitmap bm = BitmapFactory.decodeByteArray(decoded, 0,
-					decoded.length);
-			image.setImageBitmap(bm);
-			break;
-
-		default:
-			super.onPrepareDialog(id, dialog);
-		}
-	}
-
-	
 	public void onDismiss(DialogInterface arg0) {
 		captcha = null;
 		dialogOpen = false;
+	}
+
+	@Override
+	public void setPosition(int pos) {
+		this.pos = pos;
 	}
 }
 
@@ -341,22 +301,18 @@ class OverviewAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	
 	public int getCount() {
 		return downloads.size();
 	}
 
-	
 	public Object getItem(int id) {
 		return downloads.get(id);
 	}
 
-	
 	public long getItemId(int pos) {
 		return pos;
 	}
 
-	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		DownloadInfo info = downloads.get(position);
 		if (convertView == null) {
@@ -411,7 +367,6 @@ class OverviewAdapter extends BaseAdapter {
 
 	}
 
-	
 	public boolean hasStableIds() {
 		return false;
 	}

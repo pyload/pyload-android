@@ -37,6 +37,7 @@
         <item>Queue</item>
         <item>Collector</item>
     </string-array>
+    <string name="overview">Overview</string>
     <string name="collector">Collector</string>
     <string name="queue">Queue</string>
     <string name="package_links">Put your links here.</string>
@@ -53,7 +54,7 @@
     <string name="invert_tabs_desc">You may change the tab icon layout if it fits better to your theme.</string>
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
-    <string name="old_server">Server version does not match, please update your server/client.</string>
+    <string name="old_server">Server version does not match, please use pyLoad %s.</string>
     <string name="choose_file">Container File</string>
     <string name="choose">Choose</string>
     <string name="current_dir">Current Dir: </string>

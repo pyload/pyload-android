@@ -79,7 +79,7 @@ public class FixedExpandableListActivity extends Activity implements
          * Just use another id to find expandable list view
          *  */
         //mList = (ExpandableListView)findViewById(com.android.internal.R.id.list);
-        mList = (ExpandableListView)findViewById(org.pyload.android.client.R.id.expandable_listview);
+        //mList = (ExpandableListView)findViewById(org.pyload.android.client.R.id.expandable_listview);
         if (mList == null) {
             throw new RuntimeException(
                     "Your content must have a ExpandableListView whose id attribute is " +

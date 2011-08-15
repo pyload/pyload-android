@@ -5,13 +5,19 @@ import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.pyload.android.client.components.FragmentTabsPager;
+import org.pyload.android.client.fragments.AccountFragment;
+import org.pyload.android.client.fragments.CollectorFragment;
+import org.pyload.android.client.fragments.OverviewFragment;
+import org.pyload.android.client.fragments.QueueFragment;
+import org.pyload.android.client.fragments.SettingsFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -23,20 +29,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.TabHost;
 
-public class pyLoad extends TabActivity {
+public class pyLoad extends FragmentTabsPager {
 
 	private pyLoadApp app;
-	private TabHost tabHost;
 
 	/** Called when the activity is first created. */
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.main);
+		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		// setContentView(R.layout.main);
 
 		Eula.show(this);
 
@@ -49,9 +53,9 @@ public class pyLoad extends TabActivity {
 		app.init(this);
 
 		Resources res = getResources(); // Resource object to get Drawables
-		tabHost = getTabHost(); // The activity TabHost
+		// tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
-		Intent intent; // Reusable Intent for each tab
+		String title;
 
 		int tab_pyload, tab_queue, tab_collector, tab_settings, tab_accounts;
 		if (app.prefs.getBoolean("invert_tabs", false)) {
@@ -68,51 +72,40 @@ public class pyLoad extends TabActivity {
 			tab_accounts = R.drawable.ic_tab_accounts;
 		}
 
-		// Create an Intent to launch an Activity for the tab (to be reused)
-		intent = new Intent().setClass(this, OverviewActivity.class);
+		title = getString(R.string.overview);
+		spec = mTabHost.newTabSpec(title).setIndicator(title,
+				res.getDrawable(tab_pyload));
+		mTabsAdapter.addTab(spec, OverviewFragment.class, null);
 
-		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("Overview")
-				.setIndicator("Overview", res.getDrawable(tab_pyload))
-				.setContent(intent);
-		tabHost.addTab(spec);
+		title = getString(R.string.queue);
+		spec = mTabHost.newTabSpec(title).setIndicator(title,
+				res.getDrawable(tab_queue));
+		mTabsAdapter.addTab(spec, QueueFragment.class, null);
 
-		intent = new Intent().setClass(this, QueueActivity.class);
-		String queue = app.getString(R.string.queue);
-		spec = tabHost.newTabSpec(queue)
-				.setIndicator(queue, res.getDrawable(tab_queue))
-				.setContent(intent);
-		tabHost.addTab(spec);
+		title = getString(R.string.collector);
+		spec = mTabHost.newTabSpec(title).setIndicator(title,
+				res.getDrawable(tab_collector));
+		mTabsAdapter.addTab(spec, CollectorFragment.class, null);
 
-		String collector = app.getString(R.string.collector);
-		intent = new Intent().setClass(this, CollectorActivity.class);
-		spec = tabHost.newTabSpec(collector)
-				.setIndicator(collector, res.getDrawable(tab_collector))
-				.setContent(intent);
-		tabHost.addTab(spec);
-		
-		collector = app.getString(R.string.settings);
-		intent = new Intent().setClass(this, SettingsActivity.class);
-		spec = tabHost.newTabSpec(collector)
-				.setIndicator(collector, res.getDrawable(tab_settings))
-				.setContent(intent);
-		tabHost.addTab(spec);
-		
-		collector = app.getString(R.string.accounts);
-		intent = new Intent().setClass(this, AccountActivity.class);
-		spec = tabHost.newTabSpec(collector)
-				.setIndicator(collector, res.getDrawable(tab_accounts))
-				.setContent(intent);
-		tabHost.addTab(spec);
+		title = getString(R.string.settings);
+		spec = mTabHost.newTabSpec(title).setIndicator(title,
+				res.getDrawable(tab_settings));
+		mTabsAdapter.addTab(spec, SettingsFragment.class, null);
 
-		tabHost.setCurrentTab(0);
+		title = getString(R.string.accounts);
+		spec = mTabHost.newTabSpec(title).setIndicator(title,
+				res.getDrawable(tab_accounts));
+		mTabsAdapter.addTab(spec, AccountFragment.class, null);
+
 	}
 
-	
+	@Override
 	protected void onStart() {
 		super.onStart();
 		Intent intent = getIntent();
 		Uri data = intent.getData();
+
+		// startActivity(new Intent(app, FragmentTabsPager.class));
 
 		// we got an intent
 		if (data != null) {
@@ -129,14 +122,26 @@ public class pyLoad extends TabActivity {
 		}
 	}
 
-	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		app.refreshTab();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		app.clearTasks();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
 
-	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add_links:
@@ -148,11 +153,8 @@ public class pyLoad extends TabActivity {
 
 		case R.id.refresh:
 
-			TabHost tabHost = getTabHost();
-			int tab = tabHost.getCurrentTab();
-
 			app.resetClient();
-			app.refreshTab(tab);
+			app.refreshTab();
 
 			return true;
 
@@ -166,7 +168,6 @@ public class pyLoad extends TabActivity {
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				
 				public void run() {
 					Client client = app.getClient();
 					client.togglePause();
@@ -179,7 +180,6 @@ public class pyLoad extends TabActivity {
 
 			app.addTask(new GuiTask(new Runnable() {
 
-				
 				public void run() {
 					Client client = app.getClient();
 					client.toggleReconnect();
@@ -187,13 +187,13 @@ public class pyLoad extends TabActivity {
 			}, app.handleSuccess));
 
 			return true;
-		
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		switch (requestCode) {
@@ -222,7 +222,6 @@ public class pyLoad extends TabActivity {
 
 				app.addTask(new GuiTask(new Runnable() {
 
-					
 					public void run() {
 						Client client = app.getClient();
 
@@ -277,13 +276,22 @@ public class pyLoad extends TabActivity {
 
 	}
 
-	
+	@Override
 	protected void onNewIntent(Intent intent) {
 		Log.d("pyLoad", "got Intent");
 		super.onNewIntent(intent);
 	}
 
-	public int getCurrentTab() {
-		return tabHost.getCurrentTab();
+	public void setCaptchaResult(final short tid, final String result) {
+		app.addTask(new GuiTask(new Runnable() {
+
+			public void run() {
+				Client client = app.getClient();
+				Log.d("pyLoad", "Send Captcha result: " + tid + " " + result);
+				client.setCaptchaResult(tid, result);
+
+			}
+		}));
+
 	}
 }

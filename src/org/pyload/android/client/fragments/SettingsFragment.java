@@ -1,18 +1,22 @@
-package org.pyload.android.client;
+package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.SeparatedListAdapter;
 import org.pyload.thrift.ConfigSection;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +24,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SettingsActivity extends ListActivity {
+public class SettingsFragment extends ListFragment implements
+		TabHandler {
 
 	private pyLoadApp app;
 	private SeparatedListAdapter adp;
@@ -41,10 +46,15 @@ public class SettingsActivity extends ListActivity {
 		}
 	};
 
-	protected void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.settings_list, null, false);
+	};
+
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		app = (pyLoadApp) getApplicationContext();
+		app = (pyLoadApp) getActivity().getApplicationContext();
 
 		adp = new SeparatedListAdapter(app);
 
@@ -54,14 +64,16 @@ public class SettingsActivity extends ListActivity {
 		adp.addSection(getString(R.string.general_config), general);
 		adp.addSection(getString(R.string.plugin_config), plugins);
 
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		setListAdapter(adp);
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
 
+	@Override
+	public void onSelected() {
 		if (!app.hasConnection())
 			return;
 
@@ -78,30 +90,51 @@ public class SettingsActivity extends ListActivity {
 		}, mUpdateResults);
 
 		app.addTask(task);
-		
+	}
+
+	@Override
+	public void onDeselected() {
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-			
-		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) adp.getItem(position);
-		
-		Intent intent = new Intent(app, ConfigSectionActivity.class);
-		if(position > generalData.size())
-			intent.putExtra("type", "plugin");
+
+		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) adp
+				.getItem(position);
+
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+		Bundle args = new Bundle();
+		if (position > generalData.size())
+			args.putString("type", "plugin");
 		else
-			intent.putExtra("type", "core");
-		intent.putExtra("section", item.getValue());
-		startActivity(intent);
+			args.putString("type", "core");
+		args.putSerializable("section", item.getValue());
+
+		Fragment f = new ConfigSectionFragment();
+		f.setArguments(args);
+
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+		ft.addToBackStack(null);
+
+		// ft.replace(R.id.layout_root, f).commit();
+		ft.replace(R.id.layout_root, f);
+		ft.commit();
+	}
+
+	@Override
+	public void setPosition(int pos) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
 }
 
 class SettingsAdapter extends BaseAdapter {
-	
+
 	static class ViewHolder {
 		private TextView name;
 		private TextView desc;
@@ -140,34 +173,34 @@ class SettingsAdapter extends BaseAdapter {
 	@Override
 	public View getView(int row, View convertView, ViewGroup viewGroup) {
 
-		
 		ViewHolder holder;
-		
+
 		if (convertView == null) {
 
 			convertView = layoutInflater.inflate(R.layout.settings_item, null);
-			
+
 			holder = new ViewHolder();
-			
+
 			holder.name = (TextView) convertView.findViewById(R.id.section);
-			holder.desc = (TextView) convertView.findViewById(R.id.section_desc);
-		
+			holder.desc = (TextView) convertView
+					.findViewById(R.id.section_desc);
+
 			convertView.setTag(holder);
-		
+
 		}
-		
+
 		ConfigSection section = data.get(row).getValue();
 		holder = (ViewHolder) convertView.getTag();
-		
+
 		holder.name.setText(section.description);
-		
+
 		if (section.outline != null) {
 			holder.desc.setText(section.outline);
 			holder.desc.setMaxHeight(100);
 		} else {
 			holder.desc.setMaxHeight(0);
 		}
-		
+
 		return convertView;
 	}
 

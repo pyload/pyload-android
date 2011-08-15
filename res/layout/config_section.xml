@@ -21,7 +21,7 @@
 <Button  
     android:layout_height="wrap_content"  
     android:text="@string/submit"  
-    android:onClick="onSubmit"  
+    android:id="@+id/button_submit"
     android:layout_width="fill_parent"
     android:layout_weight="1">  
 </Button>
@@ -29,7 +29,7 @@
 <Button  
     android:layout_height="wrap_content"
     android:text="@string/cancel"  
-    android:onClick="onCancel"  
+    android:id="@+id/button_cancel"
     android:layout_width="fill_parent"
     android:layout_weight="1">
 </Button>

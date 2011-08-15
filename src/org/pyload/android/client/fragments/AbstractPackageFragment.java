@@ -1,9 +1,13 @@
-package org.pyload.android.client;
+package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pyload.android.client.components.FixedExpandableListActivity;
+import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.components.ExpandableListFragment;
+import org.pyload.android.client.components.TabHandler;
+import org.pyload.android.client.dialogs.FileInfoDialog;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.DownloadStatus;
@@ -11,7 +15,7 @@ import org.pyload.thrift.FileData;
 import org.pyload.thrift.PackageData;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +25,8 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ImageView;
@@ -32,159 +34,121 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public abstract class PackageActivity extends FixedExpandableListActivity {
+public abstract class AbstractPackageFragment extends ExpandableListFragment
+		implements TabHandler {
 
 	/**
 	 * Destination, queue = 0, collector = 1, same as in pyLoad Core
 	 */
 	final static int FILEINFO_DIALOG = 0;
 
-	// saved for dialog
-	private int group = 0;
-	private int child = 0;
-
 	protected int dest;
 	private List<PackageData> data;
-	protected pyLoadApp app;
+	private pyLoadApp app;
 	private Client client;
+	// tab position
+	private int pos = -1;
 
 	private final Runnable mUpdateResults = new Runnable() {
 
-		
 		public void run() {
 			onDataReceived();
 		}
 	};
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Log.d("pyLoad", dest + " onAttach " + app);
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.package_list);
-		app = (pyLoadApp) getApplicationContext();
-
+		Log.d("pyLoad", dest + " OnCreate " + app);
+		app = (pyLoadApp) getActivity().getApplicationContext();
 		data = new ArrayList<PackageData>();
 
-		PackageListAdapter adapter = new PackageListAdapter(this, data,
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		Log.d("pyLoad", dest + " onCreateView " + app);
+		View v = inflater.inflate(R.layout.package_list, null, false);
+
+		return v;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+
+		Log.d("pyLoad", dest + " onViewCreated");
+
+		registerForContextMenu(view.findViewById(android.R.id.list));
+		PackageListAdapter adp = new PackageListAdapter(app, data,
 				R.layout.package_item, R.layout.package_child_item);
-
-		setListAdapter(adapter);
-		registerForContextMenu(getExpandableListView());
+		setListAdapter(adp);
 	}
 
-	
-	protected void onPause() {
-		super.onPause();
-		app.clearTasks();
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Log.d("pyLoad", dest + " onActivityCreated " + app);
+
 	}
 
-	
-	protected void onResume() {
-		super.onResume();
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d("pyLoad", dest + "onDestroy");
+	}
+
+	@Override
+	public void onSelected() {
+		Log.d("pyLoad", dest + " selected " + app);
+		app = (pyLoadApp) getActivity().getApplicationContext();
 		refresh();
+
 	}
 
-	
-	public boolean onChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
+	@Override
+	public void onDeselected() {
+	}
 
-		group = groupPosition;
-		child = childPosition;
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v, int group,
+			int child, long id) {
 
-		showDialog(FILEINFO_DIALOG);
+		PackageData pack;
+		FileData file;
+		try {
+			pack = data.get(group);
+			file = pack.links.get(child);
+		} catch (Exception e) {
+			return true;
+		}
+
+		FileInfoDialog dialog = FileInfoDialog.newInstance(pack, file);
+		dialog.show(getFragmentManager(), FileInfoDialog.class.getName());
 		return true;
 	}
 
-	
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case FILEINFO_DIALOG:
-
-			try {
-				// just to be sure, check if clicked file exists
-				data.get(group).links.get(child);
-			} catch (IndexOutOfBoundsException e) {
-				Log.d("pyLoad", "Error when creating dialog", e);
-				return null;
-			}
-
-			final Dialog dialog = new Dialog(this);
-			dialog.setContentView(R.layout.fileinfo_dialog);
-			dialog.setTitle(R.string.fileinfo_title);
-
-			Button button = (Button) dialog.findViewById(R.id.close);
-			button.setOnClickListener(new OnClickListener() {
-				
-				public void onClick(View arg0) {
-					dialog.dismiss();
-				}
-			});
-
-			return dialog;
-
-		default:
-			return super.onCreateDialog(id);
-		}
+	@Override
+	public void setPosition(int pos) {
+		this.pos = pos;
 	}
 
-	
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		switch (id) {
-		case FILEINFO_DIALOG:
-
-			FileData file;
-
-			try {
-				file = data.get(group).links.get(child);
-			} catch (IndexOutOfBoundsException e) {
-				Log.d("pyLoad", "Error when preparing dialog", e);
-				return;
-			}
-
-			TextView view = (TextView) dialog.findViewById(R.id.name);
-			view.setText(file.name);
-
-			view = (TextView) dialog.findViewById(R.id.status);
-			view.setText(file.statusmsg);
-
-			view = (TextView) dialog.findViewById(R.id.plugin);
-			view.setText(file.plugin);
-
-			view = (TextView) dialog.findViewById(R.id.size);
-			view.setText(file.format_size);
-
-			view = (TextView) dialog.findViewById(R.id.error);
-			view.setText(file.error);
-
-			PackageData pack = null;
-			for (PackageData comparePack : data)
-				if (comparePack.pid == file.packageID)
-					pack = comparePack;
-
-			if (pack == null)
-				return;
-
-			view = (TextView) dialog.findViewById(R.id.packageValue);
-			view.setText(pack.name);
-
-			view = (TextView) dialog.findViewById(R.id.folder);
-			view.setText(pack.folder);
-
-			break;
-
-		default:
-			super.onPrepareDialog(id, dialog);
-		}
-	}
 
 	public void refresh() {
 
 		if (!app.hasConnection())
 			return;
-		
+
 		app.setProgress(true);
 
 		GuiTask task = new GuiTask(new Runnable() {
 
-			
 			public void run() {
 				client = app.getClient();
 				if (dest == 0)
@@ -205,20 +169,26 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 
 	protected void onTaskPerformed() {
 		refresh();
-		Toast.makeText(this, app.getString(R.string.success),
+		Toast.makeText(getActivity(), app.getString(R.string.success),
 				Toast.LENGTH_SHORT).show();
 	}
 
-	
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.package_context_menu, menu);
 		menu.setHeaderTitle(R.string.choose_action);
 	}
 
-	
+	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+
+		Log.d("pyLoad", dest + " onContextItemSelected " + item);
+
+		// filter event und allow to proceed
+		if (!app.isCurrentTab(pos))
+			return false;
 
 		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item
 				.getMenuInfo();
@@ -237,7 +207,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.restart:
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					public void run() {
 						client = app.getClient();
 						client.restartFile(file.fid);
@@ -248,7 +218,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.delete:
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					public void run() {
 						client = app.getClient();
 						ArrayList<Integer> fids = new ArrayList<Integer>();
@@ -261,7 +231,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 				break;
 
 			case R.id.move:
-				Toast.makeText(this, R.string.cant_move_files,
+				Toast.makeText(getActivity(), R.string.cant_move_files,
 						Toast.LENGTH_SHORT).show();
 				break;
 
@@ -280,7 +250,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.restart:
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					public void run() {
 						client = app.getClient();
 						client.restartPackage(pack.pid);
@@ -291,7 +261,7 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.delete:
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					public void run() {
 						client = app.getClient();
 						ArrayList<Integer> pids = new ArrayList<Integer>();
@@ -305,14 +275,14 @@ public abstract class PackageActivity extends FixedExpandableListActivity {
 			case R.id.move:
 
 				app.addTask(new GuiTask(new Runnable() {
-					
+
 					public void run() {
 						client = app.getClient();
 						Destination newDest;
 						if (dest == 0) {
-							newDest = Destination.Queue;
-						} else {
 							newDest = Destination.Collector;
+						} else {
+							newDest = Destination.Queue;
 						}
 
 						client.movePackage(newDest, pack.pid);
@@ -350,23 +320,21 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		private ImageView status_icon;
 	}
 
-	private final Context context;
 	private List<PackageData> data;
 	private pyLoadApp app;
 	private final int groupRes;
 	private final int childRes;
 	private final LayoutInflater layoutInflater;
 
-	public PackageListAdapter(Context contex, List<PackageData> data,
+	public PackageListAdapter(pyLoadApp app, List<PackageData> data,
 			int groupRes, int childRes) {
 
-		this.context = contex;
+		this.app = app;
 		this.data = data;
 		this.groupRes = groupRes;
 		this.childRes = childRes;
 
-		app = (pyLoadApp) contex.getApplicationContext();
-		layoutInflater = (LayoutInflater) context
+		layoutInflater = (LayoutInflater) app
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
@@ -375,37 +343,30 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		notifyDataSetChanged();
 	}
 
-	
 	public Object getChild(int group, int child) {
 		return data.get(group).links.get(child);
 	}
 
-	
 	public long getChildId(int group, int child) {
 		return child;
 	}
 
-	
 	public int getChildrenCount(int group) {
 		return data.get(group).links.size();
 	}
 
-	
 	public Object getGroup(int group) {
 		return data.get(group);
 	}
 
-	
 	public int getGroupCount() {
 		return data.size();
 	}
 
-	
 	public long getGroupId(int group) {
 		return group;
 	}
 
-	
 	public View getGroupView(int group, boolean isExpanded, View convertView,
 			ViewGroup parent) {
 
@@ -414,7 +375,8 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			convertView = layoutInflater.inflate(groupRes, null);
 			GroupViewHolder holder = new GroupViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.progress = (ProgressBar) convertView.findViewById(R.id.package_progress);
+			holder.progress = (ProgressBar) convertView
+					.findViewById(R.id.package_progress);
 			holder.size = (TextView) convertView.findViewById(R.id.size_stats);
 			holder.links = (TextView) convertView.findViewById(R.id.link_stats);
 			convertView.setTag(holder);
@@ -422,18 +384,19 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.name);
-		
+
 		if (pack.linkstotal == 0)
 			pack.linkstotal = 1;
-		
-		holder.progress.setProgress((int) ((pack.linksdone * 100) / pack.links.size()));
-		holder.size.setText(app.formatSize(pack.sizedone) + " / " + app.formatSize(pack.sizetotal));
+
+		holder.progress.setProgress((int) ((pack.linksdone * 100) / pack.links
+				.size()));
+		holder.size.setText(app.formatSize(pack.sizedone) + " / "
+				+ app.formatSize(pack.sizetotal));
 		holder.links.setText(pack.linksdone + " / " + pack.links.size());
 
 		return convertView;
 	}
 
-	
 	public View getChildView(int group, int child, boolean isLastChild,
 			View convertView, ViewGroup parent) {
 
@@ -471,7 +434,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.status_icon.setImageResource(R.drawable.tick);
 		} else if (file.status == DownloadStatus.Waiting) {
 			holder.status_icon.setImageResource(R.drawable.menu_clock);
-		} else if(file.status == DownloadStatus.Skipped){
+		} else if (file.status == DownloadStatus.Skipped) {
 			holder.status_icon.setImageResource(R.drawable.tag);
 		} else {
 			holder.status_icon.setImageResource(0);
@@ -480,12 +443,10 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	
 	public boolean hasStableIds() {
 		return false;
 	}
 
-	
 	public boolean isChildSelectable(int group, int child) {
 		return true;
 	}

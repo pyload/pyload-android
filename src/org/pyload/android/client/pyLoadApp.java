@@ -14,6 +14,7 @@ import org.apache.thrift.transport.TSSLTransportFactory;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
+import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.exceptions.WrongLogin;
 import org.pyload.android.client.exceptions.WrongServer;
 import org.pyload.android.client.module.AllTrustManager;
@@ -26,6 +27,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,13 +39,12 @@ public class pyLoadApp extends Application {
 	private Handler mHandler;
 	private TaskQueue taskQueue;
 	private Throwable lastException;
-	SharedPreferences prefs;
-	ConnectivityManager cm;
+	public SharedPreferences prefs;
+	public ConnectivityManager cm;
 
 	private pyLoad main;
-	private OverviewActivity overview;
-	private QueueActivity queue;
-	private CollectorActivity collector;
+
+	static final String clientVersion = "0.4.7";
 
 	public void init(pyLoad main) {
 		this.main = main;
@@ -85,7 +86,7 @@ public class pyLoadApp extends Application {
 		String username = prefs.getString("username", "User");
 		String password = prefs.getString("password", "pwhere");
 
-		//TODO: better exception handling
+		// TODO: better exception handling
 		TTransport trans;
 		try {
 			if (prefs.getBoolean("ssl", false)) {
@@ -130,10 +131,10 @@ public class pyLoadApp extends Application {
 			}
 
 			String server = client.getServerVersion();
-			if  (!server.equals("0.4.6-dev"))
+			if (!server.equals(clientVersion))
 				throw new WrongServer();
 
-		}		
+		}
 		return client;
 	}
 
@@ -146,7 +147,7 @@ public class pyLoadApp extends Application {
 	}
 
 	final public Runnable handleException = new Runnable() {
-		
+
 		public void run() {
 			onException();
 		}
@@ -169,17 +170,18 @@ public class pyLoadApp extends Application {
 					Toast.LENGTH_SHORT);
 			t.show();
 		} else if (lastException instanceof WrongServer) {
-			Toast t = Toast.makeText(this, R.string.old_server,
+			Toast t = Toast.makeText(this, String.format(
+					getString(R.string.old_server), clientVersion),
 					Toast.LENGTH_SHORT);
 			t.show();
 		}
-		
+
 		setProgress(false);
 	}
 
 	final public Runnable handleSuccess = new Runnable() {
 
-		
+		@Override
 		public void run() {
 			onSuccess();
 		}
@@ -189,36 +191,24 @@ public class pyLoadApp extends Application {
 		Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
 		t.show();
 
-		refreshTab(main.getCurrentTab());
+		refreshTab();
 	}
 
-	public void setOverview(OverviewActivity overview) {
-		this.overview = overview;
+	public void refreshTab() {
+		Fragment frag = main.getCurrentFragment();
+
+		Log.d("pyLoad", "Refreshing Tab: " + frag);
+
+		if (frag != null)
+			((TabHandler) frag).onSelected();
 	}
 
-	public void setQueue(QueueActivity queue) {
-		this.queue = queue;
+	public boolean isCurrentTab(int pos) {
+		return main.getCurrentTab() == pos;
 	}
 
-	public void setCollector(CollectorActivity collector) {
-		this.collector = collector;
-	}
-
-	public void refreshTab(int index) {
-
-		switch (index) {
-		case 0:
-			overview.refresh();
-			break;
-		case 1:
-			queue.refresh();
-			break;
-		case 2:
-			collector.refresh();
-
-		default:
-			break;
-		}
+	public pyLoad getMain() {
+		return main;
 	}
 
 	public boolean hasConnection() {
@@ -242,8 +232,8 @@ public class pyLoadApp extends Application {
 		Log.d("pyLoad", "Client resetted");
 		client = null;
 	}
-	
-	public void setProgress(boolean state){
+
+	public void setProgress(boolean state) {
 		main.setProgressBarIndeterminateVisibility(state);
 	}
 

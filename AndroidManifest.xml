@@ -24,15 +24,9 @@
 			   	<data android:scheme="file" android:host="*" android:pathPattern=".*\\.dlc"/>
             </intent-filter>
         </activity>
-        <activity android:name="OverviewActivity"></activity>
-        <activity android:name="QueueActivity"></activity>
-        <activity android:name="CollectorActivity"></activity>
         <activity android:name="Preferences" android:label="@string/pref_name"></activity>
         <activity android:name="AddLinksActivity"></activity>
         <activity android:name=".module.FileChooser"></activity>        
-        <activity android:name="SettingsActivity" android:label="@string/server_settings"></activity>
-        <activity android:name="ConfigSectionActivity" android:label="@string/server_settings"></activity>
-        <activity android:name="AccountActivity"></activity>
 
     </application>
 </manifest>

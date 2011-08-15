@@ -1,24 +1,27 @@
-package org.pyload.android.client;
+package org.pyload.android.client.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.AccountInfo;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class AccountActivity extends ListActivity {
+public class AccountFragment extends ListFragment implements TabHandler {
 
 	private pyLoadApp app;
 	private AccountAdapter adp;
@@ -36,18 +39,23 @@ public class AccountActivity extends ListActivity {
 	};
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		app = (pyLoadApp) getApplicationContext();
-		
+		app = (pyLoadApp) getActivity().getApplicationContext();
 		adp = new AccountAdapter(app);		
-		setListAdapter(adp);
 
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		setListAdapter(adp);
 	}
 
 	@Override
-	protected void onResume() {
+	public void onSelected(){
 		super.onResume();
 		
 		if (!app.hasConnection())
@@ -66,6 +74,16 @@ public class AccountActivity extends ListActivity {
 		}, mUpdateResults);
 
 		app.addTask(task);
+		
+	}
+	
+	@Override
+	public void onDeselected() {		
+	}
+
+	@Override
+	public void setPosition(int pos) {
+		// TODO Auto-generated method stub
 		
 	}
 

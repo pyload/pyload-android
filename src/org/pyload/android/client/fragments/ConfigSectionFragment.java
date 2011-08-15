@@ -1,53 +1,87 @@
-package org.pyload.android.client;
+package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.ConfigItem;
 import org.pyload.thrift.ConfigSection;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class ConfigSectionActivity extends Activity {
+public class ConfigSectionFragment extends Fragment {
 
 	private pyLoadApp app;
 	private ConfigSection section;
 	private String type;
 	private HashMap<String, ConfigItemView> items = new HashMap<String, ConfigItemView>();
 
+	private Runnable mRefresh = new Runnable() {
+
+		@Override
+		public void run() {
+			app.refreshTab();
+		}
+	};
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-		app = (pyLoadApp) getApplicationContext();
-
-		Bundle extras = getIntent().getExtras();
-
-		section = (ConfigSection) extras.getSerializable("section");
-		type = extras.getString("type");
-
-		View view = getLayoutInflater().inflate(R.layout.config_section, null);
+		View view = inflater.inflate(R.layout.config_section, null, false);
 		createLayout(view);
-
 		TextView t = (TextView) view.findViewById(R.id.list_header_title);
 		t.setText(section.description);
 
-		setContentView(view);
+		((Button) view.findViewById(R.id.button_submit))
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						onSubmit();
+					}
+				});
+
+		((Button) view.findViewById(R.id.button_cancel))
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						onCancel();
+					}
+				});
+
+		return view;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		app = (pyLoadApp) getActivity().getApplicationContext();
+
+		Bundle extras = getArguments();
+
+		section = (ConfigSection) extras.getSerializable("section");
+		type = extras.getString("type");
 	}
 
 	private View createLayout(View view) {
@@ -55,7 +89,7 @@ public class ConfigSectionActivity extends Activity {
 		ll.setOrientation(LinearLayout.VERTICAL);
 
 		for (ConfigItem item : section.items) {
-			ConfigItemView c = new ConfigItemView(this, item);
+			ConfigItemView c = new ConfigItemView(this.getActivity(), item);
 			items.put(item.name, c);
 			ll.addView(c);
 		}
@@ -63,36 +97,40 @@ public class ConfigSectionActivity extends Activity {
 		return ll;
 	}
 
-	public void onSubmit(View button) {
+	public void onSubmit() {
 
-		Client client = app.getClient();
-		if (client == null)
+		if (!app.hasConnection())
 			return;
 
-		try {
+		app.addTask(new GuiTask(new Runnable() {
 
-			for (ConfigItem item : section.items) {
-				ConfigItemView view = items.get(item.name);
-				String newValue = view.getValue();
-				if (!item.value.equals(newValue)) {
-					Log.d("pyLoad", String.format(
-							"Set config value: %s, %s, %s", type, section.name,
-							item.name));
-					
-					client.setConfigValue(section.name, item.name, newValue,
-							type);
+			@Override
+			public void run() {
+
+				Client client = app.getClient();
+
+				for (ConfigItem item : section.items) {
+					ConfigItemView view = items.get(item.name);
+					String newValue = view.getValue();
+					if (!item.value.equals(newValue)) {
+						Log.d("pyLoad", String.format(
+								"Set config value: %s, %s, %s", type,
+								section.name, item.name));
+
+						client.setConfigValue(section.name, item.name,
+								newValue, type);
+					}
 				}
+
+				getFragmentManager().popBackStack();
+
 			}
 
-			finish();
-		} catch (Exception e) {
-			Toast.makeText(app, R.string.error, Toast.LENGTH_SHORT);
-		}
-
+		}, mRefresh));
 	}
 
-	public void onCancel(View view) {
-		finish();
+	public void onCancel() {
+		getFragmentManager().popBackStack();
 	}
 }
 

@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="lib/slf4j-android-1.6.1-RC1.jar"/>
+	<classpathentry kind="lib" path="lib/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
