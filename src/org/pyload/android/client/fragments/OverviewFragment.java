@@ -193,7 +193,14 @@ public class OverviewFragment extends ListFragment implements
 		// already update running
 		if (update)
 			return;
-		interval = Integer.parseInt(app.prefs.getString("refresh_rate", "5"));
+		try {
+			interval = Integer.parseInt(app.prefs
+					.getString("refresh_rate", "5"));
+		} catch (NumberFormatException e) {
+			// somehow contains illegal value
+			interval = 5;
+		}
+
 		update = true;
 		mHandler.post(mUpdateTimeTask);
 	}
@@ -247,10 +254,19 @@ public class OverviewFragment extends ListFragment implements
 		dialog.setOnDismissListener(this);
 
 		dialogOpen = true;
-		dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
+		try {
+			dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
+		} catch (IllegalStateException e) {
+			dialogOpen = false;
+			// seems to appear when overview is already closed
+			Log.e("pyLoad", "Dialog state error", e);
+		} catch (NullPointerException e) {
+			dialogOpen = false;
+			// something is null, but why?
+			Log.e("pyLoad", "Dialog null pointer error", e);
+		}
 
 	}
-
 
 	public void onDismiss(DialogInterface arg0) {
 		captcha = null;
