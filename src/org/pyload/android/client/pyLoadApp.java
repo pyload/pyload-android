@@ -44,7 +44,7 @@ public class pyLoadApp extends Application {
 
 	private pyLoad main;
 
-	static final String clientVersion = "0.4.7";
+	static final String clientVersion = "0.4.8";
 
 	public void init(pyLoad main) {
 		this.main = main;

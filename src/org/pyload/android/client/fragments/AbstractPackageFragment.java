@@ -419,8 +419,9 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		ChildViewHolder holder = (ChildViewHolder) convertView.getTag();
 
-		// TODO: may occure, investigation needed
-		if(holder == null)
+
+		// seems to occure according to bug report
+		if (file.name == null)
 			return null;
 		
 		if (!file.name.equals(holder.name.getText()))
