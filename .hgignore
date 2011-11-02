@@ -7,3 +7,4 @@ syntax: glob
 *.zip
 bin/*
 .classpath
+*.svn/

@@ -80,8 +80,10 @@ public class pyLoadApp extends Application {
 	}
 
 	boolean login() throws TException {
+		
 
-		String host = prefs.getString("host", "10.0.2.2");
+		// replace protocol, some user also enter it
+		String host = prefs.getString("host", "10.0.2.2").replaceFirst("^[a-zA-z]+://", "");
 		int port = Integer.parseInt(prefs.getString("port", "7227"));
 		String username = prefs.getString("username", "User");
 		String password = prefs.getString("password", "pwhere");

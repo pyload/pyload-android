@@ -16,30 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.thrift.scheme;
 
-package org.apache.thrift;
+import org.apache.thrift.TBase;
 
-/**
- * Generic exception class for Thrift.
- *
- */
-public class TException extends RuntimeException {
+public interface IScheme<T extends TBase> {
 
-  private static final long serialVersionUID = 1L;
+  public void read(org.apache.thrift.protocol.TProtocol iproto, T struct) throws org.apache.thrift.TException;
 
-  public TException() {
-    super();
-  }
+  public void write(org.apache.thrift.protocol.TProtocol oproto, T struct) throws org.apache.thrift.TException;
 
-  public TException(String message) {
-    super(message);
-  }
-
-  public TException(Throwable cause) {
-    super(cause);
-  }
-
-  public TException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

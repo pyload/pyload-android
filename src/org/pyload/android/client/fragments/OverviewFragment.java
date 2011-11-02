@@ -224,6 +224,7 @@ public class OverviewFragment extends ListFragment implements
 		active.setText(String.format("%d / %d", status.active, status.total));
 
 		if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
+				&& captcha.resultType != null // string null bug
 				&& captcha.resultType.equals("textual")
 				&& lastCaptcha != captcha.tid) {
 			showDialog();
@@ -347,8 +348,10 @@ class OverviewAdapter extends BaseAdapter {
 		}
 
 		ViewHolder holder = (ViewHolder) convertView.getTag();
-
-		if (!info.name.equals(holder.name.getText())) {
+		
+		
+		// name is null sometimes somehow
+		if (info.name != null && !info.name.equals(holder.name.getText())) {
 			holder.name.setText(info.name);
 		}
 

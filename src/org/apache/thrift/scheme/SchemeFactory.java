@@ -16,30 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.thrift.scheme;
 
-package org.apache.thrift;
+public interface SchemeFactory {
 
-/**
- * Generic exception class for Thrift.
- *
- */
-public class TException extends RuntimeException {
+  public <S extends IScheme> S getScheme();
 
-  private static final long serialVersionUID = 1L;
-
-  public TException() {
-    super();
-  }
-
-  public TException(String message) {
-    super(message);
-  }
-
-  public TException(Throwable cause) {
-    super(cause);
-  }
-
-  public TException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

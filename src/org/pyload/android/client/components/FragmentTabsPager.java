@@ -172,7 +172,7 @@ public class FragmentTabsPager extends FragmentActivity {
 		@Override
 		public void onPageSelected(int position) {
 			
-			Log.d("pyLoad", "onPageSelected " + position);
+			// Log.d("pyLoad", "onPageSelected " + position);
 			
 			Fragment pos = getFragment(position);
 			if (pos != null)

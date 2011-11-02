@@ -25,23 +25,30 @@ import java.util.Map;
 import java.util.Set;
 import java.nio.ByteBuffer;
 
+import org.apache.thrift.TUnion.TUnionStandardScheme;
 import org.apache.thrift.protocol.TField;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TProtocolException;
 import org.apache.thrift.protocol.TStruct;
+import org.apache.thrift.scheme.IScheme;
+import org.apache.thrift.scheme.SchemeFactory;
+import org.apache.thrift.scheme.StandardScheme;
+import org.apache.thrift.scheme.TupleScheme;
 
-public abstract class TUnion<T extends TUnion<?, ?>, F extends TFieldIdEnum> implements TBase<T, F> {
+public abstract class TUnion<T extends TUnion<?,?>, F extends TFieldIdEnum> implements TBase<T, F> {
 
-  /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-protected Object value_;
+  protected Object value_;
   protected F setField_;
 
   protected TUnion() {
     setField_ = null;
     value_ = null;
+  }
+  
+  private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+  static {
+    schemes.put(StandardScheme.class, new TUnionStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new TUnionTupleSchemeFactory());
   }
 
   protected TUnion(F setField, Object value) {
@@ -56,41 +63,40 @@ protected Object value_;
     value_ = deepCopyObject(other.value_);
   }
 
-  @SuppressWarnings("unchecked")
-private static Object deepCopyObject(Object o) {
+  private static Object deepCopyObject(Object o) {
     if (o instanceof TBase) {
-      return ((TBase<?, ?>)o).deepCopy();
+      return ((TBase)o).deepCopy();
     } else if (o instanceof ByteBuffer) {
       return TBaseHelper.copyBinary((ByteBuffer)o);
     } else if (o instanceof List) {
-      return deepCopyList((List<?>)o);
+      return deepCopyList((List)o);
     } else if (o instanceof Set) {
-      return deepCopySet((Set<?>)o);
+      return deepCopySet((Set)o);
     } else if (o instanceof Map) {
-      return deepCopyMap((Map<Object, Object>)o);
+      return deepCopyMap((Map)o);
     } else {
       return o;
     }
   }
 
-  private static Map<Object, Object> deepCopyMap(Map<Object, Object> map) {
-    Map<Object, Object> copy = new HashMap<Object, Object>();
+  private static Map deepCopyMap(Map<Object, Object> map) {
+    Map copy = new HashMap();
     for (Map.Entry<Object, Object> entry : map.entrySet()) {
       copy.put(deepCopyObject(entry.getKey()), deepCopyObject(entry.getValue()));
     }
     return copy;
   }
 
-  private static Set<Object> deepCopySet(Set<?> set) {
-    Set<Object> copy = new HashSet<Object>();
+  private static Set deepCopySet(Set set) {
+    Set copy = new HashSet();
     for (Object o : set) {
       copy.add(deepCopyObject(o));
     }
     return copy;
   }
 
-  private static List<Object> deepCopyList(List<?> list) {
-    List<Object> copy = new ArrayList<Object>(list.size());
+  private static List deepCopyList(List list) {
+    List copy = new ArrayList(list.size());
     for (Object o : list) {
       copy.add(deepCopyObject(o));
     }
@@ -130,24 +136,7 @@ private static Object deepCopyObject(Object o) {
   }
 
   public void read(TProtocol iprot) throws TException {
-    setField_ = null;
-    value_ = null;
-
-    iprot.readStructBegin();
-
-    TField field = iprot.readFieldBegin();
-
-    value_ = readValue(iprot, field);
-    if (value_ != null) {
-      setField_ = enumForId(field.id);
-    }
-
-    iprot.readFieldEnd();
-    // this is so that we will eat the stop byte. we could put a check here to
-    // make sure that it actually *is* the stop byte, but it's faster to do it
-    // this way.
-    iprot.readFieldBegin();
-    iprot.readStructEnd();
+    schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
   }
 
   public void setFieldValue(F fieldId, Object value) {
@@ -161,15 +150,7 @@ private static Object deepCopyObject(Object o) {
   }
 
   public void write(TProtocol oprot) throws TException {
-    if (getSetField() == null || getFieldValue() == null) {
-      throw new TProtocolException("Cannot write a TUnion with no set value!");
-    }
-    oprot.writeStructBegin(getStructDesc());
-    oprot.writeFieldBegin(getFieldDesc(setField_));
-    writeValue(oprot);
-    oprot.writeFieldEnd();
-    oprot.writeFieldStop();
-    oprot.writeStructEnd();
+    schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
   }
 
   /**
@@ -184,11 +165,13 @@ private static Object deepCopyObject(Object o) {
    * Implementation should be generated to read the right stuff from the wire 
    * based on the field header. 
    * @param field
-   * @return
+   * @return read Object based on the field header, as specified by the argument.
    */
-  protected abstract Object readValue(TProtocol iprot, TField field) throws TException;
-
-  protected abstract void writeValue(TProtocol oprot) throws TException;
+  protected abstract Object standardSchemeReadValue(TProtocol iprot, TField field) throws TException;
+  protected abstract void standardSchemeWriteValue(TProtocol oprot) throws TException;
+  
+  protected abstract Object tupleSchemeReadValue(TProtocol iprot, short fieldID) throws TException;
+  protected abstract void tupleSchemeWriteValue(TProtocol oprot) throws TException;
 
   protected abstract TStruct getStructDesc();
 
@@ -220,5 +203,78 @@ private static Object deepCopyObject(Object o) {
   public final void clear() {
     this.setField_ = null;
     this.value_ = null;
+  }
+  
+  private static class TUnionStandardSchemeFactory implements SchemeFactory {
+    public TUnionStandardScheme getScheme() {
+      return new TUnionStandardScheme();
+    }
+  }
+  
+  public static class TUnionStandardScheme extends StandardScheme<TUnion> {
+
+    @Override
+    public void read(TProtocol iprot, TUnion struct) throws TException {
+      struct.setField_ = null;
+      struct.value_ = null;
+
+      iprot.readStructBegin();
+
+      TField field = iprot.readFieldBegin();
+
+      struct.value_ = struct.standardSchemeReadValue(iprot, field);
+      if (struct.value_ != null) {
+        struct.setField_ = struct.enumForId(field.id);
+      }
+
+      iprot.readFieldEnd();
+      // this is so that we will eat the stop byte. we could put a check here to
+      // make sure that it actually *is* the stop byte, but it's faster to do it
+      // this way.
+      iprot.readFieldBegin();
+      iprot.readStructEnd();
+    }
+
+    @Override
+    public void write(TProtocol oprot, TUnion struct) throws TException {
+      if (struct.getSetField() == null || struct.getFieldValue() == null) {
+        throw new TProtocolException("Cannot write a TUnion with no set value!");
+      }
+      oprot.writeStructBegin(struct.getStructDesc());
+      oprot.writeFieldBegin(struct.getFieldDesc(struct.setField_));
+      struct.standardSchemeWriteValue(oprot);
+      oprot.writeFieldEnd();
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+  }
+  
+  private static class TUnionTupleSchemeFactory implements SchemeFactory {
+    public TUnionStandardScheme getScheme() {
+      return new TUnionStandardScheme();
+    }
+  }
+  
+  public static class TUnionTupleScheme extends TupleScheme<TUnion> {
+
+    @Override
+    public void read(TProtocol iprot, TUnion struct) throws TException {
+      struct.setField_ = null;
+      struct.value_ = null;
+      short fieldID = iprot.readI16();
+      struct.value_ = struct.tupleSchemeReadValue(iprot, fieldID);
+      if (struct.value_ != null) {
+        struct.setField_ = struct.enumForId(fieldID);
+      }
+    }
+
+    @Override
+    public void write(TProtocol oprot, TUnion struct) throws TException {
+      if (struct.getSetField() == null || struct.getFieldValue() == null) {
+        throw new TProtocolException("Cannot write a TUnion with no set value!");
+      }
+      oprot.writeI16(struct.setField_.getThriftFieldId());
+      struct.tupleSchemeWriteValue(oprot);
+    }
   }
 }

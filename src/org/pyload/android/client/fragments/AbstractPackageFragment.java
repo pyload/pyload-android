@@ -59,13 +59,13 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		Log.d("pyLoad", dest + " onAttach " + app);
+		//Log.d("pyLoad", dest + " onAttach " + app);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("pyLoad", dest + " OnCreate " + app);
+		//Log.d("pyLoad", dest + " OnCreate " + app);
 		app = (pyLoadApp) getActivity().getApplicationContext();
 		data = new ArrayList<PackageData>();
 
@@ -74,7 +74,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.d("pyLoad", dest + " onCreateView " + app);
+		//Log.d("pyLoad", dest + " onCreateView " + app);
 		View v = inflater.inflate(R.layout.package_list, null, false);
 
 		return v;
@@ -83,7 +83,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		Log.d("pyLoad", dest + " onViewCreated");
+		//Log.d("pyLoad", dest + " onViewCreated");
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
 		PackageListAdapter adp = new PackageListAdapter(app, data,
@@ -94,19 +94,19 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.d("pyLoad", dest + " onActivityCreated " + app);
+		//Log.d("pyLoad", dest + " onActivityCreated " + app);
 
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.d("pyLoad", dest + "onDestroy");
+		//Log.d("pyLoad", dest + "onDestroy");
 	}
 
 	@Override
 	public void onSelected() {
-		Log.d("pyLoad", dest + " selected " + app);
+		//Log.d("pyLoad", dest + " selected " + app);
 		app = (pyLoadApp) getActivity().getApplicationContext();
 		refresh();
 
@@ -419,10 +419,12 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		ChildViewHolder holder = (ChildViewHolder) convertView.getTag();
 
-
 		// seems to occure according to bug report
-		if (file.name == null)
-			return null;
+		// no idea why, and what about other data, so returning the view instantly
+		if (file.name == null) {
+			holder.name.setText(R.string.lambda);
+			return convertView;
+		}
 		
 		if (!file.name.equals(holder.name.getText()))
 			holder.name.setText(file.name);
