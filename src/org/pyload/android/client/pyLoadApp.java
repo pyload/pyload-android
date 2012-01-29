@@ -44,7 +44,7 @@ public class pyLoadApp extends Application {
 
 	private pyLoad main;
 
-	static final String clientVersion = "0.4.8";
+	private static final String[] clientVersion = {"0.4.8", "0.4.9"};
 
 	public void init(pyLoad main) {
 		this.main = main;
@@ -79,7 +79,7 @@ public class pyLoadApp extends Application {
 		return String.format("%.2f %s", format, sizes[steps]);
 	}
 
-	boolean login() throws TException {
+	private boolean login() throws TException {
 		
 
 		// replace protocol, some user also enter it
@@ -133,7 +133,13 @@ public class pyLoadApp extends Application {
 			}
 
 			String server = client.getServerVersion();
-			if (!server.equals(clientVersion))
+			boolean match = false;
+			
+			for (String version : clientVersion)
+				if(server.equals(version))
+					match = true;
+			
+			if (!match)
 				throw new WrongServer();
 
 		}
@@ -173,7 +179,7 @@ public class pyLoadApp extends Application {
 			t.show();
 		} else if (lastException instanceof WrongServer) {
 			Toast t = Toast.makeText(this, String.format(
-					getString(R.string.old_server), clientVersion),
+					getString(R.string.old_server), clientVersion[clientVersion.length-1]),
 					Toast.LENGTH_SHORT);
 			t.show();
 		}
