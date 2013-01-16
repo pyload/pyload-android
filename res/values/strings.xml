@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">pyLoad</string>
     <string name="no_packages">No packages.</string>
+    <string name="no_accounts">No premium accounts.</string>
     <string name="no_downloads">No active downloads.</string>
     <string name="add_links">Add Links</string>
     <string name="settings">Settings</string>
@@ -81,6 +82,6 @@
     <string name="unlimited">unlimited</string>
     <string name="valid">valid</string>
     <string name="invalid">invalid</string>
-    <string name="trafficleft">Traffic left:</string>
-    <string name="validuntil">Valid until:</string>
+    <string name="trafficleft">Traffic:</string>
+    <string name="validuntil">Expires:</string>
 </resources>

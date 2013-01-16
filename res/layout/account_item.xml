@@ -3,10 +3,11 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
+  android:layout_height="fill_parent"
+  android:padding="10dp">
+
     <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:text="TextView" android:id="@+id/type" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
-    
-    
+
     <LinearLayout android:layout_width="fill_parent"
 		android:orientation="horizontal" android:layout_height="wrap_content"
 		android:paddingBottom="5dip">

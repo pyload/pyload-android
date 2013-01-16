@@ -17,4 +17,9 @@
        android:title="@string/settings"
        android:icon="@drawable/ic_menu_manage" />
 
+    <item
+        android:id="@+id/show_accounts"
+        android:icon="@drawable/ic_tab_accounts"
+        android:title="@string/accounts" />
+
 </menu>

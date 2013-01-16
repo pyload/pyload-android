@@ -21,4 +21,8 @@
        android:icon="@drawable/ic_menu_manage"
        android:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/show_accounts"
+        android:title="@string/accounts" />
+
 </menu>

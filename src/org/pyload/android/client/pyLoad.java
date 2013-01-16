@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.pyload.android.client.components.FragmentTabsPager;
-import org.pyload.android.client.fragments.AccountFragment;
+import org.pyload.android.client.dialogs.AccountDialog;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
@@ -39,8 +39,6 @@ public class pyLoad extends FragmentTabsPager {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		// setContentView(R.layout.main);
 
 		Eula.show(this);
 
@@ -53,23 +51,20 @@ public class pyLoad extends FragmentTabsPager {
 		app.init(this);
 
 		Resources res = getResources(); // Resource object to get Drawables
-		// tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		String title;
 
-		int tab_pyload, tab_queue, tab_collector, tab_settings, tab_accounts;
+		int tab_pyload, tab_queue, tab_collector, tab_settings;
 		if (app.prefs.getBoolean("invert_tabs", false)) {
 			tab_pyload = R.drawable.ic_tab_pyload_inverted;
 			tab_queue = R.drawable.ic_tab_queue_inverted;
 			tab_collector = R.drawable.ic_tab_collector_inverted;
 			tab_settings = R.drawable.ic_tab_settings;
-			tab_accounts = R.drawable.ic_tab_accounts;
 		} else {
 			tab_pyload = R.drawable.ic_tab_pyload;
 			tab_queue = R.drawable.ic_tab_queue;
 			tab_collector = R.drawable.ic_tab_collector;
 			tab_settings = R.drawable.ic_tab_settings;
-			tab_accounts = R.drawable.ic_tab_accounts;
 		}
 
 		title = getString(R.string.overview);
@@ -91,12 +86,6 @@ public class pyLoad extends FragmentTabsPager {
 		spec = mTabHost.newTabSpec(title).setIndicator(title,
 				res.getDrawable(tab_settings));
 		mTabsAdapter.addTab(spec, SettingsFragment.class, null);
-
-		title = getString(R.string.accounts);
-		spec = mTabHost.newTabSpec(title).setIndicator(title,
-				res.getDrawable(tab_accounts));
-		mTabsAdapter.addTab(spec, AccountFragment.class, null);
-
 	}
 
 	@Override
@@ -172,6 +161,12 @@ public class pyLoad extends FragmentTabsPager {
 			startActivity(settingsActivity);
 
 			return true;
+
+        case R.id.show_accounts:
+            AccountDialog accountsList = new AccountDialog();
+            accountsList.show(getSupportFragmentManager(), "accountsDialog");
+
+            return true;
 
 		default:
 			return super.onOptionsItemSelected(item);

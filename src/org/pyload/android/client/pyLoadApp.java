@@ -68,7 +68,7 @@ public class pyLoadApp extends Application {
 			return getString(R.string.off);
 	}
 
-	public String formatSize(long size) {
+	public static String formatSize(long size) {
 		double format = size;
 		int steps = 0;
 		String[] sizes = { "B", "KiB", "MiB", "GiB", "TiB" };
