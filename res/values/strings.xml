@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">pyLoad</string>
+    <string name="remotesettings_activity">pyLoad - Remote Settings</string>
+
+    <string name="remote_settings">Remote Settings</string>
     <string name="no_packages">No packages.</string>
     <string name="no_accounts">No premium accounts.</string>
     <string name="no_downloads">No active downloads.</string>

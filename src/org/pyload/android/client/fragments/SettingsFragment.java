@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.pyload.android.client.R;
 import org.pyload.android.client.pyLoadApp;
-import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.SeparatedListAdapter;
 import org.pyload.thrift.ConfigSection;
@@ -24,8 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SettingsFragment extends ListFragment implements
-		TabHandler {
+public class SettingsFragment extends ListFragment {
 
 	private pyLoadApp app;
 	private SeparatedListAdapter adp;
@@ -72,8 +70,12 @@ public class SettingsFragment extends ListFragment implements
 		setListAdapter(adp);
 	}
 
-	@Override
-	public void onSelected() {
+    public void onStart() {
+        super.onStart();
+        update();
+    }
+
+	private void update() {
 		if (!app.hasConnection())
 			return;
 
@@ -90,10 +92,6 @@ public class SettingsFragment extends ListFragment implements
 		}, mUpdateResults);
 
 		app.addTask(task);
-	}
-
-	@Override
-	public void onDeselected() {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -120,15 +118,8 @@ public class SettingsFragment extends ListFragment implements
 
 		ft.addToBackStack(null);
 
-		// ft.replace(R.id.layout_root, f).commit();
 		ft.replace(R.id.layout_root, f);
 		ft.commit();
-	}
-
-	@Override
-	public void setPosition(int pos) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

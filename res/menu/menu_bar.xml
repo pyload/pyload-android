@@ -25,4 +25,8 @@
         android:id="@+id/show_accounts"
         android:title="@string/accounts" />
 
+    <item
+        android:id="@+id/remote_settings"
+        android:title="@string/remote_settings" />
+
 </menu>

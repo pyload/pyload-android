@@ -22,4 +22,9 @@
         android:icon="@drawable/ic_tab_accounts"
         android:title="@string/accounts" />
 
+    <item
+        android:id="@+id/remote_settings"
+        android:icon="@drawable/ic_tab_settings"
+        android:title="@string/remote_settings" />
+
 </menu>

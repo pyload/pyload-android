@@ -36,9 +36,13 @@
            </intent-filter>
 
         </activity>
-        <activity android:name="Preferences" android:label="@string/pref_name"></activity>
-        <activity android:name="AddLinksActivity"></activity>
-        <activity android:name=".module.FileChooser"></activity>        
+
+        <activity android:name=".Preferences" android:label="@string/pref_name" />
+        <activity android:name=".AddLinksActivity" />
+        <activity android:name=".module.FileChooser" />
+
+        <activity android:name=".RemoteSettings" android:label="@string/remotesettings_activity" />
+
 
     </application>
 </manifest>

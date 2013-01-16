@@ -11,7 +11,6 @@ import org.pyload.android.client.dialogs.AccountDialog;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
-import org.pyload.android.client.fragments.SettingsFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.thrift.Destination;
@@ -54,17 +53,15 @@ public class pyLoad extends FragmentTabsPager {
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
 		String title;
 
-		int tab_pyload, tab_queue, tab_collector, tab_settings;
+		int tab_pyload, tab_queue, tab_collector;
 		if (app.prefs.getBoolean("invert_tabs", false)) {
 			tab_pyload = R.drawable.ic_tab_pyload_inverted;
 			tab_queue = R.drawable.ic_tab_queue_inverted;
 			tab_collector = R.drawable.ic_tab_collector_inverted;
-			tab_settings = R.drawable.ic_tab_settings;
 		} else {
 			tab_pyload = R.drawable.ic_tab_pyload;
 			tab_queue = R.drawable.ic_tab_queue;
 			tab_collector = R.drawable.ic_tab_collector;
-			tab_settings = R.drawable.ic_tab_settings;
 		}
 
 		title = getString(R.string.overview);
@@ -81,11 +78,6 @@ public class pyLoad extends FragmentTabsPager {
 		spec = mTabHost.newTabSpec(title).setIndicator(title,
 				res.getDrawable(tab_collector));
 		mTabsAdapter.addTab(spec, CollectorFragment.class, null);
-
-		title = getString(R.string.settings);
-		spec = mTabHost.newTabSpec(title).setIndicator(title,
-				res.getDrawable(tab_settings));
-		mTabsAdapter.addTab(spec, SettingsFragment.class, null);
 	}
 
 	@Override
@@ -165,6 +157,12 @@ public class pyLoad extends FragmentTabsPager {
         case R.id.show_accounts:
             AccountDialog accountsList = new AccountDialog();
             accountsList.show(getSupportFragmentManager(), "accountsDialog");
+
+            return true;
+
+        case R.id.remote_settings:
+            Intent serverConfigActivity = new Intent(app, RemoteSettings.class);
+            startActivity(serverConfigActivity);
 
             return true;
 
