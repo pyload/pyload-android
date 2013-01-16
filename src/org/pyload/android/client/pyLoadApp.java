@@ -245,4 +245,8 @@ public class pyLoadApp extends Application {
 		main.setProgressBarIndeterminateVisibility(state);
 	}
 
+    public static boolean isActionBarAvailable() {
+        return android.os.Build.VERSION.SDK_INT >= 11;
+    }
+
 }
