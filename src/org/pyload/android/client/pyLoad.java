@@ -136,8 +136,12 @@ public class pyLoad extends FragmentTabsPager {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            inflater.inflate(R.menu.menu_bar, menu);
+        } else {
+            inflater.inflate(R.menu.menu, menu);
+        }
 		return true;
 	}
 
