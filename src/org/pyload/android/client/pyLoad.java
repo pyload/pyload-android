@@ -156,14 +156,12 @@ public class pyLoad extends FragmentTabsPager {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add_links:
-
 			startActivityForResult(new Intent(app, AddLinksActivity.class),
 					AddLinksActivity.NEW_PACKAGE);
 
 			return true;
 
 		case R.id.refresh:
-
 			app.resetClient();
 			app.refreshTab();
 
@@ -172,30 +170,6 @@ public class pyLoad extends FragmentTabsPager {
 		case R.id.settings:
 			Intent settingsActivity = new Intent(app, Preferences.class);
 			startActivity(settingsActivity);
-
-			return true;
-
-		case R.id.toggle_server:
-
-			app.addTask(new GuiTask(new Runnable() {
-
-				public void run() {
-					Client client = app.getClient();
-					client.togglePause();
-				}
-			}, app.handleSuccess));
-
-			return true;
-
-		case R.id.toggle_reconnect:
-
-			app.addTask(new GuiTask(new Runnable() {
-
-				public void run() {
-					Client client = app.getClient();
-					client.toggleReconnect();
-				}
-			}, app.handleSuccess));
 
 			return true;
 

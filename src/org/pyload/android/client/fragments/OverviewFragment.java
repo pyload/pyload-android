@@ -116,6 +116,30 @@ public class OverviewFragment extends ListFragment implements
 		speed = (TextView) v.findViewById(R.id.speed);
 		active = (TextView) v.findViewById(R.id.active);
 
+        // toggle pause on click
+        statusServer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                app.addTask(new GuiTask(new Runnable() {
+     				public void run() {
+     					Client client = app.getClient();
+     					client.togglePause();
+     				}
+     			}, app.handleSuccess));
+            }
+        });
+
+        // toggle reconnect on click
+        reconnect.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                app.addTask(new GuiTask(new Runnable() {
+                    public void run() {
+                        Client client = app.getClient();
+                        client.toggleReconnect();
+                    }
+                }, app.handleSuccess));
+            }
+        });
+
 		if (status != null && downloads != null)
 			onDataReceived();
 
