@@ -103,23 +103,30 @@ public class pyLoad extends FragmentTabsPager {
 	protected void onStart() {
 		super.onStart();
 		Intent intent = getIntent();
+        String action = intent.getAction();
 		Uri data = intent.getData();
 
-		// startActivity(new Intent(app, FragmentTabsPager.class));
+        // we got a SHARE intent
+        if (Intent.ACTION_SEND.equals(action)) {
+            Intent addURL = new Intent(app, AddLinksActivity.class);
+            addURL.putExtra("url", intent.getStringExtra(Intent.EXTRA_TEXT));
+            addURL.putExtra("name", intent.getStringExtra(Intent.EXTRA_SUBJECT));
+            startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
+            intent.setAction(Intent.ACTION_MAIN);
 
-		// we got an intent
-		if (data != null) {
-			if (intent.getScheme().startsWith("http")) {
-				Intent addURL = new Intent(app, AddLinksActivity.class);
-				addURL.putExtra("dlcurl", data.toString());
-				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
-			} else if (intent.getScheme().equals("file")) {
-				Intent addURL = new Intent(app, AddLinksActivity.class);
-				addURL.putExtra("dlcpath", data.getPath());
-				startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
-			}
-			intent.setData(null);
-		}
+        // we got a VIEW intent
+        } else if (Intent.ACTION_VIEW.equals(action) && data != null) {
+            if (intent.getScheme().startsWith("http")) {
+                Intent addURL = new Intent(app, AddLinksActivity.class);
+                addURL.putExtra("url", data.toString());
+                startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
+            } else if (intent.getScheme().equals("file")) {
+                Intent addURL = new Intent(app, AddLinksActivity.class);
+                addURL.putExtra("dlcpath", data.getPath());
+                startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
+            }
+            intent.setData(null);
+        }
 	}
 
 	@Override

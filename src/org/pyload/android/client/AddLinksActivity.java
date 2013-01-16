@@ -1,5 +1,6 @@
 package org.pyload.android.client;
 
+import android.util.Patterns;
 import android.view.MenuItem;
 import org.pyload.android.client.module.FileChooser;
 
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.regex.Matcher;
 
 public class AddLinksActivity extends Activity {
 	
@@ -42,12 +45,21 @@ public class AddLinksActivity extends Activity {
 		super.onStart();
 		
 		Intent intent = getIntent();
-		String path = intent.getStringExtra("dlcurl");
-		if (path != null){
-			EditText view = (EditText) findViewById(R.id.links);
-			view.setText(path);
+        String name = intent.getStringExtra("name");
+        if (name != null) {
+            EditText nameView = (EditText) findViewById(R.id.new_packname);
+            nameView.setText(name);
+        }
+		String url = intent.getStringExtra("url");
+		if (url != null){
+            Matcher m = Patterns.WEB_URL.matcher(url);
+            if (m.find()) {
+                url = m.group();
+                EditText view = (EditText) findViewById(R.id.links);
+                view.setText(url);
+            }
 		}
-		path = intent.getStringExtra("dlcpath");
+		String path = intent.getStringExtra("dlcpath");
 		if (path != null){
 			EditText view = (EditText) findViewById(R.id.filename);
 			view.setText(path);

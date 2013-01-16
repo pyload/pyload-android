@@ -18,6 +18,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <intent-filter>
   				<action android:name="android.intent.action.VIEW"/>
    				<category android:name="android.intent.category.DEFAULT" />
@@ -26,6 +27,14 @@
 			  	<data android:scheme="https" android:host="*" android:pathPattern=".*\\.dlc"/>
 			   	<data android:scheme="file" android:host="*" android:pathPattern=".*\\.dlc"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="text/plain" />
+           </intent-filter>
+
         </activity>
         <activity android:name="Preferences" android:label="@string/pref_name"></activity>
         <activity android:name="AddLinksActivity"></activity>
