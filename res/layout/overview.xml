@@ -48,7 +48,9 @@
 	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
 
-	<TextView android:id="@+id/android:empty" android:text="@string/no_downloads"
-		android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <TextView android:id="@+id/android:empty" android:layout_width="fill_parent"
+           android:text="@string/no_downloads" android:layout_height="fill_parent"
+           android:layout_marginTop="-30dp" android:gravity="center"
+           android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout> 
