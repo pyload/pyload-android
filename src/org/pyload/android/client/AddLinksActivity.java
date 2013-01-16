@@ -1,5 +1,6 @@
 package org.pyload.android.client;
 
+import android.view.MenuItem;
 import org.pyload.android.client.module.FileChooser;
 
 import android.app.Activity;
@@ -20,8 +21,22 @@ public class AddLinksActivity extends Activity {
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.add_links);
 		
-	}
-	
+        if (pyLoadApp.isActionBarAvailable()) {
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return true;
+    }
+
 	@Override
 	protected void onStart() {
 		super.onStart();
