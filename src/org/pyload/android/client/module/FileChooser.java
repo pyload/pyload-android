@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.os.Environment;
 import org.pyload.android.client.R;
 
 import android.app.ListActivity;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 public class FileChooser extends ListActivity {
 	
 	public final static int CHOOSE_FILE = 0;
+    public final static String SD_CARD = Environment.getExternalStorageDirectory().getPath();
 
 	private File currentDir;
 	private FileArrayAdapter adapter;
@@ -28,7 +30,7 @@ public class FileChooser extends ListActivity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		currentDir = new File("/sdcard/");
+		currentDir = new File(SD_CARD);
 		fill(currentDir);
 	}
 
