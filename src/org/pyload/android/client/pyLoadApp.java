@@ -7,6 +7,11 @@ import java.util.HashMap;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -220,9 +225,44 @@ public class pyLoadApp extends Application {
 		client = null;
 	}
 
+    /**
+     * Enables and disables the progress indicator.
+     *
+     * The indicator depends on the user's Android version.
+     * pre-actionBar devices: Window.FEATURE_INDETERMINATE_PROGRESS
+     * actionBar devices: set refreshAction's view to a progress wheel (Gmail like)
+     *
+     * @param state
+     */
 	public void setProgress(boolean state) {
-		main.setProgressBarIndeterminateVisibility(state);
+        if (isActionBarAvailable()) {
+            setIndeterminateProgress(main.getRefreshItem(), state);
+        } else {
+            setIndeterminateProgress(state);
+        }
 	}
+
+    @TargetApi(5)
+    private void setIndeterminateProgress(boolean state) {
+        main.setProgressBarIndeterminateVisibility(state);
+    }
+
+    @TargetApi(11)
+    private void setIndeterminateProgress(MenuItem item, boolean state) {
+        if (item == null) {
+            return;
+        }
+
+        if (state) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View progress = inflater.inflate(R.layout.progress_wheel, null);
+
+            main.getRefreshItem().setActionView(progress);
+
+        } else {
+            item.setActionView(null);
+        }
+    }
 
     public static boolean isActionBarAvailable() {
         return android.os.Build.VERSION.SDK_INT >= 11;

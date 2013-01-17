@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.view.*;
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
 import org.pyload.android.client.fragments.CollectorFragment;
@@ -25,14 +26,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TabHost;
 
 public class pyLoad extends FragmentTabsPager {
 
 	private pyLoadApp app;
+
+    // keep reference to set indeterminateProgress
+    private MenuItem refreshItem;
 
 	/** Called when the activity is first created. */
 
@@ -127,6 +128,7 @@ public class pyLoad extends FragmentTabsPager {
         MenuInflater inflater = getMenuInflater();
         if (pyLoadApp.isActionBarAvailable()) {
             inflater.inflate(R.menu.menu_bar, menu);
+            refreshItem = menu.findItem(R.id.refresh);
         } else {
             inflater.inflate(R.menu.menu, menu);
         }
@@ -272,4 +274,8 @@ public class pyLoad extends FragmentTabsPager {
 		}));
 
 	}
+
+    public MenuItem getRefreshItem() {
+        return refreshItem;
+    }
 }

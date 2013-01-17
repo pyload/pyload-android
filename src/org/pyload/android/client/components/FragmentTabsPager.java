@@ -18,13 +18,13 @@ package org.pyload.android.client.components;
 import java.util.ArrayList;
 
 import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoadApp;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TabHost;
@@ -42,7 +42,9 @@ public class FragmentTabsPager extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        if (!pyLoadApp.isActionBarAvailable()) {
+		    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        }
 
 		setContentView(R.layout.fragment_tabs_pager);
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -171,8 +173,6 @@ public class FragmentTabsPager extends FragmentActivity {
 
 		@Override
 		public void onPageSelected(int position) {
-			
-			// Log.d("pyLoad", "onPageSelected " + position);
 			
 			Fragment pos = getFragment(position);
 			if (pos != null)
