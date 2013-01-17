@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,7 +52,7 @@ public class ConfigSectionFragment extends Fragment {
 		TextView t = (TextView) view.findViewById(R.id.list_header_title);
 		t.setText(section.description);
 
-		((Button) view.findViewById(R.id.button_submit))
+		view.findViewById(R.id.button_submit)
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
@@ -61,7 +60,7 @@ public class ConfigSectionFragment extends Fragment {
 					}
 				});
 
-		((Button) view.findViewById(R.id.button_cancel))
+		view.findViewById(R.id.button_cancel)
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
