@@ -4,19 +4,16 @@
 
     <item
         android:id="@+id/add_links"
-        android:titleCondensed="@string/add_links"
         android:title="@string/add_links"
-        android:icon="@drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_add"
         android:showAsAction="ifRoom" />
     <item
         android:id="@+id/refresh"
-        android:titleCondensed="@string/refresh"
         android:title="@string/refresh"
-        android:icon="@drawable/ic_menu_refresh"
+        android:icon="@drawable/ic_action_refresh"
         android:showAsAction="ifRoom" />
     <item
        android:id="@+id/settings"
-       android:titleCondensed="@string/settings"
        android:title="@string/settings"
        android:icon="@drawable/ic_menu_manage"
        android:showAsAction="ifRoom" />
