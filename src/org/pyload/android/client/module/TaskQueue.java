@@ -24,7 +24,6 @@ public class TaskQueue {
 	private Handler mHandler;
 	private pyLoadApp app;
 
-	private Thread thread;
 	private boolean running;
 	private Runnable internalRunnable;
 
@@ -45,7 +44,7 @@ public class TaskQueue {
 
 	public void start() {
 		if (!running) {
-			thread = new Thread(internalRunnable);
+			Thread thread = new Thread(internalRunnable);
 			thread.setDaemon(true);
 			running = true;
 			thread.start();

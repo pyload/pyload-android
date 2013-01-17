@@ -36,7 +36,6 @@ public class pyLoadApp extends Application {
 	private Client client;
 
 	// setted by main activity
-	private Handler mHandler;
 	private TaskQueue taskQueue;
 	private Throwable lastException;
 	public SharedPreferences prefs;
@@ -49,15 +48,13 @@ public class pyLoadApp extends Application {
 	public void init(pyLoad main) {
 		this.main = main;
 
-		mHandler = new Handler();
 		HashMap<Throwable, Runnable> map = new HashMap<Throwable, Runnable>();
 		map.put(new TException(), handleException);
 		map.put(new WrongLogin(), handleException);
 		map.put(new TTransportException(), handleException);
 		map.put(new WrongServer(), handleException);
 
-		taskQueue = new TaskQueue(this, mHandler, map);
-
+        taskQueue = new TaskQueue(this, new Handler(), map);
 		startTaskQueue();
 	}
 
@@ -68,19 +65,7 @@ public class pyLoadApp extends Application {
 			return getString(R.string.off);
 	}
 
-	public static String formatSize(long size) {
-		double format = size;
-		int steps = 0;
-		String[] sizes = { "B", "KiB", "MiB", "GiB", "TiB" };
-		while (format > 1000) {
-			format /= 1024.0;
-			steps++;
-		}
-		return String.format("%.2f %s", format, sizes[steps]);
-	}
-
 	private boolean login() throws TException {
-		
 
 		// replace protocol, some user also enter it
 		String host = prefs.getString("host", "10.0.2.2").replaceFirst("^[a-zA-z]+://", "");
@@ -117,9 +102,7 @@ public class pyLoadApp extends Application {
 		TProtocol iprot = new TBinaryProtocol(trans);
 
 		client = new Client(iprot);
-		boolean login = client.login(username, password);
-
-		return login;
+		return client.login(username, password);
 	}
 
 	public Client getClient() throws TException, WrongLogin {
@@ -188,7 +171,6 @@ public class pyLoadApp extends Application {
 	}
 
 	final public Runnable handleSuccess = new Runnable() {
-
 		@Override
 		public void run() {
 			onSuccess();
@@ -222,10 +204,7 @@ public class pyLoadApp extends Application {
 	public boolean hasConnection() {
 		NetworkInfo info = cm.getActiveNetworkInfo();
 		// TODO investigate network states, info etc
-		if (info != null) {
-			return true;
-		}
-		return false;
+		return info != null;
 	}
 
 	public void clearTasks() {

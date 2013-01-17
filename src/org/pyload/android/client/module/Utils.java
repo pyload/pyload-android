@@ -1,7 +1,8 @@
 package org.pyload.android.client.module;
 
 public final class Utils {
-	static public final String formatSize(long size) {
+
+	public static String formatSize(long size) {
 		double format = size;
 		int steps = 0;
 		String[] sizes = { "B", "KiB", "MiB", "GiB", "TiB" };

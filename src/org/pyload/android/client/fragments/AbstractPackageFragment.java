@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pyload.android.client.R;
+import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.client.components.ExpandableListFragment;
 import org.pyload.android.client.components.TabHandler;
@@ -59,13 +60,11 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		//Log.d("pyLoad", dest + " onAttach " + app);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Log.d("pyLoad", dest + " OnCreate " + app);
 		app = (pyLoadApp) getActivity().getApplicationContext();
 		data = new ArrayList<PackageData>();
 
@@ -74,16 +73,12 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//Log.d("pyLoad", dest + " onCreateView " + app);
-		View v = inflater.inflate(R.layout.package_list, null, false);
 
-		return v;
+		return inflater.inflate(R.layout.package_list, null, false);
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-
-		//Log.d("pyLoad", dest + " onViewCreated");
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
 		PackageListAdapter adp = new PackageListAdapter(app, data,
@@ -94,22 +89,17 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		//Log.d("pyLoad", dest + " onActivityCreated " + app);
-
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		//Log.d("pyLoad", dest + "onDestroy");
 	}
 
 	@Override
 	public void onSelected() {
-		//Log.d("pyLoad", dest + " selected " + app);
 		app = (pyLoadApp) getActivity().getApplicationContext();
 		refresh();
-
 	}
 
 	@Override
@@ -321,7 +311,6 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 	}
 
 	private List<PackageData> data;
-	private pyLoadApp app;
 	private final int groupRes;
 	private final int childRes;
 	private final LayoutInflater layoutInflater;
@@ -329,7 +318,6 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 	public PackageListAdapter(pyLoadApp app, List<PackageData> data,
 			int groupRes, int childRes) {
 
-		this.app = app;
 		this.data = data;
 		this.groupRes = groupRes;
 		this.childRes = childRes;
@@ -390,8 +378,8 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		holder.progress.setProgress((int) ((pack.linksdone * 100) / pack.links
 				.size()));
-		holder.size.setText(app.formatSize(pack.sizedone) + " / "
-				+ app.formatSize(pack.sizetotal));
+		holder.size.setText(Utils.formatSize(pack.sizedone) + " / "
+				+ Utils.formatSize(pack.sizetotal));
 		holder.links.setText(pack.linksdone + " / " + pack.links.size());
 
 		return convertView;
@@ -430,7 +418,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.name.setText(file.name);
 
 		holder.status.setText(file.statusmsg);
-		holder.size.setText(app.formatSize(file.size));
+		holder.size.setText(Utils.formatSize(file.size));
 		holder.plugin.setText(file.plugin);
 
 		if (file.status == DownloadStatus.Failed

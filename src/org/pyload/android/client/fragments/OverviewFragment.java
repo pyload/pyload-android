@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pyload.android.client.R;
+import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.CaptchaDialog;
@@ -146,7 +147,7 @@ public class OverviewFragment extends ListFragment implements
 		registerForContextMenu(v.findViewById(android.R.id.list));
 
 		return v;
-	};
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -244,7 +245,7 @@ public class OverviewFragment extends ListFragment implements
 
 		statusServer.setText(app.verboseBool(status.download));
 		reconnect.setText(app.verboseBool(status.reconnect));
-		speed.setText(app.formatSize(status.speed) + "/s");
+		speed.setText(Utils.formatSize(status.speed) + "/s");
 		active.setText(String.format("%d / %d", status.active, status.total));
 
 		if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
@@ -382,11 +383,11 @@ class OverviewAdapter extends BaseAdapter {
 		holder.progress.setProgress(info.percent);
 
 		if (info.status == DownloadStatus.Downloading) {
-			holder.size.setText(app.formatSize(info.size));
+			holder.size.setText(Utils.formatSize(info.size));
 			holder.percent.setText(info.percent + "%");
-			holder.size_done.setText(app.formatSize(info.size - info.bleft));
+			holder.size_done.setText(Utils.formatSize(info.size - info.bleft));
 
-			holder.speed.setText(app.formatSize(info.speed) + "/s");
+			holder.speed.setText(Utils.formatSize(info.speed) + "/s");
 			holder.eta.setText(info.format_eta);
 
 		} else if (info.status == DownloadStatus.Waiting) {

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.thrift.AccountInfo;
 import org.pyload.thrift.Pyload;
@@ -122,7 +123,7 @@ class AccountAdapter extends BaseAdapter {
         if (acc.trafficleft < 0)
             holder.trafficleft.setText(R.string.unlimited);
         else
-            holder.trafficleft.setText(pyLoadApp.formatSize(acc.trafficleft));
+            holder.trafficleft.setText(Utils.formatSize(acc.trafficleft));
 
         if (acc.validuntil < 0)
             holder.validuntil.setText(R.string.unlimited);
