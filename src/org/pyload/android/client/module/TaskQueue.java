@@ -19,7 +19,7 @@ import android.util.Log;
  */
 
 public class TaskQueue {
-	private LinkedList<GuiTask> tasks;
+	private final LinkedList<GuiTask> tasks = new LinkedList<GuiTask>();
 	private HashMap<Throwable, Runnable> exceptionMap;
 	private Handler mHandler;
 	private pyLoadApp app;
@@ -38,7 +38,6 @@ public class TaskQueue {
 		this.mHandler = mHandler;
 		this.exceptionMap = exceptionMap;
 
-		tasks = new LinkedList<GuiTask>();
 		internalRunnable = new InternalRunnable();
 	}
 
