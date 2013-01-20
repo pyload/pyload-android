@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TabHost;
+import android.support.v4.view.MenuItemCompat;
 
 public class pyLoad extends FragmentTabsPager {
 
@@ -126,12 +127,13 @@ public class pyLoad extends FragmentTabsPager {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if (pyLoadApp.isActionBarAvailable()) {
-            inflater.inflate(R.menu.menu_bar, menu);
-            refreshItem = menu.findItem(R.id.refresh);
-        } else {
-            inflater.inflate(R.menu.menu, menu);
-        }
+        inflater.inflate(R.menu.menu, menu);
+        refreshItem = menu.findItem(R.id.refresh);
+
+        MenuItemCompat.setShowAsAction(refreshItem, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setShowAsAction(menu.findItem(R.id.add_links),
+                MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+
 		return true;
 	}
 
