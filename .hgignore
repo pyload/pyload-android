@@ -8,3 +8,4 @@ syntax: glob
 bin/*
 .classpath
 *.svn/
+gen/*
