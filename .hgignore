@@ -7,5 +7,6 @@ syntax: glob
 *.zip
 bin/*
 .classpath
+ant.properties
 *.svn/
 gen/*

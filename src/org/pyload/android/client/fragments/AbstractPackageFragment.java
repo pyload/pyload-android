@@ -42,20 +42,18 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	 * Destination, queue = 0, collector = 1, same as in pyLoad Core
 	 */
 	final static int FILEINFO_DIALOG = 0;
-
-	protected int dest;
-	private List<PackageData> data;
-	private pyLoadApp app;
-	private Client client;
-	// tab position
-	private int pos = -1;
-
 	private final Runnable mUpdateResults = new Runnable() {
 
 		public void run() {
 			onDataReceived();
 		}
 	};
+	protected int dest;
+	private List<PackageData> data;
+	private pyLoadApp app;
+	private Client client;
+	// tab position
+	private int pos = -1;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -71,13 +69,6 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		return inflater.inflate(R.layout.package_list, null, false);
-	}
-
-	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
@@ -87,88 +78,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
 	public void onDestroy() {
 		super.onDestroy();
-	}
-
-	@Override
-	public void onSelected() {
-		app = (pyLoadApp) getActivity().getApplicationContext();
-		refresh();
-	}
-
-	@Override
-	public void onDeselected() {
-	}
-
-	@Override
-	public boolean onChildClick(ExpandableListView parent, View v, int group,
-			int child, long id) {
-
-		PackageData pack;
-		FileData file;
-		try {
-			pack = data.get(group);
-			file = pack.links.get(child);
-		} catch (Exception e) {
-			return true;
-		}
-
-		FileInfoDialog dialog = FileInfoDialog.newInstance(pack, file);
-		dialog.show(getFragmentManager(), FileInfoDialog.class.getName());
-		return true;
-	}
-
-	@Override
-	public void setPosition(int pos) {
-		this.pos = pos;
-	}
-
-
-	public void refresh() {
-
-		if (!app.hasConnection())
-			return;
-
-		app.setProgress(true);
-
-		GuiTask task = new GuiTask(new Runnable() {
-
-			public void run() {
-				client = app.getClient();
-				if (dest == 0)
-					data = client.getQueueData();
-				else
-					data = client.getCollectorData();
-			}
-		}, mUpdateResults);
-
-		app.addTask(task);
-	}
-
-	protected void onDataReceived() {
-		app.setProgress(false);
-		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
-		adapter.setData(data);
-	}
-
-	protected void onTaskPerformed() {
-		refresh();
-		Toast.makeText(getActivity(), app.getString(R.string.success),
-				Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.package_context_menu, menu);
-		menu.setHeaderTitle(R.string.choose_action);
 	}
 
 	@Override
@@ -191,7 +102,12 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			int childPos = ExpandableListView
 					.getPackedPositionChild(info.packedPosition);
 
-			final FileData file = data.get(groupPos).links.get(childPos);
+            final FileData file;
+            try {
+			    file = data.get(groupPos).links.get(childPos);
+            } catch (IndexOutOfBoundsException e) {
+                return false;
+            }
 
 			switch (item.getItemId()) {
 			case R.id.restart:
@@ -291,30 +207,100 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		return false;
 
 	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		return inflater.inflate(R.layout.package_list, null, false);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v, int group,
+			int child, long id) {
+
+		PackageData pack;
+		FileData file;
+		try {
+			pack = data.get(group);
+			file = pack.links.get(child);
+		} catch (Exception e) {
+			return true;
+		}
+
+		FileInfoDialog dialog = FileInfoDialog.newInstance(pack, file);
+		dialog.show(getFragmentManager(), FileInfoDialog.class.getName());
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		MenuInflater inflater = getActivity().getMenuInflater();
+		inflater.inflate(R.menu.package_context_menu, menu);
+		menu.setHeaderTitle(R.string.choose_action);
+	}
+
+	@Override
+	public void onSelected() {
+		app = (pyLoadApp) getActivity().getApplicationContext();
+		refresh();
+	}
+
+	@Override
+	public void onDeselected() {
+	}
+
+	@Override
+	public void setPosition(int pos) {
+		this.pos = pos;
+	}
+
+	public void refresh() {
+
+		if (!app.hasConnection())
+			return;
+
+		app.setProgress(true);
+
+		GuiTask task = new GuiTask(new Runnable() {
+
+			public void run() {
+				client = app.getClient();
+				if (dest == 0)
+					data = client.getQueueData();
+				else
+					data = client.getCollectorData();
+			}
+		}, mUpdateResults);
+
+		app.addTask(task);
+	}
+
+	protected void onDataReceived() {
+		app.setProgress(false);
+		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
+		adapter.setData(data);
+	}
+
+	protected void onTaskPerformed() {
+		refresh();
+		Toast.makeText(getActivity(), app.getString(R.string.success),
+				Toast.LENGTH_SHORT).show();
+	}
 }
 
 class PackageListAdapter extends BaseExpandableListAdapter {
 
-	static class GroupViewHolder {
-		private TextView name;
-		private ProgressBar progress;
-		private TextView size;
-		private TextView links;
-	}
-
-	static class ChildViewHolder {
-		private TextView name;
-		private TextView status;
-		private TextView size;
-		private TextView plugin;
-		private ImageView status_icon;
-	}
-
-	private List<PackageData> data;
 	private final int groupRes;
 	private final int childRes;
 	private final LayoutInflater layoutInflater;
-
+	private List<PackageData> data;
 	public PackageListAdapter(pyLoadApp app, List<PackageData> data,
 			int groupRes, int childRes) {
 
@@ -331,12 +317,8 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		notifyDataSetChanged();
 	}
 
-	public Object getChild(int group, int child) {
-		return data.get(group).links.get(child);
-	}
-
-	public long getChildId(int group, int child) {
-		return child;
+	public int getGroupCount() {
+		return data.size();
 	}
 
 	public int getChildrenCount(int group) {
@@ -347,12 +329,20 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return data.get(group);
 	}
 
-	public int getGroupCount() {
-		return data.size();
+	public Object getChild(int group, int child) {
+		return data.get(group).links.get(child);
 	}
 
 	public long getGroupId(int group) {
 		return group;
+	}
+
+	public long getChildId(int group, int child) {
+		return child;
+	}
+
+	public boolean hasStableIds() {
+		return false;
 	}
 
 	public View getGroupView(int group, boolean isExpanded, View convertView,
@@ -412,7 +402,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.name.setText(R.string.lambda);
 			return convertView;
 		}
-		
+
 		if (!file.name.equals(holder.name.getText()))
 			holder.name.setText(file.name);
 
@@ -437,11 +427,22 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	public boolean hasStableIds() {
-		return false;
-	}
-
 	public boolean isChildSelectable(int group, int child) {
 		return true;
+	}
+
+	static class GroupViewHolder {
+		private TextView name;
+		private ProgressBar progress;
+		private TextView size;
+		private TextView links;
+	}
+
+	static class ChildViewHolder {
+		private TextView name;
+		private TextView status;
+		private TextView size;
+		private TextView plugin;
+		private ImageView status_icon;
 	}
 }
