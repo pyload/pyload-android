@@ -19,22 +19,32 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Various Intent Filter to handle supported files and formats -->
+            <!-- (S)FTP(S) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- DLC Files
-                <data android:scheme="http" android:host="*" android:pathPattern=".*\\.dlc" />
-                <data android:scheme="https" android:host="*" android:pathPattern=".*\\.dlc" />
-                <data android:scheme="file" android:host="*" android:pathPattern=".*\\.dlc" />-->
-                <!-- (S)FTP(S) -->
                 <data android:scheme="ftp" android:host="*" android:pathPattern=".*"/>
                 <data android:scheme="ftps" android:host="*" android:pathPattern=".*"/>
                 <data android:scheme="sftp" android:host="*" android:pathPattern=".*"/>
             </intent-filter>
 
+            <!-- DLC Files -->
             <intent-filter>
-                <!-- many urls from the supported pyload crypters and hosts -->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="file" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.dlc" />
+            </intent-filter>
+
+            <!-- many urls from the supported pyload crypters and hosts -->
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -45,7 +55,6 @@
 
                 <data android:pathPattern=".*"/>
 
-                <data android:host="hotfile.com"/>
                 <data android:host="dokujunkies.org"/>
                 <data android:host="depositfiles.com"/>
                 <data android:host="egoshare.com"/>
