@@ -150,7 +150,12 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			int groupPos = ExpandableListView
 					.getPackedPositionGroup(info.packedPosition);
 
-			final PackageData pack = data.get(groupPos);
+            final PackageData pack;
+            try {
+			    pack = data.get(groupPos);
+            } catch (IndexOutOfBoundsException e){
+                return false; // pack does not exists anymore
+            }
 
 			switch (item.getItemId()) {
 			case R.id.restart:
