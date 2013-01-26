@@ -1,17 +1,24 @@
 package org.pyload.android.client;
 
+import java.io.IOException;
 import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -83,19 +90,37 @@ public class pyLoadApp extends Application {
 		try {
 			if (prefs.getBoolean("ssl", false)) {
 				SSLContext ctx;
-				final TrustManager[] trustAllCerts = { new AllTrustManager() };
+				TrustManager[] trustManagers;
 				try {
+					if (prefs.getBoolean("ssl_validate", true)) {
+						TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+						tmf.init((KeyStore) null);
+						trustManagers = tmf.getTrustManagers();
+					} else {
+						trustManagers = new TrustManager[1];
+						trustManagers[0] = new AllTrustManager();
+					}
 					ctx = SSLContext.getInstance("TLS");
-					ctx.init(null, trustAllCerts, null);
+					ctx.init(null, trustManagers, null);
 					Log.d("pyLoad", "SSL Context created");
 				} catch (NoSuchAlgorithmException e) {
+					throw new TException(e);
+				} catch (KeyStoreException e) {
 					throw new TException(e);
 				} catch (KeyManagementException e) {
 					throw new TException(e);
 				}
 				// timeout 8000ms
-				trans = TSSLTransportFactory.createClient(
-						ctx.getSocketFactory(), host, port, 8000);
+				trans = TSSLTransportFactory.createClient(ctx.getSocketFactory(), host, port, 8000);
+				if (prefs.getBoolean("ssl_validate", true)) {
+					X509HostnameVerifier verifier = new BrowserCompatHostnameVerifier();
+					try {
+						verifier.verify(host, (SSLSocket) ((TSocket) trans).getSocket());
+					} catch (IOException e) {
+						throw new TException(e);
+					}
+					// TODO: check OCSP/CRL
+				}
 			} else {
 				trans = new TSocket(host, port, 8000);
 				trans.open();

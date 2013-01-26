@@ -14,5 +14,6 @@
         <EditTextPreference android:key="host" android:summary="@string/ip_desc" android:title="@string/ip" android:singleLine="true"></EditTextPreference>
         <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="7227" android:numeric="integer" android:singleLine="true"></EditTextPreference>
         <CheckBoxPreference android:key="ssl" android:summary="@string/ssl_desc" android:title="@string/ssl" android:defaultValue="false"></CheckBoxPreference>
+        <CheckBoxPreference android:key="ssl_validate" android:summary="@string/ssl_validate_desc" android:title="@string/ssl_validate" android:defaultValue="true"></CheckBoxPreference>
     </PreferenceCategory>
 </PreferenceScreen>
