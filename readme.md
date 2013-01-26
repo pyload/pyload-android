@@ -27,7 +27,7 @@ In order to use the Android client make sure the newest pyLoad Core with version
 
 #### Contributing
 
-The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://bitbucket.org/ranan/pyload-androi://bitbucket.org/ranan/pyload-android 
+The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://bitbucket.org/ranan/pyload-android
 
 Special thanks go out to all people who helped improving the app:
 
