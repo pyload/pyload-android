@@ -5,12 +5,12 @@ In case you don't already have it, download it from http://pyload.org, its free,
 
 Please report any issues with the client here: https://bitbucket.org/ranan/pyload-android/issues?status=new&status=open
 
-In order to use the Android client make sure your the newest pyLoad Core with version 0.4.9 is running on your system, accessible over the network, the ip/hostname is correct and the port forwarded if necessary.
+In order to use the Android client make sure the newest pyLoad Core with version 0.4.9 is running on your system, accessible over the network, the ip/hostname is correct and the port forwarded if necessary.
 
 #### Features
 - Modern UI (Android 4+ components)
 - **ActionBar** integration
-- add links via **Share option** (e.g. Chrome/YouTube -> pyLoad)
+- Add links via **Share option** (e.g. Chrome/YouTube -> pyLoad)
 - Add packages, or upload container files (DLC, CCF etc.)
 - Display current downloads
 - Display queue/collector
@@ -23,11 +23,14 @@ In order to use the Android client make sure your the newest pyLoad Core with ve
 - Secure SSL connection to the Core
 
 #### Planned enhancements
-* multiple server support
+- multiple server support
 
-#### Contributers
-Special thanks go out to all people who helped improving the app.
+#### Contributing
 
-* ollih - https://bitbucket.org/ollihh
-* cimnine - https://bitbucket.org/cimnine
+The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://bitbucket.org/ranan/pyload-androi://bitbucket.org/ranan/pyload-android 
+
+Special thanks go out to all people who helped improving the app:
+
+- ollih - https://bitbucket.org/ollihh
+- cimnine - https://bitbucket.org/cimnine
 
