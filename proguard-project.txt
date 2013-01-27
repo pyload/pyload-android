@@ -20,4 +20,5 @@
 #}
 
 -keep public class org.apache.**
+-keep public class org.pyload.thrift.**
 -keep public class org.slf4j.**
