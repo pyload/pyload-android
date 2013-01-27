@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.1
+-----
+    - fixed captcha inputs
+
 0.3.0
 -----
     - Updated design to Holo theme
