@@ -59,13 +59,15 @@
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
     <string name="ssl_validate">Validate SSL Certificate</string>
-    <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is signed by a CA known by Android</string>
+    <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is
+        signed by a CA known by Android
+    </string>
     <string name="old_server">Server version does not match, please use pyLoad %s.</string>
     <string name="choose_file">Container File</string>
     <string name="choose">Choose</string>
-    <string name="current_dir">Current Dir: </string>
+    <string name="current_dir">Current Dir:</string>
     <string name="folder">Folder</string>
-    <string name="file_size">File Size: </string>
+    <string name="file_size">File Size:</string>
     <string name="parent_dir">Parent Directory</string>
     <string name="eula_title">License</string>
     <string name="eula_accept">Accept</string>
@@ -89,4 +91,12 @@
     <string name="invalid">invalid</string>
     <string name="trafficleft">Traffic:</string>
     <string name="validuntil">Expires:</string>
+    <string name="certificate_error">SSL certificate not accepted. Add it to android or disable validation.</string>
+    <string name="connect_timeout">Connecting timed out. Please check that the server settings are correct.</string>
+    <string name="socket_error">Could not connect to target host. Check the server settings, your network configuration
+        or port forwarding.
+    </string>
+    <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are
+        correct.
+    </string>
 </resources>

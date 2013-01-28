@@ -1,16 +1,16 @@
 package org.pyload.android.client;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.*;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -176,7 +176,7 @@ public class pyLoadApp extends Application {
 
 	public void onException() {
 		client = null;
-		Log.d("pyLoad", "Exception caught");
+        // The task queue will log an error with exception
 
 		if (lastException instanceof TTransportException) {
 			Toast t = Toast.makeText(this, R.string.lost_connection,
@@ -187,8 +187,20 @@ public class pyLoadApp extends Application {
 					Toast.LENGTH_SHORT);
 			t.show();
 		} else if (lastException instanceof TException) {
-			Toast t = Toast.makeText(this, R.string.no_connection,
-					Toast.LENGTH_SHORT);
+            Throwable tr = findException(lastException);
+
+            Toast t;
+            if (tr instanceof SSLHandshakeException)
+                t = Toast.makeText(this, R.string.certificate_error, Toast.LENGTH_SHORT);
+            else if(tr instanceof SocketTimeoutException)
+                t = Toast.makeText(this, R.string.connect_timeout, Toast.LENGTH_SHORT);
+            else if(tr instanceof ConnectException)
+                t = Toast.makeText(this, R.string.connect_error, Toast.LENGTH_SHORT);
+            else if(tr instanceof SocketException)
+                t = Toast.makeText(this, R.string.socket_error, Toast.LENGTH_SHORT);
+            else
+                t = Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT);
+
 			t.show();
 		} else if (lastException instanceof WrongServer) {
 			Toast t = Toast.makeText(this, String.format(
@@ -199,6 +211,21 @@ public class pyLoadApp extends Application {
 
 		setProgress(false);
 	}
+
+    /**
+     * Retrieves first root exception on stack of several TExceptions.
+     * @return the first exception not a TException or the last TException
+     */
+    private Throwable findException(Throwable e) {
+        // will not terminate when cycles occur, hopefully nobody cycle exception causes
+        while (e instanceof TException) {
+           if (e.getCause() == null) break;
+           if (e.getCause() == e) break; // just to avoid loop
+           e = e.getCause();
+        }
+
+        return e;
+    }
 
 	final public Runnable handleSuccess = new Runnable() {
 		@Override

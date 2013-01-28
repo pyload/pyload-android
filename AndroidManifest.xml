@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.pyload.android.client"
-          android:versionCode="14"
-          android:versionName="0.3.1">
+          android:versionCode="15"
+          android:versionName="0.3.2">
 
     <uses-sdk android:minSdkVersion="7"
               android:targetSdkVersion="17"/>
@@ -96,7 +96,6 @@
         <activity android:name=".module.FileChooser"/>
 
         <activity android:name=".RemoteSettings" android:label="@string/remotesettings_activity"/>
-
 
     </application>
 </manifest>
