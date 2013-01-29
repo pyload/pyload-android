@@ -1,7 +1,7 @@
 0.3.2:
 * More detailed error messages, when no connection can be established
-* TODO: Fixed refreshing of remote settings
-* TODO: Fixed reported crashes
+* Fixed refreshing of remote settings
+* Fixed reported crashes
 
 0.3.1:
 * fixed captcha inputs

@@ -199,7 +199,7 @@ public class pyLoadApp extends Application {
             else if(tr instanceof SocketException)
                 t = Toast.makeText(this, R.string.socket_error, Toast.LENGTH_SHORT);
             else
-                t = Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT);
+                t = Toast.makeText(this, getString(R.string.no_connection) + tr.getMessage(), Toast.LENGTH_SHORT);
 
 			t.show();
 		} else if (lastException instanceof WrongServer) {

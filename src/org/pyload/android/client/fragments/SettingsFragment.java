@@ -44,6 +44,13 @@ public class SettingsFragment extends ListFragment {
 		}
 	};
 
+    private Runnable mRefresh = new Runnable() {
+        @Override
+        public void run() {
+            SettingsFragment.this.update();
+        }
+    };
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.settings_list, null, false);
@@ -111,7 +118,7 @@ public class SettingsFragment extends ListFragment {
 			args.putString("type", "core");
 		args.putSerializable("section", item.getValue());
 
-		Fragment f = new ConfigSectionFragment();
+		Fragment f = new ConfigSectionFragment(mRefresh);
 		f.setArguments(args);
 
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

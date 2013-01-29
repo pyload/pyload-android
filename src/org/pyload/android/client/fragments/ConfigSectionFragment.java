@@ -35,15 +35,16 @@ public class ConfigSectionFragment extends Fragment {
 	private String type;
 	private HashMap<String, ConfigItemView> items = new HashMap<String, ConfigItemView>();
 
-	private Runnable mRefresh = new Runnable() {
+    /**
+     * Called after settings were saved
+     */
+	private final Runnable mRefresh;
 
-		@Override
-		public void run() {
-			app.refreshTab();
-		}
-	};
+    public ConfigSectionFragment(Runnable mRefresh) {
+        this.mRefresh = mRefresh;
+    }
 
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
