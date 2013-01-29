@@ -25,7 +25,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="pref_name">pyLoad - Preferences</string>
-    <string name="no_connection">Could not establish connection: </string>
+    <string name="no_connection">Could not establish connection:</string>
     <string name="bad_login">Wrong Username/Password.</string>
     <string name="move">Move location</string>
     <string name="on">on</string>
