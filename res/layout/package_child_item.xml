@@ -19,6 +19,7 @@
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
 		android:maxLines="1"
+        android:singleLine="true"
 		android:textColor="@android:color/white"
 		android:layout_toRightOf="@+id/status_icon"/>
 		

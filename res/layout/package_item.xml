@@ -18,6 +18,7 @@
     android:marqueeRepeatLimit="marquee_forever"
     android:ellipsize="marquee"
     android:scrollHorizontally="true"
+    android:singleLine="true"
 	android:maxLines="1"
 	android:textColor="@android:color/white"
   />

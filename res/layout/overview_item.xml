@@ -9,6 +9,7 @@
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
 		android:maxLines="1"
+        android:singleLine="true"
 		android:textColor="@android:color/white"/>
 	
 	<ProgressBar android:layout_width="fill_parent"
