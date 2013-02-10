@@ -3,7 +3,7 @@
 This is the official Android client for the **pyLoad** Download Manager. You need to have pyLoad running on your pc or server.
 In case you don't already have it, download it from http://pyload.org, its free, open-source and available for many platforms.
 
-Please report any issues with the client here: https://bitbucket.org/ranan/pyload-android/issues?status=new&status=open
+Please report any issues with the client here: https://github.com/pyload/pyload-android/issues
 
 In order to use the Android client make sure the newest pyLoad Core with version 0.4.9 is running on your system, accessible over the network, the ip/hostname is correct and the port forwarded if necessary.
 
@@ -27,10 +27,10 @@ In order to use the Android client make sure the newest pyLoad Core with version
 
 #### Contributing
 
-The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://bitbucket.org/ranan/pyload-android
+The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://github.com/pyload/pyload-android
 
 Special thanks go out to all people who helped improving the app:
 
 - ollih - https://bitbucket.org/ollihh
-- cimnine - https://bitbucket.org/cimnine
+- cimnine - https://github.org/cimnine
 
