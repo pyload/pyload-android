@@ -20,8 +20,8 @@
 #}
 
 -keep public class org.apache.**
--keep public class org.pyload.thrift.**
 -keep public class org.slf4j.**
+-keep public class org.pyload.**
 
 -keepclasseswithmembers class org.apache.commons.codec.binary.** {
     *;
@@ -29,6 +29,6 @@
 
 # java.lang.NoSuchMethodError: android.app.ActionBar.setHomeButtonEnabled
 # Derived from error reports, no clue how to reproduce it
--keep class android.app.ActionBar {
+-keepclasseswithmembers class android.app.ActionBar {
     public void set*(...);
 }
