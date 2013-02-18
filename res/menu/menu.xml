@@ -27,4 +27,8 @@
         android:icon="@drawable/ic_tab_settings"
         android:title="@string/remote_settings" />
 
+    <item
+        android:id="@+id/restart_failed"
+        android:title="@string/restart_failed" />
+
 </menu>
