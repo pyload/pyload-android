@@ -170,6 +170,16 @@ public class pyLoad extends FragmentTabsPager {
 
             return true;
 
+        case R.id.restart_failed:
+            app.addTask(new GuiTask(new Runnable() {
+                public void run() {
+                    Client client = app.getClient();
+                    client.restartFailed();
+                }
+            }, app.handleSuccess));
+
+            return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
