@@ -1,6 +1,8 @@
 package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.pyload.android.client.R;
@@ -289,6 +291,20 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 	protected void onDataReceived() {
 		app.setProgress(false);
+		for (PackageData pak : data) {
+			Collections.sort(pak.links, new Comparator<FileData>() {
+				public int compare(FileData a, FileData b) {
+					if (a == null && b == null)
+						return 0;
+					else if (a == null)
+						return 1;
+					else if (b == null)
+						return -1;
+					else
+						return ((Short) a.order).compareTo(b.order);
+				}
+			});
+		}
 		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
 		adapter.setData(data);
 	}
