@@ -50,6 +50,21 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			onDataReceived();
 		}
 	};
+	private final Comparator<Object> mOrderComparator = new Comparator<Object>() {
+		public int compare(Object a, Object b) {
+			if (a == null && b == null)
+				return 0;
+			else if (a == null)
+				return 1;
+			else if (b == null)
+				return -1;
+			else if (a instanceof PackageData && b instanceof PackageData)
+				return ((Short) ((PackageData) a).order).compareTo(((PackageData) b).order);
+			else if (a instanceof FileData && b instanceof FileData)
+				return ((Short) ((FileData) a).order).compareTo(((FileData) b).order);				
+			return 0;
+		}
+	};
 	protected int dest;
 	private List<PackageData> data;
 	private pyLoadApp app;
@@ -291,19 +306,9 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 	protected void onDataReceived() {
 		app.setProgress(false);
+		Collections.sort(data, mOrderComparator);
 		for (PackageData pak : data) {
-			Collections.sort(pak.links, new Comparator<FileData>() {
-				public int compare(FileData a, FileData b) {
-					if (a == null && b == null)
-						return 0;
-					else if (a == null)
-						return 1;
-					else if (b == null)
-						return -1;
-					else
-						return ((Short) a.order).compareTo(b.order);
-				}
-			});
+			Collections.sort(pak.links, mOrderComparator);
 		}
 		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
 		adapter.setData(data);
