@@ -307,9 +307,9 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	protected void onDataReceived() {
 		app.setProgress(false);
 		Collections.sort(data, mOrderComparator);
-		for (PackageData pak : data) {
+		for (PackageData pak : data)
 			Collections.sort(pak.links, mOrderComparator);
-		}
+
 		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
 		adapter.setData(data);
 	}
