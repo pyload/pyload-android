@@ -1,3 +1,7 @@
+0.3.3:
+* Added Restart failed button
+* Disabled suggestions for captcha input
+
 0.3.2:
 * More detailed error messages, when no connection can be established
 * Fixed refreshing of remote settings

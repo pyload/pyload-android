@@ -33,4 +33,5 @@ Special thanks go out to all people who helped improving the app:
 
 - ollih - https://bitbucket.org/ollihh
 - cimnine - https://github.org/cimnine
+- jplitza - https://github.com/jplitza
 
