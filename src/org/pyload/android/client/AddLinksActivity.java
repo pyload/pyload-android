@@ -52,11 +52,14 @@ public class AddLinksActivity extends Activity {
         }
 		String url = intent.getStringExtra("url");
 		if (url != null){
+			StringBuilder urls = new StringBuilder();
             Matcher m = Patterns.WEB_URL.matcher(url);
-            if (m.find()) {
-                url = m.group();
-                EditText view = (EditText) findViewById(R.id.links);
-                view.setText(url);
+            while (m.find()) {
+                urls.append(m.group() + "\n");
+            }
+            if(urls.length()>0) {
+	            EditText view = (EditText) findViewById(R.id.links);
+	            view.setText(urls.toString());
             }
 		}
 		String path = intent.getStringExtra("dlcpath");
