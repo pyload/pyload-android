@@ -25,6 +25,12 @@ In order to use the Android client make sure the newest pyLoad Core with version
 #### Planned enhancements
 - multiple server support
 
+#### Localization
+
+We want to provide the app in as many languages as possible. For this reason we are always looking for translators and proof-readers.
+If you like to help, please visit http://crowdin.net/project/pyload for more information.
+
+
 #### Contributing
 
 The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://github.com/pyload/pyload-android
