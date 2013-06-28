@@ -9,8 +9,8 @@
   <string name="no_accounts">Pas de compte premium</string>
   <string name="no_downloads">Aucun téléchargements actif</string>
   <string name="add_links">Ajouter liens</string>
-  <string name="settings">Réglages </string>
-  <string name="refresh">Rafraîchir </string>
+  <string name="settings">Réglages</string>
+  <string name="refresh">Rafraîchir</string>
   <string name="delete">Supprimer</string>
   <string name="restart">Redémarrer</string>
   <string name="general">Général</string>
@@ -21,26 +21,26 @@
   <string name="ip_desc">IP ou nom de l\'hôte de l\'accès à distance de pyLoad Core.</string>
   <string name="port">Port</string>
   <string name="port_desc">Le port du ThriftBackend que vous avez spécifié dans la connexion à distance.</string>
-  <string name="username">Nom utilisateur </string>
+  <string name="username">Nom utilisateur</string>
   <string name="username_desc">Le nom d\'utilisateur que vous utilisez pour vous connecter.</string>
   <string name="password">Mot de passe</string>
   <string name="login">Identifiant</string>
   <string name="pref_name">pyLoad - Préférences</string>
-  <string name="no_connection">Impossible d\'établir la connexion</string>
+  <string name="no_connection">Impossible d\'établir la connexion:</string>
   <string name="bad_login">Erreur dans l\'identifiant ou dans le mot de passe.</string>
   <string name="move">Changer d\'emplacement</string>
   <string name="on">Allumé</string>
   <string name="off">Eteint</string>
   <string name="n_a">n/a</string>
-  <string name="success">Effecuté</string>
+  <string name="success">Effecuté.</string>
   <string name="cant_move_files">Vous ne pouvez pas déplacer un seul fichier.</string>
-  <string name="abort">Abandonné </string>
+  <string name="abort">Abandonné</string>
   <string name="name">Nom</string>
   <string name="addlinks_desc">Ajouter un nouveau paquet.</string>
   <string name="destination">Destination</string>
-  <string name="overview">Vue d\'ensemble </string>
-  <string name="collector">Collection</string>
-  <string name="queue">File d\'attente </string>
+  <string name="overview">Aperçu</string>
+  <string name="collector">Paquets</string>
+  <string name="queue">Liste</string>
   <string name="package_links">Placez ici vos liens.</string>
   <string name="add">Ajouter</string>
   <string name="cancel">Annuler</string>
@@ -56,11 +56,11 @@
   <string name="ssl">Connexion SSL</string>
   <string name="ssl_desc">Établir une connexion sécurisée au core si vous activez la connexion SSL.</string>
   <string name="ssl_validate">Certificat SSL valide</string>
-  <string name="ssl_validate_desc">Si la connexion SSL est activée, verifier que le certificat est bien présent dans le core de l\'application\n    </string>
+  <string name="ssl_validate_desc">Si la connexion SSL est activée, verifier que le certificat est bien présent dans le core de l\'application</string>
   <string name="old_server">La version du serveur n\'est pas correct. Merci d\'utiliser pyLoad %s.</string>
   <string name="choose_file">Dossier</string>
   <string name="choose">Choissisez</string>
-  <string name="current_dir">Répertoire actuel</string>
+  <string name="current_dir">Répertoire actuel:</string>
   <string name="folder">Dossier</string>
   <string name="file_size">Taille du fichier</string>
   <string name="parent_dir">Dossier parent</string>
@@ -84,14 +84,23 @@
   <string name="unlimited">Illimité</string>
   <string name="valid">validé</string>
   <string name="invalid">non validé</string>
-  <string name="trafficleft">Traffic :</string>
-  <string name="validuntil">Expiration :</string>
+  <string name="trafficleft">Traffic:</string>
+  <string name="validuntil">Expiration:</string>
   <string name="certificate_error">Le certificat SSL n\'est pas accepté. Essayez avec Android ou désactiver la validation du certificat SSL.</string>
-  <string name="connect_timeout">Connexion expirée. Merci verifier vos paramètres serveur. </string>
-  <string name="socket_error">Impossible de se connecter à l’hôte désiré. Re-verifié vos paramètres réseau sur le serveur \n       ainsi que vos différents ports.\n    </string>
-  <string name="connect_error">Impossible de se connecter à Pyload. Verifier que Pyload est bien lacé et que la configuration de votre serveur est\n        correct.\n    </string>
+  <string name="connect_timeout">Connexion expirée. Merci verifier vos paramètres serveur.</string>
+  <string name="socket_error">Impossible de se connecter à l’hôte désiré. Re-verifié vos paramètres réseau sur le serveur ainsi que vos différents ports.</string>
+  <string name="connect_error">Impossible de se connecter à Pyload. Verifier que Pyload est bien lancé et que la configuration de votre serveur est correct.</string>
+  <string name="language">Langue</string>
+  <string name="language_desc">Langue de l\'application. Un redémarrage est nécessaire pour que les modifications prennent effet.</string>
   <string-array name="destination_list">
-    <item>File d\'attente </item>
-    <item>Collection</item>
+    <item>Liste</item>
+    <item>Paquets</item>
+  </string-array>
+  <string-array name="languages">
+    <item>Default</item>
+    <item>English</item>
+    <item>German</item>
+    <item>French</item>
+    <item>Italian</item>
   </string-array>
 </resources>

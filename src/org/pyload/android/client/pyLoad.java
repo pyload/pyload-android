@@ -283,13 +283,13 @@ public class pyLoad extends FragmentTabsPager {
     private void initLocale() {
 
         String language = app.prefs.getString("language", "");
-        // Change nothing on default value
+        Locale locale;
         if ("".equals(language))
-            return;
+            locale = Locale.getDefault();
+        else
+            locale = new Locale(language);
 
-        Log.d("pyLoad", "Change language to: " + language);
-
-        Locale locale = new Locale(language);
+        Log.d("pyLoad", "Change locale to: " + locale);
         Configuration config = new Configuration(getResources().getConfiguration());
         config.locale = locale;
         getResources().updateConfiguration(config,

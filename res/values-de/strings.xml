@@ -4,7 +4,7 @@
   <string name="app_name">pyLoad</string>
   <string name="remotesettings_activity">pyLoad - Ferneinstellungen</string>
   <string name="restart_failed">Fehlgeschlagene Dateien neu starten</string>
-  <string name="remote_settings">Server-EInstellungen</string>
+  <string name="remote_settings">Server-Einstellungen</string>
   <string name="no_packages">Keine Pakete.</string>
   <string name="no_accounts">Keine Premiumaccounts.</string>
   <string name="no_downloads">Keine aktiven Downloads.</string>
@@ -39,8 +39,8 @@
   <string name="addlinks_desc">Ein neues Paket hinzufügen</string>
   <string name="destination">Ziel</string>
   <string name="overview">Übersicht</string>
-  <string name="collector">Linksammler</string>
-  <string name="queue">Warteschlange</string>
+  <string name="collector">Collector</string>
+  <string name="queue">Queue</string>
   <string name="package_links">Füge deine Links hier ein.</string>
   <string name="add">Hinzufügen</string>
   <string name="cancel">Abbrechen</string>
@@ -90,8 +90,17 @@
   <string name="connect_timeout">Zeitüberschreitung der Verbindung. Bitte überprüfen sie, ob die Servereinstellungen korrekt sind.</string>
   <string name="socket_error">Konnte keine Verbindung zum Zielhost herstellen. Überprüfen sie die Servereinstellungen, Netzwerkeinstellungen oder Portfreigaben.</string>
   <string name="connect_error">Konnte keine Verbindung zu pyLoad herstellen. Bitte überprüfen sie, ob pyLoad läuft und ihre Servereinstellungen korrekt sind.</string>
+  <string name="language">Sprache</string>
+  <string name="language_desc">Sprache der App. Ein Neustart ist notwendig, damit die Änderungen in Kraft treten.</string>
   <string-array name="destination_list">
     <item>Warteschlange</item>
     <item>Linksammler</item>
+  </string-array>
+  <string-array name="languages">
+    <item>Default</item>
+    <item>English</item>
+    <item>German</item>
+    <item>French</item>
+    <item>Italian</item>
   </string-array>
 </resources>
