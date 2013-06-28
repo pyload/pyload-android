@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
+import android.content.res.Configuration;
 import android.view.*;
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
@@ -39,15 +41,16 @@ public class pyLoad extends FragmentTabsPager {
 	/** Called when the activity is first created. */
 
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 
+        Log.d("pyLoad", "Starting pyLoad App");
+
+        app = (pyLoadApp) getApplicationContext();
+        app.prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        initLocale();
+
+		super.onCreate(savedInstanceState);
 		Eula.show(this);
 
-		app = (pyLoadApp) getApplicationContext();
-
-		Log.d("pyLoad", "Starting pyLoad App");
-
-		app.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		app.cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		app.init(this);
 
@@ -243,8 +246,8 @@ public class pyLoad extends FragmentTabsPager {
 								ByteBuffer buffer = ByteBuffer
 										.allocate((int) file.length());
 
-								while (is.getChannel().read(buffer) > 0)
-									;
+								while (is.getChannel().read(buffer) > 0);
+
 								buffer.rewind();
 								is.close();
 								client.uploadContainer(filename, buffer);
@@ -273,6 +276,25 @@ public class pyLoad extends FragmentTabsPager {
 		Log.d("pyLoad", "got Intent");
 		super.onNewIntent(intent);
 	}
+
+    /**
+     * Sets the locale defined in config.
+     */
+    private void initLocale() {
+
+        String language = app.prefs.getString("language", "");
+        // Change nothing on default value
+        if ("".equals(language))
+            return;
+
+        Log.d("pyLoad", "Change language to: " + language);
+
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        config.locale = locale;
+        getResources().updateConfiguration(config,
+                getResources().getDisplayMetrics());
+    }
 
 	public void setCaptchaResult(final short tid, final String result) {
 		app.addTask(new GuiTask(new Runnable() {

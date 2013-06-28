@@ -2,18 +2,25 @@
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/general" android:key="general">
-        <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:numeric="integer"></EditTextPreference>
-        <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"></CheckBoxPreference>
-        <CheckBoxPreference android:key="invert_tabs" android:summary="@string/invert_tabs_desc" android:title="@string/invert_tabs" android:defaultValue="false"></CheckBoxPreference>
+        <ListPreference android:key="language"
+            android:title="@string/language"
+            android:summary="@string/language_desc"
+            android:defaultValue=""
+            android:entries="@array/languages"
+            android:entryValues="@array/languageValues"/>
+
+        <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:numeric="integer"/>
+        <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
+        <CheckBoxPreference android:key="invert_tabs" android:summary="@string/invert_tabs_desc" android:title="@string/invert_tabs" android:defaultValue="false"/>
         
         
     </PreferenceCategory><PreferenceCategory android:key="login" android:title="@string/login">
-        <EditTextPreference android:key="username" android:summary="@string/username_desc" android:title="@string/username" android:singleLine="true"></EditTextPreference>
-        <EditTextPreference android:key="password" android:title="@string/password" android:singleLine="true" android:password="true"></EditTextPreference>
+        <EditTextPreference android:key="username" android:summary="@string/username_desc" android:title="@string/username" android:singleLine="true"/>
+        <EditTextPreference android:key="password" android:title="@string/password" android:singleLine="true" android:password="true"/>
     </PreferenceCategory><PreferenceCategory android:key="server" android:title="@string/server">
-        <EditTextPreference android:key="host" android:summary="@string/ip_desc" android:title="@string/ip" android:singleLine="true"></EditTextPreference>
-        <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="7227" android:numeric="integer" android:singleLine="true"></EditTextPreference>
-        <CheckBoxPreference android:key="ssl" android:summary="@string/ssl_desc" android:title="@string/ssl" android:defaultValue="false"></CheckBoxPreference>
-        <CheckBoxPreference android:key="ssl_validate" android:summary="@string/ssl_validate_desc" android:title="@string/ssl_validate" android:defaultValue="true"></CheckBoxPreference>
+        <EditTextPreference android:key="host" android:summary="@string/ip_desc" android:title="@string/ip" android:singleLine="true"/>
+        <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="7227" android:numeric="integer" android:singleLine="true"/>
+        <CheckBoxPreference android:key="ssl" android:summary="@string/ssl_desc" android:title="@string/ssl" android:defaultValue="false"/>
+        <CheckBoxPreference android:key="ssl_validate" android:summary="@string/ssl_validate_desc" android:title="@string/ssl_validate" android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>
