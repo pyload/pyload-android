@@ -1,3 +1,7 @@
+0.3.4:
+* Translations for german, italian and french
+* Accepts multiple urls
+
 0.3.3:
 * Added Restart failed button
 * Disabled suggestions for captcha input
