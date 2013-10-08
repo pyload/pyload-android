@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pyload.android.client.R;
+import org.pyload.android.client.pyLoad;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.client.components.TabHandler;
@@ -15,12 +16,18 @@ import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.Pyload.Client;
 import org.pyload.thrift.ServerStatus;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -78,6 +85,11 @@ public class OverviewFragment extends ListFragment implements
 				Log.d("pyLoad", "Captcha available");
 				captcha = client.getCaptchaTask(false);
 				Log.d("pyload", captcha.resultType);
+				showNotification();
+			}
+			else
+			{
+				app.setCaptchaNotificationShown(false);
 			}
 		}
 	};
@@ -280,6 +292,9 @@ public class OverviewFragment extends ListFragment implements
 		dialog.setOnDismissListener(this);
 
 		dialogOpen = true;
+		
+		
+		
 		try {
 			dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
 		} catch (IllegalStateException e) {
@@ -302,6 +317,27 @@ public class OverviewFragment extends ListFragment implements
 	@Override
 	public void setPosition(int pos) {
 		this.pos = pos;
+	}
+	
+	private void showNotification()
+	{
+		if (!app.getCaptchaNotificationShown())
+		{
+			app.setCaptchaNotificationShown(true);
+			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle(getString(R.string.captcha_notification))
+				.setContentText(getString(R.string.captcha_notification_desc));
+				
+			Intent notificationIntent = new Intent(app, pyLoad.class);
+			notificationIntent.putExtra("CaptchaNotification", true);
+			PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);	 
+			mBuilder.setContentIntent(contentIntent);
+			NotificationManager mNotificationManager = (NotificationManager)app.getSystemService(Context.NOTIFICATION_SERVICE);
+			Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			mBuilder.setSound(alarmSound);
+			mNotificationManager.notify(0, mBuilder.build());	
+		}
 	}
 }
 
