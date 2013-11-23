@@ -67,8 +67,8 @@ public class FileChooser extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		Option o = adapter.getItem(position);
-		if (o.getData().equalsIgnoreCase(R.string.folder)
-				|| o.getData().equalsIgnoreCase(R.string.parent_dir)) {
+		if (o.getData().equalsIgnoreCase(getString(R.string.folder))
+				|| o.getData().equalsIgnoreCase(getString(R.string.parent_dir))) {
 			currentDir = new File(o.getPath());
 			fill(currentDir);
 		} else {
