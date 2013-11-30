@@ -6,5 +6,17 @@
         <item>de</item>
         <item>fr</item>
         <item>it</item>
+        <item>es</item>
+        <item>pl</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>pt</item>
+        <item>el</item>
+        <item>ar</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>ja</item>
+        <item>hu</item>
+        <item>sr</item>
     </string-array>
 </resources>
