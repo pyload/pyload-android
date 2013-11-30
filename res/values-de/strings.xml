@@ -34,7 +34,7 @@
   <string name="n_a">n/v</string>
   <string name="success">Erfolgreich.</string>
   <string name="cant_move_files">Du kannst keine einzelnen Dateien verschieben.</string>
-  <string name="abort">Abgebrochen</string>
+  <string name="abort">Abbrechen</string>
   <string name="name">Name</string>
   <string name="addlinks_desc">Ein neues Paket hinzufügen.</string>
   <string name="destination">Ziel</string>
@@ -44,7 +44,7 @@
   <string name="package_links">Füge deine Links hier ein.</string>
   <string name="add">Hinzufügen</string>
   <string name="cancel">Abbrechen</string>
-  <string name="toggle_server">Wechsle Server</string>
+  <string name="toggle_server">Server umschalten</string>
   <string name="toggle_reconnect">Reconnect (de)aktivieren</string>
   <string name="lost_connection">Verbindung verloren. Bitte aktualisieren.</string>
   <string name="retrieve_captcha">Rufe Captcha-Anfragen ab</string>
@@ -59,7 +59,7 @@
   <string name="ssl_validate_desc">Falls SSL aktiviert ist, prüfe ob das Zertifikat von einer in Android bekannten Organisation zertifiziert wurde</string>
   <string name="old_server">Server Version stimmt nicht überein, bitte nutze pyLoad %s.</string>
   <string name="choose_file">Containerdatei</string>
-  <string name="choose">Wählen Sie</string>
+  <string name="choose">Wähle</string>
   <string name="current_dir">Aktuelles Verzeichnis:</string>
   <string name="folder">Verzeichnis</string>
   <string name="file_size">Dateigröße:</string>
@@ -67,7 +67,7 @@
   <string name="eula_title">Lizenz</string>
   <string name="eula_accept">Annehmen</string>
   <string name="eula_refuse">Ablehnen</string>
-  <string name="choose_action">Wähle eine Anfrage</string>
+  <string name="choose_action">Wähle eine Aktion</string>
   <string name="close">Schließen</string>
   <string name="fileinfo_title">Dateiinfo</string>
   <string name="plugin">Erweiterung</string>

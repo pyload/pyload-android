@@ -7,7 +7,7 @@
   <string name="remote_settings">リモート設定</string>
   <string name="no_packages">パッケージはありません。</string>
   <string name="no_accounts">プレミアム アカウントはありません。</string>
-  <string name="no_downloads">アクティブなダウンロード。</string>
+  <string name="no_downloads">アクティブなダウンロードはありません</string>
   <string name="add_links">リンクを追加します。</string>
   <string name="settings">設定</string>
   <string name="refresh">更新</string>
@@ -18,7 +18,7 @@
   <string name="refresh_rate_desc">時間秒どのくらいの頻度で概要画面を更新する必要があります。</string>
   <string name="server">サーバー</string>
   <string name="ip">アドレス</string>
-  <string name="ip_desc">Ip アドレスまたはホスト名、リモート pyLoad コアの。</string>
+  <string name="ip_desc">リモート pyLoad コアのIp アドレスまたはホスト名。</string>
   <string name="port">ポート</string>
   <string name="port_desc">リモートのセクションで設定した ThriftBackend のポート。</string>
   <string name="username">ユーザー名</string>
@@ -39,6 +39,8 @@
   <string name="addlinks_desc">新しいパッケージを追加します。</string>
   <string name="destination">保存先：</string>
   <string name="overview">概要</string>
+  <string name="collector">コレクター</string>
+  <string name="queue">キュー</string>
   <string name="package_links">ここであなたのリンクを置きます。</string>
   <string name="add">追加</string>
   <string name="cancel">キャンセル</string>
@@ -50,11 +52,11 @@
   <string name="enter">入力</string>
   <string name="captcha_dialog_titel">テキストを入力してください。</string>
   <string name="invert_tabs">タブのアイコンの色を反転します。</string>
-  <string name="invert_tabs_desc">それはあなたのテーマにふさわしい場合はタブのアイコンのレイアウトを変更できます。</string>
+  <string name="invert_tabs_desc">あなたのテーマにふさわしい場タブのアイコンのレイアウトを変更できます。</string>
   <string name="ssl">SSL 接続</string>
-  <string name="ssl_desc">SSL を有効化した場合、コアへのセキュリティで保護された接続を確立します。</string>
+  <string name="ssl_desc">SSL を有効化した場合、コアへの接続をセキュリティで保護されます。</string>
   <string name="ssl_validate">SSL 証明書を検証します。</string>
-  <string name="ssl_validate_desc">「SSL 接続」が有効な場合は、コアによって提示された証明書が人造人間によって知られている CA によって署名されているチェックします。</string>
+  <string name="ssl_validate_desc">「SSL 接続」が有効な場合は、コアによって提示された証明書がアンドロイドによって知られている CA によって署名されているチェックします。</string>
   <string name="old_server">サーバーのバージョンと一致しません、pyLoad %s を使用してください。</string>
   <string name="choose_file">コンテナー ファイル</string>
   <string name="choose">選択</string>
@@ -64,17 +66,17 @@
   <string name="parent_dir">親ディレクトリ</string>
   <string name="eula_title">ライセンス</string>
   <string name="eula_accept">承認</string>
-  <string name="eula_refuse">拒否します。</string>
+  <string name="eula_refuse">拒否</string>
   <string name="choose_action">アクションを選択します。</string>
   <string name="close">閉じる</string>
-  <string name="fileinfo_title">Fileinfo</string>
+  <string name="fileinfo_title">ファイルインフォメーション</string>
   <string name="plugin">プラグイン</string>
   <string name="status">ステータス</string>
   <string name="size">サイズ:</string>
   <string name="error">エラー</string>
   <string name="labelPackage">パッケージ</string>
   <string name="server_settings">サーバーの設定</string>
-  <string name="general_config">一般的な構成</string>
+  <string name="general_config">一般的な設定</string>
   <string name="plugin_config">プラグインの設定</string>
   <string name="submit">送信</string>
   <string name="accounts">アカウント</string>
@@ -83,18 +85,18 @@
   <string name="invalid">無効です</string>
   <string name="trafficleft">トラフィック</string>
   <string name="validuntil">有効期限</string>
-  <string name="certificate_error">SSL 証明書は受け入れられません。Android に追加または検証を無効にします。</string>
+  <string name="certificate_error">SSL 証明書は受け入れられません。Android に追加または無効にしてください。</string>
   <string name="connect_timeout">接続タイムアウトしました。サーバーの設定が正しいことを確認してください。</string>
-  <string name="socket_error">ターゲット ・ ホストに接続できませんでした。サーバー設定、ネットワーク構成、ポート転送を確認してください。</string>
-  <string name="connect_error">PyLoad に接続できませんでした。PyLoad が実行され、サーバーの設定が正しいことを確認してください。</string>
+  <string name="socket_error">ターゲットホストに接続できませんでした。サーバー設定、ネットワーク構成、ポート転送を確認してください。</string>
+  <string name="connect_error">PyLoad に接続できませんでした。PyLoad が実行されている、サーバーの設定が正しいことを確認してください。</string>
   <string name="language">言語</string>
-  <string name="language_desc">変更が有効になる前に、アプリケーションの言語は再起動が必要です。</string>
+  <string name="language_desc">アプリケーションの言語変更が有効になるには再起動が必要です。</string>
   <string-array name="destination_list">
-    <item>Queue</item>
-    <item>Collector</item>
+    <item>キュー</item>
+    <item>コレクター</item>
   </string-array>
   <string-array name="languages">
-    <item>Default</item>
+    <item>デフォルト</item>
     <item>English</item>
     <item>German</item>
     <item>French</item>
