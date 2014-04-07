@@ -15,11 +15,14 @@ import org.pyload.thrift.DownloadStatus;
 import org.pyload.thrift.Pyload.Client;
 import org.pyload.thrift.ServerStatus;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
