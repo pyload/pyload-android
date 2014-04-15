@@ -5,7 +5,7 @@
           android:versionName="0.3.6">
 
     <uses-sdk android:minSdkVersion="7"
-              android:targetSdkVersion="17"/>
+              android:targetSdkVersion="19"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -31,6 +31,16 @@
             </intent-filter>
 
             <!-- DLC Files -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\.dlc"
+                    android:host="*"
+                    android:scheme="content" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
