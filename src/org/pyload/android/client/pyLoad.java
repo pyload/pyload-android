@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.app.NotificationManager;
 import android.content.res.Configuration;
 import android.view.*;
+
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
 import org.pyload.android.client.fragments.CollectorFragment;
@@ -118,6 +120,13 @@ public class pyLoad extends FragmentTabsPager {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Intent intent = getIntent();
+	    //app.setCaptchaNotificationShown(intent.getBooleanExtra("CaptchaNotification", false));
+	    if (intent.getBooleanExtra("CaptchaNotification", false))
+	    {
+	    	NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
+	    	notificationManager.cancel(0);
+	    }
 		app.refreshTab();
 	}
 

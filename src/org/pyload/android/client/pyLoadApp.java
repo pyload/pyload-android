@@ -54,6 +54,8 @@ public class pyLoadApp extends Application {
 	public ConnectivityManager cm;
 
 	private pyLoad main;
+	
+	private boolean captchaNotificationShown;
 
 	private static final String[] clientVersion = {"0.4.8", "0.4.9"};
 
@@ -318,6 +320,16 @@ public class pyLoadApp extends Application {
 
     public static boolean isActionBarAvailable() {
         return android.os.Build.VERSION.SDK_INT >= 11;
+    }
+    
+    public void setCaptchaNotificationShown(boolean val)
+    {
+    	captchaNotificationShown = val;
+    }
+    
+    public boolean getCaptchaNotificationShown()
+    {
+    	return captchaNotificationShown;
     }
 
 }
