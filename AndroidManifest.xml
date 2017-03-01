@@ -107,5 +107,6 @@
 
         <activity android:name=".RemoteSettings" android:label="@string/remotesettings_activity"/>
 
+        <service android:name=".service.CheckCaptchaService" />
     </application>
 </manifest>

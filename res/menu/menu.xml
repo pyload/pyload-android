@@ -32,4 +32,9 @@
         android:icon="@drawable/ic_menu_restart"
         android:title="@string/restart_failed" />
 
+    <item
+        android:id="@+id/ic_menu_check_captcha"
+        android:title="@string/check_captcha"
+        android:showAsAction="never"
+        android:checkable="true" />
 </menu>

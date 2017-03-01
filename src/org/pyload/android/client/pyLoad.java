@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.view.*;
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
@@ -16,6 +21,7 @@ import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.service.CheckCaptchaService;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
@@ -30,6 +36,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TabHost;
 import android.support.v4.view.MenuItemCompat;
+import android.widget.Toast;
 
 public class pyLoad extends FragmentTabsPager {
 
@@ -37,6 +44,10 @@ public class pyLoad extends FragmentTabsPager {
 
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
+
+    // AlarmManager and PendingIntent for CheckCaptchaService
+    private AlarmManager alarmManager;
+    private PendingIntent checkCaptchaIntent;
 
 	/** Called when the activity is first created. */
 
@@ -113,18 +124,41 @@ public class pyLoad extends FragmentTabsPager {
             }
             intent.setData(null);
         }
+
+        // get AlarmManager and create PendingIntent for CheckCaptchaService
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        checkCaptchaIntent = PendingIntent.getService(this.getApplication(), 0,
+                new Intent(this.getApplication(),
+                CheckCaptchaService.class), 0);
+        app.notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		app.refreshTab();
+        alarmManager.cancel(checkCaptchaIntent);
+        app.notificationManager.cancel(CheckCaptchaService.NOTIFICATION_ID);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		app.clearTasks();
+        // create background service to check for captchas
+        if(app.prefs.getBoolean(Preferences.CHECK_CAPTCHA_SERVICE_ENABLE, true)) {
+            int interval = 5;
+            try {
+                interval = Integer.parseInt(app.prefs
+                        .getString("refresh_rate", "5"));
+            } catch (NumberFormatException e) {
+                interval = 5;
+            }
+            Toast.makeText(this, "Checking for Captcha every " + interval + "s", Toast.LENGTH_SHORT).show();
+            interval *= 1000;
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval,
+                    interval, checkCaptchaIntent);
+        }
 	}
 
 	@Override
@@ -136,6 +170,9 @@ public class pyLoad extends FragmentTabsPager {
         MenuItemCompat.setShowAsAction(refreshItem, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
         MenuItemCompat.setShowAsAction(menu.findItem(R.id.add_links),
                 MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+
+        menu.findItem(R.id.ic_menu_check_captcha).setChecked(
+                app.prefs.getBoolean(Preferences.CHECK_CAPTCHA_SERVICE_ENABLE, true));
 
 		return true;
 	}
@@ -181,6 +218,17 @@ public class pyLoad extends FragmentTabsPager {
                 }
             }, app.handleSuccess));
 
+            return true;
+
+        case R.id.ic_menu_check_captcha:
+            SharedPreferences.Editor prefEdit = app.prefs.edit();
+            Log.d("pyLoad", "CheckCaptcha: " + item.isChecked());
+            prefEdit.putBoolean(Preferences.CHECK_CAPTCHA_SERVICE_ENABLE, !item.isChecked());
+            if(Build.VERSION.SDK_INT >= 7)
+                prefEdit.apply();
+            else
+                prefEdit.commit();
+            item.setChecked(!item.isChecked());
             return true;
 
 		default:
@@ -312,4 +360,5 @@ public class pyLoad extends FragmentTabsPager {
     public MenuItem getRefreshItem() {
         return refreshItem;
     }
+
 }

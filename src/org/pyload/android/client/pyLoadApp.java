@@ -13,6 +13,7 @@ import java.util.HashMap;
 import javax.net.ssl.*;
 
 import android.annotation.TargetApi;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -52,6 +53,9 @@ public class pyLoadApp extends Application {
 	private Throwable lastException;
 	public SharedPreferences prefs;
 	public ConnectivityManager cm;
+
+    /** NotificationManager used by CheckCaptchaService */
+    public NotificationManager notificationManager;
 
 	private pyLoad main;
 

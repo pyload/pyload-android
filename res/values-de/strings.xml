@@ -91,6 +91,7 @@
   <string name="connect_error">Konnte keine Verbindung zu pyLoad herstellen. Bitte überprüfen sie, ob pyLoad läuft und ihre Servereinstellungen korrekt sind.</string>
   <string name="language">Sprache</string>
   <string name="language_desc">Sprache der App. Ein Neustart ist notwendig, damit die Änderungen in Kraft treten.</string>
+  <string name="check_captcha">Prüfe auf Captchas im Hintergrund</string>
   <string-array name="destination_list">
     <item>Warteschlange</item>
     <item>Linksammler</item>
