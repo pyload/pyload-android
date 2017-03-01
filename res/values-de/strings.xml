@@ -4,7 +4,7 @@
   <string name="app_name">pyLoad</string>
   <string name="remotesettings_activity">pyLoad - Servereinstellungen</string>
   <string name="restart_failed">Fehlgeschlagene Dateien neu starten</string>
-  <string name="remote_settings">ServereInstellungen</string>
+  <string name="remote_settings">Servereinstellungen</string>
   <string name="no_packages">Keine Pakete.</string>
   <string name="no_accounts">Keine Premiumaccounts.</string>
   <string name="no_downloads">Keine aktiven Downloads.</string>
@@ -14,7 +14,7 @@
   <string name="delete">Löschen</string>
   <string name="restart">Neustarten</string>
   <string name="general">Allgemein</string>
-  <string name="refresh_rate">Aktualisierungsrate </string>
+  <string name="refresh_rate">Aktualisierungsrate</string>
   <string name="refresh_rate_desc">Zeit in Sekunden wie oft die Übersicht aktualisiert wird.</string>
   <string name="server">Server</string>
   <string name="ip">Adresse</string>
@@ -75,7 +75,7 @@
   <string name="size">Größe</string>
   <string name="error">Fehler</string>
   <string name="labelPackage">Paket</string>
-  <string name="server_settings">Server Einstellungen</string>
+  <string name="server_settings">Servereinstellungen</string>
   <string name="general_config">Allgemeine Einstellungen</string>
   <string name="plugin_config">Erweiterungseinstellungen</string>
   <string name="submit">Übernehmen</string>
