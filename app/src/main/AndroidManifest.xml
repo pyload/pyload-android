@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.pyload.android.client"
+          android:versionCode="19"
+          android:versionName="0.3.6">
+
+    <uses-sdk android:minSdkVersion="7"
+              android:targetSdkVersion="19"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application android:label="@string/app_name" android:name="pyLoadApp" android:icon="@drawable/ic_launcher"
+                 android:allowBackup="true">
+        <activity android:name=".pyLoad"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- Various Intent Filter to handle supported files and formats -->
+            <!-- (S)FTP(S) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="ftp" android:host="*" android:pathPattern=".*"/>
+                <data android:scheme="ftps" android:host="*" android:pathPattern=".*"/>
+                <data android:scheme="sftp" android:host="*" android:pathPattern=".*"/>
+            </intent-filter>
+
+            <!-- DLC Files -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\.dlc"
+                    android:host="*"
+                    android:scheme="content" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="file" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.dlc" />
+            </intent-filter>
+
+            <!-- many urls from the supported pyload crypters and hosts -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+
+                <data android:pathPattern=".*"/>
+
+                <data android:host="dokujunkies.org"/>
+                <data android:host="depositfiles.com"/>
+                <data android:host="egoshare.com"/>
+                <data android:host="freakshare.net"/>
+                <data android:host="freakshare.com"/>
+                <data android:host="filefactory.com"/>
+                <data android:host="fileserve.com"/>
+                <data android:host="iload.to"/>
+                <data android:host="letitbit.net"/>
+                <data android:host="linksave.in"/>
+                <data android:host="mediafire.com"/>
+                <data android:host="multiupload.com"/>
+                <data android:host="netfolder.in"/>
+                <data android:host="netload.in"/>
+                <data android:host="rapidshare.com"/>
+                <data android:host="relink.us"/>
+                <data android:host="share-links.biz"/>
+                <data android:host="s2l.biz"/>
+                <data android:host="stealth.to"/>
+                <data android:host="serienjunkies.org"/>
+                <data android:host="share-online.biz"/>
+                <data android:host="uploaded.to"/>
+                <data android:host="uploaded.net"/>
+                <data android:host="uploading.com"/>
+                <data android:host="ul.to"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".Preferences" android:label="@string/pref_name"/>
+        <activity android:name=".AddLinksActivity"/>
+        <activity android:name=".module.FileChooser"/>
+
+        <activity android:name=".RemoteSettings" android:label="@string/remotesettings_activity"/>
+
+    </application>
+</manifest>
