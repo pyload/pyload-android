@@ -1,7 +1,7 @@
 ### pyLoad Android Client 
 
 This is the official Android client for the **pyLoad** Download Manager. You need to have pyLoad running on your pc or server.
-In case you don't already have it, download it from http://pyload.org, its free, open-source and available for many platforms.
+In case you don't already have it, download it from http://pyload.net, its free, open-source and available for many platforms.
 
 Please report any issues with the client here: https://github.com/pyload/pyload-android/issues
 
