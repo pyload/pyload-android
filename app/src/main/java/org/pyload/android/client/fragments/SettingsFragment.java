@@ -1,6 +1,8 @@
 package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -148,8 +150,18 @@ class SettingsAdapter extends BaseAdapter {
 		data = new ArrayList<Entry<String, ConfigSection>>();
 	}
 
+  class SettingsComparator
+    implements Comparator<Entry<String,ConfigSection>> {
+
+    @Override
+    public int compare(Entry<String, ConfigSection> lhs, Entry<String, ConfigSection> rhs) {
+      return lhs.getKey().compareTo(rhs.getKey());
+    }
+  }
+
 	public void setData(Map<String, ConfigSection> map) {
 		this.data = new ArrayList<Entry<String, ConfigSection>>(map.entrySet());
+		Collections.sort(data, new SettingsComparator());
 		notifyDataSetChanged();
 	}
 
