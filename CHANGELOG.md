@@ -1,3 +1,7 @@
+0.3.7:
+* Works with pyLoad v0.4.20
+* Android 6 minimum
+
 0.3.4:
 * Translations for german, italian and french
 * Accepts multiple urls

@@ -89,7 +89,8 @@
   <string name="connect_error">Αποτυχία σύνδεσης στο pyLoad. Ελέγξτε ότι το pyLoad λειτουργεί και ότι οι ρυθμίσεις του διακομιστή είναι σωστές.</string>
   <string name="language">Γλώσσα</string>
   <string name="language_desc">Γλώσσα της εφαρμογής. Χρειάζεται επανεκκίνηση για να ισχύσουν οι αλλαγές.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>

@@ -92,7 +92,8 @@
 configuración del servidor es correcta.</string>
   <string name="language">Idioma</string>
   <string name="language_desc">Idioma de la aplicación. Se necesita reiniciar para que los cambios surtan efecto.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Cola</item>
     <item>Recolector</item>
   </string-array>

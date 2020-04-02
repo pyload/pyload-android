@@ -95,7 +95,8 @@
     </string>
   <string name="language">اللغة</string>
   <string name="language_desc">تغير لغة التطبيق. تحتاج لاعادة تشغيل ليتم تفعيل التغيرات.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>قائمة الإنتظار</item>
     <item>جامع</item>
   </string-array>

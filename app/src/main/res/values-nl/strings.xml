@@ -89,7 +89,8 @@
   <string name="connect_error">Kan geen verbinding maken met pyLoad. Controleer of pyLoad wordt uitgevoerd en de serverinstellingen juist zijn.</string>
   <string name="language">Taal</string>
   <string name="language_desc">Taal van app. moet opnieuw worden opgestart voordat de wijzigingen worden van kracht.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>

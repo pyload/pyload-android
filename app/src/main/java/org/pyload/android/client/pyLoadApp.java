@@ -57,7 +57,7 @@ public class pyLoadApp extends Application {
 	
 	private boolean captchaNotificationShown;
 
-	private static final String[] clientVersion = {"0.4.8", "0.4.9"};
+	private static final String[] clientVersion = {"0.4.8", "0.4.9", "0.4.20"};
 
 	public void init(pyLoad main) {
 		this.main = main;

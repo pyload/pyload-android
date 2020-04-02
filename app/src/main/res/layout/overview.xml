@@ -7,48 +7,46 @@
 		android:orientation="horizontal" android:layout_height="wrap_content"
 		android:paddingBottom="5dip" android:paddingTop="5dip">
 
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:id="@+id/linearLayout1"
-			android:gravity="left" android:layout_gravity="fill_horizontal"
-			android:layout_weight="1">
-            <TextView android:text="@string/n_a" android:id="@+id/status_server"
-                android:layout_width="wrap_content" android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/clock" android:drawablePadding="5dip" />
-		</LinearLayout>
+		<TextView
+			android:id="@+id/status_server"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:drawableStart="@drawable/clock"
+			android:drawablePadding="5dip"
+			android:text="@string/n_a" />
 
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:id="@+id/linearLayout1"
-			android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
-			android:layout_weight="1">
-            <TextView android:text="@string/n_a" android:id="@+id/reconnect"
-                android:layout_width="wrap_content" android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/redo" android:drawablePadding="5dip" />
-		</LinearLayout>
+		<TextView
+			android:id="@+id/reconnect"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:drawableStart="@drawable/redo"
+			android:drawablePadding="5dip"
+			android:text="@string/n_a" />
 
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:id="@+id/linearLayout1"
-			android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
-			android:layout_weight="1">
-            <TextView android:text="@string/n_a" android:id="@+id/speed"
-                android:layout_width="wrap_content" android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/download" android:drawablePadding="5dip" />
-		</LinearLayout>
+		<TextView
+			android:id="@+id/speed"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:drawableStart="@drawable/download"
+			android:drawablePadding="5dip"
+			android:text="@string/n_a" />
 
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:id="@+id/linearLayout1"
-			android:gravity="right" android:layout_gravity="fill_horizontal"
-			android:layout_weight="1">
-            <TextView android:text="0 / 0" android:id="@+id/active"
-                android:layout_width="wrap_content" android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/todo" android:drawablePadding="5dip" />
-		</LinearLayout>
+		<TextView
+			android:id="@+id/active"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:drawableStart="@drawable/todo"
+			android:drawablePadding="5dip"
+			android:text="@string/_0_0" />
+
 	</LinearLayout>
 
 
-	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
+	<ListView android:id="@android:id/list"
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
 
-    <TextView android:id="@+id/android:empty" android:layout_width="fill_parent"
+    <TextView android:id="@android:id/empty" android:layout_width="fill_parent"
            android:text="@string/no_downloads" android:layout_height="fill_parent"
            android:layout_marginTop="-30dp" android:gravity="center"
            android:textAppearance="?android:attr/textAppearanceLarge" />

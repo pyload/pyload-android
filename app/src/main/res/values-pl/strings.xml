@@ -89,7 +89,8 @@
   <string name="connect_error">Nie można połączyć się z pyLoad. Sprawdź czy pyLoad działa i ustawienia serwera są poprawne.</string>
   <string name="language">Język</string>
   <string name="language_desc">Zmiana języka aplikacji wymaga ponownego uruchomienia.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Kolejka</item>
     <item>Zbieracz linków</item>
   </string-array>

@@ -89,7 +89,8 @@
   <string name="connect_error">PyLoad\'a bağlanamadı. PyLoad\'un çalıştığından ve sunucu ayarlarının doğru olduğundan emin olun.</string>
   <string name="language">Dil</string>
   <string name="language_desc">Uygulama dili değişikliklerin etkili olması için yeniden başlatma gerekir.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.pyload.android.client"
-          android:versionCode="19"
-          android:versionName="0.3.6">
+          android:versionCode="20"
+          android:versionName="0.3.7">
 
-    <uses-sdk android:minSdkVersion="7"
-              android:targetSdkVersion="19"/>
+    <uses-sdk android:targetSdkVersion="23"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -67,6 +66,7 @@
 
                 <data android:host="dokujunkies.org"/>
                 <data android:host="depositfiles.com"/>
+                <data android:host="ddl.to"/>
                 <data android:host="egoshare.com"/>
                 <data android:host="freakshare.net"/>
                 <data android:host="freakshare.com"/>
@@ -85,11 +85,11 @@
                 <data android:host="s2l.biz"/>
                 <data android:host="stealth.to"/>
                 <data android:host="serienjunkies.org"/>
-                <data android:host="share-online.biz"/>
                 <data android:host="uploaded.to"/>
                 <data android:host="uploaded.net"/>
                 <data android:host="uploading.com"/>
                 <data android:host="ul.to"/>
+                <data android:host="zippyshare.com"/>
             </intent-filter>
 
             <intent-filter>

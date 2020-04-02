@@ -90,7 +90,8 @@ port forwarding.</string>
   <string name="connect_error">Không thể kết nối đến pyLoad. Kiểm tra rằng pyLoad đang chạy và cài đặt máy chủ là chính xác.</string>
   <string name="language">Ngôn ngữ</string>
   <string name="language_desc">Ngôn ngữ của ứng dụng. Cần khởi động lại trước khi thay đổi có hiệu lực.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Chờ</item>
     <item>Thu</item>
   </string-array>

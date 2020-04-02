@@ -91,7 +91,8 @@
   <string name="connect_error">Impossible de se connecter à Pyload. Verifier que Pyload est bien lancé et que la configuration de votre serveur est correct.</string>
   <string name="language">Langue</string>
   <string name="language_desc">Langue de l\'application. Un redémarrage est nécessaire pour que les modifications prennent effet.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Queue</item>
     <item>Paquets</item>
   </string-array>

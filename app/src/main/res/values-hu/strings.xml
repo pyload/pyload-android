@@ -92,7 +92,8 @@
     </string>
   <string name="language">Nyelv</string>
   <string name="language_desc">A program nyelve, újraindítást igényel.</string>
-  <string-array name="destination_list">
+    <string name="_0_0">0 / 0</string>
+    <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>
