@@ -85,13 +85,11 @@
   <string name="validuntil">Hết hạn:</string>
   <string name="certificate_error">Giấy chứng nhận SSL không được chấp nhận. Thêm nó vào android hoặc vô hiệu hoá xác nhận.</string>
   <string name="connect_timeout">Kết nối hết thời gian. Xin vui lòng kiểm tra rằng cài đặt máy chủ là chính xác.</string>
-  <string name="socket_error">Không thể kết nối đến máy chủ mục tiêu. Kiểm tra cài đặt máy chủ, cấu hình mạng hoặc 
-port forwarding.</string>
+  <string name="socket_error">Không thể kết nối đến máy chủ mục tiêu. Kiểm tra cài đặt máy chủ, cấu hình mạng hoặc port forwarding.</string>
   <string name="connect_error">Không thể kết nối đến pyLoad. Kiểm tra rằng pyLoad đang chạy và cài đặt máy chủ là chính xác.</string>
   <string name="language">Ngôn ngữ</string>
   <string name="language_desc">Ngôn ngữ của ứng dụng. Cần khởi động lại trước khi thay đổi có hiệu lực.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Chờ</item>
     <item>Thu</item>
   </string-array>
@@ -101,5 +99,18 @@ port forwarding.</string>
     <item>German</item>
     <item>French</item>
     <item>Italian</item>
+    <item>Spanish</item>
+    <item>Polish</item>
+    <item>Dutch</item>
+    <item>Russian</item>
+    <item>Portuguese</item>
+    <item>Greek</item>
+    <item>Arabic</item>
+    <item>Turkish</item>
+    <item>Vietnamese</item>
+    <item>Japanese</item>
+    <item>Hungarian</item>
+    <item>Serbian</item>
+    <item>Hebrew</item>
   </string-array>
 </resources>

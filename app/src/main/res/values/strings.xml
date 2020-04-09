@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Remote Settings</string>
-
     <string name="restart_failed">Restart failed files</string>
     <string name="remote_settings">Remote Settings</string>
     <string name="no_packages">No packages.</string>
@@ -62,9 +61,7 @@
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
     <string name="ssl_validate">Validate SSL Certificate</string>
-    <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is
-        signed by a CA known by Android
-    </string>
+    <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is signed by a CA known by Android</string>
     <string name="old_server">Server version does not match, please use pyLoad %s.</string>
     <string name="choose_file">Container File</string>
     <string name="choose">Choose</string>
@@ -96,12 +93,8 @@
     <string name="validuntil">Expires:</string>
     <string name="certificate_error">SSL certificate not accepted. Add it to android or disable validation.</string>
     <string name="connect_timeout">Connecting timed out. Please check that the server settings are correct.</string>
-    <string name="socket_error">Could not connect to target host. Check the server settings, your network configuration
-        or port forwarding.
-    </string>
-    <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are
-        correct.
-    </string>
+    <string name="socket_error">Could not connect to target host. Check the server settings, your network configuration or port forwarding.</string>
+    <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are correct.</string>
     <string name="language">Language</string>
     <string name="language_desc">Language of the app. Needs a restart before changes take effect.</string>
     <string name="_0_0">0 / 0</string>
@@ -111,5 +104,18 @@
         <item>German</item>
         <item>French</item>
         <item>Italian</item>
+        <item>Spanish</item>
+        <item>Polish</item>
+        <item>Dutch</item>
+        <item>Russian</item>
+        <item>Portuguese</item>
+        <item>Greek</item>
+        <item>Arabic</item>
+        <item>Turkish</item>
+        <item>Vietnamese</item>
+        <item>Japanese</item>
+        <item>Hungarian</item>
+        <item>Serbian</item>
+        <item>Hebrew</item>
     </string-array>
 </resources>

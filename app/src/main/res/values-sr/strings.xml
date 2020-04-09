@@ -89,16 +89,28 @@
   <string name="connect_error">Не могу да се повежем са сервером pyLoad-а. Проверите да ли је покренут и је ли исправно подешен.</string>
   <string name="language">Језик</string>
   <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покретање.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>
-  <string-array name="languages">
-    <item>Default</item>
-    <item>English</item>
-    <item>German</item>
-    <item>French</item>
-    <item>Italian</item>
-  </string-array>
+    <string-array name="languages">
+        <item>Default</item>
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Polish</item>
+        <item>Dutch</item>
+        <item>Russian</item>
+        <item>Portuguese</item>
+        <item>Greek</item>
+        <item>Arabic</item>
+        <item>Turkish</item>
+        <item>Vietnamese</item>
+        <item>Japanese</item>
+        <item>Hungarian</item>
+        <item>Serbian</item>
+        <item>Hebrew</item>
+    </string-array>
 </resources>

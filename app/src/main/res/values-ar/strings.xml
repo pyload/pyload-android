@@ -89,14 +89,11 @@
   <string name="validuntil">انتهاء صلاحية:</string>
   <string name="certificate_error">شهادة SSL غير مقبوله, اضف الشهادة لاندرويد او عطل التحقق.</string>
   <string name="connect_timeout">انتهاء وقت الاتصال, الرجاء التحقق من ان اعدادات الخادم صحيحة.</string>
-  <string name="socket_error">لا يمكن الاتصال بالمضيف المطلوب, تاكد من اعدادات الخادم, اعدادات شبكتك او المنفذ المقدم.
-    </string>
-  <string name="connect_error">لا يمكن الاتصال ب باي لود. تاكد من ان باي لود يعمل و ان اعدادات الخادم صحيحة.
-    </string>
+  <string name="socket_error">لا يمكن الاتصال بالمضيف المطلوب, تاكد من اعدادات الخادم, اعدادات شبكتك او المنفذ المقدم.</string>
+  <string name="connect_error">لا يمكن الاتصال ب باي لود. تاكد من ان باي لود يعمل و ان اعدادات الخادم صحيحة.</string>
   <string name="language">اللغة</string>
   <string name="language_desc">تغير لغة التطبيق. تحتاج لاعادة تشغيل ليتم تفعيل التغيرات.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>قائمة الإنتظار</item>
     <item>جامع</item>
   </string-array>
@@ -106,5 +103,18 @@
     <item>الالمانية</item>
     <item>الفرنسية</item>
     <item>الايطالية</item>
+    <item>الأسبانية</item>
+    <item>تلميع</item>
+    <item>هولندي</item>
+    <item>الروسية</item>
+    <item>البرتغالية</item>
+    <item>اليونانية</item>
+    <item>عربى</item>
+    <item>التركية</item>
+    <item>الفيتنامية</item>
+    <item>اليابانية</item>
+    <item>المجري</item>
+    <item>صربي</item>
+    <item>العبرية</item>
   </string-array>
 </resources>

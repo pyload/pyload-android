@@ -91,16 +91,28 @@
   <string name="connect_error">PyLoad に接続できませんでした。PyLoad が実行されている、サーバーの設定が正しいことを確認してください。</string>
   <string name="language">言語</string>
   <string name="language_desc">アプリケーションの言語変更が有効になるには再起動が必要です。</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>キュー</item>
     <item>コレクター</item>
   </string-array>
   <string-array name="languages">
     <item>デフォルト</item>
-    <item>English</item>
-    <item>German</item>
-    <item>French</item>
-    <item>Italian</item>
+	<item>English</item>
+	<item>German</item>
+	<item>French</item>
+	<item>Italian</item>
+	<item>Spanish</item>
+	<item>Polish</item>
+	<item>Dutch</item>
+	<item>Russian</item>
+	<item>Portuguese</item>
+	<item>Greek</item>
+	<item>Arabic</item>
+	<item>Turkish</item>
+	<item>Vietnamese</item>
+	<item>Japanese</item>
+	<item>Hungarian</item>
+	<item>Serbian</item>
+	<item>Hebrew</item>
   </string-array>
 </resources>

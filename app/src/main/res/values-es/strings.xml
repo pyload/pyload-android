@@ -88,20 +88,31 @@
   <string name="certificate_error">Certificado SSL no aceptado. Añadirlo a android o deshabilitar la validación.</string>
   <string name="connect_timeout">Agotado el tiempo de conexión. Por favor, compruebe que la configuración del servidor es correcta.</string>
   <string name="socket_error">No se pudo conectar con el equipo de destino. Compruebe la configuración del servidor, la configuración de red o reenvío de puertos.</string>
-  <string name="connect_error">No se pudo conectar con pyLoad. Compruebe que pyLoad se está ejecutando y la 
-configuración del servidor es correcta.</string>
+  <string name="connect_error">No se pudo conectar con pyLoad. Compruebe que pyLoad se está ejecutando y la configuración del servidor es correcta.</string>
   <string name="language">Idioma</string>
   <string name="language_desc">Idioma de la aplicación. Se necesita reiniciar para que los cambios surtan efecto.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Cola</item>
     <item>Recolector</item>
   </string-array>
   <string-array name="languages">
-    <item>Por defecto</item>
-    <item>Inglés</item>
-    <item>Alemán</item>
-    <item>Francés</item>
-    <item>italiano</item>
+    <item>Default</item>
+    <item>English</item>
+    <item>German</item>
+    <item>French</item>
+    <item>Italian</item>
+    <item>Spanish</item>
+    <item>Polish</item>
+    <item>Dutch</item>
+    <item>Russian</item>
+    <item>Portuguese</item>
+    <item>Greek</item>
+    <item>Arabic</item>
+    <item>Turkish</item>
+    <item>Vietnamese</item>
+    <item>Japanese</item>
+    <item>Hungarian</item>
+    <item>Serbian</item>
+    <item>Hebrew</item>
   </string-array>
 </resources>

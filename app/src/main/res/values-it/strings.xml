@@ -91,8 +91,7 @@
   <string name="connect_error">Impossibile collegarsi a pyLoad. Controllare che pyLoad sia in esecuzione e che le impostazioni server siano corrette.</string>
   <string name="language">Lingua</string>
   <string name="language_desc">Lingua dell\'app. È necessario riavviare affinché le modifiche abbiano effetto.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Coda</item>
     <item>Collettore</item>
   </string-array>
@@ -102,5 +101,18 @@
     <item>German</item>
     <item>French</item>
     <item>Italian</item>
+    <item>Spanish</item>
+    <item>Polish</item>
+    <item>Dutch</item>
+    <item>Russian</item>
+    <item>Portuguese</item>
+    <item>Greek</item>
+    <item>Arabic</item>
+    <item>Turkish</item>
+    <item>Vietnamese</item>
+    <item>Japanese</item>
+    <item>Hungarian</item>
+    <item>Serbian</item>
+    <item>Hebrew</item>
   </string-array>
 </resources>

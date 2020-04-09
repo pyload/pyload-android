@@ -89,16 +89,28 @@
   <string name="connect_error">Не удалось подключиться к pyLoad. Проверьте, что запущена pyLoad и параметры сервера являются правильными.     </string>
   <string name="language">Язык</string>
   <string name="language_desc">Язык приложения. Необходима перезагрузка, прежде чем изменения вступят в силу.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Очередь</item>
     <item>Сборщик</item>
   </string-array>
-  <string-array name="languages">
-    <item>Default</item>
-    <item>English</item>
-    <item>German</item>
-    <item>French</item>
-    <item>Italian</item>
-  </string-array>
+    <string-array name="languages">
+        <item>Default</item>
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Polish</item>
+        <item>Dutch</item>
+        <item>Russian</item>
+        <item>Portuguese</item>
+        <item>Greek</item>
+        <item>Arabic</item>
+        <item>Turkish</item>
+        <item>Vietnamese</item>
+        <item>Japanese</item>
+        <item>Hungarian</item>
+        <item>Serbian</item>
+        <item>Hebrew</item>
+    </string-array>
 </resources>

@@ -86,14 +86,11 @@
   <string name="validuntil">Expira:</string>
   <string name="certificate_error">Certificado SSL não foi aceitou. Adicioná-lo ao android ou desabilitar a validação.</string>
   <string name="connect_timeout">Tempo de conexão esgotado. Por favor verifique se as configurações do servidor estão corretas.</string>
-  <string name="socket_error">Não foi possível conectar ao host de destino. Verifique as configurações do servidor, sua configuração de rede ou o encaminhamento de porta.
-    </string>
-  <string name="connect_error">Não foi possível conectar ao pyLoad. Verifique se está o pyLoad esta executando e se as configurações de servidor estão corretas.
-    </string>
+  <string name="socket_error">Não foi possível conectar ao host de destino. Verifique as configurações do servidor, sua configuração de rede ou o encaminhamento de porta.</string>
+  <string name="connect_error">Não foi possível conectar ao pyLoad. Verifique se está o pyLoad esta executando e se as configurações de servidor estão corretas.</string>
   <string name="language">Língua</string>
   <string name="language_desc">Linguagem do app. Precisa reiniciar antes que as alterações tenham efeito.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>
@@ -103,5 +100,18 @@
     <item>German</item>
     <item>French</item>
     <item>Italian</item>
+    <item>Spanish</item>
+    <item>Polish</item>
+    <item>Dutch</item>
+    <item>Russian</item>
+    <item>Portuguese</item>
+    <item>Greek</item>
+    <item>Arabic</item>
+    <item>Turkish</item>
+    <item>Vietnamese</item>
+    <item>Japanese</item>
+    <item>Hungarian</item>
+    <item>Serbian</item>
+    <item>Hebrew</item>
   </string-array>
 </resources>

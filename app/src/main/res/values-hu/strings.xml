@@ -86,14 +86,11 @@
   <string name="validuntil">Lejárat:</string>
   <string name="certificate_error">Az SSL tanúsítvány nem lett elfogadva. Add hozzá az Android-hoz, vagy kapcsold ki a az ellenőrzését.</string>
   <string name="connect_timeout">Kapcsolat időtúllépés. Ellenőrizd a szerver beállításait.</string>
-  <string name="socket_error">Nem sikerült csatlakozni a célhoz. Ellenőrizd a szerver beállításait, a hálózati kapcsolatokat és a port átirányításokat.
-    </string>
-  <string name="connect_error">Nem sikerült kapcsolatba lépni a pyLoad-al. Ellenőrizd, hogy fut-e a pyLoad és hogy helyesek-e a szerver beállításai.
-    </string>
+  <string name="socket_error">Nem sikerült csatlakozni a célhoz. Ellenőrizd a szerver beállításait, a hálózati kapcsolatokat és a port átirányításokat.</string>
+  <string name="connect_error">Nem sikerült kapcsolatba lépni a pyLoad-al. Ellenőrizd, hogy fut-e a pyLoad és hogy helyesek-e a szerver beállításai.</string>
   <string name="language">Nyelv</string>
   <string name="language_desc">A program nyelve, újraindítást igényel.</string>
-    <string name="_0_0">0 / 0</string>
-    <string-array name="destination_list">
+  <string-array name="destination_list">
     <item>Queue</item>
     <item>Collector</item>
   </string-array>
@@ -103,5 +100,18 @@
     <item>German</item>
     <item>French</item>
     <item>Italian</item>
+    <item>Spanish</item>
+    <item>Polish</item>
+    <item>Dutch</item>
+    <item>Russian</item>
+    <item>Portuguese</item>
+    <item>Greek</item>
+    <item>Arabic</item>
+    <item>Turkish</item>
+    <item>Vietnamese</item>
+    <item>Japanese</item>
+    <item>Hungarian</item>
+    <item>Serbian</item>
+    <item>Hebrew</item>
   </string-array>
 </resources>
