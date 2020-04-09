@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">pyLoad</string>
+    <string name="remotesettings_activity">pyLoad - הגדרות מרוחקות</string>
+    <string name="restart_failed">הפעל מחדש את הקבצים שנכשלו</string>
+    <string name="remote_settings">הגדרות מרוחקות</string>
+    <string name="no_packages">אין חבילות.</string>
+    <string name="no_accounts">אין חשבונות פרימיום.</string>
+    <string name="no_downloads">אין הורדות פעילות.</string>
+    <string name="add_links">הוסף קישורים</string>
+    <string name="settings">הגדרות</string>
+    <string name="refresh">רענן</string>
+    <string name="delete">מחק</string>
+    <string name="restart">התחל מחדש</string>
+    <string name="general">כללי</string>
+    <string name="refresh_rate">קצב רענון</string>
+    <string name="refresh_rate_desc">כל כמה שניות מסך הסקירה אמור להתרענן.</string>
+    <string name="server">שרת</string>
+    <string name="ip">כתובת</string>
+    <string name="ip_desc">IP או hostname של שרת pyLoad המרוחק.</string>
+    <string name="port">פורט</string>
+    <string name="port_desc">הפורט של ה- ThriftBackend שקבעת בהגדרות מרוחקות.</string>
+    <string name="username">שם משתמש</string>
+    <string name="username_desc">שם המשתמש שבו אתה משתמש כדי להתחבר.</string>
+    <string name="password">סיסמה</string>
+    <string name="login">התחברות</string>
+    <string name="pref_name">pyLoad - העדפות</string>
+    <string name="no_connection">לא ניתן ליצור חיבור:</string>
+    <string name="bad_login">שם משתמש או סיסמה שגויים</string>
+    <string name="move">העבר מיקום</string>
+    <string name="on">&#x200e;פעיל</string>
+    <string name="off">&#x200e;כבוי</string>
+    <string name="n_a">n/a</string>
+    <string name="success">הצלחה.</string>
+    <string name="cant_move_files">לא ניתן להעביר קבצים בודדים.</string>
+    <string name="abort">הפסק</string>
+    <string name="name">שם</string>
+    <string name="addlinks_desc">הוסף חבילה חדשה.</string>
+    <string name="destination">יעד</string>
+    <string-array name="destination_list">
+        <item>Queue</item>
+        <item>Collector</item>
+    </string-array>
+    <string name="overview">הורדות</string>
+    <string name="collector">אוסף</string>
+    <string name="queue">תור</string>
+    <string name="package_links">הכנס את הקישורים שלך כאן.</string>
+    <string name="add">הוסף</string>
+    <string name="cancel">בטל</string>
+    <string name="toggle_server">הפעל / כבה הורדות</string>
+    <string name="toggle_reconnect">הפעל / כבה חיבור מחדש</string>
+    <string name="lost_connection">החיבור אבד. נסה לרענן.</string>
+    <string name="retrieve_captcha">קבל משימות captcha</string>
+    <string name="retrieve_captcha_desc">קבל משימות captcha מ- pyLoad כאשר מסך סקירה כללית מוצג.</string>
+    <string name="enter">שלח</string>
+    <string name="captcha_dialog_titel">הזן את הטקסט</string>
+    <string name="invert_tabs">הפוך צבע צלמית הכרטיסיות</string>
+    <string name="invert_tabs_desc">באפשרותך לשנות את פריסת צלמית הכרטיסיות אם זה מתאים יותר לערכת הנושא שלך.</string>
+    <string name="ssl">חיבור SSL</string>
+    <string name="ssl_desc">צור חיבור מאובטח לשרת המרוחק אם הפעלת את SSL</string>
+    <string name="ssl_validate">אימות תעודת SSL</string>
+    <string name="ssl_validate_desc">אם \"חיבור SSL\" מופעל, בדוק האם האישור המוצג על ידי השרת המרוחק חתום על ידי CA ידוע על ידי אנדרואיד</string>
+    <string name="old_server">גירסת השרת אינה תואמת, השתמש ב- pyLoad %s.</string>
+    <string name="choose_file">קובץ מכולה</string>
+    <string name="choose">בחר</string>
+    <string name="current_dir">תיקייה נוכחית:</string>
+    <string name="folder">&#x200e;תיקייה</string>
+    <string name="file_size">גודל הקובץ:</string>
+    <string name="parent_dir">תיקיית אב</string>
+    <string name="eula_title">רישיון</string>
+    <string name="eula_accept">קבל</string>
+    <string name="eula_refuse">דחה</string>
+    <string name="choose_action">בחר פעולה</string>
+    <string name="close">סגור</string>
+    <string name="fileinfo_title">מידע קובץ</string>
+    <string name="plugin">&#x200e;פלאגין</string>
+    <string name="status">&#x200e;מצב</string>
+    <string name="size">&#x200e;גודל</string>
+    <string name="error">&#x200e;שגיאה</string>
+    <string name="labelPackage">&#x200e;חבילה</string>
+    <string name="lambda"></string>
+    <string name="server_settings">הגדרות שרת</string>
+    <string name="general_config">הגדרות כלליות</string>
+    <string name="plugin_config">הגדרות פלאגינים</string>
+    <string name="submit">שלח</string>
+    <string name="accounts">חשבונות</string>
+    <string name="unlimited">ללא הגבלה</string>
+    <string name="valid">בתוקף</string>
+    <string name="invalid">לא בתוקף</string>
+    <string name="trafficleft">תעבורה:</string>
+    <string name="validuntil">בתוקף עד:</string>
+    <string name="certificate_error">אישור SSL לא התקבל. הוסף אותו לאנדרואיד או השבת את האימות.</string>
+    <string name="connect_timeout">החיבור נכשל. בדוק שהגדרות השרת נכונות.</string>
+    <string name="socket_error">לא ניתן היה להתחבר אל שרת היעד. בדוק את הגדרות השרת, את תצורת הרשת שלך או פתיחת פורטים. </string>
+    <string name="connect_error">לא ניתן להתחבר אל pyLoad. ודא ש- pyLoad פועל והגדרות השרת הן נכונות.</string>
+    <string name="language">שפה</string>
+    <string name="language_desc">שפת האפליקציה. דרושה הפעלה מחדש לפני שהשינויים ייכנסו לתוקף.</string>
+    <string-array name="languages">
+        <item>Default</item>
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Polish</item>
+        <item>Dutch</item>
+        <item>Russian</item>
+        <item>Portuguese</item>
+        <item>Greek</item>
+        <item>Arabic</item>
+        <item>Turkish</item>
+        <item>Vietnamese</item>
+        <item>Japanese</item>
+        <item>Hungarian</item>
+        <item>Serbian</item>
+        <item>Hebrew</item>
+    </string-array>
+</resources>
