@@ -1,6 +1,18 @@
+0.3.8:
+* Works with Android 4.2 again
+* Translation for spanish, polish, dutch, russian, portuguese, greek, turkish, serbian, hebrew
+
 0.3.7:
 * Works with pyLoad v0.4.20
 * Android 6 minimum
+
+0.3.6:
+* Updated translations
+
+0.3.5:
+* Translation for arabic, hungarian, japanese, vietnamese
+* Updated translation for german, french, italian
+* Fix FileChooser
 
 0.3.4:
 * Translations for german, italian and french
