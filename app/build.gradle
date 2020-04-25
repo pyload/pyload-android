@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 28
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "org.pyload.android.client"
-        minSdkVersion 23
+        minSdkVersion 17
+        targetSdkVersion 28
     }
 
     buildTypes {
