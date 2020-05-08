@@ -1,7 +1,7 @@
 package org.pyload.android.client.components;
 
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;

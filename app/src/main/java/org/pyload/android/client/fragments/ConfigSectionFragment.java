@@ -13,7 +13,7 @@ import org.pyload.thrift.Pyload.Client;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;

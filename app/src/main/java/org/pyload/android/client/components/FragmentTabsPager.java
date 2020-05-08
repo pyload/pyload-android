@@ -22,9 +22,9 @@ import org.pyload.android.client.pyLoadApp;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.Window;
 import android.widget.TabHost;
@@ -72,8 +72,8 @@ public class FragmentTabsPager extends FragmentActivity {
 	public Fragment getCurrentFragment() {
 		return mTabsAdapter.getFragment(getCurrentTab());
 	}
-	
-	
+
+
 	/**
 	 * This is a helper class that implements the management of tabs and all
 	 * details of connecting a ViewPager with associated TabHost. It relies on a
@@ -150,16 +150,16 @@ public class FragmentTabsPager extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			TabInfo info = mTabs.get(position);
-		
+
 			Fragment frag = Fragment.instantiate(mContext,
 					info.clss.getName(), info.args);
-			
+
 			((TabHandler) frag).setPosition(position);
-			
+
 			return frag;
 		}
-	
-	
+
+
 		@Override
 		public void onTabChanged(String tabId) {
 			int position = mTabHost.getCurrentTab();
@@ -173,7 +173,7 @@ public class FragmentTabsPager extends FragmentActivity {
 
 		@Override
 		public void onPageSelected(int position) {
-			
+
 			Fragment pos = getFragment(position);
 			if (pos != null)
 				((TabHandler) pos).onSelected();

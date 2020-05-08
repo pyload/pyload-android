@@ -1,7 +1,7 @@
 package org.pyload.android.client;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.view.MenuItem;
 
 public class RemoteSettings extends FragmentActivity {
