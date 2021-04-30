@@ -14,6 +14,7 @@ import javax.net.ssl.*;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -331,5 +332,14 @@ public class pyLoadApp extends Application {
     {
     	return captchaNotificationShown;
     }
+
+	public void showToast(final String text, final int duration){
+		new Handler(Looper.getMainLooper()).post(new Runnable(){
+			@Override
+			public void run() {
+				Toast.makeText(getBaseContext(), text, duration).show();
+			}
+		});
+	}
 
 }

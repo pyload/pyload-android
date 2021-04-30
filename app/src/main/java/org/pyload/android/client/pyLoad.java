@@ -1,15 +1,21 @@
 package org.pyload.android.client;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.view.*;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TabHost;
+
+import androidx.core.view.MenuItemCompat;
 
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
@@ -18,31 +24,26 @@ import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.services.clicknload.ClickNLoadService;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.TabHost;
-import androidx.core.view.MenuItemCompat;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class pyLoad extends FragmentTabsPager
 {
 
 	private pyLoadApp app;
-
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
 
 	/** Called when the activity is first created. */
-
 	public void onCreate(Bundle savedInstanceState)
 	{
 
@@ -90,6 +91,8 @@ public class pyLoad extends FragmentTabsPager
 		spec = mTabHost.newTabSpec(title).setIndicator(title,
 				res.getDrawable(tab_collector));
 		mTabsAdapter.addTab(spec, CollectorFragment.class, null);
+
+		startClickNLoadService();
 	}
 
 	@Override
@@ -359,4 +362,16 @@ public class pyLoad extends FragmentTabsPager
 	{
         return refreshItem;
     }
+
+	private void startClickNLoadService() {
+		if(app.prefs.getBoolean("check_box_clicknload", false)){
+			Intent i= new Intent(getApplicationContext(), ClickNLoadService.class);
+			i.setAction("START");
+			int port = Integer.parseInt(app.prefs.getString("edit_text_clicknload_port", "9666"));
+			i.putExtra("port", port);
+
+			getApplicationContext().startService(i);
+		}
+	}
+
 }

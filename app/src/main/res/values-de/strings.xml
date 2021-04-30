@@ -53,6 +53,11 @@
   <string name="captcha_dialog_titel">Bitte geben Sie den Text ein</string>
   <string name="invert_tabs">Tabfarbe invertieren</string>
   <string name="invert_tabs_desc">Du kannst das Tab-Aussehen ändern, damit es besser zu deinem System Theme passt.</string>
+  <string name="enable_clicknload">Aktiviere Click\'n\'Load</string>
+  <string name="enable_clicknload_desc">Lässt die App auf Click\'n\'Load Verbindungen reagieren.</string>
+  <string name="clicknload_port">Click\'n\'Load Port</string>
+  <string name="clicknload_port_desc">Der Server Port für Click\'n\'Load.</string>
+  <string name="clicknload_toast_msg">Paket mit %d Links empfangen. Zum Collector gesendet</string>
   <string name="ssl">SSL Verbindung</string>
   <string name="ssl_desc">Eine sichere Verbindung zum Server aufbauen, wenn SSL aktiviert wurde.</string>
   <string name="ssl_validate">Bestätige das SSL Zertifikat</string>

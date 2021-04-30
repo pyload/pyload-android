@@ -58,6 +58,11 @@
     <string name="captcha_notification_desc">Enter captcha to continue downloading.</string>
     <string name="invert_tabs">Invert tab icon color</string>
     <string name="invert_tabs_desc">You may change the tab icon layout if it fits better to your theme.</string>
+    <string name="enable_clicknload">Enable Click\'n\'Load</string>
+    <string name="enable_clicknload_desc">Have the app listen for Click\'n\'Load connections.</string>
+    <string name="clicknload_port">Click\'n\'Load Port</string>
+    <string name="clicknload_port_desc">Server Port for Click\'n\'Load.</string>
+    <string name="clicknload_toast_msg">Received a package with %d links. Send to Collector</string>
     <string name="ssl">SSL Connection</string>
     <string name="ssl_desc">Establish a secure connection to the core if you activated SSL</string>
     <string name="ssl_validate">Validate SSL Certificate</string>

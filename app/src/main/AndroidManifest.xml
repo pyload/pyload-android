@@ -105,5 +105,8 @@
 
         <activity android:name=".RemoteSettings" android:label="@string/remotesettings_activity"/>
 
+        <service
+            android:name=".services.clicknload.ClickNLoadService"
+            android:exported="true"/>
     </application>
 </manifest>

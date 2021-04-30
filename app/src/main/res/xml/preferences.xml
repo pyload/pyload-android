@@ -12,8 +12,25 @@
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:numeric="integer"/>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
         <CheckBoxPreference android:key="invert_tabs" android:summary="@string/invert_tabs_desc" android:title="@string/invert_tabs" android:defaultValue="false"/>
-        
-        
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:key="check_box_clicknload"
+            android:summary="@string/enable_clicknload_desc"
+            android:title="@string/enable_clicknload" />
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="9666"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="edit_text_clicknload_port"
+            android:singleLine="true"
+            android:summary="@string/clicknload_port_desc"
+            android:title="@string/clicknload_port" />
+
+
     </PreferenceCategory><PreferenceCategory android:key="login" android:title="@string/login">
         <EditTextPreference android:key="username" android:summary="@string/username_desc" android:title="@string/username" android:singleLine="true"/>
         <EditTextPreference android:key="password" android:title="@string/password" android:singleLine="true" android:password="true"/>
