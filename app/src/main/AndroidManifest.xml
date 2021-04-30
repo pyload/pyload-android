@@ -107,8 +107,6 @@
 
         <service
             android:name=".services.clicknload.ClickNLoadService"
-            android:exported="true"
-            android:process=":cnl_service"/>
-
+            android:exported="true"/>
     </application>
 </manifest>
