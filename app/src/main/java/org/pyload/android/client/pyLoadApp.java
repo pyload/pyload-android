@@ -1,22 +1,19 @@
 package org.pyload.android.client;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-
-import javax.net.ssl.*;
-
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.thrift.TException;
@@ -34,14 +31,16 @@ import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.TaskQueue;
 import org.pyload.thrift.Pyload.Client;
 
-import android.app.Application;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import android.util.Log;
-import android.widget.Toast;
+import javax.net.ssl.*;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class pyLoadApp extends Application {
 
@@ -151,8 +150,10 @@ public class pyLoadApp extends Application {
 			boolean match = false;
 			
 			for (String version : clientVersion)
-				if(server.equals(version))
+				if (server.equals(version)) {
 					match = true;
+					break;
+				}
 			
 			if (!match)
 				throw new WrongServer();
@@ -319,7 +320,7 @@ public class pyLoadApp extends Application {
     }
 
     public static boolean isActionBarAvailable() {
-        return android.os.Build.VERSION.SDK_INT >= 11;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
     
     public void setCaptchaNotificationShown(boolean val)
