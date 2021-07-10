@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "org.pyload.android.client"
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 30
     }
 
     buildTypes {
@@ -20,5 +20,6 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.activity:activity:1.2.3'
     implementation 'org.slf4j:slf4j-android:1.6.1-RC1'
 }
