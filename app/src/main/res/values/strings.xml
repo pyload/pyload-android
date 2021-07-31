@@ -97,7 +97,7 @@
     <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are correct.</string>
     <string name="language">Language</string>
     <string name="language_desc">Language of the app. Needs a restart before changes take effect.</string>
-    <string name="_0_0">0 / 0</string>
+    <string name="_0_0" translatable="false">0 / 0</string>
     <string name="permission_request">Permission request</string>
     <string name="permission_explanation">Browsing for a file need the read-external-storage permission.</string>
     <string name="go_to_settings">Go to settings</string>

@@ -115,4 +115,10 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
+    <string name="captcha_notification">New captcha available!</string>
+  <string name="captcha_notification_desc">Enter captcha to continue downloading.</string>
+  <string name="permission_request">Permission request</string>
+  <string name="permission_explanation">Browsing for a file need the read-external-storage permission.</string>
+  <string name="go_to_settings">Go to settings</string>
+  <string name="allow">Allow</string>
 </resources>
