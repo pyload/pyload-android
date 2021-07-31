@@ -1,6 +1,8 @@
-0.3.8:
+`0.3.8:
 * Works with Android 4.2 again
 * Translation for spanish, polish, dutch, russian, portuguese, greek, turkish, serbian, hebrew
+* Fix Android theme issues
+* Properly ask for external storage permissions when browsing for a container
 
 0.3.7:
 * Works with pyLoad v0.4.20
