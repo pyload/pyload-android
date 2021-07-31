@@ -5,7 +5,7 @@ In case you don't already have it, download it from https://pyload.net, its free
 
 Please report any issues with the client here: https://github.com/pyload/pyload-android/issues
 
-In order to use the Android client make sure the newest pyLoad Core with version 0.4.9 is running on your system, accessible over the network, the ip/hostname is correct and the port forwarded if necessary.
+In order to use the Android client make sure the newest pyLoad Core with version 0.4.9 and up is running on your system, accessible over the network, the ip/hostname is correct, and the port forwarded if necessary.
 
 #### Features
 - Modern UI (Android 4+ components)
@@ -35,9 +35,9 @@ If you like to help, please visit http://crowdin.net/project/pyload for more inf
 
 The pyLoad app is open source, everybody can contribute to make it even better. The source code is located at: https://github.com/pyload/pyload-android
 
-Special thanks go out to all people who helped improving the app:
+Special thanks go out to all people who helped to improve the app:
 
 - ollih - https://bitbucket.org/ollihh
-- cimnine - https://github.org/cimnine
+- cimnine - https://github.com/cimnine
 - jplitza - https://github.com/jplitza
 
