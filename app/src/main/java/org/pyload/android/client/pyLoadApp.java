@@ -59,12 +59,12 @@ public class pyLoadApp extends Application {
 	public void init(pyLoad main) {
 		this.main = main;
 
-		HashMap<Throwable, Runnable> map = new HashMap<Throwable, Runnable>();
-		map.put(new WrongLogin(), handleException);
-		map.put(new WrongServer(), handleException);
-		map.put(new RuntimeException(), handleException);
+		HashMap<Throwable, Runnable> exceptionMap = new HashMap<Throwable, Runnable>();
+		exceptionMap.put(new WrongLogin(), handleException);
+		exceptionMap.put(new WrongServer(), handleException);
+		exceptionMap.put(new RuntimeException(), handleException);
 
-        taskQueue = new TaskQueue(this, new Handler(), map);
+        taskQueue = new TaskQueue(this, new Handler(), exceptionMap);
 		startTaskQueue();
 	}
 
