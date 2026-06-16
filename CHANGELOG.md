@@ -1,4 +1,4 @@
-0.4.0:
+0.4.1:
 * Update for pyload-ng, replace Thrift client with REST client by @Sab44
 * Requires pyLoad-ng v0.5.x
 * Works with Android 5.0 or above
