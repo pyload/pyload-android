@@ -80,7 +80,7 @@
     <string name="size">Size</string>
     <string name="error">Error</string>
     <string name="labelPackage">Package</string>
-    <string name="lambda"></string>
+    <string name="lambda" translatable="false"></string>
     <string name="server_settings">Server settings</string>
     <string name="general_config">General config</string>
     <string name="plugin_config">Plugin config</string>

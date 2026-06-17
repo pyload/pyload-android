@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Dodaj nowy pakiet.</string>
   <string name="destination">Miejsce docelowe</string>
   <string name="overview">Przegląd</string>
+  <string name="collector">Kolektor</string>
+  <string name="queue">Kolejka</string>
   <string name="package_links">Umieść linki tutaj.</string>
   <string name="add">Dodaj</string>
   <string name="cancel">Anuluj</string>

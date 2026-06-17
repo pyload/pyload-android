@@ -32,7 +32,7 @@
   <string name="on">encendido</string>
   <string name="off">apagado</string>
   <string name="n_a">n/d</string>
-  <string name="success">Exito.</string>
+  <string name="success">Éxito.</string>
   <string name="cant_move_files">No puedes mover archivos individuales.</string>
   <string name="abort">Abortar</string>
   <string name="name">Nombre</string>

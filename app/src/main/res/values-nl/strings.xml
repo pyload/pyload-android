@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Nieuwe pakket toevoegen.</string>
   <string name="destination">Bestemming</string>
   <string name="overview">Overzicht</string>
+  <string name="collector">Verzamelaar</string>
+  <string name="queue">Wachtrij</string>
   <string name="package_links">Zet hier je links.</string>
   <string name="add">Toevoegen</string>
   <string name="cancel">Annuleren</string>

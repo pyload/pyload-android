@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Προσθήκη νέου πακέτου.</string>
   <string name="destination">Προορισμός</string>
   <string name="overview">Επισκόπηση</string>
+  <string name="collector">Συλλέκτης</string>
+  <string name="queue">Ουρά</string>
   <string name="package_links">Εισάγετε τους συνδέσμους εδώ.</string>
   <string name="add">Προσθήκη</string>
   <string name="cancel">Ακύρωση</string>

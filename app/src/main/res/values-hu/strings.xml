@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Új csomag</string>
   <string name="destination">Cél</string>
   <string name="overview">Főképernyő</string>
+  <string name="collector">Gyűjtő</string>
+  <string name="queue">Sor</string>
   <string name="package_links">Ide kell a linkeket másolni.</string>
   <string name="add">Hozzáad</string>
   <string name="cancel">Mégse</string>

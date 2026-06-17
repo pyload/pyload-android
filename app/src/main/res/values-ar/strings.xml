@@ -76,7 +76,7 @@
   <string name="size">الحجم</string>
   <string name="error">خطأ</string>
   <string name="labelPackage">حزمة</string>
-  <string name="lambda">[سلسلة فارغة]</string>
+  <string name="lambda"></string>
   <string name="server_settings">إعدادات الخادم</string>
   <string name="general_config">اعدادات عامة</string>
   <string name="plugin_config">اعدادات الاضافات</string>

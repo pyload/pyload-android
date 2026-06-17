@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Додајте нови пакет.</string>
   <string name="destination">Одредиште</string>
   <string name="overview">Преглед</string>
+  <string name="collector">Колектор</string>
+  <string name="queue">Ред</string>
   <string name="package_links">Овде копирате везе.</string>
   <string name="add">Додај</string>
   <string name="cancel">Откажи</string>

@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Thêm một gói mới.</string>
   <string name="destination">Điểm đến</string>
   <string name="overview">Tổng quan</string>
+  <string name="collector">Bộ sưu tập</string>
+  <string name="queue">Hàng đợi</string>
   <string name="package_links">Đặt liên kết của bạn ở đây.</string>
   <string name="add">Thêm</string>
   <string name="cancel">Hủy bỏ</string>

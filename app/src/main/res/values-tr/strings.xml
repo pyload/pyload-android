@@ -18,7 +18,7 @@
   <string name="refresh_rate_desc">genel bakış ekranı için önerilen saniye olarak yenileme hızı </string>
   <string name="server">Sunucu</string>
   <string name="ip">Adres</string>
-  <string name="ip_desc">pyLoad Core için IP yada ana bilgisayar adı.</string>
+  <string name="ip_desc">pyLoad Core için IP ya da ana bilgisayar adı.</string>
   <string name="port">Port</string>
   <string name="port_desc">uzak bölümünde ayarlanan PyloadBackend portu.</string>
   <string name="api_key">API Anahtarı</string>
@@ -39,6 +39,8 @@
   <string name="addlinks_desc">Yeni bir paket ekleyin.</string>
   <string name="destination">Hedef</string>
   <string name="overview">Genel bakış</string>
+  <string name="collector">Toplayıcı</string>
+  <string name="queue">Kuyruk</string>
   <string name="package_links">Bağlantılarınızı buraya kopyalayın.</string>
   <string name="add">Ekle</string>
   <string name="cancel">İptal</string>
