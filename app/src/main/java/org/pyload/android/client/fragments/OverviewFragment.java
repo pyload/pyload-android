@@ -2,6 +2,7 @@ package org.pyload.android.client.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.pyload.android.client.R;
 import org.pyload.android.client.pyLoad;
@@ -43,100 +44,98 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class OverviewFragment extends ListFragment implements
-		OnDismissListener, TabHandler {
+        OnDismissListener, TabHandler {
 
-	private pyLoadApp app;
-	private PyLoadRestApi client;
-	private OverviewAdapter adp;
+    private pyLoadApp app;
+    private PyLoadRestApi client;
+    private OverviewAdapter adp;
 
-	private List<DownloadInfo> downloads;
-	private ServerStatus status;
-	private CaptchaTask captcha;
-	private int lastCaptcha = -1;
-	private int interval = 5;
-	private boolean update = false;
-	private boolean dialogOpen = false;
-	// tab position
-	private int pos = -1;
+    private List<DownloadInfo> downloads;
+    private ServerStatus status;
+    private CaptchaTask captcha;
+    private int lastCaptcha = -1;
+    private int interval = 5;
+    private boolean update = false;
+    private boolean dialogOpen = false;
+    // tab position
+    private int pos = -1;
 
-	/**
-	 * GUI Elements
-	 */
-	private TextView statusServer;
-	private TextView reconnect;
-	private TextView speed;
-	private TextView active;
+    /**
+     * GUI Elements
+     */
+    private TextView statusServer;
+    private TextView reconnect;
+    private TextView speed;
+    private TextView active;
 
-	private final Handler mHandler = new Handler();
-	private final Runnable mUpdateResults = new Runnable() {
+    private final Handler mHandler = new Handler();
+    private final Runnable mUpdateResults = new Runnable() {
 
-		public void run() {
-			onDataReceived();
-		}
-	};
-	private final Runnable runUpdate = new Runnable() {
+        public void run() {
+            onDataReceived();
+        }
+    };
+    private final Runnable runUpdate = new Runnable() {
 
-		public void run() {
-			client = app.getClient();
-			downloads = app.executeNetworkCall(client.apiStatusDownloadsGet());
-			status = app.executeNetworkCall(client.apiStatusServerGet());
-			if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
-				Log.d("pyLoad", "Captcha available");
-				captcha = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
-				Log.d("pyload", captcha.getResultType());
-				showNotification();
-			}
-			else
-			{
-				app.setCaptchaNotificationShown(false);
-			}
-		}
-	};
+        public void run() {
+            client = app.getClient();
+            downloads = app.executeNetworkCall(client.apiStatusDownloadsGet());
+            status = app.executeNetworkCall(client.apiStatusServerGet());
+            if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
+                Log.d("pyLoad", "Captcha available");
+                captcha = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
+                Log.d("pyload", captcha.getResultType());
+                showNotification();
+            } else {
+                app.setCaptchaNotificationShown(false);
+            }
+        }
+    };
 
-	private final Runnable cancelUpdate = new Runnable() {
+    private final Runnable cancelUpdate = new Runnable() {
 
-		public void run() {
-			stopUpdate();
-		}
-	};
+        public void run() {
+            stopUpdate();
+        }
+    };
 
-	private final Runnable mUpdateTimeTask = new Runnable() {
-		public void run() {
-			refresh();
-			if (update)
-				mHandler.postDelayed(this, interval * 1000);
-		}
-	};
+    private final Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            refresh();
+            if (update)
+                mHandler.postDelayed(this, interval * 1000);
+        }
+    };
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		app = (pyLoadApp) getActivity().getApplicationContext();
+        app = (pyLoadApp) getActivity().getApplicationContext();
 
-		downloads = new ArrayList<DownloadInfo>();
-		adp = new OverviewAdapter(app, R.layout.overview_item, downloads);
-	}
+        downloads = new ArrayList<DownloadInfo>();
+        adp = new OverviewAdapter(app, R.layout.overview_item, downloads);
+    }
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		View v = inflater.inflate(R.layout.overview, null, false);
+        View v = inflater.inflate(R.layout.overview, null, false);
 
-		statusServer = (TextView) v.findViewById(R.id.status_server);
-		reconnect = (TextView) v.findViewById(R.id.reconnect);
-		speed = (TextView) v.findViewById(R.id.speed);
-		active = (TextView) v.findViewById(R.id.active);
+        statusServer = (TextView) v.findViewById(R.id.status_server);
+        reconnect = (TextView) v.findViewById(R.id.reconnect);
+        speed = (TextView) v.findViewById(R.id.speed);
+        active = (TextView) v.findViewById(R.id.active);
 
         // toggle pause on click
         statusServer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 app.addTask(new GuiTask(new Runnable() {
-     				public void run() {
-						PyLoadRestApi client = app.getClient();
-						app.executeNetworkCall(client.apiTogglePausePost());
+                    public void run() {
+                        PyLoadRestApi client = app.getClient();
+                        app.executeNetworkCall(client.apiTogglePausePost());
                     }
-     			}, app.handleSuccess));
+                }, app.handleSuccess));
             }
         });
 
@@ -146,309 +145,305 @@ public class OverviewFragment extends ListFragment implements
                 app.addTask(new GuiTask(new Runnable() {
                     public void run() {
                         PyLoadRestApi client = app.getClient();
-						app.executeNetworkCall(client.apiToggleReconnectPost());
+                        app.executeNetworkCall(client.apiToggleReconnectPost());
                     }
                 }, app.handleSuccess));
             }
         });
 
-		if (status != null && downloads != null)
-			onDataReceived();
+        if (status != null && downloads != null)
+            onDataReceived();
 
-		registerForContextMenu(v.findViewById(android.R.id.list));
+        registerForContextMenu(v.findViewById(android.R.id.list));
 
-		return v;
-	}
+        return v;
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		setListAdapter(adp);
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setListAdapter(adp);
+    }
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		onSelected();
-	}
+    @Override
+    public void onStart() {
+        super.onStart();
+        onSelected();
+    }
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.overview_context_menu, menu);
-		menu.setHeaderTitle(R.string.choose_action);
-	}
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.overview_context_menu, menu);
+        menu.setHeaderTitle(R.string.choose_action);
+    }
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
 
-		if (!app.isCurrentTab(pos))
-			return false;
+        if (!app.isCurrentTab(pos))
+            return false;
 
-		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
-				.getMenuInfo();
-		final int id = menuInfo.position;
-		final DownloadInfo info = downloads.get(id);
-		switch (item.getItemId()) {
-		case R.id.abort:
+        AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        final int id = menuInfo.position;
+        final DownloadInfo info = downloads.get(id);
+        int itemId = item.getItemId();
+        if (itemId == R.id.abort) {
 
-			app.addTask(new GuiTask(new Runnable() {
+            app.addTask(new GuiTask(new Runnable() {
 
-				public void run() {
-					client = app.getClient();
-					ArrayList<Integer> fids = new ArrayList<Integer>();
-					fids.add(info.getFid());
-					ApiStopDownloadsPostRequest request = new ApiStopDownloadsPostRequest().fileIds(fids);
-					app.executeNetworkCall(client.apiStopDownloadsPost(request));
+                public void run() {
+                    client = app.getClient();
+                    ArrayList<Integer> fids = new ArrayList<Integer>();
+                    fids.add(info.getFid());
+                    ApiStopDownloadsPostRequest request = new ApiStopDownloadsPostRequest().fileIds(fids);
+                    app.executeNetworkCall(client.apiStopDownloadsPost(request));
                 }
-			}, new Runnable() {
+            }, new Runnable() {
 
-				public void run() {
-					refresh();
-				}
-			}));
-			return true;
+                public void run() {
+                    refresh();
+                }
+            }));
+            return true;
+        }
 
-		default:
-			return super.onContextItemSelected(item);
-		}
+        return super.onContextItemSelected(item);
 
-	}
+    }
 
-	@Override
-	public void onSelected() {
-		startUpdate();
-	}
+    @Override
+    public void onSelected() {
+        startUpdate();
+    }
 
-	@Override
-	public void onDeselected() {
-		stopUpdate();
-	}
+    @Override
+    public void onDeselected() {
+        stopUpdate();
+    }
 
-	private void startUpdate() {
-		// already update running
-		if (update)
-			return;
-		try {
-			interval = Integer.parseInt(app.prefs
-					.getString("refresh_rate", "5"));
-		} catch (NumberFormatException e) {
-			// somehow contains illegal value
-			interval = 5;
-		}
+    private void startUpdate() {
+        // already update running
+        if (update)
+            return;
+        try {
+            interval = Integer.parseInt(app.prefs
+                    .getString("refresh_rate", "5"));
+        } catch (NumberFormatException e) {
+            // somehow contains illegal value
+            interval = 5;
+        }
 
-		update = true;
-		mHandler.post(mUpdateTimeTask);
-	}
+        update = true;
+        mHandler.post(mUpdateTimeTask);
+    }
 
-	private void stopUpdate() {
-		update = false;
-		mHandler.removeCallbacks(mUpdateTimeTask);
-	}
+    private void stopUpdate() {
+        update = false;
+        mHandler.removeCallbacks(mUpdateTimeTask);
+    }
 
-	/**
-	 * Called when Status data received
-	 */
-	protected void onDataReceived() {
-		OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
+    /**
+     * Called when Status data received
+     */
+    protected void onDataReceived() {
+        OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
 
-		adapter.setDownloads(downloads);
+        adapter.setDownloads(downloads);
 
-		statusServer.setText(app.verboseBool(status.getDownload()));
-		reconnect.setText(app.verboseBool(status.getReconnect()));
-		speed.setText(Utils.formatSize(status.getSpeed()) + "/s");
-		active.setText(String.format("%d / %d", status.getActive(), status.getTotal()));
+        statusServer.setText(app.verboseBool(status.getDownload()));
+        reconnect.setText(app.verboseBool(status.getReconnect()));
+        speed.setText(Utils.formatSize(status.getSpeed()) + "/s");
+        active.setText(String.format(Locale.US, "%d / %d", status.getActive(), status.getTotal()));
 
-		if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
-				&& captcha.getResultType() != null // string null bug
-				&& captcha.getResultType().equals("textual")
-				&& lastCaptcha != captcha.getTid()) {
-			showDialog();
-		}
+        if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
+                && captcha.getResultType() != null // string null bug
+                && captcha.getResultType().equals("textual")
+                && lastCaptcha != captcha.getTid()) {
+            showDialog();
+        }
 
-	}
+    }
 
-	public void refresh() {
-		if (!app.hasConnection())
-			return;
+    public void refresh() {
+        if (!app.hasConnection())
+            return;
 
-		GuiTask task = new GuiTask(runUpdate, mUpdateResults);
-		task.setCritical(cancelUpdate);
+        GuiTask task = new GuiTask(runUpdate, mUpdateResults);
+        task.setCritical(cancelUpdate);
 
-		app.addTask(task);
-	}
+        app.addTask(task);
+    }
 
-	private void showDialog() {
+    private void showDialog() {
 
-		if (dialogOpen || captcha == null)
-			return;
+        if (dialogOpen || captcha == null)
+            return;
 
-		CaptchaDialog dialog = CaptchaDialog.newInstance(captcha);
-		lastCaptcha = captcha.getTid();
+        CaptchaDialog dialog = CaptchaDialog.newInstance(captcha);
+        lastCaptcha = captcha.getTid();
 
-		Log.d("pyLoad", "Got Captcha Task");
+        Log.d("pyLoad", "Got Captcha Task");
 
-		dialog.setOnDismissListener(this);
+        dialog.setOnDismissListener(this);
 
-		dialogOpen = true;
-		
-		
-		
-		try {
-			dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
-		} catch (IllegalStateException e) {
-			dialogOpen = false;
-			// seems to appear when overview is already closed
-			Log.e("pyLoad", "Dialog state error", e);
-		} catch (NullPointerException e) {
-			dialogOpen = false;
-			// something is null, but why?
-			Log.e("pyLoad", "Dialog null pointer error", e);
-		}
+        dialogOpen = true;
 
-	}
 
-	public void onDismiss(DialogInterface arg0) {
-		captcha = null;
-		dialogOpen = false;
-	}
+        try {
+            dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
+        } catch (IllegalStateException e) {
+            dialogOpen = false;
+            // seems to appear when overview is already closed
+            Log.e("pyLoad", "Dialog state error", e);
+        } catch (NullPointerException e) {
+            dialogOpen = false;
+            // something is null, but why?
+            Log.e("pyLoad", "Dialog null pointer error", e);
+        }
 
-	@Override
-	public void setPosition(int pos) {
-		this.pos = pos;
-	}
-	
-	private void showNotification()
-	{
-		if (!app.getCaptchaNotificationShown())
-		{
-			app.setCaptchaNotificationShown(true);
-			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app)
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(getString(R.string.captcha_notification))
-				.setContentText(getString(R.string.captcha_notification_desc));
-				
-			Intent notificationIntent = new Intent(app, pyLoad.class);
-			notificationIntent.putExtra("CaptchaNotification", true);
-			PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);	 
-			mBuilder.setContentIntent(contentIntent);
-			NotificationManager mNotificationManager = (NotificationManager)app.getSystemService(Context.NOTIFICATION_SERVICE);
-			Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-			mBuilder.setSound(alarmSound);
-			mNotificationManager.notify(0, mBuilder.build());	
-		}
-	}
+    }
+
+    public void onDismiss(DialogInterface arg0) {
+        captcha = null;
+        dialogOpen = false;
+    }
+
+    @Override
+    public void setPosition(int pos) {
+        this.pos = pos;
+    }
+
+    private void showNotification() {
+        if (!app.getCaptchaNotificationShown()) {
+            app.setCaptchaNotificationShown(true);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle(getString(R.string.captcha_notification))
+                    .setContentText(getString(R.string.captcha_notification_desc));
+
+            Intent notificationIntent = new Intent(app, pyLoad.class);
+            notificationIntent.putExtra("CaptchaNotification", true);
+            PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(contentIntent);
+            NotificationManager mNotificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(alarmSound);
+            mNotificationManager.notify(0, mBuilder.build());
+        }
+    }
 }
 
 /**
  * Renders the single ListView items
- * 
+ *
  * @author RaNaN
- * 
+ *
  */
 class OverviewAdapter extends BaseAdapter {
 
-	static class ViewHolder {
-		private TextView name;
-		private ProgressBar progress;
-		private TextView size;
-		private TextView percent;
-		private TextView size_done;
-		private TextView speed;
-		private TextView eta;
-	}
+    static class ViewHolder {
+        private TextView name;
+        private ProgressBar progress;
+        private TextView size;
+        private TextView percent;
+        private TextView size_done;
+        private TextView speed;
+        private TextView eta;
+    }
 
-	private final pyLoadApp app;
-	private List<DownloadInfo> downloads;
-	private final int rowResID;
-	private final LayoutInflater layoutInflater;
+    private final pyLoadApp app;
+    private List<DownloadInfo> downloads;
+    private final int rowResID;
+    private final LayoutInflater layoutInflater;
 
-	public OverviewAdapter(final pyLoadApp app, final int rowResID,
-			List<DownloadInfo> downloads) {
-		this.app = app;
-		this.rowResID = rowResID;
-		this.downloads = downloads;
+    public OverviewAdapter(final pyLoadApp app, final int rowResID,
+                           List<DownloadInfo> downloads) {
+        this.app = app;
+        this.rowResID = rowResID;
+        this.downloads = downloads;
 
-		layoutInflater = (LayoutInflater) app
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
+        layoutInflater = (LayoutInflater) app
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
-	public void setDownloads(List<DownloadInfo> downloads) {
-		this.downloads = downloads;
-		notifyDataSetChanged();
-	}
+    public void setDownloads(List<DownloadInfo> downloads) {
+        this.downloads = downloads;
+        notifyDataSetChanged();
+    }
 
-	public int getCount() {
-		return downloads.size();
-	}
+    public int getCount() {
+        return downloads.size();
+    }
 
-	public Object getItem(int id) {
-		return downloads.get(id);
-	}
+    public Object getItem(int id) {
+        return downloads.get(id);
+    }
 
-	public long getItemId(int pos) {
-		return pos;
-	}
+    public long getItemId(int pos) {
+        return pos;
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		DownloadInfo info = downloads.get(position);
-		if (convertView == null) {
-			convertView = layoutInflater.inflate(rowResID, null);
-			ViewHolder holder = new ViewHolder();
-			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.progress = (ProgressBar) convertView
-					.findViewById(R.id.progress);
-			holder.size = (TextView) convertView.findViewById(R.id.size);
-			holder.speed = (TextView) convertView.findViewById(R.id.speed);
-			holder.size_done = (TextView) convertView
-					.findViewById(R.id.size_done);
-			holder.eta = (TextView) convertView.findViewById(R.id.eta);
-			holder.percent = (TextView) convertView.findViewById(R.id.percent);
-			convertView.setTag(holder);
-		}
+    public View getView(int position, View convertView, ViewGroup parent) {
+        DownloadInfo info = downloads.get(position);
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(rowResID, null);
+            ViewHolder holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.name);
+            holder.progress = (ProgressBar) convertView
+                    .findViewById(R.id.progress);
+            holder.size = (TextView) convertView.findViewById(R.id.size);
+            holder.speed = (TextView) convertView.findViewById(R.id.speed);
+            holder.size_done = (TextView) convertView
+                    .findViewById(R.id.size_done);
+            holder.eta = (TextView) convertView.findViewById(R.id.eta);
+            holder.percent = (TextView) convertView.findViewById(R.id.percent);
+            convertView.setTag(holder);
+        }
 
-		ViewHolder holder = (ViewHolder) convertView.getTag();
-		
-		
-		// name is null sometimes somehow
-		if (info.getName() != null && !info.getName().equals(holder.name.getText())) {
-			holder.name.setText(info.getName());
-		}
+        ViewHolder holder = (ViewHolder) convertView.getTag();
 
-		holder.progress.setProgress(info.getPercent());
 
-		if (info.getStatus() == DownloadStatus.DOWNLOADING) {
-			holder.size.setText(Utils.formatSize(info.getSize()));
-			holder.percent.setText(info.getPercent() + "%");
-			holder.size_done.setText(Utils.formatSize(info.getSize() - info.getBleft()));
+        // name is null sometimes somehow
+        if (info.getName() != null && !info.getName().equals(holder.name.getText())) {
+            holder.name.setText(info.getName());
+        }
 
-			holder.speed.setText(Utils.formatSize(info.getSpeed()) + "/s");
-			holder.eta.setText(info.getFormatEta());
+        holder.progress.setProgress(info.getPercent());
 
-		} else if (info.getStatus() == DownloadStatus.WAITING) {
-			holder.size.setText(R.string.lambda);
-			holder.percent.setText(R.string.lambda);
-			holder.size_done.setText(R.string.lambda);
+        if (info.getStatus() == DownloadStatus.DOWNLOADING) {
+            holder.size.setText(Utils.formatSize(info.getSize()));
+            holder.percent.setText(info.getPercent() + "%");
+            holder.size_done.setText(Utils.formatSize(info.getSize() - info.getBleft()));
 
-			holder.speed.setText(info.getStatusmsg());
-			holder.eta.setText(info.getFormatWait());
+            holder.speed.setText(Utils.formatSize(info.getSpeed()) + "/s");
+            holder.eta.setText(info.getFormatEta());
 
-		} else {
-			holder.size.setText(R.string.lambda);
-			holder.percent.setText(R.string.lambda);
-			holder.size_done.setText(R.string.lambda);
+        } else if (info.getStatus() == DownloadStatus.WAITING) {
+            holder.size.setText(R.string.lambda);
+            holder.percent.setText(R.string.lambda);
+            holder.size_done.setText(R.string.lambda);
 
-			holder.speed.setText(info.getStatusmsg());
-			holder.eta.setText(R.string.lambda);
-		}
+            holder.speed.setText(info.getStatusmsg());
+            holder.eta.setText(info.getFormatWait());
 
-		return convertView;
+        } else {
+            holder.size.setText(R.string.lambda);
+            holder.percent.setText(R.string.lambda);
+            holder.size_done.setText(R.string.lambda);
 
-	}
+            holder.speed.setText(info.getStatusmsg());
+            holder.eta.setText(R.string.lambda);
+        }
 
-	public boolean hasStableIds() {
-		return false;
-	}
+        return convertView;
+
+    }
+
+    public boolean hasStableIds() {
+        return false;
+    }
 
 }

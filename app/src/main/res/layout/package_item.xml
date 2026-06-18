@@ -8,7 +8,7 @@
   android:layout_weight="1"
   android:padding="6dip">
   
-  <org.pyload.android.client.components.ScrollingTextView xmlns:android="http://schemas.android.com/apk/res/android"
+  <org.pyload.android.client.components.ScrollingTextView
     android:id="@+id/name"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -19,7 +19,6 @@
     android:ellipsize="marquee"
     android:scrollHorizontally="true"
     android:singleLine="true"
-	android:maxLines="1"
 	android:textColor="@android:color/white"
   />
     	

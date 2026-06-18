@@ -7,6 +7,8 @@ import android.provider.OpenableColumns;
 
 import com.google.gson.Gson;
 
+import java.util.Locale;
+
 public final class Utils {
 
 	private static Gson gson;
@@ -19,7 +21,7 @@ public final class Utils {
 			format /= 1024.0;
 			steps++;
 		}
-		return String.format("%.2f %s", format, sizes[steps]);
+		return String.format(Locale.US, "%.2f %s", format, sizes[steps]);
 	}
 
 	public static String getFileName(Context context, Uri uri) {

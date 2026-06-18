@@ -1,6 +1,5 @@
 package org.pyload.android.client;
 
-import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -65,7 +64,7 @@ public class pyLoadApp extends Application {
 		exceptionMap.put(new RuntimeException(), handleException);
 
         taskQueue = new TaskQueue(this, new Handler(), exceptionMap);
-		startTaskQueue();
+        startTaskQueue();
 	}
 
 	public String verboseBool(boolean state) {
@@ -314,12 +313,10 @@ public class pyLoadApp extends Application {
         }
 	}
 
-    @TargetApi(5)
     private void setIndeterminateProgress(boolean state) {
         main.setProgressBarIndeterminateVisibility(state);
     }
 
-    @TargetApi(11)
     private void setIndeterminateProgress(MenuItem item, boolean state) {
         if (item == null) {
             return;

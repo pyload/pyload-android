@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "org.pyload.android.client"
         minSdkVersion 21
-        targetSdkVersion 35
+        targetSdkVersion 30
     }
 
     buildFeatures {

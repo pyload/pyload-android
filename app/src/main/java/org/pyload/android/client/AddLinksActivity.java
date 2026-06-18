@@ -191,7 +191,7 @@ public class AddLinksActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 								if (gotoSettings) {
 									startAppSettings();
-								} else {
+								} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 									requestPermission();
 								}
 							}

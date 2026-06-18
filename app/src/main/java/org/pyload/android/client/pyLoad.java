@@ -37,18 +37,18 @@ import androidx.core.view.MenuItemCompat;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class pyLoad extends FragmentTabsPager
-{
+public class pyLoad extends FragmentTabsPager {
 
-	private pyLoadApp app;
+    private pyLoadApp app;
 
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
 
-	/** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
 
-	public void onCreate(Bundle savedInstanceState)
-	{
+    public void onCreate(Bundle savedInstanceState) {
 
         Log.d("pyLoad", "Starting pyLoad App");
 
@@ -56,53 +56,49 @@ public class pyLoad extends FragmentTabsPager
         app.prefs = PreferenceManager.getDefaultSharedPreferences(this);
         initLocale();
 
-		super.onCreate(savedInstanceState);
-		Eula.show(this);
+        super.onCreate(savedInstanceState);
+        Eula.show(this);
 
-		app.cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		app.init(this);
+        app.cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        app.init(this);
 
-		Resources res = getResources(); // Resource object to get Drawables
-		TabHost.TabSpec spec; // Resusable TabSpec for each tab
-		String title;
+        Resources res = getResources(); // Resource object to get Drawables
+        TabHost.TabSpec spec; // Resusable TabSpec for each tab
+        String title;
 
-		int tab_pyload, tab_queue, tab_collector;
-		if (app.prefs.getBoolean("invert_tabs", false))
-		{
-			tab_pyload = R.drawable.ic_tab_pyload_inverted;
-			tab_queue = R.drawable.ic_tab_queue_inverted;
-			tab_collector = R.drawable.ic_tab_collector_inverted;
-		}
-		else
-		{
-			tab_pyload = R.drawable.ic_tab_pyload;
-			tab_queue = R.drawable.ic_tab_queue;
-			tab_collector = R.drawable.ic_tab_collector;
-		}
+        int tab_pyload, tab_queue, tab_collector;
+        if (app.prefs.getBoolean("invert_tabs", false)) {
+            tab_pyload = R.drawable.ic_tab_pyload_inverted;
+            tab_queue = R.drawable.ic_tab_queue_inverted;
+            tab_collector = R.drawable.ic_tab_collector_inverted;
+        } else {
+            tab_pyload = R.drawable.ic_tab_pyload;
+            tab_queue = R.drawable.ic_tab_queue;
+            tab_collector = R.drawable.ic_tab_collector;
+        }
 
-		title = getString(R.string.overview);
-		spec = mTabHost.newTabSpec(title).setIndicator(title,
-				res.getDrawable(tab_pyload));
-		mTabsAdapter.addTab(spec, OverviewFragment.class, null);
+        title = getString(R.string.overview);
+        spec = mTabHost.newTabSpec(title).setIndicator(title,
+                res.getDrawable(tab_pyload));
+        mTabsAdapter.addTab(spec, OverviewFragment.class, null);
 
-		title = getString(R.string.queue);
-		spec = mTabHost.newTabSpec(title).setIndicator(title,
-				res.getDrawable(tab_queue));
-		mTabsAdapter.addTab(spec, QueueFragment.class, null);
+        title = getString(R.string.queue);
+        spec = mTabHost.newTabSpec(title).setIndicator(title,
+                res.getDrawable(tab_queue));
+        mTabsAdapter.addTab(spec, QueueFragment.class, null);
 
-		title = getString(R.string.collector);
-		spec = mTabHost.newTabSpec(title).setIndicator(title,
-				res.getDrawable(tab_collector));
-		mTabsAdapter.addTab(spec, CollectorFragment.class, null);
-	}
+        title = getString(R.string.collector);
+        spec = mTabHost.newTabSpec(title).setIndicator(title,
+                res.getDrawable(tab_collector));
+        mTabsAdapter.addTab(spec, CollectorFragment.class, null);
+    }
 
-	@Override
-	protected void onStart()
-	{
-		super.onStart();
-		Intent intent = getIntent();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = getIntent();
         String action = intent.getAction();
-		Uri data = intent.getData();
+        Uri data = intent.getData();
 
         // we got a SHARE intent
         if (Intent.ACTION_SEND.equals(action)) {
@@ -112,50 +108,41 @@ public class pyLoad extends FragmentTabsPager
             startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
             intent.setAction(Intent.ACTION_MAIN);
 
-        // we got a VIEW intent
-        }
-        else if (Intent.ACTION_VIEW.equals(action) && data != null)
-        {
-            if (intent.getScheme().startsWith("http") || intent.getScheme().contains("ftp"))
-            {
+            // we got a VIEW intent
+        } else if (Intent.ACTION_VIEW.equals(action) && data != null) {
+            if (intent.getScheme().startsWith("http") || intent.getScheme().contains("ftp")) {
                 Intent addURL = new Intent(app, AddLinksActivity.class);
                 addURL.putExtra("url", data.toString());
                 startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
-            }
-            else if (intent.getScheme().equals("file"))
-            {
+            } else if (intent.getScheme().equals("file")) {
                 Intent addURL = new Intent(app, AddLinksActivity.class);
                 addURL.putExtra("dlcpath", data.getPath());
                 startActivityForResult(addURL, AddLinksActivity.NEW_PACKAGE);
             }
             intent.setData(null);
         }
-	}
+    }
 
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		Intent intent = getIntent();
-	    //app.setCaptchaNotificationShown(intent.getBooleanExtra("CaptchaNotification", false));
-	    if (intent.getBooleanExtra("CaptchaNotification", false))
-	    {
-	    	NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
-	    	notificationManager.cancel(0);
-	    }
-		app.refreshTab();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        //app.setCaptchaNotificationShown(intent.getBooleanExtra("CaptchaNotification", false));
+        if (intent.getBooleanExtra("CaptchaNotification", false)) {
+            NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(0);
+        }
+        app.refreshTab();
+    }
 
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-		app.clearTasks();
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        app.clearTasks();
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         refreshItem = menu.findItem(R.id.refresh);
@@ -164,172 +151,154 @@ public class pyLoad extends FragmentTabsPager
         MenuItemCompat.setShowAsAction(menu.findItem(R.id.add_links),
                 MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-		case R.id.add_links:
-			startActivityForResult(new Intent(app, AddLinksActivity.class),
-					AddLinksActivity.NEW_PACKAGE);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.add_links) {
+            startActivityForResult(new Intent(app, AddLinksActivity.class),
+                    AddLinksActivity.NEW_PACKAGE);
 
-			return true;
+            return true;
 
-		case R.id.refresh:
-			app.resetClient();
-			app.refreshTab();
+        } else if (itemId == R.id.refresh) {
+            app.resetClient();
+            app.refreshTab();
 
-			return true;
+            return true;
 
-		case R.id.settings:
-			Intent settingsActivity = new Intent(app, Preferences.class);
-			startActivity(settingsActivity);
+        } else if (itemId == R.id.settings) {
+            Intent settingsActivity = new Intent(app, Preferences.class);
+            startActivity(settingsActivity);
 
-			return true;
+            return true;
 
-        case R.id.show_accounts:
+        } else if (itemId == R.id.show_accounts) {
             AccountDialog accountsList = new AccountDialog();
             accountsList.show(getSupportFragmentManager(), "accountsDialog");
 
             return true;
 
-        case R.id.remote_settings:
+        } else if (itemId == R.id.remote_settings) {
             Intent serverConfigActivity = new Intent(app, RemoteSettings.class);
             startActivity(serverConfigActivity);
 
             return true;
 
-        case R.id.restart_failed:
-            app.addTask(new GuiTask(new Runnable()
-			{
-                public void run()
-				{
+        } else if (itemId == R.id.restart_failed) {
+            app.addTask(new GuiTask(new Runnable() {
+                public void run() {
                     PyLoadRestApi client = app.getClient();
-					app.executeNetworkCall(client.apiRestartFailedPost());
+                    app.executeNetworkCall(client.apiRestartFailedPost());
                 }
             }, app.handleSuccess));
 
             return true;
+        }
 
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+        return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		switch (requestCode)
-		{
-		case AddLinksActivity.NEW_PACKAGE:
-			switch (resultCode)
-			{
-			case RESULT_OK:
-				final String name = data.getStringExtra("name");
-				final String[] link_array = data.getStringExtra("links").trim()
-						.split("\n");
-				final Destination dest;
-				final String filepath = data.getStringExtra("filepath");
-				final String filename = data.getStringExtra("filename");
-				final Uri filepathUri = Uri.parse(filepath);
+        switch (requestCode) {
+            case AddLinksActivity.NEW_PACKAGE:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        final String name = data.getStringExtra("name");
+                        final String[] link_array = data.getStringExtra("links").trim()
+                                .split("\n");
+                        final Destination dest;
+                        final String filepath = data.getStringExtra("filepath");
+                        final String filename = data.getStringExtra("filename");
+                        final Uri filepathUri = Uri.parse(filepath);
 
-				if (data.getIntExtra("dest", 0) == 0)
-					dest = Destination.QUEUE;
-				else
-					dest = Destination.COLLECTOR;
+                        if (data.getIntExtra("dest", 0) == 0)
+                            dest = Destination.QUEUE;
+                        else
+                            dest = Destination.COLLECTOR;
 
-				final ArrayList<String> links = new ArrayList<String>();
-				for (String link_row : link_array)
-					for (String link : link_row.trim().split(" "))
-						if (!link.equals(""))
-							links.add(link);
+                        final ArrayList<String> links = new ArrayList<String>();
+                        for (String link_row : link_array)
+                            for (String link : link_row.trim().split(" "))
+                                if (!link.equals(""))
+                                    links.add(link);
 
-				final String password = data.getStringExtra("password");
+                        final String password = data.getStringExtra("password");
 
-				app.addTask(new GuiTask(new Runnable()
-				{
+                        app.addTask(new GuiTask(new Runnable() {
 
-					public void run()
-					{
-						PyLoadRestApi client = app.getClient();
+                            public void run() {
+                                PyLoadRestApi client = app.getClient();
 
-						if (links.size() > 0)
-						{
-							ApiAddPackagePostRequest addPackageRequest = new ApiAddPackagePostRequest()
-									.name(name)
-									.links(links)
-									.dest(dest);
-							int pid = app.executeNetworkCall(client.apiAddPackagePost(addPackageRequest));
+                                if (links.size() > 0) {
+                                    ApiAddPackagePostRequest addPackageRequest = new ApiAddPackagePostRequest()
+                                            .name(name)
+                                            .links(links)
+                                            .dest(dest);
+                                    int pid = app.executeNetworkCall(client.apiAddPackagePost(addPackageRequest));
 
-                            if (password != null && !password.equals(""))
-							{
-								HashMap<String, Object> opts = new HashMap<>();
-								opts.put("password", password);
+                                    if (password != null && !password.equals("")) {
+                                        HashMap<String, Object> opts = new HashMap<>();
+                                        opts.put("password", password);
 
-								ApiSetPackageDataPostRequest setPackageDataRequest = new ApiSetPackageDataPostRequest()
-										.packageId(pid)
-										.data(opts);
-								app.executeNetworkCall(client.apiSetPackageDataPost(setPackageDataRequest));
-							}
-						}
-						if (!filepath.equals(""))
-						{
-							try(InputStream inputStream = getContentResolver().openInputStream(filepathUri);
-								ByteArrayOutputStream outputStream = new ByteArrayOutputStream())
-							{
-								byte[] buffer = new byte[1024];
-								int length;
-								while ((length = inputStream.read(buffer)) != -1) {
-									outputStream.write(buffer, 0, length);
-								}
+                                        ApiSetPackageDataPostRequest setPackageDataRequest = new ApiSetPackageDataPostRequest()
+                                                .packageId(pid)
+                                                .data(opts);
+                                        app.executeNetworkCall(client.apiSetPackageDataPost(setPackageDataRequest));
+                                    }
+                                }
+                                if (!filepath.equals("")) {
+                                    try (InputStream inputStream = getContentResolver().openInputStream(filepathUri);
+                                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                                        byte[] buffer = new byte[1024];
+                                        int length;
+                                        while ((length = inputStream.read(buffer)) != -1) {
+                                            outputStream.write(buffer, 0, length);
+                                        }
 
-								byte[] fileBytes = outputStream.toByteArray();
+                                        byte[] fileBytes = outputStream.toByteArray();
 
-								if (fileBytes.length > 1048576) { // 1 MB
-									throw new IOException("File size too large");
-								}
+                                        if (fileBytes.length > 1048576) { // 1 MB
+                                            throw new IOException("File size too large");
+                                        }
 
-								RequestBody body = RequestBody.create(null, fileBytes);
-								MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("data", filename, body);
-								client.apiUploadContainerPost(filename, multipartBody).execute();
-							}
-							catch (IOException e)
-							{
-								Log.e("pyLoad", "Error when uploading file", e);
-								throw new RuntimeException(e);
-							}
-						}
+                                        RequestBody body = RequestBody.create(null, fileBytes);
+                                        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("data", filename, body);
+                                        client.apiUploadContainerPost(filename, multipartBody).execute();
+                                    } catch (IOException e) {
+                                        Log.e("pyLoad", "Error when uploading file", e);
+                                        throw new RuntimeException(e);
+                                    }
+                                }
 
-					}
-				}, app.handleSuccess));
-				break;
-			default:
-				break;
-			}
-			break;
+                            }
+                        }, app.handleSuccess));
+                        break;
+                    default:
+                        break;
+                }
+                break;
 
-		default:
-			super.onActivityResult(requestCode, resultCode, data);
-		}
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
 
-	}
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent)
-	{
-		Log.d("pyLoad", "got Intent");
-		super.onNewIntent(intent);
-	}
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d("pyLoad", "got Intent");
+        super.onNewIntent(intent);
+    }
 
     /**
      * Sets the locale defined in config.
      */
-    private void initLocale()
-	{
+    private void initLocale() {
 
         String language = app.prefs.getString("language", "");
         Locale locale;
@@ -345,23 +314,19 @@ public class pyLoad extends FragmentTabsPager
                 getResources().getDisplayMetrics());
     }
 
-	public void setCaptchaResult(final int tid, final String result)
-	{
-		app.addTask(new GuiTask(new Runnable()
-		{
+    public void setCaptchaResult(final int tid, final String result) {
+        app.addTask(new GuiTask(new Runnable() {
 
-			public void run()
-			{
-				PyLoadRestApi client = app.getClient();
-				Log.d("pyLoad", "Send Captcha result: " + tid + " " + result);
-				app.executeNetworkCall(client.apiSetCaptchaResultPost(tid, result));
-			}
-		}));
+            public void run() {
+                PyLoadRestApi client = app.getClient();
+                Log.d("pyLoad", "Send Captcha result: " + tid + " " + result);
+                app.executeNetworkCall(client.apiSetCaptchaResultPost(tid, result));
+            }
+        }));
 
-	}
+    }
 
-    public MenuItem getRefreshItem()
-	{
+    public MenuItem getRefreshItem() {
         return refreshItem;
     }
 }

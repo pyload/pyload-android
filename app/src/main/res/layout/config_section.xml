@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-<TextView  
-    xmlns:android="http://schemas.android.com/apk/res/android"  
+<TextView
     android:id="@+id/list_header_title"  
     android:layout_width="fill_parent"  
     android:layout_height="wrap_content"  
@@ -41,7 +40,7 @@
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  layout_marginBottom="50dip"
+  android:layout_marginBottom="50dip"
   android:layout_below="@id/list_header_title"
   android:layout_above="@id/buttonbar">
     <LinearLayout android:id="@+id/layout_root" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">

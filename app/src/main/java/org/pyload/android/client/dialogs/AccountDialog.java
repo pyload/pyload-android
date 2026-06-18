@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AccountDialog extends DialogFragment {
 
@@ -139,7 +140,7 @@ class AccountAdapter extends BaseAdapter {
         else {
             Date date = new Date();
             date.setTime(acc.getValiduntil().longValue() * 1000);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
             holder.validuntil.setText(formatter.format(date));
         }
 

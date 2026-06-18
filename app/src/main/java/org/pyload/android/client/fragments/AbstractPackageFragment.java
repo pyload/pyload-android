@@ -127,8 +127,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			}
 			final FileData file = links.get(childPos);
 
-			switch (item.getItemId()) {
-			case R.id.restart:
+			int itemId = item.getItemId();
+			if (itemId == R.id.restart) {
 
 				app.addTask(new GuiTask(new Runnable() {
 
@@ -138,8 +138,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
-				break;
-			case R.id.delete:
+			} else if (itemId == R.id.delete) {
 
 				app.addTask(new GuiTask(new Runnable() {
 
@@ -153,15 +152,9 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
-				break;
-
-			case R.id.move:
+			} else if (itemId == R.id.move) {
 				Toast.makeText(getActivity(), R.string.cant_move_files,
 						Toast.LENGTH_SHORT).show();
-				break;
-
-			default:
-				break;
 			}
 
 			return true;
@@ -176,8 +169,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                 return false; // pack does not exists anymore
             }
 
-			switch (item.getItemId()) {
-			case R.id.restart:
+			int itemId = item.getItemId();
+			if (itemId == R.id.restart) {
 
 				app.addTask(new GuiTask(new Runnable() {
 
@@ -187,8 +180,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 					}
 				}, app.handleSuccess));
 
-				break;
-			case R.id.delete:
+			} else if (itemId == R.id.delete) {
 
 				app.addTask(new GuiTask(new Runnable() {
 
@@ -201,9 +193,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
-				break;
-
-			case R.id.move:
+			} else if (itemId == R.id.move) {
 
 				app.addTask(new GuiTask(new Runnable() {
 
@@ -220,10 +210,6 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
-				break;
-
-			default:
-				break;
 			}
 
 			return true;

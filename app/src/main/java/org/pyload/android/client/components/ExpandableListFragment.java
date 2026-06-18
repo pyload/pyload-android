@@ -275,7 +275,7 @@ public class ExpandableListFragment extends Fragment
                 mEmptyView = root.findViewById(android.R.id.empty);
             }
             mListContainer = root.findViewById(android.R.id.list);
-            View rawListView = root.findViewById(android.R.id.list);
+            View rawListView = mListContainer;
             if (!(rawListView instanceof ExpandableListView)) {
                 if (rawListView == null) {
                     throw new RuntimeException(

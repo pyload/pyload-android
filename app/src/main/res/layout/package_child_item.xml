@@ -18,7 +18,6 @@
 		android:marqueeRepeatLimit="marquee_forever"
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
-		android:maxLines="1"
         android:singleLine="true"
 		android:textColor="@android:color/white"
 		android:layout_toRightOf="@+id/status_icon"/>
@@ -27,8 +26,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/name"
-		android:layout_alignLeft="@+id/name"
-		android:layout_weight="1">
+		android:layout_alignLeft="@+id/name">
 				
 		<TextView android:layout_width="wrap_content"
 			android:id="@+id/status"
