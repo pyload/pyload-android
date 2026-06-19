@@ -105,10 +105,10 @@ class AccountAdapter extends BaseAdapter {
         AccountInfo acc = (data.size() == 0 ? null : data.get(pos));
         // here comes the empty list view
         if (acc == null) {
-            return layoutInflater.inflate(R.layout.account_empty_list, null);
+            return layoutInflater.inflate(R.layout.account_empty_list, group, false);
         }
 
-        view = layoutInflater.inflate(R.layout.account_item, null);
+        view = layoutInflater.inflate(R.layout.account_item, group, false);
 
         holder = new ViewHolder();
 

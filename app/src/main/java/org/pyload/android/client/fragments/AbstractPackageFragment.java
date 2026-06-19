@@ -223,7 +223,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		return inflater.inflate(R.layout.package_list, null, false);
+		return inflater.inflate(R.layout.package_list, container, false);
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class SettingsFragment extends ListFragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.settings_list, null, false);
+		return inflater.inflate(R.layout.settings_list, container, false);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -187,7 +187,7 @@ class SettingsAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 
-			convertView = layoutInflater.inflate(R.layout.settings_item, null);
+			convertView = layoutInflater.inflate(R.layout.settings_item, viewGroup, false);
 
 			holder = new ViewHolder();
 

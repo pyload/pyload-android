@@ -120,7 +120,7 @@ public class OverviewFragment extends ListFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.overview, null, false);
+        View v = inflater.inflate(R.layout.overview, container, false);
 
         statusServer = (TextView) v.findViewById(R.id.status_server);
         reconnect = (TextView) v.findViewById(R.id.reconnect);
