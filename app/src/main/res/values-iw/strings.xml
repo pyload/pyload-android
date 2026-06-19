@@ -78,7 +78,6 @@
     <string name="size">&#x200e;גודל</string>
     <string name="error">&#x200e;שגיאה</string>
     <string name="labelPackage">&#x200e;חבילה</string>
-    <string name="lambda"></string>
     <string name="server_settings">הגדרות שרת</string>
     <string name="general_config">הגדרות כלליות</string>
     <string name="plugin_config">הגדרות פלאגינים</string>
