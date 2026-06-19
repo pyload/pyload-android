@@ -74,7 +74,7 @@
                 <data android:host="ddownload.com"/>
                 <data android:host="filefactory.com"/>
                 <data android:host="mediafire.com"/>
-                <data android:host="mega.nz/>
+                <data android:host="mega.nz"/>
                 <data android:host="rapidgator.net"/>
                 <data android:host="serienjunkies.org"/>
             </intent-filter>
