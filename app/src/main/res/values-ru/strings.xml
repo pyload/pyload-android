@@ -95,30 +95,26 @@
     <item>Очередь</item>
     <item>Сборщик</item>
   </string-array>
-    <string-array name="languages">
-        <item>Default</item>
-        <item>English</item>
-        <item>German</item>
-        <item>French</item>
-        <item>Italian</item>
-        <item>Spanish</item>
-        <item>Polish</item>
-        <item>Dutch</item>
-        <item>Russian</item>
-        <item>Portuguese</item>
-        <item>Greek</item>
-        <item>Arabic</item>
-        <item>Turkish</item>
-        <item>Vietnamese</item>
-        <item>Japanese</item>
-        <item>Hungarian</item>
-        <item>Serbian</item>
-        <item>Hebrew</item>
-    </string-array>
-    <string name="captcha_notification">New captcha available!</string>
-  <string name="captcha_notification_desc">Enter captcha to continue downloading.</string>
-  <string name="permission_request">Permission request</string>
-  <string name="permission_explanation">Browsing for a file need the read-external-storage permission.</string>
-  <string name="go_to_settings">Go to settings</string>
-  <string name="allow">Allow</string>
+  <string-array name="languages">
+      <item>Default</item>
+      <item>English</item>
+      <item>German</item>
+      <item>French</item>
+      <item>Italian</item>
+      <item>Spanish</item>
+      <item>Polish</item>
+      <item>Dutch</item>
+      <item>Russian</item>
+      <item>Portuguese</item>
+      <item>Greek</item>
+      <item>Arabic</item>
+      <item>Turkish</item>
+      <item>Vietnamese</item>
+      <item>Japanese</item>
+      <item>Hungarian</item>
+      <item>Serbian</item>
+      <item>Hebrew</item>
+  </string-array>
+  <string name="captcha_notification">Доступна новая капча!</string>
+  <string name="captcha_notification_desc">Введите капчу, чтобы продолжить загрузку.</string>
 </resources>
