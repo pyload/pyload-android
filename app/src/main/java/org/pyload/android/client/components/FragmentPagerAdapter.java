@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Implementation of {@link PagerAdapter} that
@@ -35,7 +36,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 
 	private final FragmentManager mFragmentManager;
 	private FragmentTransaction mCurTransaction = null;
-	private int container;
+	protected int container;
 
 	public FragmentPagerAdapter(FragmentManager fm) {
 		mFragmentManager = fm;
@@ -47,7 +48,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 	public abstract Fragment getItem(int position);
 
 	@Override
-	public void startUpdate(View container) {
+	public void startUpdate(ViewGroup container) {
 	}
 
 	public Fragment getFragment(int pos) {
@@ -56,7 +57,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(View container, int position) {
+	public Object instantiateItem(ViewGroup container, int position) {
 
 		if (mCurTransaction == null) {
 			mCurTransaction = mFragmentManager.beginTransaction();
@@ -82,7 +83,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void destroyItem(View container, int position, Object object) {
+	public void destroyItem(ViewGroup container, int position, Object object) {
 		if (mCurTransaction == null) {
 			mCurTransaction = mFragmentManager.beginTransaction();
 		}
@@ -93,7 +94,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void finishUpdate(View container) {
+	public void finishUpdate(ViewGroup container) {
 		if (mCurTransaction != null) {
 			mCurTransaction.commit();
 			mCurTransaction = null;

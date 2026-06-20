@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:layout_width="match_parent" android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="5dip">
 	<org.pyload.android.client.components.ScrollingTextView android:text="@string/n_a" android:id="@+id/name"
-		android:textAppearance="?android:attr/textAppearance"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:marqueeRepeatLimit="marquee_forever"
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
-        android:singleLine="true"
-		android:textColor="@android:color/white"/>
+        android:singleLine="true" />
 	
 	<ProgressBar android:layout_width="fill_parent"
 		android:layout_height="wrap_content" style="?android:attr/progressBarStyleHorizontal"

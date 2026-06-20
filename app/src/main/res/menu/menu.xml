@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/add_links"
         android:titleCondensed="@string/add_links"
         android:title="@string/add_links"
-        android:icon="@drawable/ic_menu_add" />
+        android:icon="@drawable/ic_menu_add"
+        app:iconTint="?attr/colorOnSurface" />
     <item
         android:id="@+id/refresh"
         android:titleCondensed="@string/refresh"
         android:title="@string/refresh"
-        android:icon="@drawable/ic_menu_refresh" />
+        android:icon="@drawable/ic_menu_refresh"
+        app:iconTint="?attr/colorOnSurface" />
     <item
        android:id="@+id/settings"
        android:titleCondensed="@string/settings"
        android:title="@string/settings"
-       android:icon="@drawable/ic_menu_manage" />
+       android:icon="@drawable/ic_menu_manage"
+       app:iconTint="?attr/colorOnSurface" />
 
     <item
         android:id="@+id/show_accounts"
         android:icon="@drawable/ic_tab_accounts"
-        android:title="@string/accounts" />
+        android:title="@string/accounts"
+        app:iconTint="?attr/colorOnSurface" />
 
     <item
         android:id="@+id/remote_settings"
         android:icon="@drawable/ic_tab_settings"
-        android:title="@string/remote_settings" />
+        android:title="@string/remote_settings"
+        app:iconTint="?attr/colorOnSurface" />
 
     <item
         android:id="@+id/restart_failed"
         android:icon="@drawable/ic_menu_restart"
-        android:title="@string/restart_failed" />
+        android:title="@string/restart_failed"
+        app:iconTint="?attr/colorOnSurface" />
 
 </menu>

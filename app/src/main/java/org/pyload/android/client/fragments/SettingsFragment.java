@@ -111,7 +111,7 @@ public class SettingsFragment extends ListFragment {
 		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) adp
 				.getItem(position);
 
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getParentFragmentManager().beginTransaction();
 
 		Bundle args = new Bundle();
 		if (position > generalData.size())

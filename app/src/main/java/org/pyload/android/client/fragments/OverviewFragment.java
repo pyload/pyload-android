@@ -20,6 +20,7 @@ import org.pyload.android.openapi.models.ServerStatus;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.os.Build;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -249,9 +250,14 @@ public class OverviewFragment extends ListFragment implements
      * Called when Status data received
      */
     protected void onDataReceived() {
+        app.setProgress(false);
+        if (status == null || downloads == null)
+            return;
+
         OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
 
-        adapter.setDownloads(downloads);
+        if (adapter != null)
+            adapter.setDownloads(downloads);
 
         statusServer.setText(app.verboseBool(status.getDownload()));
         reconnect.setText(app.verboseBool(status.getReconnect()));
@@ -271,6 +277,7 @@ public class OverviewFragment extends ListFragment implements
         if (!app.hasConnection())
             return;
 
+        app.setProgress(true);
         GuiTask task = new GuiTask(runUpdate, mUpdateResults);
         task.setCritical(cancelUpdate);
 
@@ -293,7 +300,7 @@ public class OverviewFragment extends ListFragment implements
 
 
         try {
-            dialog.show(getFragmentManager(), CaptchaDialog.class.getName());
+            dialog.show(getParentFragmentManager(), CaptchaDialog.class.getName());
         } catch (IllegalStateException e) {
             dialogOpen = false;
             // seems to appear when overview is already closed
@@ -319,14 +326,18 @@ public class OverviewFragment extends ListFragment implements
     private void showNotification() {
         if (!app.getCaptchaNotificationShown()) {
             app.setCaptchaNotificationShown(true);
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app)
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app, pyLoadApp.CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher)
                     .setContentTitle(getString(R.string.captcha_notification))
                     .setContentText(getString(R.string.captcha_notification_desc));
 
             Intent notificationIntent = new Intent(app, pyLoad.class);
             notificationIntent.putExtra("CaptchaNotification", true);
-            PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, flags);
             mBuilder.setContentIntent(contentIntent);
             NotificationManager mNotificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

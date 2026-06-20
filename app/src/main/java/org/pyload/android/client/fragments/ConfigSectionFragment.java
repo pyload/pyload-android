@@ -129,7 +129,7 @@ public class ConfigSectionFragment extends Fragment {
                     }
 				}
 
-				getFragmentManager().popBackStack();
+				getParentFragmentManager().popBackStack();
 
 			}
 
@@ -137,7 +137,7 @@ public class ConfigSectionFragment extends Fragment {
 	}
 
 	public void onCancel() {
-		getFragmentManager().popBackStack();
+		getParentFragmentManager().popBackStack();
 	}
 }
 

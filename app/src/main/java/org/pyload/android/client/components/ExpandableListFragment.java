@@ -4,6 +4,7 @@ package org.pyload.android.client.components;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -29,7 +30,7 @@ public class ExpandableListFragment extends Fragment
 
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
 
-    final private Handler mHandler = new Handler();
+    final private Handler mHandler = new Handler(Looper.getMainLooper());
 
     final private Runnable mRequestFocus = new Runnable() {
         public void run() {

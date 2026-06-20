@@ -20,7 +20,6 @@ import org.pyload.android.openapi.models.FileData;
 import org.pyload.android.openapi.models.PackageData;
 import org.pyload.android.openapi.models.DownloadStatus;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,8 +74,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	private int pos = -1;
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
 	}
 
 	@Override
@@ -245,7 +244,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		}
 
 		FileInfoDialog dialog = FileInfoDialog.newInstance(pack, file);
-		dialog.show(getFragmentManager(), FileInfoDialog.class.getName());
+		dialog.show(getParentFragmentManager(), FileInfoDialog.class.getName());
 		return true;
 	}
 

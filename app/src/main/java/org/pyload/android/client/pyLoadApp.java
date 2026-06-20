@@ -1,19 +1,22 @@
 package org.pyload.android.client;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
-import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.exceptions.WrongLogin;
 import org.pyload.android.client.exceptions.WrongServer;
@@ -41,6 +44,8 @@ import retrofit2.Retrofit;
 
 public class pyLoadApp extends Application {
 
+	public static final String CHANNEL_ID = "pyload_channel";
+
 	private PyLoadRestApi client;
 
 	// set by main activity
@@ -58,12 +63,14 @@ public class pyLoadApp extends Application {
 	public void init(pyLoad main) {
 		this.main = main;
 
+		createNotificationChannel();
+
 		HashMap<Throwable, Runnable> exceptionMap = new HashMap<Throwable, Runnable>();
 		exceptionMap.put(new WrongLogin(), handleException);
 		exceptionMap.put(new WrongServer(), handleException);
 		exceptionMap.put(new RuntimeException(), handleException);
 
-        taskQueue = new TaskQueue(this, new Handler(), exceptionMap);
+        taskQueue = new TaskQueue(this, new Handler(Looper.getMainLooper()), exceptionMap);
         startTaskQueue();
 	}
 
@@ -108,7 +115,7 @@ public class pyLoadApp extends Application {
 			}
 
 			if (validateSsl) {
-				apiClient.getOkBuilder().hostnameVerifier(new BrowserCompatHostnameVerifier());
+				apiClient.getOkBuilder().hostnameVerifier(HttpsURLConnection.getDefaultHostnameVerifier());
 			} else {
 				apiClient.getOkBuilder().hostnameVerifier((hostname, session) -> true);
 			}
@@ -278,9 +285,22 @@ public class pyLoadApp extends Application {
 	}
 
 	public boolean hasConnection() {
-		NetworkInfo info = cm.getActiveNetworkInfo();
-		// TODO investigate network states, info etc
-		return info != null;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			Network network = cm.getActiveNetwork();
+			if (network == null) return false;
+			NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+			return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+		} else {
+			@SuppressWarnings("deprecation")
+			Network[] networks = cm.getAllNetworks();
+			for (Network n : networks) {
+				NetworkCapabilities capabilities = cm.getNetworkCapabilities(n);
+				if (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	public void clearTasks() {
@@ -306,6 +326,9 @@ public class pyLoadApp extends Application {
      * @param state
      */
 	public void setProgress(boolean state) {
+		if (main == null) {
+			return;
+		}
         if (isActionBarAvailable()) {
             setIndeterminateProgress(main.getRefreshItem(), state);
         } else {
@@ -346,5 +369,17 @@ public class pyLoadApp extends Application {
     {
     	return captchaNotificationShown;
     }
+
+	private void createNotificationChannel() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			CharSequence name = getString(R.string.captcha_notification_channel_name);
+			String description = getString(R.string.captcha_notification_channel_description);
+			int importance = NotificationManager.IMPORTANCE_DEFAULT;
+			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+			channel.setDescription(description);
+			NotificationManager notificationManager = getSystemService(NotificationManager.class);
+			notificationManager.createNotificationChannel(channel);
+		}
+	}
 
 }

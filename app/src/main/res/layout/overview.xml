@@ -1,68 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
 	android:baselineAligned="false"
 	android:keepScreenOn="true"
 	android:orientation="vertical">
 
 	<LinearLayout
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center"
+		android:gravity="center_vertical"
 		android:orientation="horizontal"
-		android:paddingTop="5dip"
-		android:paddingBottom="5dip">
+		android:padding="8dp">
 
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/status_server"
-			android:layout_width="0dp"
-			android:layout_height="fill_parent"
-			android:layout_weight="0.5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:drawableStart="@drawable/clock"
-			android:drawablePadding="5dip"
-			android:text="@string/n_a" />
+			android:drawablePadding="4dp"
+			app:drawableTint="?attr/colorOnSurface"
+			android:gravity="center_vertical"
+			android:text="@string/n_a"
+			android:maxLines="1"
+			android:ellipsize="end" />
 
-		<TextView
+		<Space
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
+
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/reconnect"
-			android:layout_width="0dp"
-			android:layout_height="fill_parent"
-			android:layout_weight="0.5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:drawableStart="@drawable/redo"
-			android:drawablePadding="5dip"
-			android:text="@string/n_a" />
+			android:drawablePadding="4dp"
+			app:drawableTint="?attr/colorOnSurface"
+			android:gravity="center_vertical"
+			android:text="@string/n_a"
+			android:maxLines="1"
+			android:ellipsize="end" />
 
-		<TextView
+		<Space
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
+
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/speed"
-			android:layout_width="0dp"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:drawableStart="@drawable/download"
-			android:drawablePadding="5dip"
-			android:text="@string/n_a" />
+			android:drawablePadding="4dp"
+			app:drawableTint="?attr/colorOnSurface"
+			android:gravity="center_vertical"
+			android:text="@string/n_a"
+			android:maxLines="1"
+			android:ellipsize="end" />
 
-		<TextView
-			android:id="@+id/active"
+		<Space
 			android:layout_width="0dp"
-			android:layout_height="fill_parent"
-			android:layout_weight="0.5"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/active"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:drawableStart="@drawable/todo"
-			android:drawablePadding="5dip"
-			android:text="@string/_0_0" />
+			android:drawablePadding="4dp"
+			app:drawableTint="?attr/colorOnSurface"
+			android:gravity="center_vertical"
+			android:text="@string/_0_0"
+			android:maxLines="1"
+			android:ellipsize="end" />
 
 	</LinearLayout>
 
 
 	<ListView
 		android:id="@android:id/list"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
 
 	<TextView
 		android:id="@android:id/empty"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_marginTop="-30dp"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
 		android:gravity="center"
 		android:text="@string/no_downloads"
 		android:textAppearance="?android:attr/textAppearanceLarge" />

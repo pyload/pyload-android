@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">?android:attr/windowBackground</item>
+        <!-- Light status bar with dark icons (API 23+) -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <!-- Standard colors -->
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorOnPrimary">@android:color/black</item>
+        <item name="colorSecondary">#03DAC6</item>
+    </style>
+</resources>
