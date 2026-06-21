@@ -4,7 +4,8 @@
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:paddingTop="25dp">
 <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
@@ -53,29 +54,33 @@
 </Spinner>
 
 <LinearLayout android:layout_height="wrap_content" 
-	android:layout_width="fill_parent"
+	android:layout_width="match_parent"
 	android:id="@+id/linearLayout1" 
 	android:orientation="horizontal"
-	android:gravity="center_horizontal"
+	android:gravity="center_vertical"
 	android:layout_weight="1">
 
-<EditText
+<TextView
     android:id="@+id/filename"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
+    android:layout_weight="1"
     android:hint="@string/choose_file"
-    android:inputType="text"
     android:lines="1"
-    android:layout_width="fill_parent"
-    android:layout_weight="0.5">
-</EditText>
+    android:background="?android:attr/editTextBackground"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:textSize="18sp">
+</TextView>
 
 <Button  
     android:id="@+id/button_pick"  
     android:layout_height="wrap_content"
     android:text="@string/choose"  
     android:onClick="pickFile"  
-    android:layout_width="fill_parent"
-    android:layout_weight="1">
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_marginStart="8dp">
 </Button>
 
 </LinearLayout>  
@@ -92,7 +97,7 @@
     android:layout_height="wrap_content"  
     android:text="@string/add"  
     android:onClick="addPackage"  
-    android:layout_width="fill_parent"
+    android:layout_width="0dp"
     android:layout_weight="1">  
 </Button>
 
@@ -101,8 +106,9 @@
     android:layout_height="wrap_content"
     android:text="@string/cancel"  
     android:onClick="onCancel"  
-    android:layout_width="fill_parent"
-    android:layout_weight="1">
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_marginStart="8dp">
 </Button>
 
 </LinearLayout>  

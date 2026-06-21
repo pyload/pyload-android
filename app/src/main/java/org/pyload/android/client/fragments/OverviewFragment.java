@@ -29,6 +29,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import androidx.fragment.app.ListFragment;
 import androidx.core.app.NotificationCompat;
 import android.util.Log;
@@ -69,7 +70,7 @@ public class OverviewFragment extends ListFragment implements
     private TextView speed;
     private TextView active;
 
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable mUpdateResults = new Runnable() {
 
         public void run() {
@@ -161,8 +162,8 @@ public class OverviewFragment extends ListFragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setListAdapter(adp);
     }
 

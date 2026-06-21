@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 import org.pyload.android.client.R;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -97,7 +96,7 @@ public class FragmentTabsPager extends AppCompatActivity {
      */
     public static class TabsAdapter extends FragmentPagerAdapter implements
             TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
-        private final Context mContext;
+        private final FragmentActivity mContext;
         private final TabLayout mTabLayout;
         private final ViewPager mViewPager;
         private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
@@ -141,8 +140,10 @@ public class FragmentTabsPager extends AppCompatActivity {
         public Fragment getItem(int position) {
             TabInfo info = mTabs.get(position);
 
-            Fragment frag = Fragment.instantiate(mContext,
-                    info.clss.getName(), info.args);
+            Fragment frag = mContext.getSupportFragmentManager().getFragmentFactory().instantiate(mContext.getClassLoader(), info.clss.getName());
+            if (info.args != null) {
+                frag.setArguments(info.args);
+            }
 
             ((TabHandler) frag).setPosition(position);
 

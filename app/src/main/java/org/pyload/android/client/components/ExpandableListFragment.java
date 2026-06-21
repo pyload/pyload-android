@@ -108,8 +108,8 @@ public class ExpandableListFragment extends Fragment
      * Attach to list view once Fragment is ready to run.
      */
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ensureList();
     }
 

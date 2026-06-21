@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -149,8 +151,9 @@ public class AddLinksActivity extends AppCompatActivity {
         if (uri != null) {
             selectedUri = uri;
             filename = Utils.getFileName(this, uri);
-            EditText view = (EditText) findViewById(R.id.filename);
-            view.setText(uri.toString());
+			TextView view = (TextView) findViewById(R.id.filename);
+            view.setText(filename);
+            view.setTypeface(null, android.graphics.Typeface.BOLD);
         }
     }
 

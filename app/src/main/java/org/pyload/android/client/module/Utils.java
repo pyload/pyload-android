@@ -26,7 +26,7 @@ public final class Utils {
 
 	public static String getFileName(Context context, Uri uri) {
 		String result = null;
-		if (uri.getScheme().equals("content")) {
+		if (uri.getScheme() != null && uri.getScheme().equals("content")) {
 			try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
 				if (cursor != null && cursor.moveToFirst()) {
 					int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);

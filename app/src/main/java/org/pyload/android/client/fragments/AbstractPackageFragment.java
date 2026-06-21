@@ -88,6 +88,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
 		PackageListAdapter adp = new PackageListAdapter(app, data,
@@ -223,11 +224,6 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			Bundle savedInstanceState) {
 
 		return inflater.inflate(R.layout.package_list, container, false);
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override

@@ -1,13 +1,13 @@
 package org.pyload.android.client.fragments;
 
 
-import android.app.Activity;
+import android.content.Context;
 
 public final class CollectorFragment extends AbstractPackageFragment {
 
 	@Override
-	public void onAttach(Activity activity) {
+	public void onAttach(Context context) {
 		dest = 1;
-		super.onAttach(activity);
+		super.onAttach(context);
 	}
 }

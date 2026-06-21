@@ -329,16 +329,8 @@ public class pyLoadApp extends Application {
 		if (main == null) {
 			return;
 		}
-        if (isActionBarAvailable()) {
-            setIndeterminateProgress(main.getRefreshItem(), state);
-        } else {
-            setIndeterminateProgress(state);
-        }
+		setIndeterminateProgress(main.getRefreshItem(), state);
 	}
-
-    private void setIndeterminateProgress(boolean state) {
-        main.setProgressBarIndeterminateVisibility(state);
-    }
 
     private void setIndeterminateProgress(MenuItem item, boolean state) {
         if (item == null) {
@@ -356,10 +348,6 @@ public class pyLoadApp extends Application {
         }
     }
 
-    public static boolean isActionBarAvailable() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-    
     public void setCaptchaNotificationShown(boolean val)
     {
     	captchaNotificationShown = val;
