@@ -9,6 +9,13 @@
             android:entries="@array/languages"
             android:entryValues="@array/languageValues"/>
 
+        <ListPreference android:key="theme"
+            android:title="@string/theme"
+            android:summary="@string/theme_desc"
+            android:defaultValue="system"
+            android:entries="@array/themeEntries"
+            android:entryValues="@array/themeValues"/>
+
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:inputType="number"/>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
 

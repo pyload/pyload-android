@@ -111,4 +111,9 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
+  <string name="theme">Téma</string>
+  <string name="theme_desc">Alkalmazás megjelenési témája.</string>
+  <string name="theme_light">Világos</string>
+  <string name="theme_dark">Sötét</string>
+  <string name="theme_system">Rendszer alapértelmezett</string>
 </resources>

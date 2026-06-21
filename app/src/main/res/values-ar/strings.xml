@@ -112,4 +112,9 @@
     <item>صربي</item>
     <item>العبرية</item>
   </string-array>
+  <string name="theme">المظهر</string>
+  <string name="theme_desc">مظهر التطبيق.</string>
+  <string name="theme_light">فاتح</string>
+  <string name="theme_dark">داكن</string>
+  <string name="theme_system">افتراضي النظام</string>
 </resources>

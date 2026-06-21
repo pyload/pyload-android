@@ -111,4 +111,9 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
+  <string name="theme">Thema</string>
+  <string name="theme_desc">Thema van de app.</string>
+  <string name="theme_light">Licht</string>
+  <string name="theme_dark">Donker</string>
+  <string name="theme_system">Systeemstandaard</string>
 </resources>

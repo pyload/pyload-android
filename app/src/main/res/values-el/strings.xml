@@ -111,4 +111,9 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
+  <string name="theme">Θέμα</string>
+  <string name="theme_desc">Θέμα εμφάνισης εφαρμογής.</string>
+  <string name="theme_light">Φωτεινό</string>
+  <string name="theme_dark">Σκοτεινό</string>
+  <string name="theme_system">Προεπιλογή συστήματος</string>
 </resources>

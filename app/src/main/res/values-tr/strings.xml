@@ -111,4 +111,9 @@
       <item>Serbian</item>
       <item>Hebrew</item>
   </string-array>
+  <string name="theme">Tema</string>
+  <string name="theme_desc">Uygulama görünüm teması.</string>
+  <string name="theme_light">Açık</string>
+  <string name="theme_dark">Koyu</string>
+  <string name="theme_system">Sistem Varsayılanı</string>
 </resources>

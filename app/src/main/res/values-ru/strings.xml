@@ -111,4 +111,9 @@
       <item>Serbian</item>
       <item>Hebrew</item>
   </string-array>
+  <string name="theme">Тема</string>
+  <string name="theme_desc">Тема оформления приложения.</string>
+  <string name="theme_light">Светлая</string>
+  <string name="theme_dark">Темная</string>
+  <string name="theme_system">Системная</string>
 </resources>

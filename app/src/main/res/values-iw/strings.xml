@@ -110,4 +110,9 @@
         <item>Serbian</item>
         <item>Hebrew</item>
     </string-array>
+  <string name="theme">ערכת נושא</string>
+  <string name="theme_desc">ערכת נושא למראה האפליקציה.</string>
+  <string name="theme_light">בהיר</string>
+  <string name="theme_dark">כהה</string>
+  <string name="theme_system">ברירת מחדל של המערכת</string>
 </resources>

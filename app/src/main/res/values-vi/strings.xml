@@ -111,4 +111,9 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
+  <string name="theme">Chủ đề</string>
+  <string name="theme_desc">Chủ đề giao diện ứng dụng.</string>
+  <string name="theme_light">Sáng</string>
+  <string name="theme_dark">Tối</string>
+  <string name="theme_system">Mặc định hệ thống</string>
 </resources>

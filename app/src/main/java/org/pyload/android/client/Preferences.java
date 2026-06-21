@@ -3,6 +3,7 @@ package org.pyload.android.client;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class Preferences extends AppCompatActivity {
@@ -48,6 +49,14 @@ public class Preferences extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
+
+            Preference themePreference = findPreference("theme");
+            if (themePreference != null) {
+                themePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                    pyLoadApp.applyTheme((String) newValue);
+                    return true;
+                });
+            }
         }
     }
 }

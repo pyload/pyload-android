@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.exceptions.WrongLogin;
@@ -59,6 +60,30 @@ public class pyLoadApp extends Application {
 	private boolean captchaNotificationShown;
 
 	private static final String[] clientVersion = {"0.5"};
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+
+		prefs = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
+		String theme = prefs.getString("theme", "system");
+		applyTheme(theme);
+	}
+
+	public static void applyTheme(String theme) {
+		switch (theme) {
+			case "light":
+				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+				break;
+			case "dark":
+				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+				break;
+			case "system":
+			default:
+				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+				break;
+		}
+	}
 
 	public void init(pyLoad main) {
 		this.main = main;
