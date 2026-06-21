@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Lấy captcha từ pyLoad khi Tổng quan được hiển thị.</string>
   <string name="enter">Nhập</string>
   <string name="captcha_dialog_titel">Vui lòng nhập ký tự</string>
-  <string name="invert_tabs">Đảo ngược tab biểu tượng màu sắc</string>
-  <string name="invert_tabs_desc">Bạn có thể thay đổi bố trí biểu tượng thẻ nếu nó phù hợp hơn với chủ đề của bạn.</string>
+  <string name="captcha_notification">Có mã captcha mới!</string>
+  <string name="captcha_notification_desc">Nhập mã captcha để tiếp tục tải về.</string>
   <string name="ssl">Kết nối SSL</string>
   <string name="ssl_desc">Thiết lập kết nối an toàn đến nhân nếu bạn kích hoạt SSL</string>
   <string name="ssl_validate">Xác nhận giấy chứng nhận SSL</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Phiên bản máy chủ không phù hợp với, xin vui lòng sử dụng pyLoad %s.</string>
   <string name="choose_file">Nơi chứa tệp</string>
   <string name="choose">Chọn</string>
-  <string name="current_dir">Thư mục hiện tại:</string>
   <string name="folder">Thư mục</string>
-  <string name="file_size">Kích thước tệp tin:</string>
-  <string name="parent_dir">Thư mục chứa</string>
   <string name="eula_title">Giấy phép</string>
   <string name="eula_accept">Chấp nhận</string>
   <string name="eula_refuse">Từ chối</string>
@@ -75,7 +72,6 @@
   <string name="size">Kích thước</string>
   <string name="error">Lỗi</string>
   <string name="labelPackage">Gói</string>
-  <string name="server_settings">Cài đặt máy chủ</string>
   <string name="general_config">Cấu hình chung</string>
   <string name="plugin_config">Cấu hình plugin</string>
   <string name="submit">Gửi</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Có mã captcha mới!</string>
-  <string name="captcha_notification_desc">Nhập mã captcha để tiếp tục tải về.</string>
 </resources>

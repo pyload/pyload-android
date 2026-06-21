@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Récupérer la liste des captchas depuis Pyload quand l\'aperçu est affiché.</string>
   <string name="enter">Entrer</string>
   <string name="captcha_dialog_titel">Entrez le texte svp</string>
-  <string name="invert_tabs">Icône de l\'onglet</string>
-  <string name="invert_tabs_desc">Vous pouvez changer l\'icône de l\'onglet si elle correspond mieux à votre thème.</string>
+  <string name="captcha_notification">Nouveau captcha disponible !</string>
+  <string name="captcha_notification_desc">Entrez le captcha pour continuer le téléchargement.</string>
   <string name="ssl">Connexion SSL</string>
   <string name="ssl_desc">Établir une connexion sécurisée au coeur si vous activez la connexion SSL.</string>
   <string name="ssl_validate">Certificat SSL valide</string>
@@ -60,10 +60,7 @@
   <string name="old_server">La version du serveur n\'est pas correct. Merci d\'utiliser pyLoad %s.</string>
   <string name="choose_file">Dossier</string>
   <string name="choose">Choisissez</string>
-  <string name="current_dir">Répertoire actuel :</string>
   <string name="folder">Dossier</string>
-  <string name="file_size">Taille du fichier :</string>
-  <string name="parent_dir">Dossier parent</string>
   <string name="eula_title">License</string>
   <string name="eula_accept">Accepter</string>
   <string name="eula_refuse">Refuser</string>
@@ -75,7 +72,6 @@
   <string name="size">Taille</string>
   <string name="error">Erreur</string>
   <string name="labelPackage">Paquet</string>
-  <string name="server_settings">Réglages serveur</string>
   <string name="general_config">Configuration générale</string>
   <string name="plugin_config">Configuration des plugins</string>
   <string name="submit">Valider</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Nouveau captcha disponible !</string>
-  <string name="captcha_notification_desc">Entrez le captcha pour continuer le téléchargement.</string>
 </resources>

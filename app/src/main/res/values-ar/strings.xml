@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">الحصول على كلمة التحقق من باي لود عند العرض.</string>
   <string name="enter">ادخال</string>
   <string name="captcha_dialog_titel">الرجاء إدخال النص</string>
-  <string name="invert_tabs">عكس لون ايقونة التبويب</string>
-  <string name="invert_tabs_desc">يمكنك تغير تنسيق ايقونة التبويب اذا كانت تناسب واجهتك اكثر.</string>
+  <string name="captcha_notification">كابتشا جديدة متاحة!</string>
+  <string name="captcha_notification_desc">أدخل الكابتشا لمتابعة التحميل.</string>
   <string name="ssl">اتصال SSL</string>
   <string name="ssl_desc">تأسيس اتصال امن الى البرنامج الداخلى اذا قمت بتفعيل SSL</string>
   <string name="ssl_validate">التحقق من صحة شهادة SSL</string>
@@ -61,10 +61,7 @@
   <string name="old_server">اصدار الخادم غير متوافق, الرجاء استخدام باي لود %s.</string>
   <string name="choose_file">حاوية الملف</string>
   <string name="choose">اختيار</string>
-  <string name="current_dir">الدليل الحالي:</string>
   <string name="folder">مجلد</string>
-  <string name="file_size">حجم الملف:</string>
-  <string name="parent_dir">المجلد الأصلي</string>
   <string name="eula_title">الترخيص</string>
   <string name="eula_accept">قبول</string>
   <string name="eula_refuse">رفض</string>
@@ -76,7 +73,6 @@
   <string name="size">الحجم</string>
   <string name="error">خطأ</string>
   <string name="labelPackage">حزمة</string>
-  <string name="server_settings">إعدادات الخادم</string>
   <string name="general_config">اعدادات عامة</string>
   <string name="plugin_config">اعدادات الاضافات</string>
   <string name="submit">اقترح</string>
@@ -116,6 +112,4 @@
     <item>صربي</item>
     <item>العبرية</item>
   </string-array>
-  <string name="captcha_notification">كابتشا جديدة متاحة!</string>
-  <string name="captcha_notification_desc">أدخل الكابتشا لمتابعة التحميل.</string>
 </resources>

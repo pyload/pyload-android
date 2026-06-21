@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Преузимајте потврдне кодове док је приказан „Преглед“.</string>
   <string name="enter">Унос</string>
   <string name="captcha_dialog_titel">Унесите текст</string>
-  <string name="invert_tabs">Обрни боју картице</string>
-  <string name="invert_tabs_desc">Можете да прилагодите изглед картице вашој тренутној теми.</string>
+  <string name="captcha_notification">Novo captcha dostupno!</string>
+  <string name="captcha_notification_desc">Unesite captcha da biste nastavili sa preuzimanjem.</string>
   <string name="ssl">SSL веза</string>
   <string name="ssl_desc">Омогућите SSL и успоставите безбедну везу са сервером.</string>
   <string name="ssl_validate">Провери ваљаност SSL сертификата</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Верзија сервера се не подудара. Користите pyLoad %s.</string>
   <string name="choose_file">Датотека контејнера</string>
   <string name="choose">Потражи…</string>
-  <string name="current_dir">Тренутна фасцикла: </string>
   <string name="folder">Фасцикла</string>
-  <string name="file_size">Величина датотеке:</string>
-  <string name="parent_dir">Надређена фасцикла</string>
   <string name="eula_title">Лиценца</string>
   <string name="eula_accept">Прихватам</string>
   <string name="eula_refuse">Не прихватам</string>
@@ -75,7 +72,6 @@
   <string name="size">Величина</string>
   <string name="error">Грешка</string>
   <string name="labelPackage">Пакет</string>
-  <string name="server_settings">Поставке сервера</string>
   <string name="general_config">Опште поставке</string>
   <string name="plugin_config">Поставке прикључака</string>
   <string name="submit">Сачувај</string>
@@ -115,6 +111,4 @@
       <item>Serbian</item>
       <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Novo captcha dostupno!</string>
-  <string name="captcha_notification_desc">Unesite captcha da biste nastavili sa preuzimanjem.</string>
 </resources>

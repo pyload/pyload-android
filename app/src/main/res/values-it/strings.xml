@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Recupera i captcha da pyLoad quando sei su Panoramica.</string>
   <string name="enter">Inserisci</string>
   <string name="captcha_dialog_titel">Inserire il testo</string>
-  <string name="invert_tabs">Inverti colore icone tab</string>
-  <string name="invert_tabs_desc">Potresti cambiare il layout icone tab se si adatta meglio al tuo tema.</string>
+  <string name="captcha_notification">Nuovo captcha disponibile!</string>
+  <string name="captcha_notification_desc">Inserisci il captcha per continuare il download.</string>
   <string name="ssl">Connessione SSL</string>
   <string name="ssl_desc">Stabilisce una connessione sicura con il core se hai attivato SSL</string>
   <string name="ssl_validate">Valida Certificato SSL</string>
@@ -60,10 +60,7 @@
   <string name="old_server">La version del server non corrisponde, usa pyLoad %s.</string>
   <string name="choose_file">File Contenitore</string>
   <string name="choose">Scegli</string>
-  <string name="current_dir">Cartella Attuale:</string>
   <string name="folder">Cartella</string>
-  <string name="file_size">Dimensione:</string>
-  <string name="parent_dir">Cartella Superiore</string>
   <string name="eula_title">Licenza</string>
   <string name="eula_accept">Accetto</string>
   <string name="eula_refuse">Rifiuto</string>
@@ -75,7 +72,6 @@
   <string name="size">Dimensione</string>
   <string name="error">Errore</string>
   <string name="labelPackage">Pacchetto</string>
-  <string name="server_settings">Impostazioni server</string>
   <string name="general_config">Impostazioni generali</string>
   <string name="plugin_config">Configurazione plugin</string>
   <string name="submit">Invia</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Nuovo captcha disponibile!</string>
-  <string name="captcha_notification_desc">Inserisci il captcha per continuare il download.</string>
 </resources>

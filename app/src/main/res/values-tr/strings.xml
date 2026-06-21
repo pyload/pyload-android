@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Özet görüntülendiğinde pyLoad\'dan captcha görevleri alın.</string>
   <string name="enter">Onayla</string>
   <string name="captcha_dialog_titel">Lütfen metni giriniz</string>
-  <string name="invert_tabs">Sekme simgesi rengini ters çevir</string>
-  <string name="invert_tabs_desc">Eğer tema için daha uygunsa sekme simgesi düzenini değiştirebilirsin.</string>
+  <string name="captcha_notification">Yeni captcha mevcut!</string>
+  <string name="captcha_notification_desc">İndirmeye devam etmek için captcha\'yı girin.</string>
   <string name="ssl">SSL bağlantısı</string>
   <string name="ssl_desc">SSL etkinleştirdiyseniz çekirdek için güvenli bağlantı kurun</string>
   <string name="ssl_validate">SSL sertifikası doğrulama</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Sunucu sürüm uymuyor, lütfen pyLoad %s kullanın.</string>
   <string name="choose_file">Kapsayıcı dosya</string>
   <string name="choose">Seç</string>
-  <string name="current_dir">Geçerli dizin:</string>
   <string name="folder">Klasör</string>
-  <string name="file_size">Dosya boyutu:</string>
-  <string name="parent_dir">Üst dizine geçer</string>
   <string name="eula_title">Lisans</string>
   <string name="eula_accept">Kabul</string>
   <string name="eula_refuse">Reddet</string>
@@ -75,7 +72,6 @@
   <string name="size">Boyut</string>
   <string name="error">Hata</string>
   <string name="labelPackage">Paket</string>
-  <string name="server_settings">Sunucu ayarları</string>
   <string name="general_config">Genel yapılandırma</string>
   <string name="plugin_config">Eklenti yapılandırma</string>
   <string name="submit">Gönder</string>
@@ -115,6 +111,4 @@
       <item>Serbian</item>
       <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Yeni captcha mevcut!</string>
-  <string name="captcha_notification_desc">İndirmeye devam etmek için captcha\'yı girin.</string>
 </resources>

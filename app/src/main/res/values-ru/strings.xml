@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Получить каптчу из pyLoad, когда находишься на экране Обзор.</string>
   <string name="enter">Введите</string>
   <string name="captcha_dialog_titel">Пожалуйста, введите текст</string>
-  <string name="invert_tabs">Инвертировать цвета значка вкладки</string>
-  <string name="invert_tabs_desc">Вы можете изменить размещение вкладок, если так лучше подходит для вашей теме.</string>
+  <string name="captcha_notification">Доступна новая капча!</string>
+  <string name="captcha_notification_desc">Введите капчу, чтобы продолжить загрузку.</string>
   <string name="ssl">SSL подключение</string>
   <string name="ssl_desc">Установить безопасное подключение к основной, если вы активировали SSL</string>
   <string name="ssl_validate">Проверка SSL-сертификата</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Версия сервера не совпадает, пожалуйста, используйте pyLoad %s.</string>
   <string name="choose_file">Файл контейнера</string>
   <string name="choose">Выбрать</string>
-  <string name="current_dir">Текущая папка:</string>
   <string name="folder">Папка</string>
-  <string name="file_size">Размер файла:</string>
-  <string name="parent_dir">Родительский каталог</string>
   <string name="eula_title">Лицензия</string>
   <string name="eula_accept">Принять</string>
   <string name="eula_refuse">Отклонить</string>
@@ -75,7 +72,6 @@
   <string name="size">Размер</string>
   <string name="error">Ошибка</string>
   <string name="labelPackage">Пакет</string>
-  <string name="server_settings">Настройки сервера</string>
   <string name="general_config">Конфигурация</string>
   <string name="plugin_config">Конфигурация приложений</string>
   <string name="submit">Отправить</string>
@@ -115,6 +111,4 @@
       <item>Serbian</item>
       <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Доступна новая капча!</string>
-  <string name="captcha_notification_desc">Введите капчу, чтобы продолжить загрузку.</string>
 </resources>

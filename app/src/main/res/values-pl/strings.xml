@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Pobierz captcha zadań z pyLoad gdy jest wyświetlany.</string>
   <string name="enter">Wprowadź</string>
   <string name="captcha_dialog_titel">Proszę wprowadzić tekst</string>
-  <string name="invert_tabs">Odwróć kolor ikony karty</string>
-  <string name="invert_tabs_desc">Możesz zmienić ikonę karty jeśli lepiej pasuje do tematu.</string>
+  <string name="captcha_notification">Dostępna nowa captcha!</string>
+  <string name="captcha_notification_desc">Wpisz kod captcha, aby kontynuować pobieranie.</string>
   <string name="ssl">Połączenie SSL</string>
   <string name="ssl_desc">Nawiążesz bezpieczne połączenie do rdzenia, jeżeli uaktywnisz SSL</string>
   <string name="ssl_validate">Sprawdzanie poprawności certyfikatu SSL</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Niezgodna wersja serwera, należy użyć pyLoad %s.</string>
   <string name="choose_file">Kontener plików</string>
   <string name="choose">Wybierz</string>
-  <string name="current_dir">Bieżący folder:</string>
   <string name="folder">Folder</string>
-  <string name="file_size">Rozmiar pliku:</string>
-  <string name="parent_dir">Główny katalog</string>
   <string name="eula_title">Licencja</string>
   <string name="eula_accept">Akceptuj</string>
   <string name="eula_refuse">Odmowa</string>
@@ -75,7 +72,6 @@
   <string name="size">Rozmiar</string>
   <string name="error">Błąd</string>
   <string name="labelPackage">Pakiet</string>
-  <string name="server_settings">Ustawienia serwera</string>
   <string name="general_config">Konfiguracja</string>
   <string name="plugin_config">Konfiguracja pluginów</string>
   <string name="submit">Wyślij</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Dostępna nowa captcha!</string>
-  <string name="captcha_notification_desc">Wpisz kod captcha, aby kontynuować pobieranie.</string>
 </resources>

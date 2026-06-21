@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Zeige Captcha-Anfragen an, wenn die Übersicht geöffnet ist.</string>
   <string name="enter">Übernehmen</string>
   <string name="captcha_dialog_titel">Bitte geben Sie den Text ein</string>
-  <string name="invert_tabs">Tabfarbe invertieren</string>
-  <string name="invert_tabs_desc">Du kannst das Tab-Aussehen ändern, damit es besser zu deinem System Theme passt.</string>
+  <string name="captcha_notification">Neues Captcha verfügbar!</string>
+  <string name="captcha_notification_desc">Captcha eingeben, um den Download fortzusetzen.</string>
   <string name="ssl">SSL Verbindung</string>
   <string name="ssl_desc">Eine sichere Verbindung zum Server aufbauen, wenn SSL aktiviert wurde.</string>
   <string name="ssl_validate">Bestätige das SSL Zertifikat</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Server Version stimmt nicht überein, bitte nutze pyLoad %s.</string>
   <string name="choose_file">Containerdatei</string>
   <string name="choose">Wähle</string>
-  <string name="current_dir">Aktuelles Verzeichnis:</string>
   <string name="folder">Verzeichnis</string>
-  <string name="file_size">Dateigröße:</string>
-  <string name="parent_dir">Übergeordnetes Verzeichnis</string>
   <string name="eula_title">Lizenz</string>
   <string name="eula_accept">Annehmen</string>
   <string name="eula_refuse">Ablehnen</string>
@@ -75,7 +72,6 @@
   <string name="size">Größe</string>
   <string name="error">Fehler</string>
   <string name="labelPackage">Paket</string>
-  <string name="server_settings">Servereinstellungen</string>
   <string name="general_config">Allgemeine Einstellungen</string>
   <string name="plugin_config">Erweiterungseinstellungen</string>
   <string name="submit">Übernehmen</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Neues Captcha verfügbar!</string>
-  <string name="captcha_notification_desc">Captcha eingeben, um den Download fortzusetzen.</string>
 </resources>

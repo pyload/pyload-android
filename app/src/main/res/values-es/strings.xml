@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Coge las tareas de captcha de pyLoad cuando se muestra el Resumen.</string>
   <string name="enter">Introducir</string>
   <string name="captcha_dialog_titel">Por favor introduce el texto</string>
-  <string name="invert_tabs">Invertir el color del icono de la pestaña</string>
-  <string name="invert_tabs_desc">Puedes cambiar la disposición del icono de la pestaña si se ajusta mejor a tu tema.</string>
+  <string name="captcha_notification">¡Nuevo captcha disponible!</string>
+  <string name="captcha_notification_desc">Introduce el captcha para continuar con la descarga.</string>
   <string name="ssl">Conexión SSL</string>
   <string name="ssl_desc">Establece una conexión segura con el núcleo si activaste SSL</string>
   <string name="ssl_validate">Validar certificado SSL</string>
@@ -60,10 +60,7 @@
   <string name="old_server">La versión del servidor no coincide, por favor usa pyLoad %s.</string>
   <string name="choose_file">Archivo Contenedor</string>
   <string name="choose">Escoger</string>
-  <string name="current_dir">Directorio Actual:</string>
   <string name="folder">Carpeta</string>
-  <string name="file_size">Tamaño del Archivo:</string>
-  <string name="parent_dir">Directorio Padre</string>
   <string name="eula_title">Licencia</string>
   <string name="eula_accept">Aceptar</string>
   <string name="eula_refuse">Rechazar</string>
@@ -75,7 +72,6 @@
   <string name="size">Tamaño</string>
   <string name="error">Error</string>
   <string name="labelPackage">Paquete</string>
-  <string name="server_settings">Configuración del servidor</string>
   <string name="general_config">Configuración general</string>
   <string name="plugin_config">Configuración del plugin</string>
   <string name="submit">Enviar</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">¡Nuevo captcha disponible!</string>
-  <string name="captcha_notification_desc">Introduce el captcha para continuar con la descarga.</string>
 </resources>

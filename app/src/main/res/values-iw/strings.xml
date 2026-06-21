@@ -54,8 +54,8 @@
     <string name="retrieve_captcha_desc">קבל משימות captcha מ- pyLoad כאשר מסך סקירה כללית מוצג.</string>
     <string name="enter">שלח</string>
     <string name="captcha_dialog_titel">הזן את הטקסט</string>
-    <string name="invert_tabs">הפוך צבע צלמית הכרטיסיות</string>
-    <string name="invert_tabs_desc">באפשרותך לשנות את פריסת צלמית הכרטיסיות אם זה מתאים יותר לערכת הנושא שלך.</string>
+    <string name="captcha_notification">קאפצ\'ה חדשה זמינה!</string>
+    <string name="captcha_notification_desc">הזן קאפצ\'ה כדי להמשיך בהורדה.</string>
     <string name="ssl">חיבור SSL</string>
     <string name="ssl_desc">צור חיבור מאובטח לשרת המרוחק אם הפעלת את SSL</string>
     <string name="ssl_validate">אימות תעודת SSL</string>
@@ -63,10 +63,7 @@
     <string name="old_server">גירסת השרת אינה תואמת, השתמש ב- pyLoad %s.</string>
     <string name="choose_file">קובץ מכולה</string>
     <string name="choose">בחר</string>
-    <string name="current_dir">תיקייה נוכחית:</string>
     <string name="folder">&#x200e;תיקייה</string>
-    <string name="file_size">גודל הקובץ:</string>
-    <string name="parent_dir">תיקיית אב</string>
     <string name="eula_title">רישיון</string>
     <string name="eula_accept">קבל</string>
     <string name="eula_refuse">דחה</string>
@@ -78,7 +75,6 @@
     <string name="size">&#x200e;גודל</string>
     <string name="error">&#x200e;שגיאה</string>
     <string name="labelPackage">&#x200e;חבילה</string>
-    <string name="server_settings">הגדרות שרת</string>
     <string name="general_config">הגדרות כלליות</string>
     <string name="plugin_config">הגדרות פלאגינים</string>
     <string name="submit">שלח</string>
@@ -114,6 +110,4 @@
         <item>Serbian</item>
         <item>Hebrew</item>
     </string-array>
-    <string name="captcha_notification">קאפצ\'ה חדשה זמינה!</string>
-    <string name="captcha_notification_desc">הזן קאפצ\'ה כדי להמשיך בהורדה.</string>
 </resources>

@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">Captcha taken van pyLoad krijgen wanneer Overzicht wordt weergegeven.</string>
   <string name="enter">Enter</string>
   <string name="captcha_dialog_titel">Wilt u de tekst invoeren</string>
-  <string name="invert_tabs">Kleuren pyLoad icon omkeren</string>
-  <string name="invert_tabs_desc">Je mag het tab icoontje verplaatsen als het ergens anders beter staat bij jouw huidige thema.</string>
+  <string name="captcha_notification">Nieuwe captcha beschikbaar!</string>
+  <string name="captcha_notification_desc">Voer de captcha in om het downloaden te hervatten.</string>
   <string name="ssl">SSL Connectie</string>
   <string name="ssl_desc">Gebruik veilige verbinding indien ik SSL heb geactiveerd</string>
   <string name="ssl_validate">SSL certificaat valideren</string>
@@ -60,10 +60,7 @@
   <string name="old_server">Serverversie komt niet overeen, gebruik pyLoad %s.</string>
   <string name="choose_file">Containerbestand</string>
   <string name="choose">Kies</string>
-  <string name="current_dir">Huidige map:</string>
   <string name="folder">Map</string>
-  <string name="file_size">Bestandsgrootte:</string>
-  <string name="parent_dir">Bovenliggende map</string>
   <string name="eula_title">Licentie</string>
   <string name="eula_accept">Accepteren</string>
   <string name="eula_refuse">Weigeren</string>
@@ -75,7 +72,6 @@
   <string name="size">Grootte</string>
   <string name="error">Fout</string>
   <string name="labelPackage">Pakket</string>
-  <string name="server_settings">Server instellingen</string>
   <string name="general_config">Algemene instellingen</string>
   <string name="plugin_config">Plugin instellingen</string>
   <string name="submit">Verzenden</string>
@@ -115,6 +111,4 @@
     <item>Serbian</item>
     <item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">Nieuwe captcha beschikbaar!</string>
-  <string name="captcha_notification_desc">Voer de captcha in om het downloaden te hervatten.</string>
 </resources>

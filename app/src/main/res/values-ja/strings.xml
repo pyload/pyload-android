@@ -51,8 +51,8 @@
   <string name="retrieve_captcha_desc">概要が表示されたときに pyLoad からキャプチャ タスクを取得します。</string>
   <string name="enter">入力</string>
   <string name="captcha_dialog_titel">テキストを入力してください。</string>
-  <string name="invert_tabs">タブのアイコンの色を反転します。</string>
-  <string name="invert_tabs_desc">あなたのテーマにふさわしい場タブのアイコンのレイアウトを変更できます。</string>
+  <string name="captcha_notification">新しいキャプチャがあります！</string>
+  <string name="captcha_notification_desc">ダウンロードを続行するにはキャプチャを入力してください。</string>
   <string name="ssl">SSL 接続</string>
   <string name="ssl_desc">SSL を有効化した場合、コアへの接続をセキュリティで保護されます。</string>
   <string name="ssl_validate">SSL 証明書を検証します。</string>
@@ -60,10 +60,7 @@
   <string name="old_server">サーバーのバージョンと一致しません、pyLoad %s を使用してください。</string>
   <string name="choose_file">コンテナー ファイル</string>
   <string name="choose">選択</string>
-  <string name="current_dir">現在のディレクトリ:</string>
   <string name="folder">フォルダー</string>
-  <string name="file_size">ファイルサイズ</string>
-  <string name="parent_dir">親ディレクトリ</string>
   <string name="eula_title">ライセンス</string>
   <string name="eula_accept">承認</string>
   <string name="eula_refuse">拒否</string>
@@ -75,7 +72,6 @@
   <string name="size">サイズ:</string>
   <string name="error">エラー</string>
   <string name="labelPackage">パッケージ</string>
-  <string name="server_settings">サーバーの設定</string>
   <string name="general_config">一般的な設定</string>
   <string name="plugin_config">プラグインの設定</string>
   <string name="submit">送信</string>
@@ -115,6 +111,4 @@
 	<item>Serbian</item>
 	<item>Hebrew</item>
   </string-array>
-  <string name="captcha_notification">新しいキャプチャがあります！</string>
-  <string name="captcha_notification_desc">ダウンロードを続行するにはキャプチャを入力してください。</string>
 </resources>
