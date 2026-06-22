@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#212121</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryVariant">#000000</color>
+
+    <color name="secondary">#03DAC6</color>
+    <color name="onSecondary">#000000</color>
+
+    <color name="background">#121212</color>
+    <color name="onBackground">#FFFFFF</color>
+
+    <color name="surface">#1E1E1E</color>
+    <color name="onSurface">#FFFFFF</color>
+
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#EEEEEE</color>
+
+    <!-- Button specific colors for dark mode -->
+    <color name="button_primary">#03DAC6</color>
+    <color name="button_on_primary">#000000</color>
+    <color name="button_secondary">#BDBDBD</color>
+</resources>

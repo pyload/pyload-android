@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#FFFFFF</color>
+    <color name="onPrimary">#000000</color>
+    <color name="primaryVariant">#EEEEEE</color>
+
+    <color name="secondary">#03DAC6</color>
+    <color name="onSecondary">#000000</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="onBackground">#000000</color>
+
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#000000</color>
+
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+
+    <!-- Button specific colors -->
+    <color name="button_primary">#03DAC6</color>
+    <color name="button_on_primary">#000000</color>
+    <color name="button_secondary">#757575</color>
+</resources>

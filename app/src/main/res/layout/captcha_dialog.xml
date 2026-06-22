@@ -21,6 +21,7 @@
               android:hint="@string/captcha_dialog_titel"
               android:inputType="text|textNoSuggestions"
               android:importantForAutofill="no"
+              android:textColor="@color/textPrimary"
               />
     <LinearLayout
      android:layout_width="fill_parent"
@@ -30,6 +31,7 @@
     <Button
     	android:text="@string/enter"
     	android:id="@+id/enter"
+        style="@style/PrimaryButton"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:layout_weight="1"/>
@@ -37,6 +39,7 @@
     <Button
     	android:text="@string/cancel"
     	android:id="@+id/cancel"
+        style="@style/SecondaryButton"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:layout_weight="1"></Button>

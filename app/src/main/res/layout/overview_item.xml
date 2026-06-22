@@ -5,6 +5,7 @@
 	android:padding="5dip">
 	<org.pyload.android.client.components.ScrollingTextView android:text="@string/n_a" android:id="@+id/name"
 		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="@color/textPrimary"
 		android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:marqueeRepeatLimit="marquee_forever"
     	android:ellipsize="marquee"
@@ -22,17 +23,20 @@
 		<TextView android:text="@string/n_a" android:id="@+id/size_done"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:textColor="@color/textSecondary"
 				android:layout_weight="1"/>
 				
 		<TextView android:text="@string/n_a" android:id="@+id/percent"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:textColor="@color/textSecondary"
 				android:layout_weight="1"/>
 
 
 		<TextView android:text="@string/n_a" android:id="@+id/size"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:textColor="@color/textSecondary"
 				android:layout_weight="1"/>
 	
 	</LinearLayout>
@@ -44,12 +48,14 @@
 		<TextView android:id="@+id/speed"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="left" android:layout_gravity="fill_horizontal"
+				android:textColor="@color/textSecondary"
 				android:layout_weight="1"/>
 
 
 		<TextView android:id="@+id/eta"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:gravity="right" android:layout_gravity="fill_horizontal"
+				android:textColor="@color/textSecondary"
 				android:layout_weight="1"/>
 	
 	</LinearLayout>

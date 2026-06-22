@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Status bar color -->
         <item name="android:statusBarColor">?android:attr/windowBackground</item>
-        <!-- Light status bar with dark icons (API 23+) -->
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
-        <!-- Standard colors -->
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorOnPrimary">@android:color/black</item>
-        <item name="colorSecondary">#03DAC6</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorAccent">@color/secondary</item>
+
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorSecondaryNoDisable">@color/textSecondary</item>
+
+        <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
     </style>
+
+    <style name="AppTheme.ActionBar" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:statusBarColor">?android:attr/windowBackground</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorAccent">@color/secondary</item>
+
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorSecondaryNoDisable">@color/textSecondary</item>
+
+        <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
+    </style>
+
+    <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorAccent">@color/secondary</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AppTheme.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AppTheme.DialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AppTheme.DialogButton</item>
+    </style>
+
+    <style name="AppTheme.DialogButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">#03DAC6</item>
+    </style>
+
+    <!-- Style for Primary Buttons (Add) -->
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/button_primary</item>
+        <item name="android:textColor">@color/button_on_primary</item>
+        <item name="colorOnPrimary">@color/button_on_primary</item>
+    </style>
+
+    <!-- Style for Secondary Buttons (Cancel, Choose) -->
+    <style name="SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/button_secondary</item>
+        <item name="android:textColor">@color/button_secondary</item>
+    </style>
+
+    <!-- <style name="AppTheme.DialogButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/secondary</item>
+    </style> -->
 </resources>

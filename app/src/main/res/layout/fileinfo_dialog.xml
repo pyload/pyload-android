@@ -17,7 +17,8 @@ android:layout_marginRight="15dip">
         android:layout_width="wrap_content"
         android:id="@+id/labelName"
         android:layout_height="wrap_content"
-        android:text="@string/name"/>
+        android:text="@string/name"
+        android:textColor="@color/textSecondary"/>
    
 	<TextView 
    		android:layout_width="wrap_content"
@@ -25,6 +26,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_toRightOf="@+id/labelName"
    		android:layout_alignParentRight="true"/>
    		 
@@ -33,6 +35,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelPlugin"
         android:layout_height="wrap_content"
         android:text="@string/plugin"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/plugin"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/plugin"/>   
@@ -42,6 +45,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/name"
    		android:layout_alignParentRight="true"/>
    		 
@@ -50,6 +54,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelStatus"
         android:layout_height="wrap_content"
         android:text="@string/status"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/status"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/status"/>   
@@ -59,6 +64,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/plugin"
    		android:layout_alignParentRight="true"/>
    		 
@@ -67,6 +73,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelSize"
         android:layout_height="wrap_content"
         android:text="@string/size"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/size"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/size"/>
@@ -77,6 +84,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/status"
    		android:layout_alignParentRight="true"/>
    		 
@@ -85,6 +93,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelerror"
         android:layout_height="wrap_content"
         android:text="@string/error"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/error"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/error"/>
@@ -95,6 +104,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/size"
    		android:layout_alignParentRight="true"/>
    		 
@@ -103,6 +113,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelPackage"
         android:layout_height="wrap_content"
         android:text="@string/labelPackage"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/packageValue"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/packageValue"/>
@@ -113,6 +124,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/error"
    		android:layout_alignParentRight="true"/>
    		 
@@ -121,6 +133,7 @@ android:layout_marginRight="15dip">
         android:id="@+id/labelFolder"
         android:layout_height="wrap_content"
         android:text="@string/folder"
+        android:textColor="@color/textSecondary"
         android:layout_toLeftOf="@+id/folder"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/folder"/>
@@ -131,6 +144,7 @@ android:layout_marginRight="15dip">
    		android:text="@string/n_a"
    		android:layout_height="wrap_content"
    		android:gravity="right"
+        android:textColor="@color/textPrimary"
    		android:layout_below="@+id/packageValue"
    		android:layout_alignParentRight="true"/>
    		 
@@ -141,6 +155,8 @@ android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:id="@+id/close"
 android:text="@string/close"
+style="@style/PrimaryButton"
+android:textColor="@color/button_on_primary"
 />
 
 

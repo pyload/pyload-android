@@ -16,6 +16,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/addlinks_desc"
+    android:textColor="@color/textPrimary"
     android:textSize="10pt">
 </TextView>
 
@@ -70,11 +71,13 @@
     android:background="?android:attr/editTextBackground"
     android:padding="8dp"
     android:gravity="center_vertical"
+    android:textColor="@color/textPrimary"
     android:textSize="18sp">
 </TextView>
 
 <Button  
     android:id="@+id/button_pick"  
+    style="@style/SecondaryButton"
     android:layout_height="wrap_content"
     android:text="@string/choose"  
     android:onClick="pickFile"  
@@ -94,7 +97,8 @@
 
 <Button  
     android:id="@+id/button_add"  
-    android:layout_height="wrap_content"  
+    style="@style/PrimaryButton"
+    android:layout_height="wrap_content"
     android:text="@string/add"  
     android:onClick="addPackage"  
     android:layout_width="0dp"
@@ -103,6 +107,7 @@
 
 <Button  
     android:id="@+id/button_cancel"  
+    style="@style/SecondaryButton"
     android:layout_height="wrap_content"
     android:text="@string/cancel"  
     android:onClick="onCancel"  

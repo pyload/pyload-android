@@ -1,6 +1,6 @@
 package org.pyload.android.client.dialogs;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -75,7 +75,7 @@ class AccountAdapter extends BaseAdapter {
     private List<AccountInfo> data;
 
     public AccountAdapter(final Context context) {
-        layoutInflater = (LayoutInflater)  context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = LayoutInflater.from(context);
 
         data = new ArrayList<AccountInfo>();
     }

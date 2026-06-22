@@ -7,6 +7,7 @@
     android:paddingTop="2dip"  
     android:paddingBottom="2dip"  
     android:paddingLeft="5dip"  
+    android:textColor="@color/textSecondary"
     style="?android:attr/listSeparatorTextViewStyle" />
     
  <LinearLayout
@@ -21,6 +22,7 @@
     android:layout_height="wrap_content"  
     android:text="@string/submit"  
     android:id="@+id/button_submit"
+    style="@style/PrimaryButton"
     android:layout_width="fill_parent"
     android:layout_weight="1">  
 </Button>
@@ -29,6 +31,7 @@
     android:layout_height="wrap_content"
     android:text="@string/cancel"  
     android:id="@+id/button_cancel"
+    style="@style/SecondaryButton"
     android:layout_width="fill_parent"
     android:layout_weight="1">
 </Button>

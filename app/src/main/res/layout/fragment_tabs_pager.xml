@@ -19,7 +19,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?android:attr/windowBackground"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextColor="?android:attr/textColorPrimary" />
+            app:titleTextColor="?android:attr/textColorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.DayNight"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -33,6 +35,11 @@
             app:tabGravity="fill" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
