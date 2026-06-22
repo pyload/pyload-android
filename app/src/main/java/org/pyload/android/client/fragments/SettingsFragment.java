@@ -64,10 +64,10 @@ public class SettingsFragment extends ListFragment {
 
 		app = (pyLoadApp) getActivity().getApplicationContext();
 
-		adp = new SeparatedListAdapter(app);
+		adp = new SeparatedListAdapter(getActivity());
 
-		general = new SettingsAdapter(app);
-		plugins = new SettingsAdapter(app);
+		general = new SettingsAdapter(getActivity());
+		plugins = new SettingsAdapter(getActivity());
 
 		adp.addSection(getString(R.string.general_config), general);
 		adp.addSection(getString(R.string.plugin_config), plugins);
@@ -143,9 +143,8 @@ class SettingsAdapter extends BaseAdapter {
 	private LayoutInflater layoutInflater;
 	private ArrayList<Entry<String, ConfigSection>> data;
 
-	public SettingsAdapter(pyLoadApp app) {
-		layoutInflater = (LayoutInflater) app
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public SettingsAdapter(Context context) {
+		layoutInflater = LayoutInflater.from(context);
 
 		data = new ArrayList<Entry<String, ConfigSection>>();
 	}

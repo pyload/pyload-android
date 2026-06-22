@@ -116,7 +116,7 @@ public class OverviewFragment extends ListFragment implements
         app = (pyLoadApp) getActivity().getApplicationContext();
 
         downloads = new ArrayList<DownloadInfo>();
-        adp = new OverviewAdapter(app, R.layout.overview_item, downloads);
+        adp = new OverviewAdapter(getActivity(), R.layout.overview_item, downloads);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -371,14 +371,13 @@ class OverviewAdapter extends BaseAdapter {
     private final int rowResID;
     private final LayoutInflater layoutInflater;
 
-    public OverviewAdapter(final pyLoadApp app, final int rowResID,
+    public OverviewAdapter(final Context context, final int rowResID,
                            List<DownloadInfo> downloads) {
-        this.app = app;
+        this.app = (pyLoadApp) context.getApplicationContext();
         this.rowResID = rowResID;
         this.downloads = downloads;
 
-        layoutInflater = (LayoutInflater) app
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     public void setDownloads(List<DownloadInfo> downloads) {

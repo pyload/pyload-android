@@ -363,7 +363,7 @@ public class pyLoadApp extends Application {
         }
 
         if (state) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(main);
             View progress = inflater.inflate(R.layout.progress_wheel, null);
 
             main.getRefreshItem().setActionView(progress);

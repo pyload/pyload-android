@@ -91,7 +91,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		super.onViewCreated(view, savedInstanceState);
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
-		PackageListAdapter adp = new PackageListAdapter(app, data,
+		PackageListAdapter adp = new PackageListAdapter(getActivity(), data,
 				R.layout.package_item, R.layout.package_child_item);
 		setListAdapter(adp);
 	}
@@ -311,15 +311,14 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 	private final int childRes;
 	private final LayoutInflater layoutInflater;
 	private List<PackageData> data;
-	public PackageListAdapter(pyLoadApp app, List<PackageData> data,
+	public PackageListAdapter(Context context, List<PackageData> data,
 			int groupRes, int childRes) {
 
 		this.data = data;
 		this.groupRes = groupRes;
 		this.childRes = childRes;
 
-		layoutInflater = (LayoutInflater) app
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		layoutInflater = LayoutInflater.from(context);
 	}
 
 	public void setData(List<PackageData> data) {
