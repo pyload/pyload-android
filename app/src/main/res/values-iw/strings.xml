@@ -80,6 +80,7 @@
     <string name="submit">שלח</string>
     <string name="accounts">חשבונות</string>
     <string name="unlimited">ללא הגבלה</string>
+    <string name="drained">המכסה הסתיימה</string>
     <string name="valid">בתוקף</string>
     <string name="invalid">לא בתוקף</string>
     <string name="trafficleft">תעבורה:</string>
@@ -110,9 +111,9 @@
         <item>Serbian</item>
         <item>Hebrew</item>
     </string-array>
-  <string name="theme">ערכת נושא</string>
-  <string name="theme_desc">ערכת נושא למראה האפליקציה.</string>
-  <string name="theme_light">בהיר</string>
-  <string name="theme_dark">כהה</string>
-  <string name="theme_system">ברירת מחדל של המערכת</string>
+    <string name="theme">ערכת נושא</string>
+    <string name="theme_desc">ערכת נושא למראה האפליקציה.</string>
+    <string name="theme_light">בהיר</string>
+    <string name="theme_dark">כהה</string>
+    <string name="theme_system">ברירת מחדל של המערכת</string>
 </resources>

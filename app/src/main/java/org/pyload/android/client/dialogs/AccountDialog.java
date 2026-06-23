@@ -125,21 +125,29 @@ class AccountAdapter extends BaseAdapter {
         holder.type.setText(acc.getType());
         holder.name.setText(acc.getLogin());
 
-        if (acc.getValid())
+        if (Boolean.TRUE.equals(acc.getValid()))
             holder.valid.setText(R.string.valid);
         else
             holder.valid.setText(R.string.invalid);
 
-        if (acc.getTrafficleft() < 0)
+        Long trafficleft = acc.getTrafficleft();
+        if (trafficleft == null)
+            holder.trafficleft.setText(R.string.n_a);
+        else if (trafficleft == 0)
+            holder.trafficleft.setText(R.string.drained);
+        else if (trafficleft < 0)
             holder.trafficleft.setText(R.string.unlimited);
         else
-            holder.trafficleft.setText(Utils.formatSize(acc.getTrafficleft()));
+            holder.trafficleft.setText(Utils.formatSize(trafficleft));
 
-        if (acc.getValiduntil() < 0)
+        Float validuntil = acc.getValiduntil();
+        if (validuntil == null)
+            holder.validuntil.setText(R.string.n_a);
+        else if (validuntil < 0)
             holder.validuntil.setText(R.string.unlimited);
         else {
             Date date = new Date();
-            date.setTime(acc.getValiduntil().longValue() * 1000);
+            date.setTime(validuntil.longValue() * 1000);
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
             holder.validuntil.setText(formatter.format(date));
         }

@@ -83,6 +83,7 @@
     <string name="submit">Submit</string>
     <string name="accounts">Accounts</string>
     <string name="unlimited">unlimited</string>
+    <string name="drained">limit reached</string>
     <string name="valid">valid</string>
     <string name="invalid">invalid</string>
     <string name="trafficleft">Traffic:</string>
