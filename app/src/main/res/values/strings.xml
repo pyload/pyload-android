@@ -3,11 +3,11 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Remote Settings</string>
     <string name="restart_failed">Restart failed files</string>
+    <string name="clear_finished">Clear finished packages</string>
     <string name="remote_settings">Remote Settings</string>
     <string name="no_packages">No packages.</string>
-    <string name="no_accounts">No premium accounts.</string>
     <string name="no_accounts_yet">No accounts yet.</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="no_downloads">No active downloads.</string>
     <string name="add_links">Add Links</string>
     <string name="settings">Settings</string>

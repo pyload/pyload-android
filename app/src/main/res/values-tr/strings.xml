@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - uzak ayarları</string>
     <string name="restart_failed">Başarısız olan dosyaları yeniden başlatın</string>
+    <string name="clear_finished">Tamamlanan paketleri temizle</string>
     <string name="remote_settings">Uzak ayarlar</string>
     <string name="no_packages">Paket yok.</string>
     <string name="no_accounts">Premium hesap yok.</string>

@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad – удаљене поставке</string>
     <string name="restart_failed">Поново покрени</string>
+    <string name="clear_finished">Обриши завршене пакете</string>
     <string name="remote_settings">Удаљене поставке</string>
     <string name="no_packages">Нема пакета.</string>
     <string name="no_accounts">Нема премијум налога.</string>

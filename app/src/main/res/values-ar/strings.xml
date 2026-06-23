@@ -4,6 +4,7 @@
     <string name="app_name">باي لود </string>
     <string name="remotesettings_activity">اعدادات باي لود - عن بعد</string>
     <string name="restart_failed">اعادة تشغيل الملفات اللتي فشلت</string>
+    <string name="clear_finished">مسح الحزم المنتهية</string>
     <string name="remote_settings">الاعدادات عن بعد</string>
     <string name="no_packages">لا يوجد حزم.</string>
     <string name="no_accounts">لايوجد حساب مدفوع.</string>

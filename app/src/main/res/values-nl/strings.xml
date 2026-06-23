@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Instellingen externe verbindingen</string>
     <string name="restart_failed">Herstart mislukte bestanden</string>
+    <string name="clear_finished">Voltooide pakketten wissen</string>
     <string name="remote_settings">Instellingen voor externe verbindingen</string>
     <string name="no_packages">Geen pakketten.</string>
     <string name="no_accounts">Geen premium accounts.</string>

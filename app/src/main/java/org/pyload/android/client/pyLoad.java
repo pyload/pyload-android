@@ -199,6 +199,15 @@ public class pyLoad extends FragmentTabsPager {
             }, app.handleSuccess));
 
             return true;
+        } else if (itemId == R.id.clear_finished) {
+            app.addTask(new GuiTask(new Runnable() {
+                public void run() {
+                    PyLoadRestApi client = app.getClient();
+                    app.executeNetworkCall(client.apiDeleteFinishedPost());
+                }
+            }, app.handleSuccess));
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

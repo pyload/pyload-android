@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - リモート設定</string>
     <string name="restart_failed">失敗したファイルを再起動します。</string>
+    <string name="clear_finished">完了済みパッケージをクリア</string>
     <string name="remote_settings">リモート設定</string>
     <string name="no_packages">パッケージはありません。</string>
     <string name="no_accounts">プレミアム アカウントはありません。</string>

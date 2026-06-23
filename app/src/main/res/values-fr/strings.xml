@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Réglages à distance</string>
     <string name="restart_failed">Redémarrer les fichiers échoués</string>
+    <string name="clear_finished">Effacer les paquets terminés</string>
     <string name="remote_settings">Réglages à distance</string>
     <string name="no_packages">Pas de paquets.</string>
     <string name="no_accounts">Pas de compte premium.</string>

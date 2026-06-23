@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Távoli beállítások</string>
     <string name="restart_failed">Hibás fájlok újrakezdése</string>
+    <string name="clear_finished">Befejezett csomagok törlése</string>
     <string name="remote_settings">Távoli beállítások</string>
     <string name="no_packages">Nincs csomag.</string>
     <string name="no_accounts">Nincs prémium hozzáférés.</string>

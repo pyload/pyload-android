@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - удаленные настройки</string>
     <string name="restart_failed">Перезапустить неудавшиеся загрузки</string>
+    <string name="clear_finished">Очистить завершенные пакеты</string>
     <string name="remote_settings">Удаленные Настройки</string>
     <string name="no_packages">Нет пакетов.</string>
     <string name="no_accounts">Нет премиум аккаунтов.</string>

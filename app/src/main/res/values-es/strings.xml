@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Configuración Remota</string>
     <string name="restart_failed">Reiniciar archivos fallidos</string>
+    <string name="clear_finished">Borrar paquetes finalizados</string>
     <string name="remote_settings">Configuración Remota</string>
     <string name="no_packages">No hay paquetes.</string>
     <string name="no_accounts">No hay cuentas premium.</string>

@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Ustawienia zdalnego dostępu</string>
     <string name="restart_failed">Ponów błędne pobrania</string>
+    <string name="clear_finished">Wyczyść zakończone pakiety</string>
     <string name="remote_settings">Ustawienia zdalnego dostępu</string>
     <string name="no_packages">Brak pakietów.</string>
     <string name="no_accounts">Brak kont premium.</string>

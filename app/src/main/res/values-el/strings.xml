@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Απομακρυσμένες Ρυθμίσεις</string>
     <string name="restart_failed">Επανεκκίνηση αποτυχημένων αρχείων</string>
+    <string name="clear_finished">Εκκαθάριση ολοκληρωμένων πακέτων</string>
     <string name="remote_settings">Απομακρυσμένες ρυθμίσεις</string>
     <string name="no_packages">Δεν υπάρχουν πακέτα.</string>
     <string name="no_accounts">Δεν υπάρχουν λογαριασμοί premium.</string>

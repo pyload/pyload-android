@@ -3,6 +3,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - הגדרות מרוחקות</string>
     <string name="restart_failed">הפעל מחדש את הקבצים שנכשלו</string>
+    <string name="clear_finished">נקה חבילות שהסתיימו</string>
     <string name="remote_settings">הגדרות מרוחקות</string>
     <string name="no_packages">אין חבילות.</string>
     <string name="no_accounts">אין חשבונות פרימיום.</string>

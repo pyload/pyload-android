@@ -4,6 +4,7 @@
     <string name="app_name">pyLoad</string>
     <string name="remotesettings_activity">pyLoad - Cài đặt từ xa</string>
     <string name="restart_failed">Khởi động lại tập tin không thành công</string>
+    <string name="clear_finished">Xóa các gói đã hoàn thành</string>
     <string name="remote_settings">Cài đặt từ xa</string>
     <string name="no_packages">Không có gói.</string>
     <string name="no_accounts">Không có tài khoản trả tiền.</string>

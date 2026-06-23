@@ -39,4 +39,10 @@
         android:title="@string/restart_failed"
         app:iconTint="?attr/colorOnSurface" />
 
+    <item
+        android:id="@+id/clear_finished"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/clear_finished"
+        app:iconTint="?attr/colorOnSurface" />
+
 </menu>
