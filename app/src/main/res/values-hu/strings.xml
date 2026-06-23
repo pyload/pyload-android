@@ -7,6 +7,8 @@
     <string name="remote_settings">Távoli beállítások</string>
     <string name="no_packages">Nincs csomag.</string>
     <string name="no_accounts">Nincs prémium hozzáférés.</string>
+    <string name="no_accounts_yet">Még nincsenek fiókok</string>
+    <string name="loading">Betöltés…</string>
     <string name="no_downloads">Nincs aktív letöltés.</string>
     <string name="add_links">Link hozzáadás</string>
     <string name="settings">Beállítások</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Beépülő beállítások</string>
     <string name="submit">Küldés</string>
     <string name="accounts">Hozzáférések</string>
+    <string name="premium">Prémium</string>
+    <string name="free">Ingyenes</string>
     <string name="unlimited">végtelen</string>
     <string name="drained">limit elérve</string>
     <string name="valid">érvényes</string>

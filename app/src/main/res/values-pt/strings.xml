@@ -7,6 +7,8 @@
     <string name="remote_settings">Configurações remotas</string>
     <string name="no_packages">Não há pacotes.</string>
     <string name="no_accounts">Sem contas premium.</string>
+    <string name="no_accounts_yet">Ainda não há contas</string>
+    <string name="loading">Carregando…</string>
     <string name="no_downloads">Não há downloads ativos.</string>
     <string name="add_links">Adicionar Links</string>
     <string name="settings">Configurações</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Configuração de plugin</string>
     <string name="submit">Enviar</string>
     <string name="accounts">Contas</string>
+    <string name="premium">Premium</string>
+    <string name="free">Grátis</string>
     <string name="unlimited">ilimitado</string>
     <string name="drained">limite atingido</string>
     <string name="valid">válido</string>

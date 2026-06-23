@@ -7,6 +7,8 @@
     <string name="remote_settings">Удаљене поставке</string>
     <string name="no_packages">Нема пакета.</string>
     <string name="no_accounts">Нема премијум налога.</string>
+    <string name="no_accounts_yet">Још увек нема налога</string>
+    <string name="loading">Учитавање…</string>
     <string name="no_downloads">Нема активних преузимања.</string>
     <string name="add_links">Додај везе</string>
     <string name="settings">Поставке</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Поставке прикључака</string>
     <string name="submit">Сачувај</string>
     <string name="accounts">Налози</string>
+    <string name="premium">Premium</string>
+    <string name="free">Besplatno</string>
     <string name="unlimited">неограничено</string>
     <string name="drained">лимит достигнут</string>
     <string name="valid">исправно</string>

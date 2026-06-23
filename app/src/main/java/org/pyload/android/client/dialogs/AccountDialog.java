@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.GuiTask;
@@ -69,10 +70,12 @@ class AccountAdapter extends BaseAdapter {
         private TextView valid;
         private TextView validuntil;
         private TextView trafficleft;
+        private TextView premium;
     }
 
     private LayoutInflater layoutInflater;
     private List<AccountInfo> data;
+    private boolean loading = true;
 
     public AccountAdapter(final Context context) {
         layoutInflater = LayoutInflater.from(context);
@@ -87,6 +90,7 @@ class AccountAdapter extends BaseAdapter {
 
     public void setData(List<AccountInfo> accounts) {
         data = accounts;
+        loading = false;
         notifyDataSetChanged();
 
     }
@@ -105,7 +109,19 @@ class AccountAdapter extends BaseAdapter {
         AccountInfo acc = (data.size() == 0 ? null : data.get(pos));
         // here comes the empty list view
         if (acc == null) {
-            return layoutInflater.inflate(R.layout.account_empty_list, group, false);
+            view = layoutInflater.inflate(R.layout.account_empty_list, group, false);
+            ProgressBar progress = (ProgressBar) view.findViewById(R.id.loading_progress);
+            TextView text = (TextView) view.findViewById(R.id.no_accounts_text);
+
+            if (loading) {
+                progress.setVisibility(View.VISIBLE);
+                text.setText(R.string.loading);
+            } else {
+                progress.setVisibility(View.GONE);
+                text.setText(R.string.no_accounts_yet);
+            }
+
+            return view;
         }
 
         view = layoutInflater.inflate(R.layout.account_item, group, false);
@@ -117,12 +133,19 @@ class AccountAdapter extends BaseAdapter {
         holder.valid = (TextView) view.findViewById(R.id.valid);
         holder.validuntil = (TextView) view.findViewById(R.id.validuntil);
         holder.trafficleft = (TextView) view.findViewById(R.id.trafficleft);
+        holder.premium = (TextView) view.findViewById(R.id.premium);
 
         view.setTag(holder);
 
         holder = (ViewHolder) view.getTag();
 
         holder.type.setText(acc.getType());
+
+        if (Boolean.TRUE.equals(acc.getPremium())) {
+            holder.premium.setText(R.string.premium);
+        } else {
+            holder.premium.setText(R.string.free);
+        }
         holder.name.setText(acc.getLogin());
 
         if (Boolean.TRUE.equals(acc.getValid()))

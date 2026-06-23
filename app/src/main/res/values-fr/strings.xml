@@ -7,6 +7,8 @@
     <string name="remote_settings">Réglages à distance</string>
     <string name="no_packages">Pas de paquets.</string>
     <string name="no_accounts">Pas de compte premium.</string>
+    <string name="no_accounts_yet">Aucun compte pour le moment</string>
+    <string name="loading">Chargement…</string>
     <string name="no_downloads">Aucun téléchargements actifs.</string>
     <string name="add_links">Ajouter des liens</string>
     <string name="settings">Réglages</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Configuration des plugins</string>
     <string name="submit">Valider</string>
     <string name="accounts">Comptes</string>
+    <string name="premium">Premium</string>
+    <string name="free">Gratuit</string>
     <string name="unlimited">Illimité</string>
     <string name="drained">limite atteinte</string>
     <string name="valid">valide</string>

@@ -6,6 +6,8 @@
     <string name="remote_settings">הגדרות מרוחקות</string>
     <string name="no_packages">אין חבילות.</string>
     <string name="no_accounts">אין חשבונות פרימיום.</string>
+    <string name="no_accounts_yet">אין עדיין חשבונות</string>
+    <string name="loading">טוען…</string>
     <string name="no_downloads">אין הורדות פעילות.</string>
     <string name="add_links">הוסף קישורים</string>
     <string name="settings">הגדרות</string>
@@ -79,6 +81,8 @@
     <string name="plugin_config">הגדרות פלאגינים</string>
     <string name="submit">שלח</string>
     <string name="accounts">חשבונות</string>
+    <string name="premium">פרימיום</string>
+    <string name="free">חינם</string>
     <string name="unlimited">ללא הגבלה</string>
     <string name="drained">המכסה הסתיימה</string>
     <string name="valid">בתוקף</string>

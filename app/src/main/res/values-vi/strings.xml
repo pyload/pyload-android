@@ -7,6 +7,8 @@
     <string name="remote_settings">Cài đặt từ xa</string>
     <string name="no_packages">Không có gói.</string>
     <string name="no_accounts">Không có tài khoản trả tiền.</string>
+    <string name="no_accounts_yet">Chưa có tài khoản</string>
+    <string name="loading">Đang tải…</string>
     <string name="no_downloads">Chưa có tập tin tải về.</string>
     <string name="add_links">Thêm liên kết</string>
     <string name="settings">Cài đặt</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Cấu hình plugin</string>
     <string name="submit">Gửi</string>
     <string name="accounts">Tài khoản</string>
+    <string name="premium">Cao cấp</string>
+    <string name="free">Miễn phí</string>
     <string name="unlimited">không giới hạn</string>
     <string name="drained">đạt giới hạn</string>
     <string name="valid">hợp lệ</string>

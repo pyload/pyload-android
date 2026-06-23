@@ -7,6 +7,8 @@
     <string name="remote_settings">Удаленные Настройки</string>
     <string name="no_packages">Нет пакетов.</string>
     <string name="no_accounts">Нет премиум аккаунтов.</string>
+    <string name="no_accounts_yet">Аккаунтов пока нет</string>
+    <string name="loading">Загрузка…</string>
     <string name="no_downloads">Нет активных загрузок.</string>
     <string name="add_links">Добавить ссылки</string>
     <string name="settings">Настройки</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Конфигурация приложений</string>
     <string name="submit">Отправить</string>
     <string name="accounts">Аккаунты</string>
+    <string name="premium">Премиум</string>
+    <string name="free">Бесплатно</string>
     <string name="unlimited">неограниченный</string>
     <string name="drained">лимит исчерпан</string>
     <string name="valid">действителен</string>

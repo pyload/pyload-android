@@ -7,6 +7,8 @@
     <string name="remote_settings">Servereinstellungen</string>
     <string name="no_packages">Keine Pakete.</string>
     <string name="no_accounts">Keine Premiumaccounts.</string>
+    <string name="no_accounts_yet">Noch keine Konten</string>
+    <string name="loading">Wird geladen…</string>
     <string name="no_downloads">Keine aktiven Downloads.</string>
     <string name="add_links">Link hinzufügen</string>
     <string name="settings">Einstellungen</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Erweiterungseinstellungen</string>
     <string name="submit">Übernehmen</string>
     <string name="accounts">Konten</string>
+    <string name="premium">Premium</string>
+    <string name="free">Kostenlos</string>
     <string name="unlimited">unbegrenzt</string>
     <string name="drained">Limit erreicht</string>
     <string name="valid">gültig</string>

@@ -7,6 +7,8 @@
     <string name="remote_settings">الاعدادات عن بعد</string>
     <string name="no_packages">لا يوجد حزم.</string>
     <string name="no_accounts">لايوجد حساب مدفوع.</string>
+    <string name="no_accounts_yet">لا توجد حسابات بعد</string>
+    <string name="loading">جاري التحميل…</string>
     <string name="no_downloads">لا يوجد تحميلات فعاله.</string>
     <string name="add_links">اضافة روابط</string>
     <string name="settings">الاعدادت</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">اعدادات الاضافات</string>
     <string name="submit">اقترح</string>
     <string name="accounts">الحسابات</string>
+    <string name="premium">بريميوم</string>
+    <string name="free">مجاني</string>
     <string name="unlimited">غير محدود</string>
     <string name="drained">تم بلوغ الحد</string>
     <string name="valid">صالحة</string>

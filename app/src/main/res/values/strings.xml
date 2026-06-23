@@ -6,6 +6,8 @@
     <string name="remote_settings">Remote Settings</string>
     <string name="no_packages">No packages.</string>
     <string name="no_accounts">No premium accounts.</string>
+    <string name="no_accounts_yet">No accounts yet.</string>
+    <string name="loading">Loading...</string>
     <string name="no_downloads">No active downloads.</string>
     <string name="add_links">Add Links</string>
     <string name="settings">Settings</string>
@@ -82,6 +84,8 @@
     <string name="plugin_config">Plugin config</string>
     <string name="submit">Submit</string>
     <string name="accounts">Accounts</string>
+    <string name="premium">Premium</string>
+    <string name="free">Free</string>
     <string name="unlimited">unlimited</string>
     <string name="drained">limit reached</string>
     <string name="valid">valid</string>

@@ -7,6 +7,8 @@
     <string name="remote_settings">リモート設定</string>
     <string name="no_packages">パッケージはありません。</string>
     <string name="no_accounts">プレミアム アカウントはありません。</string>
+    <string name="no_accounts_yet">アカウントはまだありません</string>
+    <string name="loading">読み込み中…</string>
     <string name="no_downloads">アクティブなダウンロードはありません</string>
     <string name="add_links">リンクを追加します。</string>
     <string name="settings">設定</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">プラグインの設定</string>
     <string name="submit">送信</string>
     <string name="accounts">アカウント</string>
+    <string name="premium">プレミアム</string>
+    <string name="free">無料</string>
     <string name="unlimited">無制限</string>
     <string name="drained">制限に達しました</string>
     <string name="valid">有効です</string>

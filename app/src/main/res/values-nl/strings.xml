@@ -7,6 +7,8 @@
     <string name="remote_settings">Instellingen voor externe verbindingen</string>
     <string name="no_packages">Geen pakketten.</string>
     <string name="no_accounts">Geen premium accounts.</string>
+    <string name="no_accounts_yet">Nog geen accounts</string>
+    <string name="loading">Laden…</string>
     <string name="no_downloads">Geen actieve downloads.</string>
     <string name="add_links">Link toevoegen</string>
     <string name="settings">Instellingen</string>
@@ -76,6 +78,8 @@
     <string name="plugin_config">Plugin instellingen</string>
     <string name="submit">Verzenden</string>
     <string name="accounts">Accounts</string>
+    <string name="premium">Premium</string>
+    <string name="free">Gratis</string>
     <string name="unlimited">onbeperkt</string>
     <string name="drained">limiet bereikt</string>
     <string name="valid">geldig</string>
