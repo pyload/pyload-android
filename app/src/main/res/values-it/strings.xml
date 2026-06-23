@@ -24,6 +24,8 @@
     <string name="ip_desc">IP o nome host del Core pyLoad remoto.</string>
     <string name="port">Porta</string>
     <string name="port_desc">La porta del PyloadBackend che hai impostato nella sezione remoto.</string>
+    <string name="path_prefix">Prefisso del percorso</string>
+    <string name="path_prefix_desc">Prefisso del percorso per l\'URL del server (es. /pyload).</string>
     <string name="api_key">Chiave API</string>
     <string name="api_key_desc">La tua chiave API per l\'autenticazione.</string>
     <string name="password">Password</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Preferenze</string>
     <string name="no_connection">Impossibile stabilire la connessione:</string>
     <string name="bad_login">Chiave API non valida.</string>
+    <string name="bad_path">Il prefisso del percorso sembra essere errato (404 Non Trovato).</string>
     <string name="move">Sposta posizione</string>
     <string name="on">on</string>
     <string name="off">off</string>

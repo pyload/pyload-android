@@ -24,6 +24,8 @@
     <string name="ip_desc">IP oder Hostname des pyLoad Servers.</string>
     <string name="port">Port</string>
     <string name="port_desc">Der Port des PyloadBackend, den sie in den Servereinstellungen gesetzt haben.</string>
+    <string name="path_prefix">Pfad-Präfix</string>
+    <string name="path_prefix_desc">Pfad-Präfix für die Server-URL (z.B. /pyload).</string>
     <string name="api_key">API-Schlüssel</string>
     <string name="api_key_desc">Dein API-Schlüssel zur Authentifizierung.</string>
     <string name="password">Passwort</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Einstellungen</string>
     <string name="no_connection">Die Verbindung konnte nicht hergestellt werden:</string>
     <string name="bad_login">Ungültiger API-Schlüssel.</string>
+    <string name="bad_path">Pfad-Präfix scheint falsch zu sein (404 Nicht Gefunden).</string>
     <string name="move">Position ändern</string>
     <string name="on">ein</string>
     <string name="off">aus</string>

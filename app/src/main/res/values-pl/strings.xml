@@ -24,6 +24,8 @@
     <string name="ip_desc">Adres IP lub nazwa hosta zdalnego pyLoad Core.</string>
     <string name="port">Port</string>
     <string name="port_desc">Port PyloadBackend można ustawić w sekcji zdalnego dostępu.</string>
+    <string name="path_prefix">Prefiks ścieżki</string>
+    <string name="path_prefix_desc">Prefiks ścieżki dla adresu URL serwera (np. /pyload).</string>
     <string name="api_key">Klucz API</string>
     <string name="api_key_desc">Twój klucz API do uwierzytelnienia.</string>
     <string name="password">Hasło</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Ustawienia</string>
     <string name="no_connection">Nie można ustanowić połączenia:</string>
     <string name="bad_login">Nieprawidłowy klucz API.</string>
+    <string name="bad_path">Prefiks ścieżki wydaje się być błędny (404 Nie znaleziono).</string>
     <string name="move">Przenieś do innej lokalizacji</string>
     <string name="on">Wł</string>
     <string name="off">Wył</string>

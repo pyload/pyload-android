@@ -24,6 +24,8 @@
     <string name="ip_desc">A távoli pyLoad Core IP vagy host címe.</string>
     <string name="port">Port</string>
     <string name="port_desc">A PyloadBackend szerver port-ja, ami a távoli elérésnél van beállítva.</string>
+    <string name="path_prefix">Útvonal előtag</string>
+    <string name="path_prefix_desc">Útvonal előtag a szerver URL-hez (pl. /pyload).</string>
     <string name="api_key">API kulcs</string>
     <string name="api_key_desc">Az API kulcsod hitelesítéshez.</string>
     <string name="password">Jelszó</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Beállítások</string>
     <string name="no_connection">Nem sikerült kapcsolatot létesíteni:</string>
     <string name="bad_login">Érvénytelen API-kulcs.</string>
+    <string name="bad_path">Az útvonal előtag hibásnak tűnik (404 Nem található).</string>
     <string name="move">Hely áthelyezése</string>
     <string name="on">be</string>
     <string name="off">ki</string>

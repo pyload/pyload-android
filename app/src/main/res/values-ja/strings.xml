@@ -24,6 +24,8 @@
     <string name="ip_desc">リモート pyLoad コアのIp アドレスまたはホスト名。</string>
     <string name="port">ポート</string>
     <string name="port_desc">リモートのセクションで設定した PyloadBackend のポート。</string>
+    <string name="path_prefix">パスプレフィックス</string>
+    <string name="path_prefix_desc">サーバーURLのパスプレフィックス (例: /pyload)</string>
     <string name="api_key">APIキー</string>
     <string name="api_key_desc">認証のためのAPIキー。</string>
     <string name="password">パスワード</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - 設定</string>
     <string name="no_connection">接続を確立できませんでした。</string>
     <string name="bad_login">無効なAPIキーです。</string>
+    <string name="bad_path">パスプレフィックスが間違っているようです (404 見つかりません).</string>
     <string name="move">移動します。</string>
     <string name="on">オン</string>
     <string name="off">オフ</string>

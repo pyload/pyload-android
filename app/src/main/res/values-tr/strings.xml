@@ -24,6 +24,8 @@
     <string name="ip_desc">pyLoad Core için IP ya da ana bilgisayar adı.</string>
     <string name="port">Port</string>
     <string name="port_desc">uzak bölümünde ayarlanan PyloadBackend portu.</string>
+    <string name="path_prefix">Yol Öneki</string>
+    <string name="path_prefix_desc">Sunucu URL\'si için yol öneki (örn. /pyload).</string>
     <string name="api_key">API Anahtarı</string>
     <string name="api_key_desc">Kimlik doğrulama için API anahtarınız.</string>
     <string name="password">Şifre</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - tercihleri</string>
     <string name="no_connection">Bağlantı kurulamadı:</string>
     <string name="bad_login">Geçersiz API anahtarı.</string>
+    <string name="bad_path">Yol öneki yanlış görünüyor (404 Bulunamadı).</string>
     <string name="move">Yere taşıyın</string>
     <string name="on">Aç</string>
     <string name="off">Kapat</string>

@@ -23,6 +23,8 @@
     <string name="ip_desc">IP או hostname של שרת pyLoad המרוחק.</string>
     <string name="port">פורט</string>
     <string name="port_desc">הפורט של ה- PyloadBackend שקבעת בהגדרות מרוחקות.</string>
+    <string name="path_prefix">קידומת נתיב</string>
+    <string name="path_prefix_desc">קידומת נתיב עבור כתובת השרת (למשל /pyload).</string>
     <string name="api_key">מפתח API</string>
     <string name="api_key_desc">מפתח ה‑API שלך לאימות.</string>
     <string name="password">סיסמה</string>
@@ -30,6 +32,7 @@
     <string name="pref_name">pyLoad - העדפות</string>
     <string name="no_connection">לא ניתן ליצור חיבור:</string>
     <string name="bad_login">מפתח API שגוי.</string>
+    <string name="bad_path">נראה שקידומת הנתיב שגויה (404 לא נמצא).</string>
     <string name="move">העבר מיקום</string>
     <string name="on">&#x200e;פעיל</string>
     <string name="off">&#x200e;כבוי</string>

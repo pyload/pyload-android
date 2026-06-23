@@ -104,7 +104,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-            if ("host".equals(key) || "port".equals(key) || "ssl".equals(key)) {
+            if ("host".equals(key) || "port".equals(key) || "ssl".equals(key) || "path_prefix".equals(key)) {
                 updateUrlSummary();
             }
         }
@@ -116,9 +116,18 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                 if (prefs != null) {
                     String host = prefs.getString("host", "");
                     String port = prefs.getString("port", "8000");
+                    String pathPrefix = prefs.getString("path_prefix", "");
+
+                    if (!pathPrefix.startsWith("/") && !pathPrefix.isEmpty()) {
+                        pathPrefix = "/" + pathPrefix;
+                    }
+                    if (pathPrefix.endsWith("/")) {
+                        pathPrefix = pathPrefix.substring(0, pathPrefix.length() - 1);
+                    }
+
                     boolean ssl = prefs.getBoolean("ssl", false);
                     String protocol = ssl ? "https://" : "http://";
-                    serverConnection.setSummary(protocol + host + ":" + port);
+                    serverConnection.setSummary(protocol + host + ":" + port + pathPrefix);
                 }
             }
         }

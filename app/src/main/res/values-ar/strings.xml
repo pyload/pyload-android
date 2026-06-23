@@ -24,6 +24,8 @@
     <string name="ip_desc">عنوان IP او اسم المضيف لمصدر باي لود البعيد.</string>
     <string name="port">المنفذ</string>
     <string name="port_desc">المنفذ لPyloadBackend اللذي وضعتة في الجزء البعيد.</string>
+    <string name="path_prefix">بادئة المسار</string>
+    <string name="path_prefix_desc">بادئة المسار لعنوان URL الخاص بالخادم (على سبيل المثال /pyload).</string>
     <string name="api_key">مفتاح API</string>
     <string name="api_key_desc">مفتاح API الخاص بك للمصادقة.</string>
     <string name="password">كلمة المرور</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">خيارات - باي لود</string>
     <string name="no_connection">لا يمكن انشاء الاتصال:</string>
     <string name="bad_login">مفتاح API غير صالح.</string>
+    <string name="bad_path">يبدو أن بادئة المسار خاطئة (404 لم يتم العثور عليه).</string>
     <string name="move">نقل المكان</string>
     <string name="on">تشغيل</string>
     <string name="off">ايقاف</string>

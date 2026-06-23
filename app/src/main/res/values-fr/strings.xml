@@ -24,6 +24,8 @@
     <string name="ip_desc">IP ou nom de l\'hôte de l\'accès à distance du centre pyLoad.</string>
     <string name="port">Port</string>
     <string name="port_desc">Le port du PyloadBackend que vous avez spécifié dans la connexion à distance.</string>
+    <string name="path_prefix">Préfixe de chemin</string>
+    <string name="path_prefix_desc">Préfixe de chemin pour l\'URL du serveur (ex: /pyload).</string>
     <string name="api_key">Clé API</string>
     <string name="api_key_desc">Votre clé API pour l\'authentification.</string>
     <string name="password">Mot de passe</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Préférences</string>
     <string name="no_connection">Impossible d\'établir la connexion :</string>
     <string name="bad_login">Clé API invalide.</string>
+    <string name="bad_path">Le préfixe de chemin semble être incorrect (404 Non Trouvé).</string>
     <string name="move">Changer d\'emplacement</string>
     <string name="on">Allumé</string>
     <string name="off">Eteint</string>

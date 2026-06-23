@@ -24,6 +24,8 @@
     <string name="ip_desc">IP адреса или главни рачунар удаљеног сервера pyLoad-а.</string>
     <string name="port">Порт</string>
     <string name="port_desc">Порт PyloadBackend-а који сте подесили у удаљеним поставкама.</string>
+    <string name="path_prefix">Префикс путање</string>
+    <string name="path_prefix_desc">Префикс путање за URL сервера (нпр. /pyload).</string>
     <string name="api_key">API ključ</string>
     <string name="api_key_desc">Vaš API ključ za autentifikaciju.</string>
     <string name="password">Лозинка</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad – жељене поставке</string>
     <string name="no_connection">Не могу да успоставим везу:</string>
     <string name="bad_login">Nevažeći API ključ.</string>
+    <string name="bad_path">Префикс путање изгледа неисправан (404 Није пронађено).</string>
     <string name="move">Промени размештај</string>
     <string name="on">укључено</string>
     <string name="off">искључено</string>

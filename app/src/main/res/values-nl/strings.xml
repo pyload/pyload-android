@@ -24,6 +24,8 @@
     <string name="ip_desc">IP of hostname van de externe pyLoad Core.</string>
     <string name="port">Poort</string>
     <string name="port_desc">De poort waarop je de PyloadBackend hebt ingesteld bij de externe verbindingen.</string>
+    <string name="path_prefix">Padvoorvoegsel</string>
+    <string name="path_prefix_desc">Padvoorvoegsel voor de server-URL (bijv. /pyload).</string>
     <string name="api_key">API-sleutel</string>
     <string name="api_key_desc">Je API-sleutel voor authenticatie.</string>
     <string name="password">Wachtwoord</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Voorkeuren</string>
     <string name="no_connection">Kan geen verbinding maken:</string>
     <string name="bad_login">Ongeldige API-sleutel.</string>
+    <string name="bad_path">Padvoorvoegsel lijkt onjuist te zijn (404 Niet Gevonden).</string>
     <string name="move">Locatie verplaatsen</string>
     <string name="on">aan</string>
     <string name="off">uit</string>

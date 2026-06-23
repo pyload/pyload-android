@@ -49,6 +49,12 @@
 					android:singleLine="true"
 					android:summary="@string/port_desc"
 					android:title="@string/port" />
+				<EditTextPreference
+					android:defaultValue=""
+					android:key="path_prefix"
+					android:singleLine="true"
+					android:summary="@string/path_prefix_desc"
+					android:title="@string/path_prefix" />
 				<CheckBoxPreference
 					android:defaultValue="false"
 					android:key="ssl"

@@ -24,6 +24,8 @@
     <string name="ip_desc">Διεύθυνση IP ή όνομα κεντρικού υπολογιστή του απομακρυσμένου πυρήνα pyLoad.</string>
     <string name="port">Θύρα</string>
     <string name="port_desc">Η θύρα του PyloadBackend που ορίσατε στην ενότητα απομακρυσμένων ρυθμίσεων.</string>
+    <string name="path_prefix">Πρόθεμα διαδρομής</string>
+    <string name="path_prefix_desc">Πρόθεμα διαδρομής για τη διεύθυνση URL του διακομιστή (π.χ. /pyload).</string>
     <string name="api_key">Κλειδί API</string>
     <string name="api_key_desc">Το κλειδί API σας για αυθεντικοποίηση.</string>
     <string name="password">Κωδικός πρόσβασης</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Προτιμήσεις</string>
     <string name="no_connection">Αδυναμία δημιουργίας  σύνδεσης:</string>
     <string name="bad_login">Μη έγκυρο κλειδί API.</string>
+    <string name="bad_path">Το πρόθεμα διαδρομής φαίνεται να είναι λάθος (404 Δεν βρέθηκε).</string>
     <string name="move">Τοποθεσία για μετακίνηση</string>
     <string name="on">ενεργό</string>
     <string name="off">ανενεργό</string>

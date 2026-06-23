@@ -24,6 +24,8 @@
     <string name="ip_desc">IP hoặc tên máy chủ của nhân pyLoad.</string>
     <string name="port">Cổng</string>
     <string name="port_desc">Cổng của PyloadBackend mà bạn thiết lập trong phiên điều khiển.</string>
+    <string name="path_prefix">Tiền tố đường dẫn</string>
+    <string name="path_prefix_desc">Tiền tố đường dẫn cho URL máy chủ (ví dụ: /pyload).</string>
     <string name="api_key">API Key</string>
     <string name="api_key_desc">API key của bạn để xác thực.</string>
     <string name="password">Mật khẩu</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad – Tùy chọn</string>
     <string name="no_connection">Không thể thiết lập kết nối:</string>
     <string name="bad_login">Khóa API không hợp lệ.</string>
+    <string name="bad_path">Tiền tố đường dẫn có vẻ sai (404 Không tìm thấy).</string>
     <string name="move">Di chuyển vị trí</string>
     <string name="on">trên</string>
     <string name="off">tắt</string>

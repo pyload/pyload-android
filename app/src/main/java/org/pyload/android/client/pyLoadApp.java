@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.exceptions.WrongLogin;
+import org.pyload.android.client.exceptions.WrongPathPrefix;
 import org.pyload.android.client.exceptions.WrongServer;
 import org.pyload.android.client.module.AllTrustManager;
 import org.pyload.android.client.module.GuiTask;
@@ -92,6 +93,7 @@ public class pyLoadApp extends Application {
 
 		HashMap<Throwable, Runnable> exceptionMap = new HashMap<Throwable, Runnable>();
 		exceptionMap.put(new WrongLogin(), handleException);
+		exceptionMap.put(new WrongPathPrefix(), handleException);
 		exceptionMap.put(new WrongServer(), handleException);
 		exceptionMap.put(new RuntimeException(), handleException);
 
@@ -147,7 +149,15 @@ public class pyLoadApp extends Application {
 		}
 
 		String protocol = useSsl ? "https://" : "http://";
-		String baseUrl = protocol + host + ":" + port + "/";
+		String pathPrefix = prefs.getString("path_prefix", "");
+		if (!pathPrefix.startsWith("/") && !pathPrefix.isEmpty()) {
+			pathPrefix = "/" + pathPrefix;
+		}
+		if (pathPrefix.endsWith("/")) {
+			pathPrefix = pathPrefix.substring(0, pathPrefix.length() - 1);
+		}
+
+		String baseUrl = protocol + host + ":" + port + pathPrefix + "/";
 
 		apiClient.createDefaultAdapter();
 		Retrofit.Builder retrofit = apiClient.getAdapterBuilder().baseUrl(baseUrl);
@@ -166,7 +176,11 @@ public class pyLoadApp extends Application {
 			authSuccessful = serverStatus.isSuccessful();
 			if (authSuccessful) {
 				client = pyLoadRestApi;
+			} else if (serverStatus.code() == 404) {
+				throw new WrongPathPrefix();
 			}
+		} catch (WrongPathPrefix e) {
+			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -238,6 +252,8 @@ public class pyLoadApp extends Application {
 		String errorMessage;
 		if (lastException instanceof WrongLogin)
 			errorMessage = getString(R.string.bad_login);
+		else if (lastException instanceof WrongPathPrefix)
+			errorMessage = getString(R.string.bad_path);
 		else if (lastException instanceof WrongServer)
 			errorMessage = String.format(getString(R.string.old_server), clientVersion[clientVersion.length - 1]);
 		else if (lastException instanceof RuntimeException) {

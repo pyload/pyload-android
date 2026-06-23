@@ -24,6 +24,8 @@
     <string name="ip_desc">IP o nombre del equipo del núcleo de pyLoad remoto.</string>
     <string name="port">Puerto</string>
     <string name="port_desc">El puerto del PyloadBackend establecido en la sección remoto.</string>
+    <string name="path_prefix">Prefijo de ruta</string>
+    <string name="path_prefix_desc">Prefijo de ruta para la URL del servidor (ej. /pyload).</string>
     <string name="api_key">Clave API</string>
     <string name="api_key_desc">Tu clave API para autenticación.</string>
     <string name="password">Contraseña</string>
@@ -31,6 +33,7 @@
     <string name="pref_name">pyLoad - Preferencias</string>
     <string name="no_connection">No se pudo establecer la conexión:</string>
     <string name="bad_login">Clave API no válida.</string>
+    <string name="bad_path">El prefijo de ruta parece ser incorrecto (404 No Encontrado).</string>
     <string name="move">Mover posición</string>
     <string name="on">encendido</string>
     <string name="off">apagado</string>
