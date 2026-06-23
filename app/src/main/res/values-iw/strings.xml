@@ -6,8 +6,7 @@
     <string name="clear_finished">נקה חבילות שהסתיימו</string>
     <string name="remote_settings">הגדרות מרוחקות</string>
     <string name="no_packages">אין חבילות.</string>
-    <string name="no_accounts">אין חשבונות פרימיום.</string>
-    <string name="no_accounts_yet">אין עדיין חשבונות</string>
+    <string name="no_accounts">אין עדיין חשבונות</string>
     <string name="loading">טוען…</string>
     <string name="no_downloads">אין הורדות פעילות.</string>
     <string name="add_links">הוסף קישורים</string>

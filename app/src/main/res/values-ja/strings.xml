@@ -7,8 +7,7 @@
     <string name="clear_finished">完了済みパッケージをクリア</string>
     <string name="remote_settings">リモート設定</string>
     <string name="no_packages">パッケージはありません。</string>
-    <string name="no_accounts">プレミアム アカウントはありません。</string>
-    <string name="no_accounts_yet">アカウントはまだありません</string>
+    <string name="no_accounts">アカウントはまだありません</string>
     <string name="loading">読み込み中…</string>
     <string name="no_downloads">アクティブなダウンロードはありません</string>
     <string name="add_links">リンクを追加します。</string>

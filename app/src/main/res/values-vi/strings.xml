@@ -7,8 +7,7 @@
     <string name="clear_finished">Xóa các gói đã hoàn thành</string>
     <string name="remote_settings">Cài đặt từ xa</string>
     <string name="no_packages">Không có gói.</string>
-    <string name="no_accounts">Không có tài khoản trả tiền.</string>
-    <string name="no_accounts_yet">Chưa có tài khoản</string>
+    <string name="no_accounts">Chưa có tài khoản</string>
     <string name="loading">Đang tải…</string>
     <string name="no_downloads">Chưa có tập tin tải về.</string>
     <string name="add_links">Thêm liên kết</string>

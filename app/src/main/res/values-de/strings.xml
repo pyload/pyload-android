@@ -7,7 +7,7 @@
     <string name="clear_finished">Abgeschlossene Pakete löschen</string>
     <string name="remote_settings">Servereinstellungen</string>
     <string name="no_packages">Keine Pakete.</string>
-    <string name="no_accounts_yet">Noch keine Konten</string>
+    <string name="no_accounts">Noch keine Konten</string>
     <string name="loading">Wird geladen…</string>
     <string name="no_downloads">Keine aktiven Downloads.</string>
     <string name="add_links">Link hinzufügen</string>

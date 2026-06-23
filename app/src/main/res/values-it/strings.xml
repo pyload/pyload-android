@@ -7,8 +7,7 @@
     <string name="clear_finished">Cancella pacchetti completati</string>
     <string name="remote_settings">Impostazioni Remote</string>
     <string name="no_packages">Nessun pacchetto.</string>
-    <string name="no_accounts">Nessun account premium.</string>
-    <string name="no_accounts_yet">Ancora nessun account</string>
+    <string name="no_accounts">Ancora nessun account</string>
     <string name="loading">Caricamento…</string>
     <string name="no_downloads">Nessun download attivo.</string>
     <string name="add_links">Aggiungi Link</string>

@@ -7,8 +7,7 @@
     <string name="clear_finished">Обриши завршене пакете</string>
     <string name="remote_settings">Удаљене поставке</string>
     <string name="no_packages">Нема пакета.</string>
-    <string name="no_accounts">Нема премијум налога.</string>
-    <string name="no_accounts_yet">Још увек нема налога</string>
+    <string name="no_accounts">Још увек нема налога</string>
     <string name="loading">Учитавање…</string>
     <string name="no_downloads">Нема активних преузимања.</string>
     <string name="add_links">Додај везе</string>

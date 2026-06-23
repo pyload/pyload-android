@@ -7,8 +7,7 @@
     <string name="clear_finished">Voltooide pakketten wissen</string>
     <string name="remote_settings">Instellingen voor externe verbindingen</string>
     <string name="no_packages">Geen pakketten.</string>
-    <string name="no_accounts">Geen premium accounts.</string>
-    <string name="no_accounts_yet">Nog geen accounts</string>
+    <string name="no_accounts">Nog geen accounts</string>
     <string name="loading">Laden…</string>
     <string name="no_downloads">Geen actieve downloads.</string>
     <string name="add_links">Link toevoegen</string>

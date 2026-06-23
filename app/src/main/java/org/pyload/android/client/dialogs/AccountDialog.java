@@ -118,7 +118,7 @@ class AccountAdapter extends BaseAdapter {
                 text.setText(R.string.loading);
             } else {
                 progress.setVisibility(View.GONE);
-                text.setText(R.string.no_accounts_yet);
+                text.setText(R.string.no_accounts);
             }
 
             return view;

@@ -7,8 +7,7 @@
     <string name="clear_finished">Очистить завершенные пакеты</string>
     <string name="remote_settings">Удаленные Настройки</string>
     <string name="no_packages">Нет пакетов.</string>
-    <string name="no_accounts">Нет премиум аккаунтов.</string>
-    <string name="no_accounts_yet">Аккаунтов пока нет</string>
+    <string name="no_accounts">Аккаунтов пока нет</string>
     <string name="loading">Загрузка…</string>
     <string name="no_downloads">Нет активных загрузок.</string>
     <string name="add_links">Добавить ссылки</string>

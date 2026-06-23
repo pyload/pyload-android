@@ -7,8 +7,7 @@
     <string name="clear_finished">مسح الحزم المنتهية</string>
     <string name="remote_settings">الاعدادات عن بعد</string>
     <string name="no_packages">لا يوجد حزم.</string>
-    <string name="no_accounts">لايوجد حساب مدفوع.</string>
-    <string name="no_accounts_yet">لا توجد حسابات بعد</string>
+    <string name="no_accounts">لا توجد حسابات بعد</string>
     <string name="loading">جاري التحميل…</string>
     <string name="no_downloads">لا يوجد تحميلات فعاله.</string>
     <string name="add_links">اضافة روابط</string>

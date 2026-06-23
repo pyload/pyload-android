@@ -7,8 +7,7 @@
     <string name="clear_finished">Effacer les paquets terminés</string>
     <string name="remote_settings">Réglages à distance</string>
     <string name="no_packages">Pas de paquets.</string>
-    <string name="no_accounts">Pas de compte premium.</string>
-    <string name="no_accounts_yet">Aucun compte pour le moment</string>
+    <string name="no_accounts">Aucun compte pour le moment</string>
     <string name="loading">Chargement…</string>
     <string name="no_downloads">Aucun téléchargements actifs.</string>
     <string name="add_links">Ajouter des liens</string>

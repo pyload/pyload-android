@@ -7,8 +7,7 @@
     <string name="clear_finished">Tamamlanan paketleri temizle</string>
     <string name="remote_settings">Uzak ayarlar</string>
     <string name="no_packages">Paket yok.</string>
-    <string name="no_accounts">Premium hesap yok.</string>
-    <string name="no_accounts_yet">Henüz hesap yok</string>
+    <string name="no_accounts">Henüz hesap yok</string>
     <string name="loading">Yükleniyor…</string>
     <string name="no_downloads">Aktif yükleme yok.</string>
     <string name="add_links">Linkleri Ekle</string>

@@ -7,8 +7,7 @@
     <string name="clear_finished">Limpar pacotes concluídos</string>
     <string name="remote_settings">Configurações remotas</string>
     <string name="no_packages">Não há pacotes.</string>
-    <string name="no_accounts">Sem contas premium.</string>
-    <string name="no_accounts_yet">Ainda não há contas</string>
+    <string name="no_accounts">Ainda não há contas</string>
     <string name="loading">Carregando…</string>
     <string name="no_downloads">Não há downloads ativos.</string>
     <string name="add_links">Adicionar Links</string>

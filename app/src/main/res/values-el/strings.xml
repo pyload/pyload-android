@@ -7,8 +7,7 @@
     <string name="clear_finished">Εκκαθάριση ολοκληρωμένων πακέτων</string>
     <string name="remote_settings">Απομακρυσμένες ρυθμίσεις</string>
     <string name="no_packages">Δεν υπάρχουν πακέτα.</string>
-    <string name="no_accounts">Δεν υπάρχουν λογαριασμοί premium.</string>
-    <string name="no_accounts_yet">Δεν υπάρχουν ακόμα λογαριασμοί</string>
+    <string name="no_accounts">Δεν υπάρχουν ακόμα λογαριασμοί</string>
     <string name="loading">Φόρτωση…</string>
     <string name="no_downloads">Δεν υπάρχουν ενεργές λήψεις.</string>
     <string name="add_links">Προσθήκη Συνδέσμων</string>
