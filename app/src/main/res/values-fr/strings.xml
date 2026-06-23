@@ -19,6 +19,7 @@
     <string name="refresh_rate">Taux de raffraichissement</string>
     <string name="refresh_rate_desc">Le temps en secondes où l\'aperçu devrait être rafraîchit.</string>
     <string name="server">Serveur</string>
+    <string name="server_url">URL du serveur</string>
     <string name="ip">Adresse</string>
     <string name="ip_desc">IP ou nom de l\'hôte de l\'accès à distance du centre pyLoad.</string>
     <string name="port">Port</string>

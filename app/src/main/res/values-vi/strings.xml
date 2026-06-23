@@ -19,6 +19,7 @@
     <string name="refresh_rate">Làm mới tỷ lệ</string>
     <string name="refresh_rate_desc">Thời gian để màn hình tổng quát sẽ làm tươi, tính bằng giây.</string>
     <string name="server">Máy chủ</string>
+    <string name="server_url">URL máy chủ</string>
     <string name="ip">Địa chỉ</string>
     <string name="ip_desc">IP hoặc tên máy chủ của nhân pyLoad.</string>
     <string name="port">Cổng</string>

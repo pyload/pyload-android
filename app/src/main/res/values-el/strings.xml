@@ -19,6 +19,7 @@
     <string name="refresh_rate">Ρυθμός ανανέωσης</string>
     <string name="refresh_rate_desc">Χρόνος σε δευτερόλεπτα πόσο συχνά θα πρέπει να ανανεώνεται η οθόνη επισκόπησης.</string>
     <string name="server">Διακομιστής</string>
+    <string name="server_url">Διεύθυνση URL διακομιστή</string>
     <string name="ip">Διεύθυνση</string>
     <string name="ip_desc">Διεύθυνση IP ή όνομα κεντρικού υπολογιστή του απομακρυσμένου πυρήνα pyLoad.</string>
     <string name="port">Θύρα</string>

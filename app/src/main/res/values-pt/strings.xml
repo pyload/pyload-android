@@ -19,6 +19,7 @@
     <string name="refresh_rate">Taxa de atualização</string>
     <string name="refresh_rate_desc">Tempo em segundos, com que freqüência deve atualizar a tela de visão geral.</string>
     <string name="server">Servidor</string>
+    <string name="server_url">URL do servidor</string>
     <string name="ip">Endereço</string>
     <string name="ip_desc">IP ou nome do host do Core remoto do pyLoad .</string>
     <string name="port">Porta</string>

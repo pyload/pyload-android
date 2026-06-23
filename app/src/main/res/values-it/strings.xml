@@ -19,6 +19,7 @@
     <string name="refresh_rate">Frequenza Aggiornamento</string>
     <string name="refresh_rate_desc">Ogni quanti secondi la schermata Panoramica dovrebbe aggiornarsi.</string>
     <string name="server">Server</string>
+    <string name="server_url">URL del server</string>
     <string name="ip">Indirizzo</string>
     <string name="ip_desc">IP o nome host del Core pyLoad remoto.</string>
     <string name="port">Porta</string>

@@ -19,6 +19,7 @@
     <string name="refresh_rate">Vernieuwingsfrequentie</string>
     <string name="refresh_rate_desc">Om de hoeveel seconden het Overzicht scherm zich ververst.</string>
     <string name="server">Server</string>
+    <string name="server_url">Server-URL</string>
     <string name="ip">Adres</string>
     <string name="ip_desc">IP of hostname van de externe pyLoad Core.</string>
     <string name="port">Poort</string>

@@ -19,6 +19,7 @@
     <string name="refresh_rate">リフレッシュ レート</string>
     <string name="refresh_rate_desc">時間秒どのくらいの頻度で概要画面を更新する必要があります。</string>
     <string name="server">サーバー</string>
+    <string name="server_url">サーバーURL</string>
     <string name="ip">アドレス</string>
     <string name="ip_desc">リモート pyLoad コアのIp アドレスまたはホスト名。</string>
     <string name="port">ポート</string>

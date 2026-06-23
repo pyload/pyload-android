@@ -18,6 +18,7 @@
     <string name="refresh_rate">קצב רענון</string>
     <string name="refresh_rate_desc">כל כמה שניות מסך הסקירה אמור להתרענן.</string>
     <string name="server">שרת</string>
+    <string name="server_url">כתובת השרת</string>
     <string name="ip">כתובת</string>
     <string name="ip_desc">IP או hostname של שרת pyLoad המרוחק.</string>
     <string name="port">פורט</string>

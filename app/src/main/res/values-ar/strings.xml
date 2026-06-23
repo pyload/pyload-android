@@ -19,6 +19,7 @@
     <string name="refresh_rate">معدل التحديث</string>
     <string name="refresh_rate_desc">الوقت بالثواني لعدد مرات تحديث شاشة العرض.</string>
     <string name="server">خادم</string>
+    <string name="server_url">عنوان URL للخادم</string>
     <string name="ip">عنوان</string>
     <string name="ip_desc">عنوان IP او اسم المضيف لمصدر باي لود البعيد.</string>
     <string name="port">المنفذ</string>

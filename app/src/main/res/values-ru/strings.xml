@@ -19,6 +19,7 @@
     <string name="refresh_rate">Частота Обновления</string>
     <string name="refresh_rate_desc">Как часто следует обновлять экран Обзора, в секундах.</string>
     <string name="server">Сервер</string>
+    <string name="server_url">URL-адрес сервера</string>
     <string name="ip">Адрес</string>
     <string name="ip_desc">IP или хост удаленного pyLoad Core сервера.</string>
     <string name="port">Порт</string>

@@ -19,12 +19,47 @@
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:inputType="number"/>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
 
-    </PreferenceCategory><PreferenceCategory android:key="login" android:title="@string/login">
-        <EditTextPreference android:key="api_key" android:summary="@string/api_key_desc" android:title="@string/api_key" android:singleLine="true"/>
-    </PreferenceCategory><PreferenceCategory android:key="server" android:title="@string/server">
-        <EditTextPreference android:key="host" android:summary="@string/ip_desc" android:title="@string/ip" android:singleLine="true"/>
-        <EditTextPreference android:key="port" android:summary="@string/port_desc" android:title="@string/port" android:defaultValue="8000" android:inputType="number" android:singleLine="true"/>
-        <CheckBoxPreference android:key="ssl" android:summary="@string/ssl_desc" android:title="@string/ssl" android:defaultValue="false"/>
-        <CheckBoxPreference android:key="ssl_validate" android:summary="@string/ssl_validate_desc" android:title="@string/ssl_validate" android:defaultValue="true"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:key="login"  android:title="@string/login">
+        <EditTextPreference
+            android:key="api_key"
+            android:singleLine="true"
+            android:summary="@string/api_key_desc"
+            android:title="@string/api_key" />
+    </PreferenceCategory>
+    <PreferenceCategory android:key="server" android:title="@string/server">
+		<PreferenceScreen
+			android:key="server_connection"
+			android:title="@string/server_url">
+
+			<PreferenceCategory
+				android:key="server"
+				android:title="@string/server">
+				<EditTextPreference
+					android:key="host"
+					android:singleLine="true"
+					android:summary="@string/ip_desc"
+					android:title="@string/ip" />
+				<EditTextPreference
+					android:defaultValue="8000"
+					android:id="@+id/port"
+					android:inputType="number"
+					android:key="port"
+					android:singleLine="true"
+					android:summary="@string/port_desc"
+					android:title="@string/port" />
+				<CheckBoxPreference
+					android:defaultValue="false"
+					android:key="ssl"
+					android:summary="@string/ssl_desc"
+					android:title="@string/ssl" />
+				<CheckBoxPreference
+					android:defaultValue="true"
+					android:key="ssl_validate"
+					android:summary="@string/ssl_validate_desc"
+					android:title="@string/ssl_validate" />
+			</PreferenceCategory>
+		</PreferenceScreen>
+	</PreferenceCategory>
 </PreferenceScreen>
