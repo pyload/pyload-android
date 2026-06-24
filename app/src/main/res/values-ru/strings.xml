@@ -23,7 +23,7 @@
     <string name="ip">Адрес</string>
     <string name="ip_desc">IP или хост удаленного pyLoad Core сервера.</string>
     <string name="port">Порт</string>
-    <string name="port_desc">Порт PyloadBackend, заданный в удаленной части.</string>
+    <string name="port_desc">Порт, который прослушивает ваш сервер pyLoad (по умолчанию 8000).</string>
     <string name="path_prefix">Префикс пути</string>
     <string name="path_prefix_desc">Префикс пути для URL-адреса сервера (например, /pyload).</string>
     <string name="api_key">API-ключ</string>

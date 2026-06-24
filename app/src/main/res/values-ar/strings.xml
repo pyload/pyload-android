@@ -23,7 +23,7 @@
     <string name="ip">عنوان</string>
     <string name="ip_desc">عنوان IP او اسم المضيف لمصدر باي لود البعيد.</string>
     <string name="port">المنفذ</string>
-    <string name="port_desc">المنفذ لPyloadBackend اللذي وضعتة في الجزء البعيد.</string>
+    <string name="port_desc">المنفذ الذي يستمع إليه خادم pyLoad الخاص بك (الافتراضي هو 8000).</string>
     <string name="path_prefix">بادئة المسار</string>
     <string name="path_prefix_desc">بادئة المسار لعنوان URL الخاص بالخادم (على سبيل المثال /pyload).</string>
     <string name="api_key">مفتاح API</string>

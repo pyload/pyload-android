@@ -23,7 +23,7 @@
     <string name="ip">Địa chỉ</string>
     <string name="ip_desc">IP hoặc tên máy chủ của nhân pyLoad.</string>
     <string name="port">Cổng</string>
-    <string name="port_desc">Cổng của PyloadBackend mà bạn thiết lập trong phiên điều khiển.</string>
+    <string name="port_desc">Cổng mà máy chủ pyLoad của bạn đang lắng nghe (mặc định là 8000).</string>
     <string name="path_prefix">Tiền tố đường dẫn</string>
     <string name="path_prefix_desc">Tiền tố đường dẫn cho URL máy chủ (ví dụ: /pyload).</string>
     <string name="api_key">API Key</string>

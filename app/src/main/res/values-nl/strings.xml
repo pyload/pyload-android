@@ -23,7 +23,7 @@
     <string name="ip">Adres</string>
     <string name="ip_desc">IP of hostname van de externe pyLoad Core.</string>
     <string name="port">Poort</string>
-    <string name="port_desc">De poort waarop je de PyloadBackend hebt ingesteld bij de externe verbindingen.</string>
+    <string name="port_desc">De poort waarop uw pyLoad-server luistert (standaard is 8000).</string>
     <string name="path_prefix">Padvoorvoegsel</string>
     <string name="path_prefix_desc">Padvoorvoegsel voor de server-URL (bijv. /pyload).</string>
     <string name="api_key">API-sleutel</string>

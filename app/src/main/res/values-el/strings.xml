@@ -23,7 +23,7 @@
     <string name="ip">Διεύθυνση</string>
     <string name="ip_desc">Διεύθυνση IP ή όνομα κεντρικού υπολογιστή του απομακρυσμένου πυρήνα pyLoad.</string>
     <string name="port">Θύρα</string>
-    <string name="port_desc">Η θύρα του PyloadBackend που ορίσατε στην ενότητα απομακρυσμένων ρυθμίσεων.</string>
+    <string name="port_desc">Η θύρα στην οποία ακούει ο διακομιστής pyLoad (η προεπιλογή είναι 8000).</string>
     <string name="path_prefix">Πρόθεμα διαδρομής</string>
     <string name="path_prefix_desc">Πρόθεμα διαδρομής για τη διεύθυνση URL του διακομιστή (π.χ. /pyload).</string>
     <string name="api_key">Κλειδί API</string>

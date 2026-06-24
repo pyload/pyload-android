@@ -23,7 +23,7 @@
     <string name="ip">Adres</string>
     <string name="ip_desc">pyLoad Core için IP ya da ana bilgisayar adı.</string>
     <string name="port">Port</string>
-    <string name="port_desc">uzak bölümünde ayarlanan PyloadBackend portu.</string>
+    <string name="port_desc">pyLoad sunucunuzun dinlediği bağlantı noktası (varsayılan 8000\'dir).</string>
     <string name="path_prefix">Yol Öneki</string>
     <string name="path_prefix_desc">Sunucu URL\'si için yol öneki (örn. /pyload).</string>
     <string name="api_key">API Anahtarı</string>

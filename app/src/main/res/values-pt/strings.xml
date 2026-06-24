@@ -23,7 +23,7 @@
     <string name="ip">Endereço</string>
     <string name="ip_desc">IP ou nome do host do Core remoto do pyLoad .</string>
     <string name="port">Porta</string>
-    <string name="port_desc">A porta do PyloadBackend que você definiu na seção remota.</string>
+    <string name="port_desc">A porta onde o seu servidor pyLoad está escutando (o padrão é 8000).</string>
     <string name="path_prefix">Prefixo do caminho</string>
     <string name="path_prefix_desc">Prefixo do caminho para a URL do servidor (ex: /pyload).</string>
     <string name="api_key">Chave API</string>

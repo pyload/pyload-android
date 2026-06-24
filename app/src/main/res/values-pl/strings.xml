@@ -23,7 +23,7 @@
     <string name="ip">Adres</string>
     <string name="ip_desc">Adres IP lub nazwa hosta zdalnego pyLoad Core.</string>
     <string name="port">Port</string>
-    <string name="port_desc">Port PyloadBackend można ustawić w sekcji zdalnego dostępu.</string>
+    <string name="port_desc">Port, na którym nasłuchuje serwer pyLoad (domyślnie 8000).</string>
     <string name="path_prefix">Prefiks ścieżki</string>
     <string name="path_prefix_desc">Prefiks ścieżki dla adresu URL serwera (np. /pyload).</string>
     <string name="api_key">Klucz API</string>

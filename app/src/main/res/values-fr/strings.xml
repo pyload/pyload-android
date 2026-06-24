@@ -23,7 +23,7 @@
     <string name="ip">Adresse</string>
     <string name="ip_desc">IP ou nom de l\'hôte de l\'accès à distance du centre pyLoad.</string>
     <string name="port">Port</string>
-    <string name="port_desc">Le port du PyloadBackend que vous avez spécifié dans la connexion à distance.</string>
+    <string name="port_desc">Le port sur lequel votre serveur pyLoad écoute (par défaut 8000).</string>
     <string name="path_prefix">Préfixe de chemin</string>
     <string name="path_prefix_desc">Préfixe de chemin pour l\'URL du serveur (ex: /pyload).</string>
     <string name="api_key">Clé API</string>

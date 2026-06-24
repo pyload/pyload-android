@@ -23,7 +23,7 @@
     <string name="ip">アドレス</string>
     <string name="ip_desc">リモート pyLoad コアのIp アドレスまたはホスト名。</string>
     <string name="port">ポート</string>
-    <string name="port_desc">リモートのセクションで設定した PyloadBackend のポート。</string>
+    <string name="port_desc">pyLoad サーバーがリッスンしているポート (デフォルトは 8000)。</string>
     <string name="path_prefix">パスプレフィックス</string>
     <string name="path_prefix_desc">サーバーURLのパスプレフィックス (例: /pyload)</string>
     <string name="api_key">APIキー</string>
