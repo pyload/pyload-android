@@ -1,8 +1,10 @@
 package org.pyload.android.client;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Application;
+import android.os.Bundle;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -59,6 +61,7 @@ public class pyLoadApp extends Application {
 	private pyLoad main;
 	
 	private boolean captchaNotificationShown;
+	private int activityCount = 0;
 
 	private static final String[] clientVersion = {"0.5"};
 
@@ -69,6 +72,33 @@ public class pyLoadApp extends Application {
 		prefs = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
 		String theme = prefs.getString("theme", "system");
 		applyTheme(theme);
+
+		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+			@Override
+			public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+
+			@Override
+			public void onActivityStarted(Activity activity) {
+				activityCount++;
+			}
+
+			@Override
+			public void onActivityResumed(Activity activity) {}
+
+			@Override
+			public void onActivityPaused(Activity activity) {}
+
+			@Override
+			public void onActivityStopped(Activity activity) {
+				activityCount--;
+			}
+
+			@Override
+			public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+
+			@Override
+			public void onActivityDestroyed(Activity activity) {}
+		});
 	}
 
 	public static void applyTheme(String theme) {
@@ -273,8 +303,10 @@ public class pyLoadApp extends Application {
 		else
 			errorMessage = getString(R.string.error);
 
-		Toast t = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-		t.show();
+		if (isAppInForeground()) {
+			Toast t = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+			t.show();
+		}
 
 		setProgress(false);
 	}
@@ -302,8 +334,10 @@ public class pyLoadApp extends Application {
 	};
 
 	public void onSuccess() {
-		Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
-		t.show();
+		if (isAppInForeground()) {
+			Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
+			t.show();
+		}
 
 		refreshTab();
 	}
@@ -387,6 +421,10 @@ public class pyLoadApp extends Application {
         } else {
             item.setActionView(null);
         }
+    }
+
+    public boolean isAppInForeground() {
+        return activityCount > 0;
     }
 
     public void setCaptchaNotificationShown(boolean val)
