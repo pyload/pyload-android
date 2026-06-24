@@ -72,10 +72,10 @@ public class AddLinksActivity extends AppCompatActivity {
 		super.onStart();
 		
 		Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        if (name != null) {
+        String packName = intent.getStringExtra("name");
+        if (packName != null) {
             EditText nameView = (EditText) findViewById(R.id.new_packname);
-            nameView.setText(name);
+            nameView.setText(packName);
         }
 		String url = intent.getStringExtra("url");
 		if (url != null){
@@ -91,8 +91,11 @@ public class AddLinksActivity extends AppCompatActivity {
 		}
 		String path = intent.getStringExtra("dlcpath");
 		if (path != null){
-			EditText view = (EditText) findViewById(R.id.filename);
-			view.setText(path);
+			selectedUri = Uri.parse(path);
+			filename = Utils.getFileName(this, selectedUri);
+			TextView textView = (TextView) findViewById(R.id.filename);
+			textView.setText(filename);
+			textView.setTypeface(null, android.graphics.Typeface.BOLD);
 		}
 		
 	}
@@ -111,15 +114,18 @@ public class AddLinksActivity extends AppCompatActivity {
 		view = (EditText) findViewById(R.id.password);
 		data.putExtra("password", view.getText().toString());
 		
-		view = (EditText) findViewById(R.id.filename);
-		String path = view.getText().toString().trim();
-		data.putExtra("filepath", path);
-		data.putExtra("filename", filename);
+		TextView textView = (TextView) findViewById(R.id.filename);
+		String path = textView.getText().toString().trim();
 
-		if (selectedUri != null && path.equals(selectedUri.toString())) {
+		if (selectedUri != null) {
+			data.putExtra("filepath", selectedUri.toString());
 			data.setData(selectedUri);
 			data.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		} else {
+			data.putExtra("filepath", path);
 		}
+
+		data.putExtra("filename", filename);
 		
 		Spinner spin = (Spinner) findViewById(R.id.destination);
 		
@@ -151,9 +157,9 @@ public class AddLinksActivity extends AppCompatActivity {
         if (uri != null) {
             selectedUri = uri;
             filename = Utils.getFileName(this, uri);
-			TextView view = (TextView) findViewById(R.id.filename);
-            view.setText(filename);
-            view.setTypeface(null, android.graphics.Typeface.BOLD);
+			TextView textView = (TextView) findViewById(R.id.filename);
+            textView.setText(filename);
+            textView.setTypeface(null, android.graphics.Typeface.BOLD);
         }
     }
 

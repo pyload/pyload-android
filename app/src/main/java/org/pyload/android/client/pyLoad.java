@@ -121,7 +121,7 @@ public class pyLoad extends FragmentTabsPager {
                 addLinksLauncher.launch(addURL);
             } else if (intent.getScheme().equals("file")) {
                 Intent addURL = new Intent(app, AddLinksActivity.class);
-                addURL.putExtra("dlcpath", data.getPath());
+                addURL.putExtra("dlcpath", data.toString());
                 addLinksLauncher.launch(addURL);
             }
             intent.setData(null);
