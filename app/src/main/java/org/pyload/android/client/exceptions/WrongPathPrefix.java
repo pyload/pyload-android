@@ -1,5 +1,5 @@
 package org.pyload.android.client.exceptions;
 
 public class WrongPathPrefix extends RuntimeException {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 915995886261117654L;
 }
