@@ -89,7 +89,7 @@ public class AddLinksActivity extends AppCompatActivity {
 	            view.setText(urls.toString());
             }
 		}
-		String path = intent.getStringExtra("dlcpath");
+		String path = intent.getStringExtra("filepath");
 		if (path != null){
 			selectedUri = Uri.parse(path);
 			filename = Utils.getFileName(this, selectedUri);

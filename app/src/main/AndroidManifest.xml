@@ -44,6 +44,7 @@
                     android:host="*"
                     android:scheme="content" />
             </intent-filter>
+            <!-- DLC Links -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -54,6 +55,33 @@
                 <data android:mimeType="*/*" />
                 <data android:host="*" />
                 <data android:pathPattern=".*\\.dlc" />
+            </intent-filter>
+
+            <!-- Torrent Files -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <!-- Torrent Links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.torrent" />
+            </intent-filter>
+
+            <!-- Magnet Links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="magnet" />
             </intent-filter>
 
             <!-- many urls from the supported pyload crypters and hosts -->

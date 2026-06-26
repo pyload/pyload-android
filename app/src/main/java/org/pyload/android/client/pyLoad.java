@@ -115,13 +115,14 @@ public class pyLoad extends FragmentTabsPager {
 
             // we got a VIEW intent
         } else if (Intent.ACTION_VIEW.equals(action) && data != null) {
-            if (intent.getScheme().startsWith("http") || intent.getScheme().contains("ftp")) {
+            String scheme = intent.getScheme();
+            if (scheme != null && (scheme.startsWith("http") || scheme.contains("ftp") || scheme.equals("magnet"))) {
                 Intent addURL = new Intent(app, AddLinksActivity.class);
                 addURL.putExtra("url", data.toString());
                 addLinksLauncher.launch(addURL);
-            } else if (intent.getScheme().equals("file")) {
+            } else if (scheme != null && (scheme.equals("file") || scheme.equals("content"))) {
                 Intent addURL = new Intent(app, AddLinksActivity.class);
-                addURL.putExtra("dlcpath", data.toString());
+                addURL.putExtra("filepath", data.toString());
                 addLinksLauncher.launch(addURL);
             }
             intent.setData(null);
