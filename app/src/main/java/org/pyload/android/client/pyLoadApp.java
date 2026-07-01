@@ -30,7 +30,7 @@ import org.pyload.android.client.module.TaskQueue;
 import org.pyload.android.openapi.ApiClient;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.auth.ApiKeyAuth;
-import org.pyload.android.openapi.models.ServerStatus;
+import org.pyload.android.openapi.model.ServerStatus;
 
 import javax.net.ssl.*;
 

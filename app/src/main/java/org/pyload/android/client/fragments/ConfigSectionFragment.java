@@ -8,9 +8,9 @@ import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.ApiSetConfigValuePostRequest;
-import org.pyload.android.openapi.models.ConfigItem;
-import org.pyload.android.openapi.models.ConfigSection;
+import org.pyload.android.openapi.model.ApiSetConfigValuePostRequest;
+import org.pyload.android.openapi.model.ConfigItem;
+import org.pyload.android.openapi.model.ConfigSection;
 
 import android.content.Context;
 import android.graphics.Color;

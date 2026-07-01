@@ -9,35 +9,35 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.MultipartBody;
 
-import org.pyload.android.openapi.models.AccountInfo;
-import org.pyload.android.openapi.models.ApiAddFilesPostRequest;
-import org.pyload.android.openapi.models.ApiAddPackagePostRequest;
-import org.pyload.android.openapi.models.ApiCheckAndAddPackagesPostRequest;
-import org.pyload.android.openapi.models.ApiCheckOnlineStatusPostRequest;
-import org.pyload.android.openapi.models.ApiCheckUrlsPostRequest;
-import org.pyload.android.openapi.models.ApiDeleteFilesPostRequest;
-import org.pyload.android.openapi.models.ApiDeletePackagesPostRequest;
-import org.pyload.android.openapi.models.ApiGeneratePackagesPostRequest;
-import org.pyload.android.openapi.models.ApiIsAuthorizedPostRequest;
-import org.pyload.android.openapi.models.ApiMoveFilesPostRequest;
-import org.pyload.android.openapi.models.ApiParseUrlsPostRequest;
-import org.pyload.android.openapi.models.ApiServiceCallPostRequest;
-import org.pyload.android.openapi.models.ApiSetConfigValuePostRequest;
-import org.pyload.android.openapi.models.ApiSetPackageDataPostRequest;
-import org.pyload.android.openapi.models.ApiStopDownloadsPostRequest;
-import org.pyload.android.openapi.models.ApiUpdateAccountPostRequest;
-import org.pyload.android.openapi.models.CaptchaTask;
-import org.pyload.android.openapi.models.ConfigSection;
-import org.pyload.android.openapi.models.Destination;
-import org.pyload.android.openapi.models.DownloadInfo;
-import org.pyload.android.openapi.models.EventInfo;
+import org.pyload.android.openapi.model.AccountInfo;
+import org.pyload.android.openapi.model.ApiAddFilesPostRequest;
+import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
+import org.pyload.android.openapi.model.ApiCheckAndAddPackagesPostRequest;
+import org.pyload.android.openapi.model.ApiCheckOnlineStatusPostRequest;
+import org.pyload.android.openapi.model.ApiCheckUrlsPostRequest;
+import org.pyload.android.openapi.model.ApiDeleteFilesPostRequest;
+import org.pyload.android.openapi.model.ApiDeletePackagesPostRequest;
+import org.pyload.android.openapi.model.ApiGeneratePackagesPostRequest;
+import org.pyload.android.openapi.model.ApiIsAuthorizedPostRequest;
+import org.pyload.android.openapi.model.ApiMoveFilesPostRequest;
+import org.pyload.android.openapi.model.ApiParseUrlsPostRequest;
+import org.pyload.android.openapi.model.ApiServiceCallPostRequest;
+import org.pyload.android.openapi.model.ApiSetConfigValuePostRequest;
+import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
+import org.pyload.android.openapi.model.ApiStopDownloadsPostRequest;
+import org.pyload.android.openapi.model.ApiUpdateAccountPostRequest;
+import org.pyload.android.openapi.model.CaptchaTask;
+import org.pyload.android.openapi.model.ConfigSection;
+import org.pyload.android.openapi.model.Destination;
+import org.pyload.android.openapi.model.DownloadInfo;
+import org.pyload.android.openapi.model.EventInfo;
 import java.io.File;
-import org.pyload.android.openapi.models.FileData;
-import org.pyload.android.openapi.models.OldUserData;
-import org.pyload.android.openapi.models.OnlineCheck;
-import org.pyload.android.openapi.models.PackageData;
-import org.pyload.android.openapi.models.ServerStatus;
-import org.pyload.android.openapi.models.UserData;
+import org.pyload.android.openapi.model.FileData;
+import org.pyload.android.openapi.model.OldUserData;
+import org.pyload.android.openapi.model.OnlineCheck;
+import org.pyload.android.openapi.model.PackageData;
+import org.pyload.android.openapi.model.ServerStatus;
+import org.pyload.android.openapi.model.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,8 +156,8 @@ public interface PyLoadRestApi {
   );
 
   /**
-   * Gets urls and returns pluginname mapped to list of matched urls.
-   * Gets urls and returns pluginname mapped to list of matched urls.
+   * Gets urls and returns plugin name mapped to list of matched urls.
+   * Gets urls and returns plugin name mapped to list of matched urls.
    * @param apiCheckUrlsPostRequest  (optional)
    * @return Call&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
    */
@@ -962,12 +962,13 @@ public interface PyLoadRestApi {
    * Uploads and adds a container file to pyLoad.
    * @param filename file name - extension is important, so it can correctly decrypt (required)
    * @param data file content (required)
+   * @param dest &#x60;Destination&#x60; (optional, default to 0)
    * @return Call&lt;Void&gt;
    */
   @retrofit2.http.Multipart
   @POST("api/upload_container")
   Call<Void> apiUploadContainerPost(
-    @retrofit2.http.Part("filename") String filename, @retrofit2.http.Part MultipartBody.Part data
+    @retrofit2.http.Part("filename") String filename, @retrofit2.http.Part MultipartBody.Part data, @retrofit2.http.Part("dest") Destination dest
   );
 
   /**

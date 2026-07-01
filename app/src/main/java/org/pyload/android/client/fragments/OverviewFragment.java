@@ -12,11 +12,11 @@ import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.CaptchaDialog;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.ApiStopDownloadsPostRequest;
-import org.pyload.android.openapi.models.CaptchaTask;
-import org.pyload.android.openapi.models.DownloadInfo;
-import org.pyload.android.openapi.models.DownloadStatus;
-import org.pyload.android.openapi.models.ServerStatus;
+import org.pyload.android.openapi.model.ApiStopDownloadsPostRequest;
+import org.pyload.android.openapi.model.CaptchaTask;
+import org.pyload.android.openapi.model.DownloadInfo;
+import org.pyload.android.openapi.model.DownloadStatus;
+import org.pyload.android.openapi.model.ServerStatus;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

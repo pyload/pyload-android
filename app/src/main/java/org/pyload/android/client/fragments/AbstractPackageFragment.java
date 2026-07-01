@@ -13,12 +13,12 @@ import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.FileInfoDialog;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.ApiDeleteFilesPostRequest;
-import org.pyload.android.openapi.models.ApiDeletePackagesPostRequest;
-import org.pyload.android.openapi.models.Destination;
-import org.pyload.android.openapi.models.FileData;
-import org.pyload.android.openapi.models.PackageData;
-import org.pyload.android.openapi.models.DownloadStatus;
+import org.pyload.android.openapi.model.ApiDeleteFilesPostRequest;
+import org.pyload.android.openapi.model.ApiDeletePackagesPostRequest;
+import org.pyload.android.openapi.model.Destination;
+import org.pyload.android.openapi.model.FileData;
+import org.pyload.android.openapi.model.PackageData;
+import org.pyload.android.openapi.model.DownloadStatus;
 
 import android.content.Context;
 import android.os.Bundle;

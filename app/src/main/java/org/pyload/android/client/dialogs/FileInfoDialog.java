@@ -2,8 +2,8 @@ package org.pyload.android.client.dialogs;
 
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
-import org.pyload.android.openapi.models.FileData;
-import org.pyload.android.openapi.models.PackageData;
+import org.pyload.android.openapi.model.FileData;
+import org.pyload.android.openapi.model.PackageData;
 
 import android.app.Dialog;
 import android.os.Bundle;

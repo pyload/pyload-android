@@ -1,4 +1,9 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.openapi.generator' version '7.23.0'
+//    id "com.autonomousapps.dependency-analysis" version '3.16.0'
+//    id 'com.github.ben-manes.versions' version '0.54.0'
+}
 
 android {
     compileSdkVersion 35
@@ -26,8 +31,6 @@ android {
         }
     }
 
-    useLibrary 'org.apache.http.legacy'
-
     tasks.withType(JavaCompile) {
         options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation"]
     }
@@ -40,19 +43,202 @@ android {
     namespace='org.pyload.android.client'
 }
 
+ext {
+    openapiSpecUrl = "https://raw.githubusercontent.com/pyload/pyload/refs/heads/main/openapi-generator/openapi.json"
+
+    openapiResourcesDir = "$projectDir/src/main/resources/openapi"
+    openapiLocalSpecFile = "${openapiResourcesDir}/openapi.json"
+    openapiIgnoreFileOverride = "${openapiResourcesDir}/.openapi-generator-ignore"
+
+    openapiGenaratedRoot = "$projectDir/build/generated/openapi"
+    openapiGenaratedApiClientDir = "${openapiGenaratedRoot}/src/main/java/org/pyload/android/openapi"
+    openapiProjectApiClientDir = "$projectDir/src/main/java/org/pyload/android/openapi"
+}
+
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = openapiLocalSpecFile
+    outputDir = openapiGenaratedRoot
+
+    invokerPackage = "org.pyload.android.openapi"
+    apiPackage     = "org.pyload.android.openapi.api"
+    modelPackage   = "org.pyload.android.openapi.model"
+
+//    library = "okhttp-gson"
+    library = "retrofit2"
+
+    groupId = "org.pyload.android"
+
+    configOptions = [
+            additionalModelTypeAnnotations: "@SuppressWarnings(\"unchecked\")",
+            additionalEnumTypeAnnotations: "@SuppressWarnings(\"unchecked\")",
+            additionalApiTypeAnnotations: "@SuppressWarnings(\"unchecked\")"
+    ]
+
+    additionalProperties = [
+            parcelableModel: "true",
+            openApiNullable: "false",
+            hideGenerationTimestamp: "true"
+    ]
+
+    ignoreFileOverride = openapiIgnoreFileOverride
+    skipOverwrite = false
+    templateDir = "$projectDir/src/main/resources/openapi"
+}
+
+tasks.register('downloadOpenApiSpec') {
+    def localSpecFile = file(openapiLocalSpecFile)
+
+    outputs.file(localSpecFile)
+    outputs.upToDateWhen { false } // Always check
+
+    doLast {
+        println "Checking OpenAPI spec from pyLoad's GitHub repository..."
+
+        try {
+            def connection = new URL(openapiSpecUrl).openConnection() as HttpURLConnection
+            connection.connectTimeout = 15000   // 15 seconds
+            connection.readTimeout = 30000      // 30 seconds
+            connection.requestMethod = "GET"
+
+            if (connection.responseCode != HttpURLConnection.HTTP_OK) {
+                throw new GradleException("Failed to download spec. HTTP ${connection.responseCode}: ${connection.responseMessage}")
+            }
+
+            def remoteBytes = connection.inputStream.bytes
+            // Compare with local file
+            if (localSpecFile.exists()) {
+                def localBytes = localSpecFile.bytes
+
+                if (java.util.Arrays.equals(remoteBytes, localBytes)) {
+                    println "✅ Local openapi.json is up-to-date"
+                    return
+                } else {
+                    println "🔄 Remote OpenAPI spec has changed. Updating local file..."
+                }
+            } else {
+                println "📥 Local openapi.json file not found. Downloading..."
+            }
+
+            // Save new version
+            localSpecFile.parentFile.mkdirs()
+            localSpecFile.bytes = remoteBytes
+            println "✅ Successfully updated openapi.json"
+
+            project.ext.openapiSpecChanged = true
+
+        } catch (UnknownHostException e) {
+            throw new GradleException("Network error: Cannot reach server. Check your internet connection.", e)
+        } catch (SocketTimeoutException e) {
+            throw new GradleException("Timeout downloading spec. Server is slow or unreachable.", e)
+        } catch (Exception e) {
+            throw new GradleException("Failed to download OpenAPI spec from $specUrl", e)
+        }
+    }
+}
+
+tasks.register('moveOpenApiCode') {
+    dependsOn "openApiGenerate"
+
+    inputs.file(openapiLocalSpecFile)
+    inputs.dir(openapiGenaratedRoot)
+    outputs.dir(openapiProjectApiClientDir)
+
+    onlyIf {
+        def shouldRun = tasks.named('openApiGenerate').get().state.didWork
+        if (shouldRun) {
+            println "→ moveOpenApiCode will run because openApiGenerate executed"
+        } else {
+            println "→ Skipping moveOpenApiCode (openApiGenerate was up-to-date)"
+        }
+        return shouldRun
+    }
+
+    doLast {
+        def sourceDir = file(openapiGenaratedApiClientDir)
+        def targetDir = file(openapiProjectApiClientDir)
+
+        println "Moving generated code to src/main/java..."
+
+        // Delete old directory if it exists
+        if (targetDir.exists()) {
+            targetDir.deleteDir()
+            println "Deleted old directory"
+        }
+
+        if (!sourceDir.exists() || sourceDir.listFiles()?.size() == 0) {
+            throw new GradleException("""
+                Failed to move OpenAPI code!
+                
+                Expected source: ${sourceDir.absolutePath}
+                This usually means openApiGenerate did not produce any files.
+                Try running: ./gradlew forceGenerateOpenApi
+            """.stripIndent())
+        } else {
+            // Move new generated code
+            sourceDir.parentFile.mkdirs()
+            sourceDir.renameTo(targetDir)
+            println "✅ Successfully moved generated code to src/main/java/org/pyload/android/openapi"
+        }
+    }
+}
+
+tasks.register('forceGenerateOpenApi') {
+    description = "Force regenerate OpenAPI client (ignores incremental checks)"
+
+    doFirst {
+        println "🔄 Forcing full OpenAPI regeneration..."
+        file(openapiLocalSpecFile).deleteDir()
+        file(openapiProjectApiClientDir).deleteDir()
+        file(openapiGenaratedRoot).deleteDir()
+    }
+    finalizedBy "openApiGenerate"
+}
+
+tasks.named('preBuild') {
+    dependsOn "moveOpenApiCode"
+}
+
+tasks.named('openApiGenerate') {
+    dependsOn 'downloadOpenApiSpec'
+    finalizedBy 'moveOpenApiCode'
+
+    onlyIf {
+        def targetDir = file(openapiProjectApiClientDir)
+        def specChanged = project.findProperty('openapiSpecChanged') == true
+
+        def shouldRun = specChanged || !targetDir.exists() || (targetDir.listFiles()?.length ?: 0) == 0
+
+        if (!shouldRun) {
+            println "→ Skipping openApiGenerate (target already exists and spec unchanged)"
+            println "Use ./gradlew forceGenerateOpenApi to force regenerate"
+            return false
+        } else {
+            println "→ Running openApiGenerate (spec changed or target directory is empty or missing)"
+            return true
+        }
+    }
+}
+
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.activity:activity:1.3.0'
-    implementation 'org.slf4j:slf4j-android:1.6.1-RC1'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'io.gsonfire:gson-fire:1.9.0'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.core:core:1.15.0'
+    implementation 'androidx.fragment:fragment:1.8.5'
     implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'io.gsonfire:gson-fire:1.9.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
 }

@@ -19,8 +19,6 @@
 #   public *;
 #}
 
--keep public class org.apache.**
--keep public class org.slf4j.**
 -keep public class org.pyload.**
 
 -keepclasseswithmembers class org.apache.commons.codec.binary.** {

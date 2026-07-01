@@ -12,7 +12,7 @@ import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.SeparatedListAdapter;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.ConfigSection;
+import org.pyload.android.openapi.model.ConfigSection;
 
 import android.content.Context;
 import android.os.Bundle;

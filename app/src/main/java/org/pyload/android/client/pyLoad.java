@@ -19,9 +19,9 @@ import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.ApiAddPackagePostRequest;
-import org.pyload.android.openapi.models.ApiSetPackageDataPostRequest;
-import org.pyload.android.openapi.models.Destination;
+import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
+import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
+import org.pyload.android.openapi.model.Destination;
 
 import android.content.Context;
 import android.content.Intent;
@@ -273,9 +273,9 @@ public class pyLoad extends FragmentTabsPager {
                             throw new IOException("File size too large");
                         }
 
-                        RequestBody body = RequestBody.create(null, fileBytes);
+                        RequestBody body = RequestBody.Companion.create(fileBytes, null);
                         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("data", filename, body);
-                        client.apiUploadContainerPost(filename, multipartBody).execute();
+                        client.apiUploadContainerPost(filename, multipartBody, dest).execute();
                     } catch (IOException e) {
                         Log.e("pyLoad", "Error when uploading file", e);
                         throw new RuntimeException(e);

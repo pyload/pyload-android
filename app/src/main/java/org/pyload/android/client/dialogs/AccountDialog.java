@@ -17,7 +17,7 @@ import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
 import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.models.AccountInfo;
+import org.pyload.android.openapi.model.AccountInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

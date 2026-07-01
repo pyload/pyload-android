@@ -4,7 +4,7 @@ import android.util.Base64;
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoad;
-import org.pyload.android.openapi.models.CaptchaTask;
+import org.pyload.android.openapi.model.CaptchaTask;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -94,6 +94,7 @@ public class CaptchaDialog extends DialogFragment {
 
 	@Override
 	public void onDismiss(DialogInterface dialog) {
+		super.onDismiss(dialog);
 		if (listener != null) {
 			listener.onDismiss(dialog);
 			// clear reference
