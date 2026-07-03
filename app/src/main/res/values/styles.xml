@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">?android:attr/windowBackground</item>
+        <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
         <item name="colorPrimary">@color/primary</item>
@@ -20,7 +20,7 @@
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.MaterialComponents.DayNight">
-        <item name="android:statusBarColor">?android:attr/windowBackground</item>
+        <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
         <item name="colorPrimary">@color/primary</item>
