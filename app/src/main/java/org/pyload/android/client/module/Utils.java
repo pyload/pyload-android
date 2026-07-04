@@ -7,7 +7,10 @@ import android.provider.OpenableColumns;
 
 import com.google.gson.Gson;
 
+import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public final class Utils {
 
@@ -52,5 +55,32 @@ public final class Utils {
 			gson = new Gson();
 
 		return gson.fromJson(json, classOfT);
+	}
+
+	public static Map<String, String> parseQueryParams(String query) {
+		Map<String, String> params = new HashMap<>();
+		if (query == null || query.isEmpty()) return params;
+		try {
+			for (String param : query.split("&")) {
+				String[] pair = param.split("=");
+				String key = URLDecoder.decode(pair[0], "UTF-8");
+				String value = "";
+				if (pair.length > 1) {
+					value = URLDecoder.decode(pair[1], "UTF-8");
+				}
+				params.put(key, value);
+			}
+		} catch (Exception ignored) {}
+		return params;
+	}
+
+	public static byte[] hexToBytes(String s) {
+		int len = s.length();
+		byte[] data = new byte[len / 2];
+		for (int i = 0; i < len; i += 2) {
+			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+					+ Character.digit(s.charAt(i + 1), 16));
+		}
+		return data;
 	}
 }

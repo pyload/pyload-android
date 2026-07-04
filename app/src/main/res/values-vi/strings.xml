@@ -125,4 +125,7 @@
     <string name="theme_light">Sáng</string>
     <string name="theme_dark">Tối</string>
     <string name="theme_system">Mặc định hệ thống</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Bật hỗ trợ ClickNLoad (máy chủ cục bộ trên cổng 9666).</string>
+    <string name="clicknload_service_running">Dịch vụ ClickNLoad đang chạy…</string>
 </resources>

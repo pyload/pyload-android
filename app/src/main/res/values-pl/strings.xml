@@ -125,4 +125,7 @@
     <string name="theme_light">Jasny</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_system">Domyślny systemowy</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Włącz obsługę ClickNLoad (lokalny serwer na porcie 9666).</string>
+    <string name="clicknload_service_running">Usługa ClickNLoad jest uruchomiona…</string>
 </resources>

@@ -43,10 +43,6 @@
     <string name="name">Name</string>
     <string name="addlinks_desc">Add a new Package.</string>
     <string name="destination">Destination</string>
-    <string-array name="destination_list">
-        <item>Queue</item>
-        <item>Collector</item>
-    </string-array>
     <string name="overview">Overview</string>
     <string name="collector">Collector</string>
     <string name="queue">Queue</string>
@@ -107,6 +103,9 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System Default</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Enable ClickNLoad support (local server on port 9666).</string>
+    <string name="clicknload_service_running">ClickNLoad service is running…</string>
     <string name="_0_0" translatable="false">0 / 0</string>
     <string-array name="languages">
         <item>Default</item>

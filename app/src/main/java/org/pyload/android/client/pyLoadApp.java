@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -62,7 +63,8 @@ public class pyLoadApp extends Application {
 	public ConnectivityManager cm;
 
 	private pyLoad main;
-	
+	private Activity currentActivity;
+
 	private boolean captchaNotificationShown;
 	private int activityCount = 0;
 
@@ -75,6 +77,15 @@ public class pyLoadApp extends Application {
 		prefs = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
 		String theme = prefs.getString("theme", "system");
 		applyTheme(theme);
+
+		if (prefs.getBoolean("clicknload", false)) {
+			Intent intent = new Intent(this, org.pyload.android.client.services.clicknload.ClickNLoadService.class);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+				startForegroundService(intent);
+			} else {
+				startService(intent);
+			}
+		}
 
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 			@Override
@@ -370,8 +381,7 @@ public class pyLoadApp extends Application {
 
 	public void onSuccess() {
 		if (isAppInForeground()) {
-			Toast t = Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT);
-			t.show();
+			showCenteredSnackbar(R.string.success, Snackbar.LENGTH_SHORT);
 		}
 
 		refreshTab();

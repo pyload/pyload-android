@@ -125,4 +125,7 @@
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_system">Системная</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Включить поддержку ClickNLoad (локальный сервер на порту 9666).</string>
+    <string name="clicknload_service_running">Служба ClickNLoad запущена…</string>
 </resources>

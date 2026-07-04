@@ -125,4 +125,7 @@
     <string name="theme_light">Licht</string>
     <string name="theme_dark">Donker</string>
     <string name="theme_system">Systeemstandaard</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">ClickNLoad-ondersteuning inschakelen (lokale server op poort 9666).</string>
+    <string name="clicknload_service_running">ClickNLoad-service wordt uitgevoerd…</string>
 </resources>

@@ -125,4 +125,7 @@
     <string name="theme_light">Φωτεινό</string>
     <string name="theme_dark">Σκοτεινό</string>
     <string name="theme_system">Προεπιλογή συστήματος</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Ενεργοποίηση υποστήριξης ClickNLoad (τοπικός διακομιστής στη θύρα 9666).</string>
+    <string name="clicknload_service_running">Η υπηρεσία ClickNLoad εκτελείται…</string>
 </resources>

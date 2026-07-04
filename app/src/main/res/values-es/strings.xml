@@ -125,4 +125,7 @@
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_system">Predeterminado del sistema</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Habilitar soporte ClickNLoad (servidor local en puerto 9666).</string>
+    <string name="clicknload_service_running">El servicio ClickNLoad se está ejecutando…</string>
 </resources>

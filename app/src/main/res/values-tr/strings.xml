@@ -125,4 +125,7 @@
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_system">Sistem Varsayılanı</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">ClickNLoad desteğini etkinleştir (9666 numaralı bağlantı noktasındaki yerel sunucu).</string>
+    <string name="clicknload_service_running">ClickNLoad servisi çalışıyor…</string>
 </resources>

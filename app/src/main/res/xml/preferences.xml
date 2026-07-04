@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/general" android:key="general">
+    <PreferenceCategory android:title="@string/general" android:key="general_category">
         <ListPreference android:key="language"
             android:title="@string/language"
             android:summary="@string/language_desc"
@@ -18,23 +18,38 @@
 
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:inputType="number"/>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
-
     </PreferenceCategory>
 
-    <PreferenceCategory android:key="login"  android:title="@string/login">
+    <PreferenceCategory android:title="@string/clicknload" android:key="clicknload_category">
+        <CheckBoxPreference
+			android:key="clicknload"
+			android:title="@string/clicknload"
+			android:summary="@string/clicknload_desc"
+			android:defaultValue="false"/>
+
+        <ListPreference android:key="clicknload_dest"
+            android:title="@string/destination"
+            android:summary="@string/destination"
+            android:defaultValue="1"
+            android:entries="@array/destination_list"
+            android:entryValues="@array/destination_values"
+            android:dependency="clicknload"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="login_category" android:title="@string/login">
         <EditTextPreference
             android:key="api_key"
             android:singleLine="true"
             android:summary="@string/api_key_desc"
             android:title="@string/api_key" />
     </PreferenceCategory>
-    <PreferenceCategory android:key="server" android:title="@string/server">
+    <PreferenceCategory android:key="server_category" android:title="@string/server">
 		<PreferenceScreen
-			android:key="server_connection"
+			android:key="server_url"
 			android:title="@string/server_url">
 
 			<PreferenceCategory
-				android:key="server"
+				android:key="server_details"
 				android:title="@string/server">
 				<EditTextPreference
 					android:key="host"

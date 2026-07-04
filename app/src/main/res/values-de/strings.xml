@@ -125,4 +125,7 @@
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_system">Systemstandard</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">ClickNLoad-Unterstützung aktivieren (lokaler Server auf Port 9666).</string>
+    <string name="clicknload_service_running">ClickNLoad-Dienst läuft…</string>
 </resources>

@@ -1,6 +1,8 @@
 package org.pyload.android.client;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -106,12 +108,24 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
             if ("host".equals(key) || "port".equals(key) || "ssl".equals(key) || "path_prefix".equals(key)) {
                 updateUrlSummary();
+            } else if ("clicknload".equals(key)) {
+                boolean enabled = sharedPreferences.getBoolean(key, false);
+                Intent intent = new Intent(getContext(), org.pyload.android.client.services.clicknload.ClickNLoadService.class);
+                if (enabled) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        getContext().startForegroundService(intent);
+                    } else {
+                        getContext().startService(intent);
+                    }
+                } else {
+                    getContext().stopService(intent);
+                }
             }
         }
 
         private void updateUrlSummary() {
-            Preference serverConnection = findPreference("server_connection");
-            if (serverConnection != null) {
+            Preference serverUrl = findPreference("server_url");
+            if (serverUrl != null) {
                 SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
                 if (prefs != null) {
                     String host = prefs.getString("host", "");
@@ -127,7 +141,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
                     boolean ssl = prefs.getBoolean("ssl", false);
                     String protocol = ssl ? "https://" : "http://";
-                    serverConnection.setSummary(protocol + host + ":" + port + pathPrefix);
+                    serverUrl.setSummary(protocol + host + ":" + port + pathPrefix);
                 }
             }
         }

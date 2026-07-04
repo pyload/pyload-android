@@ -30,4 +30,12 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="destination_values">
+        <item>0</item> <!-- Queue -->
+        <item>1</item> <!-- Collector -->
+    </string-array>
+    <string-array name="destination_list">
+        <item>@string/queue</item>
+        <item>@string/collector</item>
+    </string-array>
 </resources>

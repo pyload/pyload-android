@@ -124,4 +124,7 @@
     <string name="theme_light">בהיר</string>
     <string name="theme_dark">כהה</string>
     <string name="theme_system">ברירת מחדל של המערכת</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">אפשר תמיכה ב-ClickNLoad (שרת מקומי בפורט 9666).</string>
+    <string name="clicknload_service_running">שירות ClickNLoad פועל…</string>
 </resources>

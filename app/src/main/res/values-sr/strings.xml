@@ -125,4 +125,7 @@
     <string name="theme_light">Светла</string>
     <string name="theme_dark">Тамна</string>
     <string name="theme_system">Системски подразумевано</string>
+    <string name="clicknload">ClickNLoad</string>
+    <string name="clicknload_desc">Omogući ClickNLoad podršku (lokalni server na portu 9666).</string>
+    <string name="clicknload_service_running">ClickNLoad usluga je pokrenuta…</string>
 </resources>
