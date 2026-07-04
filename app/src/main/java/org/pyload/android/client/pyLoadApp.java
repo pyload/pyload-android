@@ -17,7 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Gravity;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import org.pyload.android.client.components.TabHandler;
@@ -83,10 +86,16 @@ public class pyLoadApp extends Application {
 			}
 
 			@Override
-			public void onActivityResumed(Activity activity) {}
+			public void onActivityResumed(Activity activity) {
+				currentActivity = activity;
+			}
 
 			@Override
-			public void onActivityPaused(Activity activity) {}
+			public void onActivityPaused(Activity activity) {
+				if (currentActivity == activity) {
+					currentActivity = null;
+				}
+			}
 
 			@Override
 			public void onActivityStopped(Activity activity) {
@@ -304,11 +313,37 @@ public class pyLoadApp extends Application {
 			errorMessage = getString(R.string.error);
 
 		if (isAppInForeground()) {
-			Toast t = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-			t.show();
+			showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
 		}
 
 		setProgress(false);
+	}
+
+	private void showCenteredSnackbar(Object message, int length) {
+		if (currentActivity == null) {
+			if (message instanceof Integer) {
+				Toast.makeText(this, (Integer) message, length).show();
+			} else {
+				Toast.makeText(this, (String) message, length).show();
+			}
+			return;
+		}
+
+		Snackbar snackbar;
+		if (message instanceof Integer) {
+			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (Integer) message, length);
+		} else {
+			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (String) message, length);
+		}
+
+		View snackbarView = snackbar.getView();
+		TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+		if (textView != null) {
+			textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+			textView.setGravity(Gravity.CENTER_HORIZONTAL);
+		}
+		snackbar.setTextMaxLines(10);
+		snackbar.show();
 	}
 
 	/**
