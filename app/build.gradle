@@ -6,12 +6,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 35
+    compileSdk = 35
+
+    namespace = 'org.pyload.android.client'
 
     defaultConfig {
-        applicationId "org.pyload.android.client"
-        minSdkVersion 21
-        targetSdkVersion 35
+        applicationId = "org.pyload.android.client"
+        minSdk = 21
+        targetSdk = 35
     }
 
     buildFeatures {
@@ -26,7 +28,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
         }
     }
@@ -36,11 +38,10 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled = true
     }
-    namespace='org.pyload.android.client'
 }
 
 ext {
@@ -132,7 +133,7 @@ tasks.register('downloadOpenApiSpec') {
         } catch (SocketTimeoutException e) {
             throw new GradleException("Timeout downloading spec. Server is slow or unreachable.", e)
         } catch (Exception e) {
-            throw new GradleException("Failed to download OpenAPI spec from $specUrl", e)
+            throw new GradleException("Failed to download OpenAPI spec from ${openapiSpecUrl}", e)
         }
     }
 }
@@ -240,5 +241,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'io.gsonfire:gson-fire:1.9.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.4.0'
 }
