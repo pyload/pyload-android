@@ -11,7 +11,7 @@
     <string name="loading">Ładowanie…</string>
     <string name="no_downloads">Brak aktywnych transferów.</string>
     <string name="add_links">Dodaj linki</string>
-    <string name="settings">Ustawienia</string>
+    <string name="app_settings">Ustawienia aplikacji</string>
     <string name="refresh">Odśwież</string>
     <string name="delete">Usuń</string>
     <string name="restart">Restart</string>

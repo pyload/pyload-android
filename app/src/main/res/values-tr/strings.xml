@@ -11,7 +11,7 @@
     <string name="loading">Yükleniyor…</string>
     <string name="no_downloads">Aktif yükleme yok.</string>
     <string name="add_links">Linkleri Ekle</string>
-    <string name="settings">Ayarlar</string>
+    <string name="app_settings">Uygulama ayarları</string>
     <string name="refresh">Yenile</string>
     <string name="delete">sil</string>
     <string name="restart">yeniden başlat</string>

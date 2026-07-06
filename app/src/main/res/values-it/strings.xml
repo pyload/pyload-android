@@ -11,7 +11,7 @@
     <string name="loading">Caricamento…</string>
     <string name="no_downloads">Nessun download attivo.</string>
     <string name="add_links">Aggiungi Link</string>
-    <string name="settings">Impostazioni</string>
+    <string name="app_settings">Impostazioni app</string>
     <string name="refresh">Aggiorna</string>
     <string name="delete">Elimina</string>
     <string name="restart">Riavvia</string>

@@ -11,7 +11,7 @@
     <string name="loading">Учитавање…</string>
     <string name="no_downloads">Нема активних преузимања.</string>
     <string name="add_links">Додај везе</string>
-    <string name="settings">Поставке</string>
+    <string name="app_settings">Подешавања апликације</string>
     <string name="refresh">Освежи</string>
     <string name="delete">Обриши</string>
     <string name="restart">Поново покрени</string>

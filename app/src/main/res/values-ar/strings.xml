@@ -11,7 +11,7 @@
     <string name="loading">جاري التحميل…</string>
     <string name="no_downloads">لا يوجد تحميلات فعاله.</string>
     <string name="add_links">اضافة روابط</string>
-    <string name="settings">الاعدادت</string>
+    <string name="app_settings">إعدادات التطبيق</string>
     <string name="refresh">تحديث</string>
     <string name="delete">حذف</string>
     <string name="restart">اعادة تشغيل</string>

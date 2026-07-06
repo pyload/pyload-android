@@ -11,7 +11,7 @@
     <string name="loading">Đang tải…</string>
     <string name="no_downloads">Chưa có tập tin tải về.</string>
     <string name="add_links">Thêm liên kết</string>
-    <string name="settings">Cài đặt</string>
+    <string name="app_settings">Cài đặt ứng dụng</string>
     <string name="refresh">Làm mới</string>
     <string name="delete">Xóa</string>
     <string name="restart">Khởi động lại</string>

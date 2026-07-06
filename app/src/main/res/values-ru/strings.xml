@@ -11,7 +11,7 @@
     <string name="loading">Загрузка…</string>
     <string name="no_downloads">Нет активных загрузок.</string>
     <string name="add_links">Добавить ссылки</string>
-    <string name="settings">Настройки</string>
+    <string name="app_settings">Настройки приложения</string>
     <string name="refresh">Обновить</string>
     <string name="delete">Удалить</string>
     <string name="restart">Перезапустить</string>

@@ -11,7 +11,7 @@
     <string name="loading">Betöltés…</string>
     <string name="no_downloads">Nincs aktív letöltés.</string>
     <string name="add_links">Link hozzáadás</string>
-    <string name="settings">Beállítások</string>
+    <string name="app_settings">Alkalmazásbeállítások</string>
     <string name="refresh">Frissítés</string>
     <string name="delete">Törlés</string>
     <string name="restart">Újraindítás</string>

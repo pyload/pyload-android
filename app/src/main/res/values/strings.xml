@@ -10,7 +10,7 @@
     <string name="loading">Loading…</string>
     <string name="no_downloads">No active downloads.</string>
     <string name="add_links">Add Links</string>
-    <string name="settings">Settings</string>
+    <string name="app_settings">App Settings</string>
     <string name="refresh">Refresh</string>
     <string name="delete">Delete</string>
     <string name="restart">Restart</string>

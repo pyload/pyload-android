@@ -11,7 +11,7 @@
     <string name="loading">Φόρτωση…</string>
     <string name="no_downloads">Δεν υπάρχουν ενεργές λήψεις.</string>
     <string name="add_links">Προσθήκη Συνδέσμων</string>
-    <string name="settings">Ρυθμίσεις</string>
+    <string name="app_settings">Ρυθμίσεις εφαρμογής</string>
     <string name="refresh">Ανανέωση</string>
     <string name="delete">Διαγραφή</string>
     <string name="restart">Επανεκκίνηση</string>
