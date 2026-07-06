@@ -127,5 +127,6 @@
     <string name="theme_system">Domyślny systemowy</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Włącz obsługę ClickNLoad (lokalny serwer na porcie 9666).</string>
+    <string name="clicknload_dest_desc">Wybierz, gdzie mają być wysyłane nowe dodane linki.</string>
     <string name="clicknload_service_running">Usługa ClickNLoad jest uruchomiona…</string>
 </resources>

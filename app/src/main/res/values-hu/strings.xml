@@ -127,5 +127,6 @@
     <string name="theme_system">Rendszer alapértelmezett</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">ClickNLoad támogatás engedélyezése (helyi szerver a 9666-os porton).</string>
+    <string name="clicknload_dest_desc">Válassza ki, hova legyenek küldve az újonnan hozzáadott linkek.</string>
     <string name="clicknload_service_running">A ClickNLoad szolgáltatás fut…</string>
 </resources>

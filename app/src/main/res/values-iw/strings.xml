@@ -126,5 +126,6 @@
     <string name="theme_system">ברירת מחדל של המערכת</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">אפשר תמיכה ב-ClickNLoad (שרת מקומי בפורט 9666).</string>
+    <string name="clicknload_dest_desc">בחר היכן יישלחו הקישורים החדשים שנוספו.</string>
     <string name="clicknload_service_running">שירות ClickNLoad פועל…</string>
 </resources>

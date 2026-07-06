@@ -127,5 +127,6 @@
     <string name="theme_system">Системная</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Включить поддержку ClickNLoad (локальный сервер на порту 9666).</string>
+    <string name="clicknload_dest_desc">Выберите, куда отправлять только что добавленные ссылки.</string>
     <string name="clicknload_service_running">Служба ClickNLoad запущена…</string>
 </resources>

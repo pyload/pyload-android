@@ -127,5 +127,6 @@
     <string name="theme_system">Προεπιλογή συστήματος</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Ενεργοποίηση υποστήριξης ClickNLoad (τοπικός διακομιστής στη θύρα 9666).</string>
+    <string name="clicknload_dest_desc">Επιλέξτε πού θα αποστέλλονται οι νέες προστιθέμενες συνδέσεις.</string>
     <string name="clicknload_service_running">Η υπηρεσία ClickNLoad εκτελείται…</string>
 </resources>

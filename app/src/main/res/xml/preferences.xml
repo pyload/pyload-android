@@ -29,7 +29,7 @@
 
         <ListPreference android:key="clicknload_dest"
             android:title="@string/destination"
-            android:summary="@string/destination"
+            android:summary="@string/clicknload_dest_desc"
             android:defaultValue="1"
             android:entries="@array/destination_list"
             android:entryValues="@array/destination_values"

@@ -127,5 +127,6 @@
     <string name="theme_system">Mặc định hệ thống</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Bật hỗ trợ ClickNLoad (máy chủ cục bộ trên cổng 9666).</string>
+    <string name="clicknload_dest_desc">Chọn nơi gửi các liên kết mới thêm.</string>
     <string name="clicknload_service_running">Dịch vụ ClickNLoad đang chạy…</string>
 </resources>

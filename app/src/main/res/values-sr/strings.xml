@@ -127,5 +127,6 @@
     <string name="theme_system">Системски подразумевано</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Omogući ClickNLoad podršku (lokalni server na portu 9666).</string>
+    <string name="clicknload_dest_desc">Odaberite gde da se pošalju novododati linkovi.</string>
     <string name="clicknload_service_running">ClickNLoad usluga je pokrenuta…</string>
 </resources>

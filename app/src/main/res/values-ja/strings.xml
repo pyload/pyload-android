@@ -127,5 +127,6 @@
     <string name="theme_system">システムのデフォルト</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">ClickNLoad サポートを有効にする (ポート 9666 のローカル サーバー)。</string>
+    <string name="clicknload_dest_desc">追加したリンクをどこに送信するかを選択してください。</string>
     <string name="clicknload_service_running">ClickNLoad サービスが実行されています…</string>
 </resources>

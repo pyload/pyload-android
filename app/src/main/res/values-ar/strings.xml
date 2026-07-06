@@ -127,5 +127,6 @@
     <string name="theme_system">افتراضي النظام</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">تمكين دعم ClickNLoad (خادم محلي على المنفذ 9666).</string>
+    <string name="clicknload_dest_desc">اختر المكان الذي ستُرسل إليه الروابط المضافة حديثًا.</string>
     <string name="clicknload_service_running">خدمة ClickNLoad قيد التشغيل…</string>
 </resources>

@@ -105,6 +105,7 @@
     <string name="theme_system">System Default</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Enable ClickNLoad support (local server on port 9666).</string>
+    <string name="clicknload_dest_desc">Choose where newly added links should be sent.</string>
     <string name="clicknload_service_running">ClickNLoad service is running…</string>
     <string name="_0_0" translatable="false">0 / 0</string>
     <string-array name="languages">

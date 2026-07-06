@@ -127,5 +127,6 @@
     <string name="theme_system">Predeterminado del sistema</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Habilitar soporte ClickNLoad (servidor local en puerto 9666).</string>
+    <string name="clicknload_dest_desc">Elige dónde deben enviarse los enlaces recién añadidos.</string>
     <string name="clicknload_service_running">El servicio ClickNLoad se está ejecutando…</string>
 </resources>
