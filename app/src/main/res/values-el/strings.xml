@@ -29,7 +29,7 @@
     <string name="api_key">Κλειδί API</string>
     <string name="api_key_desc">Το κλειδί API σας για αυθεντικοποίηση.</string>
     <string name="password">Κωδικός πρόσβασης</string>
-    <string name="login">Σύνδεση</string>
+    <string name="connection">Σύνδεση</string>
     <string name="pref_name">pyLoad - Προτιμήσεις</string>
     <string name="no_connection">Αδυναμία δημιουργίας  σύνδεσης:</string>
     <string name="bad_login">Μη έγκυρο κλειδί API.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Εισάγετε τους συνδέσμους εδώ.</string>
     <string name="add">Προσθήκη</string>
     <string name="cancel">Ακύρωση</string>
-    <string name="toggle_server">Εναλλαγή διακομιστή</string>
-    <string name="toggle_reconnect">Εναλλαγή επανασύνδεσης</string>
-    <string name="lost_connection">Χάθηκε η σύνδεση. Παρακαλώ δοκιμάστε να ανανεώσετε.</string>
     <string name="retrieve_captcha">Ανάκτηση εργασιών captcha</string>
     <string name="retrieve_captcha_desc">Ανάκτηση εργασιών captcha από το pyLoad όταν εμφανίζεται η οθόνη επισκόπησης.</string>
     <string name="enter">Εισαγωγή</string>

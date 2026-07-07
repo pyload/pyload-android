@@ -29,7 +29,7 @@
     <string name="api_key">API ključ</string>
     <string name="api_key_desc">Vaš API ključ za autentifikaciju.</string>
     <string name="password">Лозинка</string>
-    <string name="login">Пријава</string>
+    <string name="connection">Веза</string>
     <string name="pref_name">pyLoad – жељене поставке</string>
     <string name="no_connection">Не могу да успоставим везу:</string>
     <string name="bad_login">Nevažeći API ključ.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Овде копирате везе.</string>
     <string name="add">Додај</string>
     <string name="cancel">Откажи</string>
-    <string name="toggle_server">Укључи/искључи сервер</string>
-    <string name="toggle_reconnect">Укључи/искључи поновно повезивање</string>
-    <string name="lost_connection">Веза је прекинута. Пробајте да освежите.</string>
     <string name="retrieve_captcha">Преузимај потврдне кодове</string>
     <string name="retrieve_captcha_desc">Преузимајте потврдне кодове док је приказан „Преглед“.</string>
     <string name="enter">Унос</string>

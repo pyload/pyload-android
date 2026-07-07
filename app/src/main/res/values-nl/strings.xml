@@ -29,7 +29,7 @@
     <string name="api_key">API-sleutel</string>
     <string name="api_key_desc">Je API-sleutel voor authenticatie.</string>
     <string name="password">Wachtwoord</string>
-    <string name="login">Inloggen</string>
+    <string name="connection">Verbinding</string>
     <string name="pref_name">pyLoad - Voorkeuren</string>
     <string name="no_connection">Kan geen verbinding maken:</string>
     <string name="bad_login">Ongeldige API-sleutel.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Zet hier je links.</string>
     <string name="add">Toevoegen</string>
     <string name="cancel">Annuleren</string>
-    <string name="toggle_server">Server aan/uit</string>
-    <string name="toggle_reconnect">Opnieuw verbinden</string>
-    <string name="lost_connection">Verbinding is verbroken. Probeer te vernieuwen.</string>
     <string name="retrieve_captcha">Captcha taken ophalen</string>
     <string name="retrieve_captcha_desc">Captcha taken van pyLoad krijgen wanneer Overzicht wordt weergegeven.</string>
     <string name="enter">Enter</string>

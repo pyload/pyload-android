@@ -29,7 +29,7 @@
     <string name="api_key">Klucz API</string>
     <string name="api_key_desc">Twój klucz API do uwierzytelnienia.</string>
     <string name="password">Hasło</string>
-    <string name="login">Logowanie</string>
+    <string name="connection">Połączenie</string>
     <string name="pref_name">pyLoad - Ustawienia</string>
     <string name="no_connection">Nie można ustanowić połączenia:</string>
     <string name="bad_login">Nieprawidłowy klucz API.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Umieść linki tutaj.</string>
     <string name="add">Dodaj</string>
     <string name="cancel">Anuluj</string>
-    <string name="toggle_server">Zmień serwer</string>
-    <string name="toggle_reconnect">Połącz ponownie</string>
-    <string name="lost_connection">Utracono połączenie. Spróbuj odświeżyć.</string>
     <string name="retrieve_captcha">Odebrano nowe captcha</string>
     <string name="retrieve_captcha_desc">Pobierz captcha zadań z pyLoad gdy jest wyświetlany.</string>
     <string name="enter">Wprowadź</string>

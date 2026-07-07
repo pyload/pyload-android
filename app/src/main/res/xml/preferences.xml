@@ -36,14 +36,7 @@
             android:dependency="clicknload"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:key="login_category" android:title="@string/login">
-        <EditTextPreference
-            android:key="api_key"
-            android:singleLine="true"
-            android:summary="@string/api_key_desc"
-            android:title="@string/api_key" />
-    </PreferenceCategory>
-    <PreferenceCategory android:key="server_category" android:title="@string/server">
+    <PreferenceCategory android:key="connection_category" android:title="@string/connection">
 		<PreferenceScreen
 			android:key="server_url"
 			android:title="@string/server_url">
@@ -82,5 +75,10 @@
 					android:title="@string/ssl_validate" />
 			</PreferenceCategory>
 		</PreferenceScreen>
-	</PreferenceCategory>
+        <EditTextPreference
+            android:key="api_key"
+            android:singleLine="true"
+            android:summary="@string/api_key_desc"
+            android:title="@string/api_key" />
+    </PreferenceCategory>
 </PreferenceScreen>

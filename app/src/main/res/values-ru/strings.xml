@@ -29,7 +29,7 @@
     <string name="api_key">API-ключ</string>
     <string name="api_key_desc">Ваш API-ключ для аутентификации.</string>
     <string name="password">Пароль</string>
-    <string name="login">Логин</string>
+    <string name="connection">Подключение</string>
     <string name="pref_name">pyLoad - Установки</string>
     <string name="no_connection">Не удалось установить соединение:</string>
     <string name="bad_login">Недействительный API-ключ.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Поместите ваши ссылки здесь.</string>
     <string name="add">Добавить</string>
     <string name="cancel">Отменить</string>
-    <string name="toggle_server">Переключение сервера</string>
-    <string name="toggle_reconnect">Переключение переподключения</string>
-    <string name="lost_connection">Связь прервана. Пожалуйста, попробуйте обновить.</string>
     <string name="retrieve_captcha">Получение задач каптчи</string>
     <string name="retrieve_captcha_desc">Получить каптчу из pyLoad, когда находишься на экране Обзор.</string>
     <string name="enter">Введите</string>

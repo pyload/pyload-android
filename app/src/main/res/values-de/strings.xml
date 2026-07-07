@@ -29,7 +29,7 @@
     <string name="api_key">API-Schlüssel</string>
     <string name="api_key_desc">Dein API-Schlüssel zur Authentifizierung.</string>
     <string name="password">Passwort</string>
-    <string name="login">Anmeldung</string>
+    <string name="connection">Verbindung</string>
     <string name="pref_name">pyLoad - Einstellungen</string>
     <string name="no_connection">Die Verbindung konnte nicht hergestellt werden:</string>
     <string name="bad_login">Ungültiger API-Schlüssel.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Füge deine Links hier ein.</string>
     <string name="add">Hinzufügen</string>
     <string name="cancel">Abbrechen</string>
-    <string name="toggle_server">Server umschalten</string>
-    <string name="toggle_reconnect">Reconnect (de)aktivieren</string>
-    <string name="lost_connection">Verbindung verloren. Bitte aktualisieren.</string>
     <string name="retrieve_captcha">Rufe Captcha-Anfragen ab</string>
     <string name="retrieve_captcha_desc">Zeige Captcha-Anfragen an, wenn die Übersicht geöffnet ist.</string>
     <string name="enter">Übernehmen</string>

@@ -29,7 +29,7 @@
     <string name="api_key">مفتاح API</string>
     <string name="api_key_desc">مفتاح API الخاص بك للمصادقة.</string>
     <string name="password">كلمة المرور</string>
-    <string name="login">تسجيل الدخول</string>
+    <string name="connection">الاتصال</string>
     <string name="pref_name">خيارات - باي لود</string>
     <string name="no_connection">لا يمكن انشاء الاتصال:</string>
     <string name="bad_login">مفتاح API غير صالح.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">ضع الروابط الخاصة بك هنا.</string>
     <string name="add">إضافة</string>
     <string name="cancel">الغاء</string>
-    <string name="toggle_server">تبديل الخادم</string>
-    <string name="toggle_reconnect">اعادة اتصال مره اخرى</string>
-    <string name="lost_connection">فقدان الاتصال. الرجاء محاولة تحديث.</string>
     <string name="retrieve_captcha">استرداد مهام كلمة التحقق</string>
     <string name="retrieve_captcha_desc">الحصول على كلمة التحقق من باي لود عند العرض.</string>
     <string name="enter">ادخال</string>

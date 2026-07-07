@@ -29,7 +29,7 @@
     <string name="api_key">API Anahtarı</string>
     <string name="api_key_desc">Kimlik doğrulama için API anahtarınız.</string>
     <string name="password">Şifre</string>
-    <string name="login">Oturum açma</string>
+    <string name="connection">Bağlantı</string>
     <string name="pref_name">pyLoad - tercihleri</string>
     <string name="no_connection">Bağlantı kurulamadı:</string>
     <string name="bad_login">Geçersiz API anahtarı.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Bağlantılarınızı buraya kopyalayın.</string>
     <string name="add">Ekle</string>
     <string name="cancel">İptal</string>
-    <string name="toggle_server">Geçiş sunucusu</string>
-    <string name="toggle_reconnect">Yeniden geçiş</string>
-    <string name="lost_connection">Bağlantı kesildi. Lütfen yenilemeyi deneyin.</string>
     <string name="retrieve_captcha">Captcha görevi alır</string>
     <string name="retrieve_captcha_desc">Özet görüntülendiğinde pyLoad\'dan captcha görevleri alın.</string>
     <string name="enter">Onayla</string>

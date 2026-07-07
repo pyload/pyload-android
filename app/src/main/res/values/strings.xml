@@ -28,7 +28,7 @@
     <string name="api_key">API Key</string>
     <string name="api_key_desc">Your API Key for authentication.</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="connection">Connection</string>
     <string name="pref_name">pyLoad - Preferences</string>
     <string name="no_connection">Could not establish connection:</string>
     <string name="bad_login">Invalid API key.</string>
@@ -49,9 +49,6 @@
     <string name="package_links">Put your links here.</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
-    <string name="toggle_server">Toggle Server</string>
-    <string name="toggle_reconnect">Toggle Reconnect</string>
-    <string name="lost_connection">Lost connection. Please try to refresh.</string>
     <string name="retrieve_captcha">Retrieve captcha tasks</string>
     <string name="retrieve_captcha_desc">Get captcha tasks from pyLoad when Overview is displayed.</string>
     <string name="enter">Enter</string>

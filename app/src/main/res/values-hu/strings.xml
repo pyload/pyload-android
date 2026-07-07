@@ -29,7 +29,7 @@
     <string name="api_key">API kulcs</string>
     <string name="api_key_desc">Az API kulcsod hitelesítéshez.</string>
     <string name="password">Jelszó</string>
-    <string name="login">Bejelentkezés</string>
+    <string name="connection">Kapcsolat</string>
     <string name="pref_name">pyLoad - Beállítások</string>
     <string name="no_connection">Nem sikerült kapcsolatot létesíteni:</string>
     <string name="bad_login">Érvénytelen API-kulcs.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Ide kell a linkeket másolni.</string>
     <string name="add">Hozzáad</string>
     <string name="cancel">Mégse</string>
-    <string name="toggle_server">Szerver átállítása</string>
-    <string name="toggle_reconnect">Újracsatlakozás átállítása</string>
-    <string name="lost_connection">Hiba a kapcsolatban, kérlek frissíts.</string>
     <string name="retrieve_captcha">Captcha betöltése</string>
     <string name="retrieve_captcha_desc">Captcha-k lekérése a főképernyőn.</string>
     <string name="enter">megad</string>

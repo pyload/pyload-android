@@ -29,7 +29,7 @@
     <string name="api_key">Chiave API</string>
     <string name="api_key_desc">La tua chiave API per l\'autenticazione.</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="connection">Connessione</string>
     <string name="pref_name">pyLoad - Preferenze</string>
     <string name="no_connection">Impossibile stabilire la connessione:</string>
     <string name="bad_login">Chiave API non valida.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Metti qui i tuoi link.</string>
     <string name="add">Aggiungi</string>
     <string name="cancel">Annulla</string>
-    <string name="toggle_server">Attiva/Disattiva Server</string>
-    <string name="toggle_reconnect">Attiva/Disattiva Riconnessione</string>
-    <string name="lost_connection">Connessione persa. Prova ad aggiornare.</string>
     <string name="retrieve_captcha">Recupera i captcha</string>
     <string name="retrieve_captcha_desc">Recupera i captcha da pyLoad quando sei su Panoramica.</string>
     <string name="enter">Inserisci</string>

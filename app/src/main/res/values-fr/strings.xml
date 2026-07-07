@@ -29,7 +29,7 @@
     <string name="api_key">Clé API</string>
     <string name="api_key_desc">Votre clé API pour l\'authentification.</string>
     <string name="password">Mot de passe</string>
-    <string name="login">Identifiant</string>
+    <string name="connection">Connexion</string>
     <string name="pref_name">pyLoad - Préférences</string>
     <string name="no_connection">Impossible d\'établir la connexion :</string>
     <string name="bad_login">Clé API invalide.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Placez vos liens ici.</string>
     <string name="add">Ajouter</string>
     <string name="cancel">Annuler</string>
-    <string name="toggle_server">Changer de serveur</string>
-    <string name="toggle_reconnect">Changer de connexion</string>
-    <string name="lost_connection">Connexion perdue. Essayez de rafraîchir la page.</string>
     <string name="retrieve_captcha">Récupérer la liste de captcha</string>
     <string name="retrieve_captcha_desc">Récupérer la liste des captchas depuis Pyload quand l\'aperçu est affiché.</string>
     <string name="enter">Entrer</string>

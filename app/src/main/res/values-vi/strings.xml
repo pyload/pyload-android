@@ -29,7 +29,7 @@
     <string name="api_key">API Key</string>
     <string name="api_key_desc">API key của bạn để xác thực.</string>
     <string name="password">Mật khẩu</string>
-    <string name="login">Đăng nhập</string>
+    <string name="connection">Kết nối</string>
     <string name="pref_name">pyLoad – Tùy chọn</string>
     <string name="no_connection">Không thể thiết lập kết nối:</string>
     <string name="bad_login">Khóa API không hợp lệ.</string>
@@ -50,9 +50,6 @@
     <string name="package_links">Đặt liên kết của bạn ở đây.</string>
     <string name="add">Thêm</string>
     <string name="cancel">Hủy bỏ</string>
-    <string name="toggle_server">Chuyển đổi máy chủ</string>
-    <string name="toggle_reconnect">Bật tắt kết nối</string>
-    <string name="lost_connection">Kết nối bị mất. Hãy thử làm tươi.</string>
     <string name="retrieve_captcha">Lấy lại captcha</string>
     <string name="retrieve_captcha_desc">Lấy captcha từ pyLoad khi Tổng quan được hiển thị.</string>
     <string name="enter">Nhập</string>

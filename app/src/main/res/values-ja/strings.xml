@@ -29,7 +29,7 @@
     <string name="api_key">APIキー</string>
     <string name="api_key_desc">認証のためのAPIキー。</string>
     <string name="password">パスワード</string>
-    <string name="login">ログイン</string>
+    <string name="connection">接続</string>
     <string name="pref_name">pyLoad - 設定</string>
     <string name="no_connection">接続を確立できませんでした。</string>
     <string name="bad_login">無効なAPIキーです。</string>
@@ -50,9 +50,6 @@
     <string name="package_links">ここであなたのリンクを置きます。</string>
     <string name="add">追加</string>
     <string name="cancel">キャンセル</string>
-    <string name="toggle_server">サーバー切り替え</string>
-    <string name="toggle_reconnect">トグルを再接続します。</string>
-    <string name="lost_connection">接続が失われました。更新してください。</string>
     <string name="retrieve_captcha">キャプチャ タスクを取得します。</string>
     <string name="retrieve_captcha_desc">概要が表示されたときに pyLoad からキャプチャ タスクを取得します。</string>
     <string name="enter">入力</string>
