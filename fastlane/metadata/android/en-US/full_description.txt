@@ -1,0 +1,19 @@
+This is the official Android client for the pyLoad Download Manager. You need to have pyLoad running on your pc or server.
+
+Features:
+- Add links via Share option (e.g. Chrome/YouTube -> pyLoad)
+- Add packages, or upload container files (DLC, CCF etc.)
+- Display current downloads
+- Display queue/collector
+- Delete/Move/Restart packages
+- Abort downloads
+- Enter Captchas for downloads
+- Toggle download/reconnect
+- Edit server side settings
+- View accounts
+- Secure SSL connection to the Core
+
+You need an API key to connect the app to your pyLoad instance. Open pyLoad in your browser and navigate to:
+Settings → Users → Next to your username tap on Actions → Manage API Keys → Generate.
+
+Please report any issues with the client here: https://github.com/pyload/pyload-android/issues

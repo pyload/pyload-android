@@ -1,0 +1,2 @@
+- Translations for german, italian and french
+- Accepts multiple urls

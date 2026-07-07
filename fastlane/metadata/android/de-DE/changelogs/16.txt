@@ -1,0 +1,3 @@
+- "Dateien neu starten" Schaltfläche hinzugefügt
+- Vorschläge für Captcha-Eingabe deaktiviert
+- Korrekte Reihenfolge von Paketen und Dateien anzeigen

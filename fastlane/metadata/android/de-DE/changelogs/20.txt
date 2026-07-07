@@ -1,0 +1,2 @@
+- Funktioniert mit pyLoad v0.4.20
+- Mindestens Android 6

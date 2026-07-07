@@ -1,0 +1,3 @@
+- Übersetzungen für Arabisch, Ungarisch, Japanisch, Vietnamesisch
+- Aktualisierte Übersetzungen für Deutsch, Französisch, Italienisch
+- FileChooser korrigiert

@@ -1,0 +1,4 @@
+- Works with Android 4.2 again
+- Translation for spanish, polish, dutch, russian, portuguese, greek, turkish, serbian, hebrew
+- Fix Android theme issues
+- Properly ask for external storage permissions when browsing for a container

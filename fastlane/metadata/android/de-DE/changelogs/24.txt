@@ -1,0 +1,8 @@
+- Update für pyload-ng, Thrift-Client durch REST-Client ersetzt
+- Erfordert pyLoad v0.5.x, entwickelt für Android 15, funktioniert ab Android 5.0
+- Ausnahmebehandlung wiederhergestellt
+- Upgrade auf Java 17 und Gradle 8.13, targetSdkVersion auf 35 gesetzt
+- Android-Kompatibilität aktualisiert und die Benutzeroberfläche modernisiert durch Anwendung konsistenter Themes, Schaltflächenstile und Farben in allen Layouts
+- Option zum Wählen zwischen dunklen / hellen Themes hinzugefügt
+- Unterstützung für Server-Pfad-Präfix hinzugefügt
+- Click'N'Load-Listener-Dienst erstellt

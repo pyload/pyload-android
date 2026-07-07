@@ -1,0 +1,3 @@
+- Translation for arabic, hungarian, japanese, vietnamese
+- Updated translation for german, french, italian
+- Fix FileChooser

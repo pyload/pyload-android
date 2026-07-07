@@ -1,0 +1,3 @@
+- Added Restart failed button
+- Disabled suggestions for captcha input
+- Show correct order of packages and files

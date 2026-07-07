@@ -1,0 +1,4 @@
+- Funktioniert wieder mit Android 4.2
+- Übersetzungen für Spanisch, Polnisch, Niederländisch, Russisch, Portugiesisch, Griechisch, Türkisch, Serbisch, Hebräisch
+- Probleme mit Android-Themes behoben
+- Berechtigungen für externen Speicher beim Durchsuchen nach einem Container ordnungsgemäß anfordern
