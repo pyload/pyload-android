@@ -35,6 +35,7 @@
     <string name="bad_login">無効なAPIキーです。</string>
     <string name="bad_path">パスプレフィックスが間違っているようです (404 見つかりません).</string>
     <string name="move">移動します。</string>
+    <string name="package_password">パッケージのパスワード</string>
     <string name="on">オン</string>
     <string name="off">オフ</string>
     <string name="n_a">n/a</string>

@@ -35,6 +35,7 @@
     <string name="bad_login">Nieprawidłowy klucz API.</string>
     <string name="bad_path">Prefiks ścieżki wydaje się być błędny (404 Nie znaleziono).</string>
     <string name="move">Przenieś do innej lokalizacji</string>
+    <string name="package_password">Hasło pakietu</string>
     <string name="on">Wł</string>
     <string name="off">Wył</string>
     <string name="n_a">nie dotyczy</string>

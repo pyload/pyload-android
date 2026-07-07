@@ -35,6 +35,7 @@
     <string name="bad_login">Geçersiz API anahtarı.</string>
     <string name="bad_path">Yol öneki yanlış görünüyor (404 Bulunamadı).</string>
     <string name="move">Yere taşıyın</string>
+    <string name="package_password">Paket parolası</string>
     <string name="on">Aç</string>
     <string name="off">Kapat</string>
     <string name="n_a">n/a</string>

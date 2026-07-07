@@ -35,6 +35,7 @@
     <string name="bad_login">Nevažeći API ključ.</string>
     <string name="bad_path">Префикс путање изгледа неисправан (404 Није пронађено).</string>
     <string name="move">Промени размештај</string>
+    <string name="package_password">Lozinka paketa</string>
     <string name="on">укључено</string>
     <string name="off">искључено</string>
     <string name="n_a">недоступно</string>

@@ -48,7 +48,7 @@
     </style>
 
     <style name="AppTheme.DialogButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">#03DAC6</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
     <!-- Style for Primary Buttons (Add) -->

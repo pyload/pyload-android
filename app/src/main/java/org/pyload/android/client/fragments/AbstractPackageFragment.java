@@ -3,7 +3,9 @@ package org.pyload.android.client.fragments;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
@@ -15,12 +17,16 @@ import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiDeleteFilesPostRequest;
 import org.pyload.android.openapi.model.ApiDeletePackagesPostRequest;
+import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
 import org.pyload.android.openapi.model.Destination;
 import org.pyload.android.openapi.model.FileData;
 import org.pyload.android.openapi.model.PackageData;
 import org.pyload.android.openapi.model.DownloadStatus;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -31,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ImageView;
@@ -106,12 +113,19 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 		Log.d("pyLoad", dest + " onContextItemSelected " + item);
 
-		// filter event und allow to proceed
+		// filter event and allow to proceed
 		if (!app.isCurrentTab(pos))
 			return false;
 
-		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item
-				.getMenuInfo();
+		ExpandableListContextMenuInfo info;
+		try {
+			info = (ExpandableListContextMenuInfo) item.getMenuInfo();
+		} catch (ClassCastException e) {
+			return false;
+		}
+
+		if (info == null)
+			return false;
 
 		int type = ExpandableListView
 				.getPackedPositionType(info.packedPosition);
@@ -210,6 +224,38 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
+			} else if (itemId == R.id.package_password) {
+				final EditText input = new EditText(getActivity());
+				input.setText(pack.getPassword());
+				int padding = (int) (16 * getResources().getDisplayMetrics().density);
+				android.widget.FrameLayout container = new android.widget.FrameLayout(getActivity());
+				android.widget.FrameLayout.LayoutParams params = new  android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				params.leftMargin = padding;
+				params.rightMargin = padding;
+				input.setLayoutParams(params);
+				container.addView(input);
+
+				new MaterialAlertDialogBuilder(getActivity())
+						.setTitle(R.string.package_password)
+						.setView(container)
+						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								final String password = input.getText().toString();
+								app.addTask(new GuiTask(new Runnable() {
+									public void run() {
+										client = app.getClient();
+										Map<String, Object> dataMap = new HashMap<String, Object>();
+										dataMap.put("password", password);
+										ApiSetPackageDataPostRequest request = new ApiSetPackageDataPostRequest()
+												.packageId(pack.getPid())
+												.data(dataMap);
+										app.executeNetworkCall(client.apiSetPackageDataPost(request));
+									}
+								}, app.handleSuccess));
+							}
+						})
+						.setNegativeButton(android.R.string.cancel, null)
+						.show();
 			}
 
 			return true;

@@ -35,6 +35,7 @@
     <string name="bad_login">Μη έγκυρο κλειδί API.</string>
     <string name="bad_path">Το πρόθεμα διαδρομής φαίνεται να είναι λάθος (404 Δεν βρέθηκε).</string>
     <string name="move">Τοποθεσία για μετακίνηση</string>
+    <string name="package_password">Κωδικός πακέτου</string>
     <string name="on">ενεργό</string>
     <string name="off">ανενεργό</string>
     <string name="n_a">n/a</string>

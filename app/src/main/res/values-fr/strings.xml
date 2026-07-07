@@ -35,6 +35,7 @@
     <string name="bad_login">Clé API invalide.</string>
     <string name="bad_path">Le préfixe de chemin semble être incorrect (404 Non Trouvé).</string>
     <string name="move">Changer d\'emplacement</string>
+    <string name="package_password">Mot de passe du paquet</string>
     <string name="on">Allumé</string>
     <string name="off">Eteint</string>
     <string name="n_a">n/a</string>

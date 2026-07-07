@@ -35,6 +35,7 @@
     <string name="bad_login">Chiave API non valida.</string>
     <string name="bad_path">Il prefisso del percorso sembra essere errato (404 Non Trovato).</string>
     <string name="move">Sposta posizione</string>
+    <string name="package_password">Password pacchetto</string>
     <string name="on">on</string>
     <string name="off">off</string>
     <string name="n_a">n/a</string>

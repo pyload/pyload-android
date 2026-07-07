@@ -21,6 +21,7 @@ import org.pyload.android.client.R;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -129,6 +130,15 @@ public class FragmentTabsPager extends AppCompatActivity {
             mTabs.add(info);
             mTabLayout.addTab(mTabLayout.newTab().setText(title).setIcon(icon));
             notifyDataSetChanged();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Object obj = super.instantiateItem(container, position);
+            if (obj instanceof TabHandler) {
+                ((TabHandler) obj).setPosition(position);
+            }
+            return obj;
         }
 
         @Override

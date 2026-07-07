@@ -35,6 +35,7 @@
     <string name="bad_login">Ungültiger API-Schlüssel.</string>
     <string name="bad_path">Pfad-Präfix scheint falsch zu sein (404 Nicht Gefunden).</string>
     <string name="move">Position ändern</string>
+    <string name="package_password">Paket-Passwort</string>
     <string name="on">ein</string>
     <string name="off">aus</string>
     <string name="n_a">n/v</string>

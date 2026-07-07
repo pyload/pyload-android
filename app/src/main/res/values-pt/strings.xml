@@ -35,6 +35,7 @@
     <string name="bad_login">Chave API inválida.</string>
     <string name="bad_path">O prefixo do caminho parece estar incorreto (404 Não Encontrado).</string>
     <string name="move">Localização de movimento</string>
+    <string name="package_password">Senha do pacote</string>
     <string name="on">ligado</string>
     <string name="off">desligado</string>
     <string name="n_a">n/a</string>

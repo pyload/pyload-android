@@ -35,6 +35,7 @@
     <string name="bad_login">Érvénytelen API-kulcs.</string>
     <string name="bad_path">Az útvonal előtag hibásnak tűnik (404 Nem található).</string>
     <string name="move">Hely áthelyezése</string>
+    <string name="package_password">Csomag jelszava</string>
     <string name="on">be</string>
     <string name="off">ki</string>
     <string name="n_a">n/a</string>

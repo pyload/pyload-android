@@ -35,6 +35,7 @@
     <string name="bad_login">Ongeldige API-sleutel.</string>
     <string name="bad_path">Padvoorvoegsel lijkt onjuist te zijn (404 Niet Gevonden).</string>
     <string name="move">Locatie verplaatsen</string>
+    <string name="package_password">Pakket wachtwoord</string>
     <string name="on">aan</string>
     <string name="off">uit</string>
     <string name="n_a">n.v.t</string>

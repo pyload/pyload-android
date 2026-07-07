@@ -34,6 +34,7 @@
     <string name="bad_login">Invalid API key.</string>
     <string name="bad_path">Path Prefix seems to be wrong (404 Not Found).</string>
     <string name="move">Move location</string>
+    <string name="package_password">Package password</string>
     <string name="on">on</string>
     <string name="off">off</string>
     <string name="n_a">n/a</string>

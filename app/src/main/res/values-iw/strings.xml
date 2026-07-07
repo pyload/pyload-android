@@ -34,6 +34,7 @@
     <string name="bad_login">מפתח API שגוי.</string>
     <string name="bad_path">נראה שקידומת הנתיב שגויה (404 לא נמצא).</string>
     <string name="move">העבר מיקום</string>
+    <string name="package_password">סיסמת חבילה</string>
     <string name="on">&#x200e;פעיל</string>
     <string name="off">&#x200e;כבוי</string>
     <string name="n_a">n/a</string>

@@ -35,6 +35,7 @@
     <string name="bad_login">Khóa API không hợp lệ.</string>
     <string name="bad_path">Tiền tố đường dẫn có vẻ sai (404 Không tìm thấy).</string>
     <string name="move">Di chuyển vị trí</string>
+    <string name="package_password">Mật khẩu gói</string>
     <string name="on">trên</string>
     <string name="off">tắt</string>
     <string name="n_a">n/a</string>

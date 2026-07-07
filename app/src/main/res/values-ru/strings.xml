@@ -35,6 +35,7 @@
     <string name="bad_login">Недействительный API-ключ.</string>
     <string name="bad_path">Префикс пути кажется неправильным (404 Не Найдено).</string>
     <string name="move">Переместить</string>
+    <string name="package_password">Пароль пакета</string>
     <string name="on">вкл.</string>
     <string name="off">выкл.</string>
     <string name="n_a">н/д</string>
