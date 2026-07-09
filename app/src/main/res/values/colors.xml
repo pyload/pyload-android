@@ -15,6 +15,7 @@
 
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
+    <color name="textDisabled">#BDBDBD</color>
 
     <!-- Button specific colors -->
     <color name="button_primary">#03DAC6</color>

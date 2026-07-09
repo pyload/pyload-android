@@ -11,9 +11,10 @@
         <item name="colorAccent">@color/secondary</item>
 
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:textColorPrimary">@color/textPrimary</item>
-        <item name="android:textColorSecondary">@color/textSecondary</item>
-        <item name="android:textColorSecondaryNoDisable">@color/textSecondary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
 
         <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
@@ -30,9 +31,10 @@
         <item name="colorAccent">@color/secondary</item>
 
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:textColorPrimary">@color/textPrimary</item>
-        <item name="android:textColorSecondary">@color/textSecondary</item>
-        <item name="android:textColorSecondaryNoDisable">@color/textSecondary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
 
         <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
@@ -41,7 +43,8 @@
     <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/secondary</item>
         <item name="colorAccent">@color/secondary</item>
-        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="buttonBarPositiveButtonStyle">@style/AppTheme.DialogButton</item>
         <item name="buttonBarNegativeButtonStyle">@style/AppTheme.DialogButton</item>
         <item name="buttonBarNeutralButtonStyle">@style/AppTheme.DialogButton</item>
@@ -49,6 +52,11 @@
 
     <style name="AppTheme.DialogButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+
+    <style name="PreferenceTheme" parent="PreferenceThemeOverlay">
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
 
     <!-- Style for Primary Buttons (Add) -->

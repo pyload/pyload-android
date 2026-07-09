@@ -14,7 +14,8 @@
     <color name="onSurface">#FFFFFF</color>
 
     <color name="textPrimary">#FFFFFF</color>
-    <color name="textSecondary">#EEEEEE</color>
+    <color name="textSecondary">#BDBDBD</color>
+    <color name="textDisabled">#666666</color>
 
     <!-- Button specific colors for dark mode -->
     <color name="button_primary">#03DAC6</color>
