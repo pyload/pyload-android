@@ -74,7 +74,7 @@ public class ClickNLoadService extends Service {
         return new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(getString(R.string.clicknload))
                 .setContentText(getString(R.string.clicknload_service_running))
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .build();
     }
