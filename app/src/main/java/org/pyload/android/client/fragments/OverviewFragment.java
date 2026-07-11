@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import androidx.fragment.app.ListFragment;
 import androidx.core.app.NotificationCompat;
 import android.util.Log;
@@ -420,6 +421,17 @@ class OverviewAdapter extends BaseAdapter {
         // name is null sometimes somehow
         if (info.getName() != null && !info.getName().equals(holder.name.getText())) {
             holder.name.setText(info.getName());
+        }
+
+        boolean marquee = app.prefs.getBoolean("package_marquee", true);
+        if (marquee) {
+            holder.name.setSingleLine(true);
+            holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            holder.name.setHorizontallyScrolling(true);
+        } else {
+            holder.name.setSingleLine(false);
+            holder.name.setEllipsize(null);
+            holder.name.setHorizontallyScrolling(false);
         }
 
         holder.progress.setProgress(info.getPercent());

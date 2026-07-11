@@ -36,6 +36,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.text.TextUtils;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -99,7 +100,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
 		PackageListAdapter adp = new PackageListAdapter(getActivity(), data,
-				R.layout.package_item, R.layout.package_child_item);
+				R.layout.package_item, R.layout.package_child_item, app);
 		setListAdapter(adp);
 	}
 
@@ -357,12 +358,15 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 	private final int childRes;
 	private final LayoutInflater layoutInflater;
 	private List<PackageData> data;
+	private final pyLoadApp app;
+
 	public PackageListAdapter(Context context, List<PackageData> data,
-			int groupRes, int childRes) {
+			int groupRes, int childRes, pyLoadApp app) {
 
 		this.data = data;
 		this.groupRes = groupRes;
 		this.childRes = childRes;
+		this.app = app;
 
 		layoutInflater = LayoutInflater.from(context);
 	}
@@ -418,6 +422,17 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.getName());
 
+		boolean marquee = app.prefs.getBoolean("package_marquee", true);
+		if (marquee) {
+			holder.name.setSingleLine(true);
+			holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			holder.name.setHorizontallyScrolling(true);
+		} else {
+			holder.name.setSingleLine(false);
+			holder.name.setEllipsize(null);
+			holder.name.setHorizontallyScrolling(false);
+		}
+
 		if (pack.getLinkstotal() == null || pack.getLinkstotal() == 0)
 			pack.setLinkstotal(1);
 
@@ -460,6 +475,17 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 
 		if (!file.getName().equals(holder.name.getText()))
 			holder.name.setText(file.getName());
+
+		boolean marquee = app.prefs.getBoolean("package_marquee", true);
+		if (marquee) {
+			holder.name.setSingleLine(true);
+			holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			holder.name.setHorizontallyScrolling(true);
+		} else {
+			holder.name.setSingleLine(false);
+			holder.name.setEllipsize(null);
+			holder.name.setHorizontallyScrolling(false);
+		}
 
 		holder.status.setText(file.getStatusmsg());
 		holder.size.setText(Utils.formatSize(file.getSize()));
