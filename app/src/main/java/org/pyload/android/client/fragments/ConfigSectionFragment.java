@@ -13,9 +13,9 @@ import org.pyload.android.openapi.model.ConfigItem;
 import org.pyload.android.openapi.model.ConfigSection;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -157,7 +157,7 @@ class ConfigItemView extends LinearLayout {
 		if (!item.getType().equals("bool")) {
 			TextView tv = new TextView(context);
 			tv.setText(item.getDescription());
-			tv.setTextColor(Color.WHITE);
+			tv.setTextColor(ContextCompat.getColor(context, R.color.text_primary));
 			tv.setTextSize(16);
 			tv.setPadding(2, 0, 0, 0);
 			addView(tv);
