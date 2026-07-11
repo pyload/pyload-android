@@ -93,14 +93,12 @@
     <string name="plugin_config">Configurazione plugin</string>
     <string name="port">Porta</string>
     <string name="port_desc">La porta su cui è in ascolto il tuo server pyLoad (l\'impostazione predefinita è 8000).</string>
-    <string name="pref_name">pyLoad - Preferenze</string>
     <string name="premium">Premium</string>
     <string name="queue">Coda</string>
     <string name="refresh">Aggiorna</string>
     <string name="refresh_rate">Frequenza Aggiornamento</string>
     <string name="refresh_rate_desc">Ogni quanti secondi la schermata Panoramica dovrebbe aggiornarsi.</string>
     <string name="remote_settings">Impostazioni Remote</string>
-    <string name="remotesettings_activity">pyLoad - Impostazioni Remote</string>
     <string name="restart">Riavvia</string>
     <string name="restart_failed">Riavvia file falliti</string>
     <string name="retrieve_captcha">Recupera i captcha</string>

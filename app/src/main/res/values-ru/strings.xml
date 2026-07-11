@@ -93,14 +93,12 @@
     <string name="plugin_config">Конфигурация приложений</string>
     <string name="port">Порт</string>
     <string name="port_desc">Порт, который прослушивает ваш сервер pyLoad (по умолчанию 8000).</string>
-    <string name="pref_name">pyLoad - Установки</string>
     <string name="premium">Премиум</string>
     <string name="queue">Очередь</string>
     <string name="refresh">Обновить</string>
     <string name="refresh_rate">Частота Обновления</string>
     <string name="refresh_rate_desc">Как часто следует обновлять экран Обзора, в секундах.</string>
     <string name="remote_settings">Удаленные Настройки</string>
-    <string name="remotesettings_activity">pyLoad - удаленные настройки</string>
     <string name="restart">Перезапустить</string>
     <string name="restart_failed">Перезапустить неудавшиеся загрузки</string>
     <string name="retrieve_captcha">Получение задач каптчи</string>

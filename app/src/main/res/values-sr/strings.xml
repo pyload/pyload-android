@@ -93,14 +93,12 @@
     <string name="plugin_config">Поставке прикључака</string>
     <string name="port">Порт</string>
     <string name="port_desc">Порт на коме ваш pyLoad сервер слуша (подразумевано је 8000).</string>
-    <string name="pref_name">pyLoad – жељене поставке</string>
     <string name="premium">Premium</string>
     <string name="queue">Ред</string>
     <string name="refresh">Освежи</string>
     <string name="refresh_rate">Учесталост освежавања</string>
     <string name="refresh_rate_desc">Колико често се екран са прегледом освежава (у секундама).</string>
     <string name="remote_settings">Удаљене поставке</string>
-    <string name="remotesettings_activity">pyLoad – удаљене поставке</string>
     <string name="restart">Поново покрени</string>
     <string name="restart_failed">Поново покрени</string>
     <string name="retrieve_captcha">Преузимај потврдне кодове</string>

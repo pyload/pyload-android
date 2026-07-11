@@ -93,14 +93,12 @@
     <string name="plugin_config">Ρυθμίσεις πρόσθετων</string>
     <string name="port">Θύρα</string>
     <string name="port_desc">Η θύρα στην οποία ακούει ο διακομιστής pyLoad (η προεπιλογή είναι 8000).</string>
-    <string name="pref_name">pyLoad - Προτιμήσεις</string>
     <string name="premium">Premium</string>
     <string name="queue">Ουρά</string>
     <string name="refresh">Ανανέωση</string>
     <string name="refresh_rate">Ρυθμός ανανέωσης</string>
     <string name="refresh_rate_desc">Χρόνος σε δευτερόλεπτα πόσο συχνά θα πρέπει να ανανεώνεται η οθόνη επισκόπησης.</string>
     <string name="remote_settings">Απομακρυσμένες ρυθμίσεις</string>
-    <string name="remotesettings_activity">pyLoad - Απομακρυσμένες Ρυθμίσεις</string>
     <string name="restart">Επανεκκίνηση</string>
     <string name="restart_failed">Επανεκκίνηση αποτυχημένων αρχείων</string>
     <string name="retrieve_captcha">Ανάκτηση εργασιών captcha</string>

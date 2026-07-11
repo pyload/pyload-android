@@ -93,14 +93,12 @@
     <string name="plugin_config">اعدادات الاضافات</string>
     <string name="port">المنفذ</string>
     <string name="port_desc">المنفذ الذي يستمع إليه خادم pyLoad الخاص بك (الافتراضي هو 8000).</string>
-    <string name="pref_name">خيارات - باي لود</string>
     <string name="premium">بريميوم</string>
     <string name="queue">قائمة الإنتظار</string>
     <string name="refresh">تحديث</string>
     <string name="refresh_rate">معدل التحديث</string>
     <string name="refresh_rate_desc">الوقت بالثواني لعدد مرات تحديث شاشة العرض.</string>
     <string name="remote_settings">الاعدادات عن بعد</string>
-    <string name="remotesettings_activity">اعدادات باي لود - عن بعد</string>
     <string name="restart">اعادة تشغيل</string>
     <string name="restart_failed">اعادة تشغيل الملفات اللتي فشلت</string>
     <string name="retrieve_captcha">استرداد مهام كلمة التحقق</string>

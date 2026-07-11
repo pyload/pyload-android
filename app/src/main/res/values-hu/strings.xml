@@ -93,14 +93,12 @@
     <string name="plugin_config">Beépülő beállítások</string>
     <string name="port">Port</string>
     <string name="port_desc">A port, amelyen a pyLoad szerver figyel (alapértelmezett a 8000).</string>
-    <string name="pref_name">pyLoad - Beállítások</string>
     <string name="premium">Prémium</string>
     <string name="queue">Sor</string>
     <string name="refresh">Frissítés</string>
     <string name="refresh_rate">Frissítés gyakorisága</string>
     <string name="refresh_rate_desc">Főképernyő frissítési gyakorisága másodpercben.</string>
     <string name="remote_settings">Távoli beállítások</string>
-    <string name="remotesettings_activity">pyLoad - Távoli beállítások</string>
     <string name="restart">Újraindítás</string>
     <string name="restart_failed">Hibás fájlok újrakezdése</string>
     <string name="retrieve_captcha">Captcha betöltése</string>

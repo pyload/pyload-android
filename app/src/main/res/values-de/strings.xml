@@ -93,14 +93,12 @@
     <string name="plugin_config">Erweiterungseinstellungen</string>
     <string name="port">Port</string>
     <string name="port_desc">Der Port, an dem dein pyLoad-Server lauscht (Standard ist 8000).</string>
-    <string name="pref_name">pyLoad - Einstellungen</string>
     <string name="premium">Premium</string>
     <string name="queue">Warteschlange</string>
     <string name="refresh">Aktualisieren</string>
     <string name="refresh_rate">Aktualisierungsrate</string>
     <string name="refresh_rate_desc">Zeit in Sekunden wie oft die Übersicht aktualisiert wird.</string>
     <string name="remote_settings">Servereinstellungen</string>
-    <string name="remotesettings_activity">pyLoad - Servereinstellungen</string>
     <string name="restart">Neustarten</string>
     <string name="restart_failed">Fehlgeschlagene Dateien neu starten</string>
     <string name="retrieve_captcha">Rufe Captcha-Anfragen ab</string>

@@ -93,14 +93,12 @@
     <string name="plugin_config">Cấu hình plugin</string>
     <string name="port">Cổng</string>
     <string name="port_desc">Cổng mà máy chủ pyLoad của bạn đang lắng nghe (mặc định là 8000).</string>
-    <string name="pref_name">pyLoad – Tùy chọn</string>
     <string name="premium">Cao cấp</string>
     <string name="queue">Hàng đợi</string>
     <string name="refresh">Làm mới</string>
     <string name="refresh_rate">Làm mới tỷ lệ</string>
     <string name="refresh_rate_desc">Thời gian để màn hình tổng quát sẽ làm tươi, tính bằng giây.</string>
     <string name="remote_settings">Cài đặt từ xa</string>
-    <string name="remotesettings_activity">pyLoad - Cài đặt từ xa</string>
     <string name="restart">Khởi động lại</string>
     <string name="restart_failed">Khởi động lại tập tin không thành công</string>
     <string name="retrieve_captcha">Lấy lại captcha</string>

@@ -93,14 +93,12 @@
     <string name="plugin_config">Konfiguracja pluginów</string>
     <string name="port">Port</string>
     <string name="port_desc">Port, na którym nasłuchuje serwer pyLoad (domyślnie 8000).</string>
-    <string name="pref_name">pyLoad - Ustawienia</string>
     <string name="premium">Premium</string>
     <string name="queue">Kolejka</string>
     <string name="refresh">Odśwież</string>
     <string name="refresh_rate">Częstotliwość odświeżania</string>
     <string name="refresh_rate_desc">Czas odświeżania ekranu w sekundach.</string>
     <string name="remote_settings">Ustawienia zdalnego dostępu</string>
-    <string name="remotesettings_activity">pyLoad - Ustawienia zdalnego dostępu</string>
     <string name="restart">Restart</string>
     <string name="restart_failed">Ponów błędne pobrania</string>
     <string name="retrieve_captcha">Odebrano nowe captcha</string>

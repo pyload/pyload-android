@@ -92,14 +92,12 @@
     <string name="plugin_config">הגדרות פלאגינים</string>
     <string name="port">פורט</string>
     <string name="port_desc">הפורט שבו שרת ה-pyLoad שלך מאזין (ברירת המחדל היא 8000).</string>
-    <string name="pref_name">pyLoad - העדפות</string>
     <string name="premium">פרימיום</string>
     <string name="queue">תור</string>
     <string name="refresh">רענן</string>
     <string name="refresh_rate">קצב רענון</string>
     <string name="refresh_rate_desc">כל כמה שניות מסך הסקירה אמור להתרענן.</string>
     <string name="remote_settings">הגדרות מרוחקות</string>
-    <string name="remotesettings_activity">pyLoad - הגדרות מרוחקות</string>
     <string name="restart">התחל מחדש</string>
     <string name="restart_failed">הפעל מחדש את הקבצים שנכשלו</string>
     <string name="retrieve_captcha">קבל משימות captcha</string>

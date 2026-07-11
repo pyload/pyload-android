@@ -96,14 +96,12 @@
     <string name="plugin_config">Plugin config</string>
     <string name="port">Port</string>
     <string name="port_desc">The port where your pyLoad server is listening (default is 8000).</string>
-    <string name="pref_name">pyLoad - Preferences</string>
     <string name="premium">Premium</string>
     <string name="queue">Queue</string>
     <string name="refresh">Refresh</string>
     <string name="refresh_rate">Refresh Rate</string>
     <string name="refresh_rate_desc">Time in seconds how often Overview screen should refresh.</string>
     <string name="remote_settings">Remote Settings</string>
-    <string name="remotesettings_activity">pyLoad - Remote Settings</string>
     <string name="restart">Restart</string>
     <string name="restart_failed">Restart failed files</string>
     <string name="retrieve_captcha">Retrieve captcha tasks</string>

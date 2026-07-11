@@ -93,14 +93,12 @@
     <string name="plugin_config">プラグインの設定</string>
     <string name="port">ポート</string>
     <string name="port_desc">pyLoad サーバーがリッスンしているポート (デフォルトは 8000)。</string>
-    <string name="pref_name">pyLoad - 設定</string>
     <string name="premium">プレミアム</string>
     <string name="queue">キュー</string>
     <string name="refresh">更新</string>
     <string name="refresh_rate">リフレッシュ レート</string>
     <string name="refresh_rate_desc">時間秒どのくらいの頻度で概要画面を更新する必要があります。</string>
     <string name="remote_settings">リモート設定</string>
-    <string name="remotesettings_activity">pyLoad - リモート設定</string>
     <string name="restart">再起動</string>
     <string name="restart_failed">失敗したファイルを再起動します。</string>
     <string name="retrieve_captcha">キャプチャ タスクを取得します。</string>
