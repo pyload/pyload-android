@@ -60,6 +60,7 @@ public class SeparatedListAdapter extends BaseAdapter {
 		return total;
 	}
 
+	@Override
 	public int getItemViewType(int position) {
 		int type = 1;
 		for(Object section : this.sections.keySet()) {
@@ -77,10 +78,12 @@ public class SeparatedListAdapter extends BaseAdapter {
 		return -1;
 	}
 
-	public boolean areAllItemsSelectable() {
+	@Override
+	public boolean areAllItemsEnabled() {
 		return false;
 	}
 
+	@Override
 	public boolean isEnabled(int position) {
 		return (getItemViewType(position) != TYPE_SECTION_HEADER);
 	}

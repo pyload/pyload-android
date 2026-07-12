@@ -32,6 +32,10 @@ import android.widget.TextView;
 
 public class ConfigSectionFragment extends Fragment {
 
+	public interface OnSettingsSavedListener {
+		void onSettingsSaved();
+	}
+
 	private pyLoadApp app;
 	private ConfigSection section;
 	private String type;
@@ -40,11 +44,20 @@ public class ConfigSectionFragment extends Fragment {
     /**
      * Called after settings were saved
      */
-	private final Runnable mRefresh;
+	private OnSettingsSavedListener mCallback;
 
-    public ConfigSectionFragment(Runnable mRefresh) {
-        this.mRefresh = mRefresh;
+    public ConfigSectionFragment() {
     }
+
+	@Override
+	public void onAttach(@androidx.annotation.NonNull Context context) {
+		super.onAttach(context);
+		if (context instanceof OnSettingsSavedListener) {
+			mCallback = (OnSettingsSavedListener) context;
+		} else if (getParentFragment() instanceof OnSettingsSavedListener) {
+			mCallback = (OnSettingsSavedListener) getParentFragment();
+		}
+	}
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,36 +117,42 @@ public class ConfigSectionFragment extends Fragment {
 		if (!app.hasConnection())
 			return;
 
+		Runnable callback = () -> {
+			if (mCallback != null) {
+				mCallback.onSettingsSaved();
+			}
+		};
+
 		app.addTask(new GuiTask(new Runnable() {
 
-			@Override
-			public void run() {
+					@Override
+					public void run() {
 
-				PyLoadRestApi client = app.getClient();
+						PyLoadRestApi client = app.getClient();
 
-				for (ConfigItem item : section.getItems()) {
-					ConfigItemView view = items.get(item.getName());
-					String newValue = view.getValue();
-					if (!item.getValue().equals(newValue)) {
-						Log.d("pyLoad", String.format(
-								"Set config value: %s, %s, %s", type,
-								section.getName(), item.getName()));
+						for (ConfigItem item : section.getItems()) {
+							ConfigItemView view = items.get(item.getName());
+							String newValue = view.getValue();
+							if (!item.getValue().equals(newValue)) {
+								Log.d("pyLoad", String.format(
+										"Set config value: %s, %s, %s", type,
+										section.getName(), item.getName()));
 
-						ApiSetConfigValuePostRequest request = new ApiSetConfigValuePostRequest()
-								.category(section.getName())
-								.option(item.getName())
-								.value(newValue)
-								.section(type);
+								ApiSetConfigValuePostRequest request = new ApiSetConfigValuePostRequest()
+										.category(section.getName())
+										.option(item.getName())
+										.value(newValue)
+										.section(type);
 
-						app.executeNetworkCall(client.apiSetConfigValuePost(request));
-                    }
-				}
+								app.executeNetworkCall(client.apiSetConfigValuePost(request));
+							}
+						}
 
-				getParentFragmentManager().popBackStack();
+						getParentFragmentManager().popBackStack();
 
-			}
+					}
 
-		}, mRefresh));
+				}, callback));
 	}
 
 	public void onCancel() {

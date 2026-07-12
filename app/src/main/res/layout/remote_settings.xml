@@ -5,8 +5,9 @@
 	android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <fragment class="org.pyload.android.client.fragments.SettingsFragment"
-        android:layout_width="fill_parent" android:layout_height="fill_parent"
-        android:id="@+id/serverSettings"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/serverSettings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout> 

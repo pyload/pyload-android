@@ -78,6 +78,19 @@ public class pyLoadApp extends Application {
 		String theme = prefs.getString("theme", "system");
 		applyTheme(theme);
 
+		cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		createNotificationChannel();
+
+		HashMap<Throwable, Runnable> exceptionMap = new HashMap<Throwable, Runnable>();
+		exceptionMap.put(new WrongLogin(), handleException);
+		exceptionMap.put(new WrongPathPrefix(), handleException);
+		exceptionMap.put(new WrongServer(), handleException);
+		exceptionMap.put(new RuntimeException(), handleException);
+
+		taskQueue = new TaskQueue(this, new Handler(Looper.getMainLooper()), exceptionMap);
+		startTaskQueue();
+
 		if (prefs.getBoolean("clicknload", false)) {
 			Intent intent = new Intent(this, org.pyload.android.client.services.clicknload.ClickNLoadService.class);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -138,17 +151,6 @@ public class pyLoadApp extends Application {
 
 	public void init(pyLoad main) {
 		this.main = main;
-
-		createNotificationChannel();
-
-		HashMap<Throwable, Runnable> exceptionMap = new HashMap<Throwable, Runnable>();
-		exceptionMap.put(new WrongLogin(), handleException);
-		exceptionMap.put(new WrongPathPrefix(), handleException);
-		exceptionMap.put(new WrongServer(), handleException);
-		exceptionMap.put(new RuntimeException(), handleException);
-
-        taskQueue = new TaskQueue(this, new Handler(Looper.getMainLooper()), exceptionMap);
-        startTaskQueue();
 	}
 
 	public String verboseBool(boolean state) {

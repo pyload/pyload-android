@@ -26,7 +26,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SettingsFragment extends ListFragment {
+public class SettingsFragment extends ListFragment implements ConfigSectionFragment.OnSettingsSavedListener {
 
 	private pyLoadApp app;
 	private SeparatedListAdapter adp;
@@ -47,12 +47,10 @@ public class SettingsFragment extends ListFragment {
 		}
 	};
 
-    private Runnable mRefresh = new Runnable() {
-        @Override
-        public void run() {
-            SettingsFragment.this.update();
-        }
-    };
+    @Override
+    public void onSettingsSaved() {
+        update();
+    }
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -108,27 +106,35 @@ public class SettingsFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
-		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) adp
-				.getItem(position);
+		Object itemObj = adp.getItem(position);
+		if (!(itemObj instanceof Entry)) {
+			return;
+		}
 
-		FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+		Entry<String, ConfigSection> item = (Entry<String, ConfigSection>) itemObj;
 
 		Bundle args = new Bundle();
-		if (position > generalData.size())
+		// Calculate type correctly based on section headers
+		int generalCount = general.getCount();
+		if (position > generalCount + 1)
 			args.putString("type", "plugin");
 		else
 			args.putString("type", "core");
+
 		args.putString("section", Utils.encodeObject(item.getValue()));
 
-		Fragment f = new ConfigSectionFragment(mRefresh);
+		Fragment f = new ConfigSectionFragment();
 		f.setArguments(args);
 
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-		ft.addToBackStack(null);
-
-		ft.replace(R.id.layout_root, f);
-		ft.commit();
+		new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+            if (!isAdded()) return;
+            
+			FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+			ft.addToBackStack(null);
+			ft.replace(R.id.serverSettings, f);
+			ft.commitAllowingStateLoss();
+		});
 	}
 
 }
@@ -183,6 +189,7 @@ class SettingsAdapter extends BaseAdapter {
 	public View getView(int row, View convertView, ViewGroup viewGroup) {
 
 		ViewHolder holder;
+		android.util.Log.d("pyLoad", "SettingsAdapter.getView(" + row + ")");
 
 		if (convertView == null) {
 

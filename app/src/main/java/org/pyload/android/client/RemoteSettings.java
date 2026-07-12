@@ -27,6 +27,13 @@ public class RemoteSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_settings);
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.serverSettings, org.pyload.android.client.fragments.SettingsFragment.class, null)
+                    .commit();
+        }
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,11 +47,18 @@ public class RemoteSettings extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        android.util.Log.d("pyLoad", "RemoteSettings.onDestroy()");
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
             finish();
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }
