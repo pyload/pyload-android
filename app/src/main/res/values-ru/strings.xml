@@ -5,6 +5,8 @@
     <string name="accounts">Аккаунты</string>
     <string name="add">Добавить</string>
     <string name="add_links">Добавить ссылки</string>
+    <string name="search">Поиск</string>
+    <string name="filter_hint">Фильтровать по имени…</string>
     <string name="addlinks_desc">Добавить новый пакет.</string>
     <string name="api_key">API-ключ</string>
     <string name="api_key_desc">Ваш API-ключ для аутентификации.</string>

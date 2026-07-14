@@ -5,6 +5,8 @@
     <string name="accounts">Λογαριασμοί</string>
     <string name="add">Προσθήκη</string>
     <string name="add_links">Προσθήκη Συνδέσμων</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="filter_hint">Φιλτράρισμα κατά όνομα…</string>
     <string name="addlinks_desc">Προσθήκη νέου πακέτου.</string>
     <string name="api_key">Κλειδί API</string>
     <string name="api_key_desc">Το κλειδί API σας για αυθεντικοποίηση.</string>

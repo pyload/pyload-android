@@ -394,8 +394,9 @@ public class pyLoadApp extends Application {
 
 		Log.d("pyLoad", "Refreshing Tab: " + frag);
 
-		if (frag != null)
-			((TabHandler) frag).onSelected();
+		if (frag instanceof TabHandler) {
+			((TabHandler) frag).refresh();
+		}
 	}
 
 	public boolean isCurrentTab(int pos) {

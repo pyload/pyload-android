@@ -13,6 +13,7 @@ import android.view.*;
 
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
+import org.pyload.android.client.fragments.AbstractPackageFragment;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
@@ -38,8 +39,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import org.pyload.android.client.components.TabHandler;
 import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.widget.SearchView;
 
+import android.widget.ImageView;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -49,6 +54,7 @@ public class pyLoad extends FragmentTabsPager {
 
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
+    private MenuItem searchItem;
 
     private final ActivityResultLauncher<Intent> addLinksLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -152,14 +158,86 @@ public class pyLoad extends FragmentTabsPager {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         refreshItem = menu.findItem(R.id.refresh);
+        searchItem = menu.findItem(R.id.search);
 
-        refreshItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.findItem(R.id.add_links).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        if (searchItem != null) {
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            if (searchView != null) {
+                searchView.setIconifiedByDefault(true);
+
+                // Remove the underline from the search box
+                int searchPlateId = androidx.appcompat.R.id.search_plate;
+                View searchPlate = searchView.findViewById(searchPlateId);
+                if (searchPlate != null) {
+                    searchPlate.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+                }
+
+                searchView.setSubmitButtonEnabled(false);
+
+                searchView.setOnSearchClickListener(v -> {
+                    MenuItem addLinks = menu.findItem(R.id.add_links);
+                    if (addLinks != null) {
+                        addLinks.setVisible(false);
+                    }
+                    // Immediate focus and open keyboard
+                    searchView.requestFocus();
+                    android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.showSoftInput(searchView.findFocus(), android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+                    }
+                });
+
+                searchView.setOnCloseListener(() -> {
+                    MenuItem addLinks = menu.findItem(R.id.add_links);
+                    if (addLinks != null) {
+                        addLinks.setVisible(true);
+                    }
+                    return false;
+                });
+
+                // Force the 'X' button to close the search view entirely
+                int closeBtnId = androidx.appcompat.R.id.search_close_btn;
+                View closeBtn = searchView.findViewById(closeBtnId);
+                if (closeBtn != null) {
+                    // Prevent it from being grayed out/semi-transparent when empty
+                    closeBtn.setAlpha(1.0f);
+                    closeBtn.setEnabled(true);
+
+                    // Apply the same color as the magnifier icon
+                    if (closeBtn instanceof ImageView) {
+                        android.util.TypedValue typedValue = new android.util.TypedValue();
+                        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true);
+                        int color = typedValue.data;
+                        ((ImageView) closeBtn).setColorFilter(color);
+                    }
+
+                    closeBtn.setOnClickListener(v -> {
+                        searchView.setQuery("", false);
+                        searchView.setIconified(true);
+                    });
+                }
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Fragment frag = getCurrentFragment();
+                        if (frag instanceof TabHandler) {
+                            ((TabHandler) frag).onSearch(newText);
+                        }
+                        return true;
+                    }
+                });
+            }
+        }
 
         return true;
     }
-
-    @Override
+  @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.add_links) {
@@ -309,7 +387,30 @@ public class pyLoad extends FragmentTabsPager {
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem search = menu.findItem(R.id.search);
+        if (search != null) {
+            Fragment frag = getCurrentFragment();
+            // Overview, Queue, and Collector tabs support searching
+            boolean visible = frag instanceof OverviewFragment || frag instanceof AbstractPackageFragment;
+            search.setVisible(visible);
+
+            SearchView searchView = (SearchView) search.getActionView();
+            if (searchView != null && !searchView.isIconified()) {
+                // Reset search query and trigger listeners to refresh the list
+                searchView.setQuery("", true);
+                searchView.setIconified(true);
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     public MenuItem getRefreshItem() {
         return refreshItem;
+    }
+
+    public MenuItem getSearchItem() {
+        return searchItem;
     }
 }

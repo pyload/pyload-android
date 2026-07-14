@@ -54,6 +54,8 @@ public class OverviewFragment extends ListFragment implements
     private OverviewAdapter adp;
 
     private List<DownloadInfo> downloads;
+    private List<DownloadInfo> allDownloads;
+    private String filter = "";
     private ServerStatus status;
     private CaptchaTask captcha;
     private int lastCaptcha = -1;
@@ -219,12 +221,42 @@ public class OverviewFragment extends ListFragment implements
 
     @Override
     public void onSelected() {
+        this.filter = ""; // Reset filter on selection
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
         startUpdate();
     }
 
     @Override
     public void onDeselected() {
         stopUpdate();
+    }
+
+    @Override
+    public void onSearch(String query) {
+        this.filter = query;
+        applyFilter();
+    }
+
+    private void applyFilter() {
+        if (allDownloads == null) return;
+
+        if (TextUtils.isEmpty(filter)) {
+            downloads = new ArrayList<>(allDownloads);
+        } else {
+            downloads = new ArrayList<>();
+            String lowerFilter = filter.toLowerCase();
+            for (DownloadInfo info : allDownloads) {
+                if (info.getName().toLowerCase().contains(lowerFilter)) {
+                    downloads.add(info);
+                }
+            }
+        }
+
+        if (adp != null) {
+            adp.setDownloads(downloads);
+        }
     }
 
     private void startUpdate() {
@@ -256,10 +288,15 @@ public class OverviewFragment extends ListFragment implements
         if (status == null || downloads == null)
             return;
 
-        OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
+        allDownloads = new ArrayList<>(downloads);
+        if (!TextUtils.isEmpty(filter)) {
+            applyFilter();
+        } else {
+            OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
 
-        if (adapter != null)
-            adapter.setDownloads(downloads);
+            if (adapter != null)
+                adapter.setDownloads(downloads);
+        }
 
         statusServer.setText(app.verboseBool(status.getDownload()));
         reconnect.setText(app.verboseBool(status.getReconnect()));

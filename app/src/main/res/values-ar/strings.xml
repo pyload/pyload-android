@@ -5,6 +5,8 @@
     <string name="accounts">الحسابات</string>
     <string name="add">إضافة</string>
     <string name="add_links">اضافة روابط</string>
+    <string name="search">بحث</string>
+    <string name="filter_hint">تصفية حسب الاسم…</string>
     <string name="addlinks_desc">إضافة حزمة جديدة.</string>
     <string name="api_key">مفتاح API</string>
     <string name="api_key_desc">مفتاح API الخاص بك للمصادقة.</string>

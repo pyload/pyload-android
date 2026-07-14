@@ -5,6 +5,8 @@
     <string name="accounts">Cuentas</string>
     <string name="add">Añadir</string>
     <string name="add_links">Añadir enlaces</string>
+    <string name="search">Buscar</string>
+    <string name="filter_hint">Filtrar por nombre…</string>
     <string name="addlinks_desc">Añadir un nuevo Paquete.</string>
     <string name="api_key">Clave API</string>
     <string name="api_key_desc">Tu clave API para autenticación.</string>

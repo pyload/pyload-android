@@ -4,4 +4,6 @@ public interface TabHandler {
 	public void onSelected();
 	public void onDeselected();
 	public void setPosition(int pos);
+	default void onSearch(String query) {}
+	public void refresh();
 }

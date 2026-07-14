@@ -5,6 +5,8 @@
     <string name="accounts">Hesaplar</string>
     <string name="add">Ekle</string>
     <string name="add_links">Linkleri Ekle</string>
+    <string name="search">Arama</string>
+    <string name="filter_hint">Ada göre filtrele…</string>
     <string name="addlinks_desc">Yeni bir paket ekleyin.</string>
     <string name="api_key">API Anahtarı</string>
     <string name="api_key_desc">Kimlik doğrulama için API anahtarınız.</string>

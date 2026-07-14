@@ -4,6 +4,8 @@
     <string name="accounts">חשבונות</string>
     <string name="add">הוסף</string>
     <string name="add_links">הוסף קישורים</string>
+    <string name="search">חיפוש</string>
+    <string name="filter_hint">סנן לפי שם…</string>
     <string name="addlinks_desc">הוסף חבילה חדשה.</string>
     <string name="api_key">מפתח API</string>
     <string name="api_key_desc">מפתח ה‑API שלך לאימות.</string>

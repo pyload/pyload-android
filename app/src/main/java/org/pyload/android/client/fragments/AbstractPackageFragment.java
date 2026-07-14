@@ -76,6 +76,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	};
 	protected int dest;
 	private List<PackageData> data;
+	private List<PackageData> allData;
+	private String filter = "";
 	private pyLoadApp app;
 	private PyLoadRestApi client;
 	// tab position
@@ -302,11 +304,42 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	@Override
 	public void onSelected() {
 		app = (pyLoadApp) getActivity().getApplicationContext();
+		this.filter = ""; // Reset filter on selection
+		if (getActivity() != null) {
+			getActivity().invalidateOptionsMenu();
+		}
 		refresh();
 	}
 
 	@Override
 	public void onDeselected() {
+	}
+
+	@Override
+	public void onSearch(String query) {
+		this.filter = query;
+		applyFilter();
+	}
+
+	private void applyFilter() {
+		if (allData == null) return;
+
+		if (TextUtils.isEmpty(filter)) {
+			data = new ArrayList<>(allData);
+		} else {
+			data = new ArrayList<>();
+			String lowerFilter = filter.toLowerCase();
+			for (PackageData pack : allData) {
+				if (pack.getName().toLowerCase().contains(lowerFilter)) {
+					data.add(pack);
+				}
+			}
+		}
+
+		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
+		if (adapter != null) {
+			adapter.setData(data);
+		}
 	}
 
 	@Override
@@ -341,8 +374,13 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		for (PackageData pak : data)
 			Collections.sort(pak.getLinks(), mOrderComparator);
 
-		PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
-		adapter.setData(data);
+		allData = new ArrayList<>(data);
+		if (!TextUtils.isEmpty(filter)) {
+			applyFilter();
+		} else {
+			PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
+			adapter.setData(data);
+		}
 	}
 
 	protected void onTaskPerformed() {

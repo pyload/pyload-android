@@ -5,6 +5,8 @@
     <string name="accounts">Налози</string>
     <string name="add">Додај</string>
     <string name="add_links">Додај везе</string>
+    <string name="search">Pretraga</string>
+    <string name="filter_hint">Filtriraj po imenu…</string>
     <string name="addlinks_desc">Додајте нови пакет.</string>
     <string name="api_key">API ključ</string>
     <string name="api_key_desc">Vaš API ključ za autentifikaciju.</string>

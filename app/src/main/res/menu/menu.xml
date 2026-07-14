@@ -7,12 +7,21 @@
         android:titleCondensed="@string/add_links"
         android:title="@string/add_links"
         android:icon="@drawable/ic_menu_add"
+        app:showAsAction="always"
+        app:iconTint="?attr/colorOnSurface" />
+    <item
+        android:id="@+id/search"
+        android:title="@string/search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:iconTint="?attr/colorOnSurface" />
     <item
         android:id="@+id/refresh"
         android:titleCondensed="@string/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_menu_refresh"
+        app:showAsAction="always"
         app:iconTint="?attr/colorOnSurface" />
     <item
        android:id="@+id/settings"

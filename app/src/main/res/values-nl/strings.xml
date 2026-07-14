@@ -5,6 +5,8 @@
     <string name="accounts">Accounts</string>
     <string name="add">Toevoegen</string>
     <string name="add_links">Link toevoegen</string>
+    <string name="search">Zoeken</string>
+    <string name="filter_hint">Filteren op naam…</string>
     <string name="addlinks_desc">Nieuwe pakket toevoegen.</string>
     <string name="api_key">API-sleutel</string>
     <string name="api_key_desc">Je API-sleutel voor authenticatie.</string>

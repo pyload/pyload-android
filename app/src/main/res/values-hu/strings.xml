@@ -5,6 +5,8 @@
     <string name="accounts">Hozzáférések</string>
     <string name="add">Hozzáad</string>
     <string name="add_links">Link hozzáadás</string>
+    <string name="search">Keresés</string>
+    <string name="filter_hint">Szűrés név alapján…</string>
     <string name="addlinks_desc">Új csomag</string>
     <string name="api_key">API kulcs</string>
     <string name="api_key_desc">Az API kulcsod hitelesítéshez.</string>
