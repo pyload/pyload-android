@@ -3,14 +3,18 @@
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:paddingLeft="6dip"
+	android:paddingRight="6dip"
 	android:paddingTop="2dip" android:paddingBottom="2dip">
-	
+
 	<ImageView 
 	android:layout_width="?android:attr/expandableListPreferredItemPaddingLeft"
 	android:id="@+id/status_icon"
-	android:layout_height="fill_parent"
+	android:layout_height="wrap_content"
 	android:layout_alignParentLeft="true"
-	android:layout_centerVertical="true"/>
+	android:layout_alignTop="@+id/name"
+	android:layout_alignBottom="@+id/name"
+	android:scaleType="centerInside"/>
 	
 	<org.pyload.android.client.components.ScrollingTextView android:id="@+id/name" android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -21,40 +25,52 @@
     	android:ellipsize="marquee"
     	android:scrollHorizontally="true"
         android:singleLine="true"
-		android:layout_toRightOf="@+id/status_icon"/>
+		android:layout_toRightOf="@+id/status_icon"
+		android:layout_alignParentRight="true"/>
 		
 	<LinearLayout android:id="@+id/linear"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/name"
-		android:layout_alignLeft="@+id/name">
+		android:layout_alignLeft="@+id/name"
+		android:layout_alignParentRight="true">
 				
 		<TextView android:layout_width="wrap_content"
 			android:id="@+id/status"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/textSecondary"
-			android:gravity="left" android:layout_gravity="fill_horizontal"
+			android:gravity="start"
 			android:text="@string/n_a"
-			android:layout_weight="1"/>
+			android:singleLine="true"/>
 		
+		<View android:layout_width="0dip"
+			android:layout_height="0dip"
+			android:layout_weight="1" />
+
 		<TextView android:layout_width="wrap_content"
 			android:id="@+id/size"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/textSecondary"
-			android:gravity="center_horizontal" android:layout_gravity="fill_horizontal"
+			android:gravity="center_horizontal"
 			android:text="@string/n_a"
-			android:layout_weight="1"/>
+			android:singleLine="true" />
+
+		<View android:layout_width="0dip"
+			android:layout_height="0dip"
+			android:layout_weight="1" />
 		
 		<TextView android:layout_width="wrap_content"
 			android:id="@+id/plugin"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/textSecondary"
-			android:gravity="right" android:layout_gravity="fill_horizontal"
+			android:gravity="end"
 			android:text="@string/n_a"
-			android:layout_weight="1"/>
+			android:layout_weight="0.01"
+			android:singleLine="true"
+			android:ellipsize="end"/>
 		
 	</LinearLayout>
 
