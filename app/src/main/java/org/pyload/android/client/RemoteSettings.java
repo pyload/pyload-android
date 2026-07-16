@@ -114,6 +114,25 @@ public class RemoteSettings extends AppCompatActivity {
 
                 searchView.setSubmitButtonEnabled(false);
 
+                // Access the inner EditText to handle focus and clicks
+                View searchAutoComplete = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+                if (searchAutoComplete != null) {
+                    searchAutoComplete.setOnTouchListener((v, event) -> {
+                        if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                            // Force focus reset to trigger keyboard if it was dismissed
+                            if (v.isFocused()) {
+                                v.clearFocus();
+                                v.requestFocus();
+                            }
+                            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            if (imm != null) {
+                                imm.showSoftInput(v, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+                            }
+                        }
+                        return false;
+                    });
+                }
+
                 // Immediate focus and open keyboard
                 searchView.setOnSearchClickListener(v -> {
                     searchView.requestFocus();
