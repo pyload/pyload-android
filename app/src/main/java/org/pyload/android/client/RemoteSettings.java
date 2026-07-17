@@ -165,7 +165,8 @@ public class RemoteSettings extends AppCompatActivity {
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        return false;
+                        searchView.clearFocus();
+                        return true;
                     }
 
                     @Override
