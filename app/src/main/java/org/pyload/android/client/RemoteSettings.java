@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.KeyEvent;
 import androidx.appcompat.widget.SearchView;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
@@ -157,6 +158,19 @@ public class RemoteSettings extends AppCompatActivity {
                         }
                         return false;
                     });
+
+                    searchAutoComplete.setOnKeyListener((v, keyCode, event) -> {
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            if (event.getAction() == KeyEvent.ACTION_UP) {
+                                if (searchItem != null && searchItem.isActionViewExpanded()) {
+                                    searchItem.collapseActionView();
+                                }
+                            }
+                            // Always consume back key when search is expanded to prevent default SearchView behavior
+                            return searchItem != null && searchItem.isActionViewExpanded();
+                        }
+                        return false;
+                    });
                 }
 
                 // Immediate focus and open keyboard
@@ -183,8 +197,7 @@ public class RemoteSettings extends AppCompatActivity {
                     }
 
                     closeBtn.setOnClickListener(v -> {
-                        searchView.setQuery("", false);
-                        searchView.setIconified(true);
+                        searchItem.collapseActionView();
                     });
                 }
 

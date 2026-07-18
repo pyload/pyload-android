@@ -10,6 +10,7 @@ import java.util.Locale;
 import android.app.NotificationManager;
 import android.content.res.Configuration;
 import android.view.*;
+import android.view.KeyEvent;
 
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.dialogs.AccountDialog;
@@ -187,12 +188,20 @@ public class pyLoad extends FragmentTabsPager {
                 @Override
                 public boolean onMenuItemActionExpand(MenuItem item) {
                     onBackPressedCallback.setEnabled(true);
+                    MenuItem addLinks = menu.findItem(R.id.add_links);
+                    if (addLinks != null) {
+                        addLinks.setVisible(false);
+                    }
                     return true;
                 }
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
                     onBackPressedCallback.setEnabled(false);
+                    MenuItem addLinks = menu.findItem(R.id.add_links);
+                    if (addLinks != null) {
+                        addLinks.setVisible(true);
+                    }
                     return true;
                 }
             });
@@ -227,13 +236,22 @@ public class pyLoad extends FragmentTabsPager {
                         }
                         return false;
                     });
+
+                    searchAutoComplete.setOnKeyListener((v, keyCode, event) -> {
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            if (event.getAction() == KeyEvent.ACTION_UP) {
+                                if (searchItem != null && searchItem.isActionViewExpanded()) {
+                                    searchItem.collapseActionView();
+                                }
+                            }
+                            // Always consume back key when search is expanded to prevent default SearchView behavior
+                            return searchItem != null && searchItem.isActionViewExpanded();
+                        }
+                        return false;
+                    });
                 }
 
                 searchView.setOnSearchClickListener(v -> {
-                    MenuItem addLinks = menu.findItem(R.id.add_links);
-                    if (addLinks != null) {
-                        addLinks.setVisible(false);
-                    }
                     // Immediate focus and open keyboard
                     searchView.requestFocus();
                     android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -243,10 +261,6 @@ public class pyLoad extends FragmentTabsPager {
                 });
 
                 searchView.setOnCloseListener(() -> {
-                    MenuItem addLinks = menu.findItem(R.id.add_links);
-                    if (addLinks != null) {
-                        addLinks.setVisible(true);
-                    }
                     return false;
                 });
 
@@ -267,8 +281,7 @@ public class pyLoad extends FragmentTabsPager {
                     }
 
                     closeBtn.setOnClickListener(v -> {
-                        searchView.setQuery("", false);
-                        searchView.setIconified(true);
+                        searchItem.collapseActionView();
                     });
                 }
 
