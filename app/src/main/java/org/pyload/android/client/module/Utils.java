@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
 
@@ -15,6 +17,14 @@ import java.util.Map;
 public final class Utils {
 
 	private static Gson gson;
+
+    public static void hideKeyboard(View view) {
+        if (view == null) return;
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
 	public static String formatSize(long size) {
 		double format = size;

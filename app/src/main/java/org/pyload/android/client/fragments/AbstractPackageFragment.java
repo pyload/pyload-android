@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AbsListView;
 
 public abstract class AbstractPackageFragment extends ExpandableListFragment
 		implements TabHandler {
@@ -104,6 +105,19 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		PackageListAdapter adp = new PackageListAdapter(getActivity(), data,
 				R.layout.package_item, R.layout.package_child_item, app);
 		setListAdapter(adp);
+
+		getExpandableListView().setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+					Utils.hideKeyboard(view);
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			}
+		});
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AbsListView;
 
 public class SettingsFragment extends ListFragment implements ConfigSectionFragment.OnSettingsSavedListener, TabHandler {
 
@@ -85,6 +86,19 @@ public class SettingsFragment extends ListFragment implements ConfigSectionFragm
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setListAdapter(adp);
+
+		getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+					Utils.hideKeyboard(view);
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			}
+		});
 	}
 
     public void onStart() {
