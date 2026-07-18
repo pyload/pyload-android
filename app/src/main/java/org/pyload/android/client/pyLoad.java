@@ -239,7 +239,9 @@ public class pyLoad extends FragmentTabsPager {
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        searchView.clearFocus();
+                        if (query != null && !query.trim().isEmpty()) {
+                            searchView.clearFocus();
+                        }
                         return true;
                     }
 
