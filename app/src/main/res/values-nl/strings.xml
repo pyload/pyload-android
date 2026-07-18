@@ -38,6 +38,8 @@
     <string name="drained">limiet bereikt</string>
     <string name="enter">Enter</string>
     <string name="error">Fout</string>
+    <string name="exit_confirm_title">pyLoad afsluiten</string>
+    <string name="exit_confirm_message">Wilt u pyLoad echt afsluiten?</string>
     <string name="eula_accept">Accepteren</string>
     <string name="eula_refuse">Weigeren</string>
     <string name="eula_title">Licentie</string>

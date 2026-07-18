@@ -24,6 +24,8 @@ import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
 import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
 import org.pyload.android.openapi.model.Destination;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -106,11 +108,18 @@ public class pyLoad extends FragmentTabsPager {
         title = getString(R.string.collector);
         mTabsAdapter.addTab(title, null, CollectorFragment.class, null);
 
-        onBackPressedCallback = new OnBackPressedCallback(false) {
+        onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 if (searchItem != null && searchItem.isActionViewExpanded()) {
                     searchItem.collapseActionView();
+                } else {
+                    new MaterialAlertDialogBuilder(pyLoad.this)
+                            .setTitle(R.string.exit_confirm_title)
+                            .setMessage(R.string.exit_confirm_message)
+                            .setPositiveButton(android.R.string.yes, (dialog, which) -> finish())
+                            .setNegativeButton(android.R.string.no, null)
+                            .show();
                 }
             }
         };

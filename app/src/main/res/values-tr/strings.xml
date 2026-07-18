@@ -38,6 +38,8 @@
     <string name="drained">sınıra ulaşıldı</string>
     <string name="enter">Onayla</string>
     <string name="error">Hata</string>
+    <string name="exit_confirm_title">pyLoad\'dan Çık</string>
+    <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
     <string name="eula_accept">Kabul</string>
     <string name="eula_refuse">Reddet</string>
     <string name="eula_title">Lisans</string>

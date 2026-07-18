@@ -38,6 +38,8 @@
     <string name="drained">το όριο συμπληρώθηκε</string>
     <string name="enter">Εισαγωγή</string>
     <string name="error">Σφάλμα</string>
+    <string name="exit_confirm_title">Έξοδος από το pyLoad</string>
+    <string name="exit_confirm_message">Θέλετε πραγματικά να βγείτε από το pyLoad;</string>
     <string name="eula_accept">Αποδοχή</string>
     <string name="eula_refuse">Άρνηση</string>
     <string name="eula_title">Άδεια</string>

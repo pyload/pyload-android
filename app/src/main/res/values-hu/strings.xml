@@ -38,6 +38,8 @@
     <string name="drained">limit elérve</string>
     <string name="enter">megad</string>
     <string name="error">Hiba</string>
+    <string name="exit_confirm_title">Kilépés a pyLoad-ból</string>
+    <string name="exit_confirm_message">Valóban ki akar lépni a pyLoad-ból?</string>
     <string name="eula_accept">elfogad</string>
     <string name="eula_refuse">Visszautasítás</string>
     <string name="eula_title">Licensz</string>

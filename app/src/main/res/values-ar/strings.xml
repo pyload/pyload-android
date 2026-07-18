@@ -38,6 +38,8 @@
     <string name="drained">تم بلوغ الحد</string>
     <string name="enter">ادخال</string>
     <string name="error">خطأ</string>
+    <string name="exit_confirm_title">الخروج من pyLoad</string>
+    <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
     <string name="eula_accept">قبول</string>
     <string name="eula_refuse">رفض</string>
     <string name="eula_title">الترخيص</string>

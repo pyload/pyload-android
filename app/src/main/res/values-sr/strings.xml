@@ -58,6 +58,8 @@
     <string name="drained">лимит достигнут</string>
     <string name="enter">Унос</string>
     <string name="error">Грешка</string>
+    <string name="exit_confirm_title">Излаз из pyLoad-а</string>
+    <string name="exit_confirm_message">Да ли заиστα желите да изађετε из pyLoad-а?</string>
     <string name="eula_accept">Прихватам</string>
     <string name="eula_refuse">Не прихватам</string>
     <string name="eula_title">Лиценца</string>

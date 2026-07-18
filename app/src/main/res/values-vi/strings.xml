@@ -38,6 +38,8 @@
     <string name="drained">đạt giới hạn</string>
     <string name="enter">Nhập</string>
     <string name="error">Lỗi</string>
+    <string name="exit_confirm_title">Thoát pyLoad</string>
+    <string name="exit_confirm_message">Bạn có thực sự muốn thoát pyLoad không?</string>
     <string name="eula_accept">Chấp nhận</string>
     <string name="eula_refuse">Từ chối</string>
     <string name="eula_title">Giấy phép</string>

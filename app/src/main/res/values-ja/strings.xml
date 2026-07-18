@@ -38,6 +38,8 @@
     <string name="drained">制限に達しました</string>
     <string name="enter">入力</string>
     <string name="error">エラー</string>
+    <string name="exit_confirm_title">pyLoadを終了</string>
+    <string name="exit_confirm_message">本当にpyLoadを終了しますか？</string>
     <string name="eula_accept">承認</string>
     <string name="eula_refuse">拒否</string>
     <string name="eula_title">ライセンス</string>

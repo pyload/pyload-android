@@ -37,6 +37,8 @@
     <string name="drained">המכסה הסתיימה</string>
     <string name="enter">שלח</string>
     <string name="error">&#x200e;שגיאה</string>
+    <string name="exit_confirm_title">יציאה מ-pyLoad</string>
+    <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
     <string name="eula_accept">קבל</string>
     <string name="eula_refuse">דחה</string>
     <string name="eula_title">רישיון</string>

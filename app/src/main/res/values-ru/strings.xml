@@ -38,6 +38,8 @@
     <string name="drained">лимит исчерпан</string>
     <string name="enter">Введите</string>
     <string name="error">Ошибка</string>
+    <string name="exit_confirm_title">Выйти из pyLoad</string>
+    <string name="exit_confirm_message">Вы действительно хотите выйти из pyLoad?</string>
     <string name="eula_accept">Принять</string>
     <string name="eula_refuse">Отклонить</string>
     <string name="eula_title">Лицензия</string>
