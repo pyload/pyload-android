@@ -34,6 +34,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -55,6 +56,8 @@ public class pyLoad extends FragmentTabsPager {
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
     private MenuItem searchItem;
+
+    private OnBackPressedCallback onBackPressedCallback;
 
     private final ActivityResultLauncher<Intent> addLinksLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -102,6 +105,16 @@ public class pyLoad extends FragmentTabsPager {
 
         title = getString(R.string.collector);
         mTabsAdapter.addTab(title, null, CollectorFragment.class, null);
+
+        onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                if (searchItem != null && searchItem.isActionViewExpanded()) {
+                    searchItem.collapseActionView();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override
@@ -161,6 +174,20 @@ public class pyLoad extends FragmentTabsPager {
         searchItem = menu.findItem(R.id.search);
 
         if (searchItem != null) {
+            searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item) {
+                    onBackPressedCallback.setEnabled(true);
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item) {
+                    onBackPressedCallback.setEnabled(false);
+                    return true;
+                }
+            });
+
             SearchView searchView = (SearchView) searchItem.getActionView();
             if (searchView != null) {
                 searchView.setIconifiedByDefault(true);

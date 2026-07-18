@@ -1,6 +1,7 @@
 package org.pyload.android.client;
 
 import android.os.Bundle;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 public class RemoteSettings extends AppCompatActivity {
 
     private MenuItem searchItem;
+    private OnBackPressedCallback onBackPressedCallback;
 
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
@@ -37,6 +39,16 @@ public class RemoteSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_settings);
+
+        onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                if (searchItem != null && searchItem.isActionViewExpanded()) {
+                    searchItem.collapseActionView();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -99,6 +111,20 @@ public class RemoteSettings extends AppCompatActivity {
             // Only show search on the main settings page (backstack is empty)
             boolean isMainPage = getSupportFragmentManager().getBackStackEntryCount() == 0;
             searchItem.setVisible(isMainPage);
+
+            searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item) {
+                    onBackPressedCallback.setEnabled(true);
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item) {
+                    onBackPressedCallback.setEnabled(false);
+                    return true;
+                }
+            });
 
             SearchView searchView = (SearchView) searchItem.getActionView();
             if (searchView != null) {
