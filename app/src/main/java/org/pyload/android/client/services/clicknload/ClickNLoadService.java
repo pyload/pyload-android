@@ -72,7 +72,6 @@ public class ClickNLoadService extends Service {
                 notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         return new NotificationCompat.Builder(this, channelId)
-                .setContentTitle(getString(R.string.clicknload))
                 .setContentText(getString(R.string.clicknload_service_running))
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pendingIntent)
