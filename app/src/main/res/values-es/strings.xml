@@ -5,8 +5,6 @@
     <string name="accounts">Cuentas</string>
     <string name="add">Añadir</string>
     <string name="add_links">Añadir enlaces</string>
-    <string name="search">Buscar</string>
-    <string name="filter_hint">Filtrar por nombre…</string>
     <string name="addlinks_desc">Añadir un nuevo Paquete.</string>
     <string name="api_key">Clave API</string>
     <string name="api_key_desc">Tu clave API para autenticación.</string>
@@ -16,7 +14,7 @@
     <string name="bad_path">El prefijo de ruta parece ser incorrecto (404 No Encontrado).</string>
     <string name="cancel">Cancelar</string>
     <string name="cant_move_files">No puedes mover archivos individuales.</string>
-    <string name="captcha_dialog_titel">Por favor introduce el texto</string>
+    <string name="captcha_dialog_titel">Por favor introduce the texto</string>
     <string name="captcha_notification">¡Nuevo captcha disponible!</string>
     <string name="captcha_notification_desc">Introduce el captcha para continuar con la descarga.</string>
     <string name="certificate_error">Certificado SSL no aceptado. Añadirlo a android o deshabilitar la validación.</string>
@@ -38,12 +36,13 @@
     <string name="drained">límite alcanzado</string>
     <string name="enter">Introducir</string>
     <string name="error">Error</string>
-    <string name="exit_confirm_title">Salir de pyLoad</string>
-    <string name="exit_confirm_message">¿Realmente quieres salir de pyLoad?</string>
     <string name="eula_accept">Aceptar</string>
     <string name="eula_refuse">Rechazar</string>
     <string name="eula_title">Licencia</string>
+    <string name="exit_confirm_message">¿Realmente quieres salir de pyLoad?</string>
+    <string name="exit_confirm_title">Salir de pyLoad</string>
     <string name="fileinfo_title">Información del archivo</string>
+    <string name="filter_hint">Filtrar por nombre…</string>
     <string name="folder">Carpeta</string>
     <string name="free">Gratis</string>
     <string name="general">General</string>
@@ -51,6 +50,8 @@
     <string name="invalid">inválido</string>
     <string name="ip">Dirección</string>
     <string name="ip_desc">IP o nombre del equipo del núcleo de pyLoad remoto.</string>
+    <string name="keep_screen_on">Mantener pantalla encendida</string>
+    <string name="keep_screen_on_desc">Evitar que la pantalla se apague mientras la aplicación esté en primer plano.</string>
     <string name="labelPackage">Paquete</string>
     <string name="language">Idioma</string>
     <string name="language_desc">Idioma de la aplicación. Se necesita reiniciar para que los cambios surtan efecto.</string>
@@ -78,11 +79,13 @@
     <string name="move">Mover posición</string>
     <string name="n_a">n/d</string>
     <string name="name">Nombre</string>
+    <string name="no">No</string>
     <string name="no_accounts">Aún no hay cuentas</string>
     <string name="no_connection">No se pudo establecer la conexión:</string>
     <string name="no_downloads">No hay descargas activas.</string>
     <string name="no_packages">No hay paquetes.</string>
     <string name="off">apagado</string>
+    <string name="ok">Aceptar</string>
     <string name="old_server">La versión del servidor no coincide, por favor usa pyLoad %s.</string>
     <string name="on">encendido</string>
     <string name="overview">Resumen</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Reiniciar archivos fallidos</string>
     <string name="retrieve_captcha">Recuperar las tareas de captcha</string>
     <string name="retrieve_captcha_desc">Coge las tareas de captcha de pyLoad cuando se muestra el Resumen.</string>
+    <string name="search">Buscar</string>
     <string name="server">Servidor</string>
     <string name="server_url">URL del servidor</string>
     <string name="size">Tamaño</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">ilimitado</string>
     <string name="valid">válido</string>
     <string name="validuntil">Caduca:</string>
+    <string name="yes">Sí</string>
 </resources>

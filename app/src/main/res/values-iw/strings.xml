@@ -4,8 +4,6 @@
     <string name="accounts">חשבונות</string>
     <string name="add">הוסף</string>
     <string name="add_links">הוסף קישורים</string>
-    <string name="search">חיפוש</string>
-    <string name="filter_hint">סנן לפי שם…</string>
     <string name="addlinks_desc">הוסף חבילה חדשה.</string>
     <string name="api_key">מפתח API</string>
     <string name="api_key_desc">מפתח ה‑API שלך לאימות.</string>
@@ -37,12 +35,13 @@
     <string name="drained">המכסה הסתיימה</string>
     <string name="enter">שלח</string>
     <string name="error">&#x200e;שגיאה</string>
-    <string name="exit_confirm_title">יציאה מ-pyLoad</string>
-    <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
     <string name="eula_accept">קבל</string>
     <string name="eula_refuse">דחה</string>
     <string name="eula_title">רישיון</string>
+    <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
+    <string name="exit_confirm_title">יציאה מ-pyLoad</string>
     <string name="fileinfo_title">מידע קובץ</string>
+    <string name="filter_hint">סנן לפי שם…</string>
     <string name="folder">&#x200e;תיקייה</string>
     <string name="free">חינם</string>
     <string name="general">כללי</string>
@@ -50,6 +49,8 @@
     <string name="invalid">לא בתוקף</string>
     <string name="ip">כתובת</string>
     <string name="ip_desc">IP או hostname של שרת pyLoad המרוחק.</string>
+    <string name="keep_screen_on">השאר מסך דולק</string>
+    <string name="keep_screen_on_desc">מנע מהמסך להיכבות כשהאפליקציה פתוחה.</string>
     <string name="labelPackage">&#x200e;חבילה</string>
     <string name="language">שפה</string>
     <string name="language_desc">שפת האפליקציה. דרושה הפעלה מחדש לפני שהשינויים ייכנסו לתוקף.</string>
@@ -77,11 +78,13 @@
     <string name="move">העבר מיקום</string>
     <string name="n_a">n/a</string>
     <string name="name">שם</string>
+    <string name="no">לא</string>
     <string name="no_accounts">אין עדיין חשבונות</string>
     <string name="no_connection">לא ניתן ליצור חיבור:</string>
     <string name="no_downloads">אין הורדות פעילות.</string>
     <string name="no_packages">אין חבילות.</string>
     <string name="off">&#x200e;כבוי</string>
+    <string name="ok">אישור</string>
     <string name="old_server">גירסת השרת אינה תואמת, השתמש ב- pyLoad %s.</string>
     <string name="on">&#x200e;פעיל</string>
     <string name="overview">הורדות</string>
@@ -106,6 +109,7 @@
     <string name="restart_failed">הפעל מחדש את הקבצים שנכשלו</string>
     <string name="retrieve_captcha">קבל משימות captcha</string>
     <string name="retrieve_captcha_desc">קבל משימות captcha מ- pyLoad כאשר מסך סקירה כללית מוצג.</string>
+    <string name="search">חיפוש</string>
     <string name="server">שרת</string>
     <string name="server_url">כתובת השרת</string>
     <string name="size">&#x200e;גודל</string>

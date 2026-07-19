@@ -5,8 +5,6 @@
     <string name="accounts">Tài khoản</string>
     <string name="add">Thêm</string>
     <string name="add_links">Thêm liên kết</string>
-    <string name="search">Tìm kiếm</string>
-    <string name="filter_hint">Lọc theo tên…</string>
     <string name="addlinks_desc">Thêm một gói mới.</string>
     <string name="api_key">API Key</string>
     <string name="api_key_desc">API key của bạn để xác thực.</string>
@@ -38,12 +36,13 @@
     <string name="drained">đạt giới hạn</string>
     <string name="enter">Nhập</string>
     <string name="error">Lỗi</string>
-    <string name="exit_confirm_title">Thoát pyLoad</string>
-    <string name="exit_confirm_message">Bạn có thực sự muốn thoát pyLoad không?</string>
     <string name="eula_accept">Chấp nhận</string>
     <string name="eula_refuse">Từ chối</string>
     <string name="eula_title">Giấy phép</string>
+    <string name="exit_confirm_message">Bạn có thực sự muốn thoát pyLoad không?</string>
+    <string name="exit_confirm_title">Thoát pyLoad</string>
     <string name="fileinfo_title">Thông tin tệp tin</string>
+    <string name="filter_hint">Lọc theo tên…</string>
     <string name="folder">Thư mục</string>
     <string name="free">Miễn phí</string>
     <string name="general">Chung</string>
@@ -51,6 +50,8 @@
     <string name="invalid">không hợp lệ</string>
     <string name="ip">Địa chỉ</string>
     <string name="ip_desc">IP hoặc tên máy chủ của nhân pyLoad.</string>
+    <string name="keep_screen_on">Giữ màn hình luôn bật</string>
+    <string name="keep_screen_on_desc">Ngăn màn hình tắt khi ứng dụng đang chạy ở chế độ nền.</string>
     <string name="labelPackage">Gói</string>
     <string name="language">Ngôn ngữ</string>
     <string name="language_desc">Ngôn ngữ của ứng dụng. Cần khởi động lại trước khi thay đổi có hiệu lực.</string>
@@ -78,11 +79,13 @@
     <string name="move">Di chuyển vị trí</string>
     <string name="n_a">n/a</string>
     <string name="name">Tên</string>
+    <string name="no">Không</string>
     <string name="no_accounts">Chưa có tài khoản</string>
     <string name="no_connection">Không thể thiết lập kết nối:</string>
     <string name="no_downloads">Chưa có tập tin tải về.</string>
     <string name="no_packages">Không có gói.</string>
     <string name="off">tắt</string>
+    <string name="ok">OK</string>
     <string name="old_server">Phiên bản máy chủ không phù hợp với, xin vui lòng sử dụng pyLoad %s.</string>
     <string name="on">trên</string>
     <string name="overview">Tổng quan</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Khởi động lại tập tin không thành công</string>
     <string name="retrieve_captcha">Lấy lại captcha</string>
     <string name="retrieve_captcha_desc">Lấy captcha từ pyLoad khi Tổng quan được hiển thị.</string>
+    <string name="search">Tìm kiếm</string>
     <string name="server">Máy chủ</string>
     <string name="server_url">URL máy chủ</string>
     <string name="size">Kích thước</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">không giới hạn</string>
     <string name="valid">hợp lệ</string>
     <string name="validuntil">Hết hạn:</string>
+    <string name="yes">Có</string>
 </resources>

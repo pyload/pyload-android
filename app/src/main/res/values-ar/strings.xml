@@ -5,8 +5,6 @@
     <string name="accounts">الحسابات</string>
     <string name="add">إضافة</string>
     <string name="add_links">اضافة روابط</string>
-    <string name="search">بحث</string>
-    <string name="filter_hint">تصفية حسب الاسم…</string>
     <string name="addlinks_desc">إضافة حزمة جديدة.</string>
     <string name="api_key">مفتاح API</string>
     <string name="api_key_desc">مفتاح API الخاص بك للمصادقة.</string>
@@ -38,12 +36,13 @@
     <string name="drained">تم بلوغ الحد</string>
     <string name="enter">ادخال</string>
     <string name="error">خطأ</string>
-    <string name="exit_confirm_title">الخروج من pyLoad</string>
-    <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
     <string name="eula_accept">قبول</string>
     <string name="eula_refuse">رفض</string>
     <string name="eula_title">الترخيص</string>
+    <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
+    <string name="exit_confirm_title">الخروج من pyLoad</string>
     <string name="fileinfo_title">معلومات الملف</string>
+    <string name="filter_hint">تصفية حسب الاسم…</string>
     <string name="folder">مجلد</string>
     <string name="free">مجاني</string>
     <string name="general">عام</string>
@@ -51,6 +50,8 @@
     <string name="invalid">غير صالح</string>
     <string name="ip">عنوان</string>
     <string name="ip_desc">عنوان IP او اسم المضيف لمصدر باي لود البعيد.</string>
+    <string name="keep_screen_on">إبقاء الشاشة مفعلة</string>
+    <string name="keep_screen_on_desc">منع إيقاف تشغيل الشاشة أثناء وجود التطبيق في المقدمة.</string>
     <string name="labelPackage">حزمة</string>
     <string name="language">اللغة</string>
     <string name="language_desc">تغير لغة التطبيق. تحتاج لاعادة تشغيل ليتم تفعيل التغيرات.</string>
@@ -78,11 +79,13 @@
     <string name="move">نقل المكان</string>
     <string name="n_a">غير معروف</string>
     <string name="name">اسم</string>
+    <string name="no">لا</string>
     <string name="no_accounts">لا توجد حسابات بعد</string>
     <string name="no_connection">لا يمكن انشاء الاتصال:</string>
     <string name="no_downloads">لا يوجد تحميلات فعاله.</string>
     <string name="no_packages">لا يوجد حزم.</string>
     <string name="off">ايقاف</string>
+    <string name="ok">موافق</string>
     <string name="old_server">اصدار الخادم غير متوافق, الرجاء استخدام باي لود %s.</string>
     <string name="on">تشغيل</string>
     <string name="overview">نظرة عامّة</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">اعادة تشغيل الملفات اللتي فشلت</string>
     <string name="retrieve_captcha">استرداد مهام كلمة التحقق</string>
     <string name="retrieve_captcha_desc">الحصول على كلمة التحقق من باي لود عند العرض.</string>
+    <string name="search">بحث</string>
     <string name="server">خادم</string>
     <string name="server_url">عنوان URL للخادم</string>
     <string name="size">الحجم</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">غير محدود</string>
     <string name="valid">صالحة</string>
     <string name="validuntil">انتهاء صلاحية:</string>
+    <string name="yes">نعم</string>
 </resources>

@@ -5,8 +5,6 @@
     <string name="accounts">Hesaplar</string>
     <string name="add">Ekle</string>
     <string name="add_links">Linkleri Ekle</string>
-    <string name="search">Arama</string>
-    <string name="filter_hint">Ada göre filtrele…</string>
     <string name="addlinks_desc">Yeni bir paket ekleyin.</string>
     <string name="api_key">API Anahtarı</string>
     <string name="api_key_desc">Kimlik doğrulama için API anahtarınız.</string>
@@ -38,12 +36,13 @@
     <string name="drained">sınıra ulaşıldı</string>
     <string name="enter">Onayla</string>
     <string name="error">Hata</string>
-    <string name="exit_confirm_title">pyLoad\'dan Çık</string>
-    <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
     <string name="eula_accept">Kabul</string>
     <string name="eula_refuse">Reddet</string>
     <string name="eula_title">Lisans</string>
+    <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
+    <string name="exit_confirm_title">pyLoad\'dan Çık</string>
     <string name="fileinfo_title">Dosya bilgisi</string>
+    <string name="filter_hint">Ada göre filtrele…</string>
     <string name="folder">Klasör</string>
     <string name="free">Ücretsiz</string>
     <string name="general">Genel</string>
@@ -51,6 +50,8 @@
     <string name="invalid">Geçersiz</string>
     <string name="ip">Adres</string>
     <string name="ip_desc">pyLoad Core için IP ya da ana bilgisayar adı.</string>
+    <string name="keep_screen_on">Ekranı Açık Tut</string>
+    <string name="keep_screen_on_desc">Uygulama ön plandayken ekranın kapanmasını önleyin.</string>
     <string name="labelPackage">Paket</string>
     <string name="language">Dil</string>
     <string name="language_desc">Uygulama dili değişikliklerin etkili olması için yeniden başlatma gerekir.</string>
@@ -78,11 +79,13 @@
     <string name="move">Yere taşıyın</string>
     <string name="n_a">n/a</string>
     <string name="name">İsim</string>
+    <string name="no">Hayır</string>
     <string name="no_accounts">Henüz hesap yok</string>
     <string name="no_connection">Bağlantı kurulamadı:</string>
     <string name="no_downloads">Aktif yükleme yok.</string>
     <string name="no_packages">Paket yok.</string>
     <string name="off">Kapat</string>
+    <string name="ok">Tamam</string>
     <string name="old_server">Sunucu sürüm uymuyor, lütfen pyLoad %s kullanın.</string>
     <string name="on">Aç</string>
     <string name="overview">Genel bakış</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Başarısız olan dosyaları yeniden başlatın</string>
     <string name="retrieve_captcha">Captcha görevi alır</string>
     <string name="retrieve_captcha_desc">Özet görüntülendiğinde pyLoad\'dan captcha görevleri alın.</string>
+    <string name="search">Arama</string>
     <string name="server">Sunucu</string>
     <string name="server_url">Sunucu URL\'si</string>
     <string name="size">Boyut</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">sınırsız</string>
     <string name="valid">geçerli</string>
     <string name="validuntil">Son kullanma tarihi:</string>
+    <string name="yes">Evet</string>
 </resources>

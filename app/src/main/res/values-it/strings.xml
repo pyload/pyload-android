@@ -5,8 +5,6 @@
     <string name="accounts">Account</string>
     <string name="add">Aggiungi</string>
     <string name="add_links">Aggiungi Link</string>
-    <string name="search">Cerca</string>
-    <string name="filter_hint">Filtra per nome…</string>
     <string name="addlinks_desc">Aggiungi un nuovo Pacchetto.</string>
     <string name="api_key">Chiave API</string>
     <string name="api_key_desc">La tua chiave API per l\'autenticazione.</string>
@@ -38,12 +36,11 @@
     <string name="drained">limite raggiunto</string>
     <string name="enter">Inserisci</string>
     <string name="error">Errore</string>
-    <string name="exit_confirm_title">Esci da pyLoad</string>
-    <string name="exit_confirm_message">Vuoi davvero uscire da pyLoad?</string>
     <string name="eula_accept">Accetto</string>
     <string name="eula_refuse">Rifiuto</string>
     <string name="eula_title">Licenza</string>
     <string name="fileinfo_title">Fileinfo</string>
+    <string name="filter_hint">Filtra per nome…</string>
     <string name="folder">Cartella</string>
     <string name="free">Gratuito</string>
     <string name="general">Generale</string>
@@ -51,6 +48,8 @@
     <string name="invalid">non valido</string>
     <string name="ip">Indirizzo</string>
     <string name="ip_desc">IP o nome host del Core pyLoad remoto.</string>
+    <string name="keep_screen_on">Mantieni schermo acceso</string>
+    <string name="keep_screen_on_desc">Impedisci lo spegnimento dello schermo mentre l\'app è in primo piano.</string>
     <string name="labelPackage">Pacchetto</string>
     <string name="language">Lingua</string>
     <string name="language_desc">Lingua dell\'app. È necessario riavviare affinché le modifiche abbiano effetto.</string>
@@ -78,11 +77,13 @@
     <string name="move">Sposta posizione</string>
     <string name="n_a">n/a</string>
     <string name="name">Nome</string>
+    <string name="no">No</string>
     <string name="no_accounts">Ancora nessun account</string>
     <string name="no_connection">Impossibile stabilire la connessione:</string>
     <string name="no_downloads">Nessun download attivo.</string>
     <string name="no_packages">Nessun pacchetto.</string>
     <string name="off">off</string>
+    <string name="ok">OK</string>
     <string name="old_server">La version del server non corrisponde, usa pyLoad %s.</string>
     <string name="on">on</string>
     <string name="overview">Panoramica</string>
@@ -107,6 +108,7 @@
     <string name="restart_failed">Riavvia file falliti</string>
     <string name="retrieve_captcha">Recupera i captcha</string>
     <string name="retrieve_captcha_desc">Recupera i captcha da pyLoad quando sei su Panoramica.</string>
+    <string name="search">Cerca</string>
     <string name="server">Server</string>
     <string name="server_url">URL del server</string>
     <string name="size">Dimensione</string>
@@ -127,4 +129,5 @@
     <string name="unlimited">illimitato</string>
     <string name="valid">valido</string>
     <string name="validuntil">Scadenza:</string>
+    <string name="yes">Sì</string>
 </resources>

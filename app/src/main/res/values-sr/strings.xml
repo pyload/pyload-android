@@ -5,8 +5,6 @@
     <string name="accounts">Налози</string>
     <string name="add">Додај</string>
     <string name="add_links">Додај везе</string>
-    <string name="search">Pretraga</string>
-    <string name="filter_hint">Filtriraj po imenu…</string>
     <string name="addlinks_desc">Додајте нови пакет.</string>
     <string name="api_key">API ključ</string>
     <string name="api_key_desc">Vaš API ključ za autentifikaciju.</string>
@@ -35,6 +33,28 @@
     <string name="connection">Веза</string>
     <string name="delete">Обриши</string>
     <string name="destination">Одредиште</string>
+    <string name="drained">лимит достигнут</string>
+    <string name="enter">Унос</string>
+    <string name="error">Грешка</string>
+    <string name="eula_accept">Прихватам</string>
+    <string name="eula_refuse">Не прихватам</string>
+    <string name="eula_title">Лиценца</string>
+    <string name="exit_confirm_message">Да ли заиστα желите да изађете из pyLoad-а?</string>
+    <string name="exit_confirm_title">Излаз из pyLoad-а</string>
+    <string name="fileinfo_title">Подаци о датотеци</string>
+    <string name="filter_hint">Filtriraj po imenu…</string>
+    <string name="folder">Фасцикла</string>
+    <string name="free">Besplatno</string>
+    <string name="general">Опште</string>
+    <string name="general_config">Опште поставке</string>
+    <string name="invalid">неисправно</string>
+    <string name="ip">Адреса</string>
+    <string name="ip_desc">IP адреса или главни рачунар удаљеног сервера pyLoad-а.</string>
+    <string name="keep_screen_on">Не искључуј екран</string>
+    <string name="keep_screen_on_desc">Спречите искључивање екрана док је апликација у предњем плану.</string>
+    <string name="labelPackage">Пакет</string>
+    <string name="language">Језик</string>
+    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покретање.</string>
     <string-array name="languages">
         <item>Default</item>
         <item>English</item>
@@ -55,34 +75,17 @@
         <item>Serbian</item>
         <item>Hebrew</item>
     </string-array>
-    <string name="drained">лимит достигнут</string>
-    <string name="enter">Унос</string>
-    <string name="error">Грешка</string>
-    <string name="exit_confirm_title">Излаз из pyLoad-а</string>
-    <string name="exit_confirm_message">Да ли заиστα желите да изађετε из pyLoad-а?</string>
-    <string name="eula_accept">Прихватам</string>
-    <string name="eula_refuse">Не прихватам</string>
-    <string name="eula_title">Лиценца</string>
-    <string name="fileinfo_title">Подаци о датотеци</string>
-    <string name="folder">Фасцикла</string>
-    <string name="free">Besplatno</string>
-    <string name="general">Опште</string>
-    <string name="general_config">Опште поставке</string>
-    <string name="invalid">неисправно</string>
-    <string name="ip">Адреса</string>
-    <string name="ip_desc">IP адреса или главни рачунар удаљеног сервера pyLoad-а.</string>
-    <string name="labelPackage">Пакет</string>
-    <string name="language">Језик</string>
-    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покретање.</string>
     <string name="loading">Учитавање…</string>
     <string name="move">Промени размештај</string>
     <string name="n_a">недоступно</string>
     <string name="name">Име</string>
+    <string name="no">Не</string>
     <string name="no_accounts">Још увек нема налога</string>
     <string name="no_connection">Не могу да успоставим везу:</string>
     <string name="no_downloads">Нема активних преузимања.</string>
     <string name="no_packages">Нема пакета.</string>
     <string name="off">искључено</string>
+    <string name="ok">Ок</string>
     <string name="old_server">Верзија сервера се не подудара. Користите pyLoad %s.</string>
     <string name="on">укључено</string>
     <string name="overview">Преглед</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Поново покрени</string>
     <string name="retrieve_captcha">Преузимај потврдне кодове</string>
     <string name="retrieve_captcha_desc">Преузимајте потврдне кодове док је приказан „Преглед“.</string>
+    <string name="search">Pretraga</string>
     <string name="server">Сервер</string>
     <string name="server_url">URL сервера</string>
     <string name="size">Величина</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">неограничено</string>
     <string name="valid">исправно</string>
     <string name="validuntil">Истиче:</string>
+    <string name="yes">Да</string>
 </resources>

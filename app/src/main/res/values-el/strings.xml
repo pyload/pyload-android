@@ -5,8 +5,6 @@
     <string name="accounts">Λογαριασμοί</string>
     <string name="add">Προσθήκη</string>
     <string name="add_links">Προσθήκη Συνδέσμων</string>
-    <string name="search">Αναζήτηση</string>
-    <string name="filter_hint">Φιλτράρισμα κατά όνομα…</string>
     <string name="addlinks_desc">Προσθήκη νέου πακέτου.</string>
     <string name="api_key">Κλειδί API</string>
     <string name="api_key_desc">Το κλειδί API σας για αυθεντικοποίηση.</string>
@@ -38,12 +36,13 @@
     <string name="drained">το όριο συμπληρώθηκε</string>
     <string name="enter">Εισαγωγή</string>
     <string name="error">Σφάλμα</string>
-    <string name="exit_confirm_title">Έξοδος από το pyLoad</string>
-    <string name="exit_confirm_message">Θέλετε πραγματικά να βγείτε από το pyLoad;</string>
     <string name="eula_accept">Αποδοχή</string>
     <string name="eula_refuse">Άρνηση</string>
     <string name="eula_title">Άδεια</string>
+    <string name="exit_confirm_message">Θέλετε πραγματικά να βγείτε από το pyLoad;</string>
+    <string name="exit_confirm_title">Έξοδος από το pyLoad</string>
     <string name="fileinfo_title">Πληροφορίες αρχείου</string>
+    <string name="filter_hint">Φιλτράρισμα κατά όνομα…</string>
     <string name="folder">Φάκελος</string>
     <string name="free">Δωρεάν</string>
     <string name="general">Γενικά</string>
@@ -51,6 +50,8 @@
     <string name="invalid">μη έγκυρο</string>
     <string name="ip">Διεύθυνση</string>
     <string name="ip_desc">Διεύθυνση IP ή όνομα κεντρικού υπολογιστή του απομακρυσμένου πυρήνα pyLoad.</string>
+    <string name="keep_screen_on">Διατήρηση οθόνης αναμμένης</string>
+    <string name="keep_screen_on_desc">Αποτροπή απενεργοποίησης της οθόνης όσο η εφαρμογή είναι στο προσκήνιο.</string>
     <string name="labelPackage">Πακέτο</string>
     <string name="language">Γλώσσα</string>
     <string name="language_desc">Γλώσσα της εφαρμογής. Χρειάζεται επανεκκίνηση για να ισχύσουν οι αλλαγές.</string>
@@ -78,11 +79,13 @@
     <string name="move">Τοποθεσία για μετακίνηση</string>
     <string name="n_a">n/a</string>
     <string name="name">Όνομα</string>
+    <string name="no">Όχι</string>
     <string name="no_accounts">Δεν υπάρχουν ακόμα λογαριασμοί</string>
     <string name="no_connection">Αδυναμία δημιουργίας  σύνδεσης:</string>
     <string name="no_downloads">Δεν υπάρχουν ενεργές λήψεις.</string>
     <string name="no_packages">Δεν υπάρχουν πακέτα.</string>
     <string name="off">ανενεργό</string>
+    <string name="ok">OK</string>
     <string name="old_server">Η έκδοση του διακομιστή δεν ταιριάζει, παρακαλούμε χρησιμοποιήστε το pyLoad %s.</string>
     <string name="on">ενεργό</string>
     <string name="overview">Επισκόπηση</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Επανεκκίνηση αποτυχημένων αρχείων</string>
     <string name="retrieve_captcha">Ανάκτηση εργασιών captcha</string>
     <string name="retrieve_captcha_desc">Ανάκτηση εργασιών captcha από το pyLoad όταν εμφανίζεται η οθόνη επισκόπησης.</string>
+    <string name="search">Αναζήτηση</string>
     <string name="server">Διακομιστής</string>
     <string name="server_url">Διεύθυνση URL διακομιστή</string>
     <string name="size">Μέγεθος</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">απεριόριστο</string>
     <string name="valid">έγκυρο</string>
     <string name="validuntil">Λήγει:</string>
+    <string name="yes">Ναι</string>
 </resources>

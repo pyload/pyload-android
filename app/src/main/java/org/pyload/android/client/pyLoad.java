@@ -167,6 +167,12 @@ public class pyLoad extends FragmentTabsPager {
             NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(0);
         }
+
+        if (app.prefs.getBoolean("keep_screen_on", true)) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
         app.refreshTab();
     }
 

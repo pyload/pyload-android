@@ -18,6 +18,7 @@
 
         <EditTextPreference android:key="refresh_rate" android:defaultValue="5" android:summary="@string/refresh_rate_desc" android:title="@string/refresh_rate" android:inputType="number"/>
         <CheckBoxPreference android:key="package_marquee" android:title="@string/package_marquee" android:summary="@string/package_marquee_desc" android:defaultValue="true"/>
+		<CheckBoxPreference android:key="keep_screen_on" android:title="@string/keep_screen_on" android:summary="@string/keep_screen_on_desc" android:defaultValue="true"/>
         <CheckBoxPreference android:key="pull_captcha" android:title="@string/retrieve_captcha" android:summary="@string/retrieve_captcha_desc" android:defaultValue="true"/>
     </PreferenceCategory>
 

@@ -5,8 +5,6 @@
     <string name="accounts">Accounts</string>
     <string name="add">Toevoegen</string>
     <string name="add_links">Link toevoegen</string>
-    <string name="search">Zoeken</string>
-    <string name="filter_hint">Filteren op naam…</string>
     <string name="addlinks_desc">Nieuwe pakket toevoegen.</string>
     <string name="api_key">API-sleutel</string>
     <string name="api_key_desc">Je API-sleutel voor authenticatie.</string>
@@ -38,12 +36,13 @@
     <string name="drained">limiet bereikt</string>
     <string name="enter">Enter</string>
     <string name="error">Fout</string>
-    <string name="exit_confirm_title">pyLoad afsluiten</string>
-    <string name="exit_confirm_message">Wilt u pyLoad echt afsluiten?</string>
     <string name="eula_accept">Accepteren</string>
     <string name="eula_refuse">Weigeren</string>
     <string name="eula_title">Licentie</string>
+    <string name="exit_confirm_message">Wilt u pyLoad echt afsluiten?</string>
+    <string name="exit_confirm_title">pyLoad afsluiten</string>
     <string name="fileinfo_title">Bestandsinfo</string>
+    <string name="filter_hint">Filteren op naam…</string>
     <string name="folder">Map</string>
     <string name="free">Gratis</string>
     <string name="general">Algemeen</string>
@@ -51,6 +50,8 @@
     <string name="invalid">ongeldig</string>
     <string name="ip">Adres</string>
     <string name="ip_desc">IP of hostname van de externe pyLoad Core.</string>
+    <string name="keep_screen_on">Scherm aan houden</string>
+    <string name="keep_screen_on_desc">Voorkom dat het scherm uitgaat terwijl de app op de voorgrond is.</string>
     <string name="labelPackage">Pakket</string>
     <string name="language">Taal</string>
     <string name="language_desc">Taal van app. moet opnieuw worden opgestart voordat de wijzigingen worden van kracht.</string>
@@ -78,11 +79,13 @@
     <string name="move">Locatie verplaatsen</string>
     <string name="n_a">n.v.t</string>
     <string name="name">Naam</string>
+    <string name="no">Nee</string>
     <string name="no_accounts">Nog geen accounts</string>
     <string name="no_connection">Kan geen verbinding maken:</string>
     <string name="no_downloads">Geen actieve downloads.</string>
     <string name="no_packages">Geen pakketten.</string>
     <string name="off">uit</string>
+    <string name="ok">OK</string>
     <string name="old_server">Serverversie komt niet overeen, gebruik pyLoad %s.</string>
     <string name="on">aan</string>
     <string name="overview">Overzicht</string>
@@ -107,12 +110,13 @@
     <string name="restart_failed">Herstart mislukte bestanden</string>
     <string name="retrieve_captcha">Captcha taken ophalen</string>
     <string name="retrieve_captcha_desc">Captcha taken van pyLoad krijgen wanneer Overzicht wordt weergegeven.</string>
+    <string name="search">Zoeken</string>
     <string name="server">Server</string>
     <string name="server_url">Server-URL</string>
     <string name="size">Grootte</string>
     <string name="socket_error">Kan geen verbinding maken met de dataserver. Controleer uw serverinstellingen, netwerkconfiguratie en port forwarding, alstublieft.</string>
     <string name="ssl">SSL Connectie</string>
-    <string name="ssl_desc">Gebruik veilige verbinding indien ik SSL heb geactiveerd</string>
+    <string name="ssl_desc">Gebruik veilige verbinding indien ich SSL heb geactiveerd</string>
     <string name="ssl_validate">SSL certificaat valideren</string>
     <string name="ssl_validate_desc">Controleer certificaat wanneer SSL is ingeschakeld</string>
     <string name="status">Status</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">onbeperkt</string>
     <string name="valid">geldig</string>
     <string name="validuntil">Verloopt:</string>
+    <string name="yes">Ja</string>
 </resources>

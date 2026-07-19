@@ -5,8 +5,6 @@
     <string name="accounts">Contas</string>
     <string name="add">Adicionar</string>
     <string name="add_links">Adicionar Links</string>
-    <string name="search">Procurar</string>
-    <string name="filter_hint">Filtrar por nome…</string>
     <string name="addlinks_desc">Adicione um novo pacote.</string>
     <string name="api_key">Chave API</string>
     <string name="api_key_desc">Sua chave de API para autenticação.</string>
@@ -38,12 +36,13 @@
     <string name="drained">limite atingido</string>
     <string name="enter">Enter</string>
     <string name="error">Erro</string>
-    <string name="exit_confirm_title">Sair do pyLoad</string>
-    <string name="exit_confirm_message">Deseja realmente sair do pyLoad?</string>
     <string name="eula_accept">Aceitar</string>
     <string name="eula_refuse">Recusar</string>
     <string name="eula_title">Licença</string>
+    <string name="exit_confirm_message">Deseja realmente sair do pyLoad?</string>
+    <string name="exit_confirm_title">Sair do pyLoad</string>
     <string name="fileinfo_title">Informação do arquivo</string>
+    <string name="filter_hint">Filtrar por nome…</string>
     <string name="folder">Pasta</string>
     <string name="free">Grátis</string>
     <string name="general">Geral</string>
@@ -51,6 +50,8 @@
     <string name="invalid">Inválido</string>
     <string name="ip">Endereço</string>
     <string name="ip_desc">IP ou nome do host do Core remoto do pyLoad .</string>
+    <string name="keep_screen_on">Manter tela ligada</string>
+    <string name="keep_screen_on_desc">Evitar que a tela se apague enquanto o aplicativo estiver em primeiro plano.</string>
     <string name="labelPackage">Pacote</string>
     <string name="language">Língua</string>
     <string name="language_desc">Linguagem do app. Precisa reiniciar antes que as alterações tenham efeito.</string>
@@ -78,11 +79,13 @@
     <string name="move">Localização de movimento</string>
     <string name="n_a">n/a</string>
     <string name="name">Nome</string>
+    <string name="no">Não</string>
     <string name="no_accounts">Ainda não há contas</string>
     <string name="no_connection">Não foi possível estabelecer a conexão:</string>
     <string name="no_downloads">Não há downloads ativos.</string>
     <string name="no_packages">Não há pacotes.</string>
     <string name="off">desligado</string>
+    <string name="ok">OK</string>
     <string name="old_server">Versão do servidor não corresponde, por favor use pyLoad %s.</string>
     <string name="on">ligado</string>
     <string name="overview">Visão geral</string>
@@ -107,6 +110,7 @@
     <string name="restart_failed">Reiniciar arquivos que falharam</string>
     <string name="retrieve_captcha">Recuperar as tarefas do captcha</string>
     <string name="retrieve_captcha_desc">Obter tarefas de captcha do pyLoad quando a visão geral é exibida.</string>
+    <string name="search">Procurar</string>
     <string name="server">Servidor</string>
     <string name="server_url">URL do servidor</string>
     <string name="size">Tamanho</string>
@@ -127,4 +131,5 @@
     <string name="unlimited">ilimitado</string>
     <string name="valid">válido</string>
     <string name="validuntil">Expira:</string>
+    <string name="yes">Sim</string>
 </resources>
