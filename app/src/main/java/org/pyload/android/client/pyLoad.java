@@ -36,7 +36,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.AccountDialog;
-import org.pyload.android.client.dialogs.CaptchaActivity;
 import org.pyload.android.client.fragments.AbstractPackageFragment;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;

@@ -121,7 +121,7 @@
         <activity android:name=".Preferences" android:label="@string/app_settings" android:exported="false"/>
         <activity android:name=".AddLinksActivity" android:exported="false"/>
         <activity android:name=".RemoteSettings" android:label="@string/remote_settings" android:exported="false"/>
-        <activity android:name=".dialogs.CaptchaActivity"
+        <activity android:name=".CaptchaActivity"
                   android:label="@string/captcha_textual_title"
                   android:exported="false"
                   android:launchMode="singleTop"

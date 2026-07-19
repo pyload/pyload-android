@@ -1,6 +1,5 @@
-package org.pyload.android.client.dialogs;
+package org.pyload.android.client;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,9 +20,7 @@ import android.widget.ImageView;
 import androidx.annotation.Keep;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
-import org.pyload.android.client.pyLoad;
 import org.pyload.android.openapi.model.CaptchaTask;
 
 import java.net.URI;
