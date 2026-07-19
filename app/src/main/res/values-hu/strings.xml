@@ -14,9 +14,10 @@
     <string name="bad_path">Az útvonal előtag hibásnak tűnik (404 Nem található).</string>
     <string name="cancel">Mégse</string>
     <string name="cant_move_files">A fájlok egyenként nem mozgathatóak.</string>
-    <string name="captcha_dialog_titel">Add meg a szöveget</string>
     <string name="captcha_notification">Új captcha érhető el!</string>
     <string name="captcha_notification_desc">Adja meg a captchát a letöltés folytatásához.</string>
+    <string name="captcha_positional_title">Kérjük, kattintson a helyes pozícióra</string>
+    <string name="captcha_textual_title">Add meg a szöveget</string>
     <string name="certificate_error">Az SSL tanúsítvány nem lett elfogadva. Add hozzá az Android-hoz, vagy kapcsold ki a az ellenőrzését.</string>
     <string name="choose">választ</string>
     <string name="choose_action">Művelet választása</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">elfogad</string>
     <string name="eula_refuse">Visszautasítás</string>
     <string name="eula_title">Licensz</string>
-    <string name="exit_confirm_message">Valóban ki akar lépni a pyLoad-ból?</string>
     <string name="exit_confirm_title">Kilépés a pyLoad-ból</string>
+    <string name="exit_confirm_message">Valóban ki akar lépni a pyLoad-ból?</string>
     <string name="fileinfo_title">Fájl infó</string>
     <string name="filter_hint">Szűrés név alapján…</string>
     <string name="folder">mappa</string>
@@ -116,9 +117,9 @@
     <string name="size">Méret</string>
     <string name="socket_error">Nem sikerült csatlakozni a célhoz. Ellenőrizd a szerver beállításait, a hálózati kapcsolatokat és a port átirányításokat.</string>
     <string name="ssl">SSL-kapcsolat</string>
-    <string name="ssl_desc">Biztonságos csatlakozás a Core-hoz, ha be van állítva az SSL</string>
+    <string name="ssl_desc">Biztonságos csatlakozás a Core-hoz, if be van állítva az SSL</string>
     <string name="ssl_validate">SSL tanúsítvány ellenőrzése</string>
-    <string name="ssl_validate_desc">Ha az \"SSL kapcsolat\" engedélyezve van, ellenőrizd, hogy a tanúsítványt egy az Android által بھی ismert CA írta-e alá.</string>
+    <string name="ssl_validate_desc">Ha az \"SSL kapcsolat\" engedélyezve van, ellenőrizd, hogy a tanúsítványt egy az Android által भी ismert CA írta-e alá.</string>
     <string name="status">Állapot</string>
     <string name="submit">Küldés</string>
     <string name="success">Sikeres.</string>

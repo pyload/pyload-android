@@ -14,9 +14,10 @@
     <string name="bad_path">Tiền tố đường dẫn có vẻ sai (404 Không tìm thấy).</string>
     <string name="cancel">Hủy bỏ</string>
     <string name="cant_move_files">Bạn không thể di chuyển các tập tin đơn lẻ.</string>
-    <string name="captcha_dialog_titel">Vui lòng nhập ký tự</string>
     <string name="captcha_notification">Có mã captcha mới!</string>
     <string name="captcha_notification_desc">Nhập mã captcha để tiếp tục tải về.</string>
+    <string name="captcha_positional_title">Vui lòng nhấp vào vị trí đúng</string>
+    <string name="captcha_textual_title">Vui lòng nhập ký tự</string>
     <string name="certificate_error">Giấy chứng nhận SSL không được chấp nhận. Thêm nó vào android hoặc vô hiệu hoá xác nhận.</string>
     <string name="choose">Chọn</string>
     <string name="choose_action">Chọn một hành động</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">Chấp nhận</string>
     <string name="eula_refuse">Từ chối</string>
     <string name="eula_title">Giấy phép</string>
-    <string name="exit_confirm_message">Bạn có thực sự muốn thoát pyLoad không?</string>
     <string name="exit_confirm_title">Thoát pyLoad</string>
+    <string name="exit_confirm_message">Bạn có thực sự muốn thoát pyLoad không?</string>
     <string name="fileinfo_title">Thông tin tệp tin</string>
     <string name="filter_hint">Lọc theo tên…</string>
     <string name="folder">Thư mục</string>

@@ -14,11 +14,12 @@
     <string name="bad_path">Path Prefix seems to be wrong (404 Not Found).</string>
     <string name="cancel">Cancel</string>
     <string name="cant_move_files">You can\'t move single files.</string>
-    <string name="captcha_dialog_titel">Please enter the text</string>
     <string name="captcha_notification">New captcha available!</string>
     <string name="captcha_notification_channel_description" translatable="false">Notifications when a new captcha is available.</string>
     <string name="captcha_notification_channel_name" translatable="false">Captchas</string>
     <string name="captcha_notification_desc">Enter captcha to continue downloading.</string>
+    <string name="captcha_positional_title">Please click on the right position</string>
+    <string name="captcha_textual_title">Please enter the text</string>
     <string name="certificate_error">SSL certificate not accepted. Add it to android or disable validation.</string>
     <string name="choose">Choose</string>
     <string name="choose_action">Choose an action</string>
@@ -134,4 +135,5 @@
     <string name="unlimited">unlimited</string>
     <string name="valid">valid</string>
     <string name="validuntil">Expires:</string>
+    <string name="yes">Yes</string>
 </resources>

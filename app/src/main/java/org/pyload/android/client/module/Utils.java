@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
+import org.pyload.android.openapi.model.CaptchaTask;
 
+import java.net.URI;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -25,6 +28,96 @@ public final class Utils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+	public static String getCaptchaHTML(CaptchaTask task) {
+		Object data = task.getData();
+		if (!(data instanceof Map)) return "";
+
+		@SuppressWarnings("unchecked")
+		Map<String, Object> captchaParams = (Map<String, Object>) data;
+
+		String captchaType = String.valueOf(captchaParams.getOrDefault("captcha_plugin", ""));
+		String siteKey = String.valueOf(captchaParams.getOrDefault("sitekey", ""));
+		String captchaUrl = String.valueOf(captchaParams.getOrDefault("url", ""));
+		URI uri = URI.create(captchaUrl);
+		String baseUrl = uri.getScheme() + "://" + uri.getAuthority();
+
+		String scriptSrc;
+		String widgetHtml;
+
+		switch (captchaType) {
+			case "ReCaptcha":
+				scriptSrc = "https://www.google.com/recaptcha/api.js?hl=en";
+				widgetHtml = "<div class=\"g-recaptcha\" data-sitekey=\"" + siteKey + "\" data-callback=\"onSuccess\" data-size=\"compact\"></div>";
+				break;
+			case "Turnstile":
+				scriptSrc = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+				widgetHtml = "<div class=\"cf-turnstile\" data-sitekey=\"" + siteKey + "\" data-callback=\"onSuccess\" data-language=\"en\"></div>";
+				break;
+			case "HCaptcha":
+				scriptSrc = "https://js.hcaptcha.com/1/api.js?hl=en";
+				widgetHtml = "<div class=\"h-captcha\" data-sitekey=\"" + siteKey + "\" data-callback=\"onSuccess\" data-size=\"compact\"></div>";
+				break;
+			default:
+				scriptSrc = "";
+				widgetHtml = "<p>Unsupported interactive captcha: " + captchaType + "</p>";
+		}
+
+		return "<!DOCTYPE html>\n" +
+				"<html lang=\"en\">\n" +
+				"<head>\n" +
+				"    <meta charset=\"UTF-8\">\n" +
+				"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+				"    <base href=\"" + baseUrl + "\">\n" +
+				"    <title>" + captchaType + "</title>\n\n" +
+				"    <script src=\"" + scriptSrc + "\" async defer></script>\n" +
+				"    <style>\n" +
+				"        body { \n" +
+				"            font-family: Arial, sans-serif; \n" +
+				"            margin: 0; \n" +
+				"            padding: 0; \n" +
+				"            display: flex; \n" +
+				"            flex-direction: column; \n" +
+				"            align-items: center; \n" +
+				"            justify-content: center; \n" +
+				"            height: 100vh; \n" +
+				"            width: 100vw;\n" +
+				"        }\n" +
+				"        .info {\n" +
+				"            position: absolute;\n" +
+				"            top: 60px;\n" +
+				"            text-align: center;\n" +
+				"            width: 100%;\n" +
+				"            pointer-events: none;\n" +
+				"            opacity: 0.3;\n" +
+				"        }\n" +
+				"    </style>\n" +
+				"</head>\n" +
+				"<body>\n" +
+				"    " + widgetHtml + "\n" +
+				"\n" +
+				"    <script>\n" +
+				"        (function() {\n" +
+				"            const originalDomain = '" + baseUrl + "';\n" +
+				"            try {\n" +
+				"                Object.defineProperty(window, 'location', {\n" +
+				"                    value: new URL(originalDomain),\n" +
+				"                    writable: false\n" +
+				"                });\n" +
+				"                Object.defineProperty(document, 'referrer', { value: originalDomain });\n" +
+				"            } catch (e) { console.error('Spoofing failed:', e); }\n" +
+				"        })();\n" +
+				"\n" +
+				"        function onSuccess(token) {\n" +
+				"            console.log('CAPTCHA_TOKEN:' + token);\n" +
+				"            if (window.AndroidBridge && window.AndroidBridge.onTokenCaptured) {\n" +
+				"                window.AndroidBridge.onTokenCaptured(token);\n" +
+				"            }\n" +
+				"        }\n" +
+				"    </script>\n" +
+				"</body>\n" +
+				"</html>";
+	}
 
 	public static String formatSize(long size) {
 		double format = size;
@@ -73,10 +166,10 @@ public final class Utils {
 		try {
 			for (String param : query.split("&")) {
 				String[] pair = param.split("=");
-				String key = URLDecoder.decode(pair[0], "UTF-8");
+								String key = URLDecoder.decode(pair[0], StandardCharsets.UTF_8.name());
 				String value = "";
 				if (pair.length > 1) {
-					value = URLDecoder.decode(pair[1], "UTF-8");
+					value = URLDecoder.decode(pair[1], StandardCharsets.UTF_8.name());
 				}
 				params.put(key, value);
 			}

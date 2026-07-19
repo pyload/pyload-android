@@ -14,9 +14,10 @@
     <string name="bad_path">Yol öneki yanlış görünüyor (404 Bulunamadı).</string>
     <string name="cancel">İptal</string>
     <string name="cant_move_files">Tek dosya taşıyamazsınız.</string>
-    <string name="captcha_dialog_titel">Lütfen metni giriniz</string>
     <string name="captcha_notification">Yeni captcha mevcut!</string>
     <string name="captcha_notification_desc">İndirmeye devam etmek için captcha\'yı girin.</string>
+    <string name="captcha_positional_title">Lütfen doğru konuma tıklayın</string>
+    <string name="captcha_textual_title">Lütfen metni giriniz</string>
     <string name="certificate_error">SSL sertifikası kabul edilmedi. Android\'e ekle veya doğrulamayı devre dışı bırakın.</string>
     <string name="choose">Seç</string>
     <string name="choose_action">Bir eylem seç</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">Kabul</string>
     <string name="eula_refuse">Reddet</string>
     <string name="eula_title">Lisans</string>
-    <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
     <string name="exit_confirm_title">pyLoad\'dan Çık</string>
+    <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
     <string name="fileinfo_title">Dosya bilgisi</string>
     <string name="filter_hint">Ada göre filtrele…</string>
     <string name="folder">Klasör</string>

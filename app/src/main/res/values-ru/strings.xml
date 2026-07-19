@@ -14,9 +14,10 @@
     <string name="bad_path">Префикс пути кажется неправильным (404 Не Найдено).</string>
     <string name="cancel">Отменить</string>
     <string name="cant_move_files">Нельзя переместить отдельные файлы.</string>
-    <string name="captcha_dialog_titel">Пожалуйста, введите текст</string>
     <string name="captcha_notification">Доступная новая капча!</string>
     <string name="captcha_notification_desc">Введите капчу, чтобы продолжить загрузку.</string>
+    <string name="captcha_positional_title">Пожалуйста, нажмите в нужном месте</string>
+    <string name="captcha_textual_title">Пожалуйста, введите текст</string>
     <string name="certificate_error">SSL-сертификат не принимается. Добавьте его в android или отключить проверку.</string>
     <string name="choose">Выбрать</string>
     <string name="choose_action">Выбор действия</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">Принять</string>
     <string name="eula_refuse">Отклонить</string>
     <string name="eula_title">Лицензия</string>
-    <string name="exit_confirm_message">Вы действительно хотите выйти из pyLoad?</string>
     <string name="exit_confirm_title">Выйти из pyLoad</string>
+    <string name="exit_confirm_message">Вы действительно хотите выйти из pyLoad?</string>
     <string name="fileinfo_title">Информация о файле</string>
     <string name="filter_hint">Фильтровать по имени…</string>
     <string name="folder">Папка</string>
@@ -86,7 +87,7 @@
     <string name="no_packages">Нет пакетов.</string>
     <string name="off">выкл.</string>
     <string name="ok">OK</string>
-    <string name="old_server">Версия сервера не совпадает, пожалуйста, используйте pyLoad %s.</string>
+    <string name="old_server">Серверная версия не совпадает, пожалуйста, используйте pyLoad %s.</string>
     <string name="on">вкл.</string>
     <string name="overview">Обзор</string>
     <string name="package_links">Поместите ваши ссылки здесь.</string>

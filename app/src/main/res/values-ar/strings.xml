@@ -14,9 +14,10 @@
     <string name="bad_path">يبدو أن بادئة المسار خاطئة (404 لم يتم العثور عليه).</string>
     <string name="cancel">الغاء</string>
     <string name="cant_move_files">لا يمكنك تحريك ملفات مفرد.</string>
-    <string name="captcha_dialog_titel">الرجاء إدخال النص</string>
     <string name="captcha_notification">كابتشا جديدة متاحة!</string>
     <string name="captcha_notification_desc">أدخل الكابتشا لمتابعة التحميل.</string>
+    <string name="captcha_positional_title">يرجى النقر على الموضع الصحيح</string>
+    <string name="captcha_textual_title">الرجاء إدخال النص</string>
     <string name="certificate_error">شهادة SSL غير مقبوله, اضف الشهادة لاندرويد او عطل التحقق.</string>
     <string name="choose">اختيار</string>
     <string name="choose_action">اختر أحد الإجراءات</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">قبول</string>
     <string name="eula_refuse">رفض</string>
     <string name="eula_title">الترخيص</string>
-    <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
     <string name="exit_confirm_title">الخروج من pyLoad</string>
+    <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
     <string name="fileinfo_title">معلومات الملف</string>
     <string name="filter_hint">تصفية حسب الاسم…</string>
     <string name="folder">مجلد</string>

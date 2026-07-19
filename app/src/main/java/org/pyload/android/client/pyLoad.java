@@ -1,54 +1,61 @@
 package org.pyload.android.client;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-
+import android.Manifest;
 import android.app.NotificationManager;
-import android.content.res.Configuration;
-import android.view.*;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.pyload.android.client.components.FragmentTabsPager;
+import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.AccountDialog;
+import org.pyload.android.client.dialogs.CaptchaActivity;
 import org.pyload.android.client.fragments.AbstractPackageFragment;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.Utils;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
 import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
+import org.pyload.android.openapi.model.CaptchaTask;
 import org.pyload.android.openapi.model.Destination;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.os.Build;
-import android.Manifest;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import org.pyload.android.client.components.TabHandler;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.widget.SearchView;
-
-import android.widget.ImageView;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -59,8 +66,54 @@ public class pyLoad extends FragmentTabsPager {
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
     private MenuItem searchItem;
+    private View captchaBanner;
 
     private OnBackPressedCallback onBackPressedCallback;
+
+    private CaptchaTask currentCaptcha;
+    private int lastCaptchaId = -1;
+
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+    private final Runnable runCaptchaUpdate = new Runnable() {
+        public void run() {
+            PyLoadRestApi client = app.getClient();
+            if (app.prefs.getBoolean("pull_captcha", true)) {
+                if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
+                    currentCaptcha = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
+                } else {
+                    currentCaptcha = null;
+                    app.setCaptchaNotificationShown(false);
+                }
+            }
+        }
+    };
+
+    private final Runnable onCaptchaDataReceived = new Runnable() {
+        public void run() {
+            if (currentCaptcha != null && app.prefs.getBoolean("pull_captcha", true)) {
+                captchaBanner.setVisibility(View.VISIBLE);
+                if (lastCaptchaId != currentCaptcha.getTid()) {
+                    showCaptchaNotification();
+                    lastCaptchaId = currentCaptcha.getTid();
+                }
+            } else {
+                captchaBanner.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private final Runnable mCaptchaTimeTask = new Runnable() {
+        public void run() {
+            checkCaptcha();
+            int interval;
+            try {
+                interval = Integer.parseInt(app.prefs.getString("refresh_rate", "5"));
+            } catch (NumberFormatException e) {
+                interval = 5;
+            }
+            mHandler.postDelayed(this, (long) interval * 1000);
+        }
+    };
 
     private final ActivityResultLauncher<Intent> addLinksLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -109,6 +162,15 @@ public class pyLoad extends FragmentTabsPager {
         title = getString(R.string.collector);
         mTabsAdapter.addTab(title, null, CollectorFragment.class, null);
 
+        captchaBanner = findViewById(R.id.captcha_banner_container);
+        captchaBanner.setOnClickListener(v -> {
+            if (currentCaptcha != null) {
+                Intent intent = new Intent(this, CaptchaActivity.class);
+                intent.putExtra("task", Utils.encodeObject(currentCaptcha));
+                startActivity(intent);
+            }
+        });
+
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -118,8 +180,8 @@ public class pyLoad extends FragmentTabsPager {
                     new MaterialAlertDialogBuilder(pyLoad.this)
                             .setTitle(R.string.exit_confirm_title)
                             .setMessage(R.string.exit_confirm_message)
-                            .setPositiveButton(android.R.string.yes, (dialog, which) -> finish())
-                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(R.string.yes, (dialog, which) -> finish())
+                            .setNegativeButton(R.string.no, null)
                             .show();
                 }
             }
@@ -173,12 +235,15 @@ public class pyLoad extends FragmentTabsPager {
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+
+        mHandler.post(mCaptchaTimeTask);
         app.refreshTab();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        mHandler.removeCallbacks(mCaptchaTimeTask);
         app.clearTasks();
     }
 
@@ -371,8 +436,9 @@ public class pyLoad extends FragmentTabsPager {
 
     private void handleNewPackageResult(Intent data) {
         final String name = data.getStringExtra("name");
-        final String[] link_array = data.getStringExtra("links").trim()
-                .split("\n");
+        String linksStr = data.getStringExtra("links");
+        if (linksStr == null) return;
+        final String[] link_array = linksStr.trim().split("\n");
         final Destination dest;
         final String filepath = data.getStringExtra("filepath");
         final String filename = data.getStringExtra("filename");
@@ -383,7 +449,7 @@ public class pyLoad extends FragmentTabsPager {
         else
             dest = Destination.COLLECTOR;
 
-        final ArrayList<String> links = new ArrayList<String>();
+        final ArrayList<String> links = new ArrayList<>();
         for (String link_row : link_array)
             for (String link : link_row.trim().split(" "))
                 if (!link.equals(""))
@@ -450,6 +516,13 @@ public class pyLoad extends FragmentTabsPager {
     protected void onNewIntent(Intent intent) {
         Log.d("pyLoad", "got Intent");
         super.onNewIntent(intent);
+        if ("SET_CAPTCHA_RESULT".equals(intent.getAction())) {
+            int tid = intent.getIntExtra("tid", -1);
+            String result = intent.getStringExtra("result");
+            if (tid != -1 && result != null) {
+                setCaptchaResult(tid, result);
+            }
+        }
     }
 
     public void setCaptchaResult(final int tid, final String result) {
@@ -462,6 +535,34 @@ public class pyLoad extends FragmentTabsPager {
             }
         }));
 
+    }
+
+    private void checkCaptcha() {
+        if (!app.hasConnection()) return;
+        app.addTask(new GuiTask(runCaptchaUpdate, onCaptchaDataReceived));
+    }
+
+    private void showCaptchaNotification() {
+        if (!app.getCaptchaNotificationShown()) {
+            app.setCaptchaNotificationShown(true);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app, pyLoadApp.CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle(getString(R.string.captcha_notification))
+                    .setContentText(getString(R.string.captcha_notification_desc));
+
+            Intent notificationIntent = new Intent(app, pyLoad.class);
+            notificationIntent.putExtra("CaptchaNotification", true);
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, flags);
+            mBuilder.setContentIntent(contentIntent);
+            NotificationManager mNotificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(alarmSound);
+            mNotificationManager.notify(0, mBuilder.build());
+        }
     }
 
     @Override
@@ -487,6 +588,7 @@ public class pyLoad extends FragmentTabsPager {
         return refreshItem;
     }
 
+    @SuppressWarnings("unused")
     public MenuItem getSearchItem() {
         return searchItem;
     }

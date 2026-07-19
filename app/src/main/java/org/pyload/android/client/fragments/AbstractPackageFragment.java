@@ -255,7 +255,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				new MaterialAlertDialogBuilder(getActivity())
 						.setTitle(R.string.package_password)
 						.setView(container)
-						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton) {
 								final String password = input.getText().toString();
 								app.addTask(new GuiTask(new Runnable() {
@@ -271,7 +271,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 								}, app.handleSuccess));
 							}
 						})
-						.setNegativeButton(android.R.string.cancel, null)
+						.setNegativeButton(R.string.cancel, null)
 						.show();
 			}
 

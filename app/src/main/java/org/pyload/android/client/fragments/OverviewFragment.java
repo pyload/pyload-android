@@ -1,39 +1,10 @@
 package org.pyload.android.client.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import org.pyload.android.client.R;
-import org.pyload.android.client.pyLoad;
-import org.pyload.android.client.module.Utils;
-import org.pyload.android.client.pyLoadApp;
-import org.pyload.android.client.components.TabHandler;
-import org.pyload.android.client.dialogs.CaptchaDialog;
-import org.pyload.android.client.module.GuiTask;
-import org.pyload.android.openapi.api.PyLoadRestApi;
-import org.pyload.android.openapi.model.ApiStopDownloadsPostRequest;
-import org.pyload.android.openapi.model.CaptchaTask;
-import org.pyload.android.openapi.model.DownloadInfo;
-import org.pyload.android.openapi.model.DownloadStatus;
-import org.pyload.android.openapi.model.ServerStatus;
-
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.os.Build;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import androidx.fragment.app.ListFragment;
-import androidx.core.app.NotificationCompat;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -41,14 +12,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.AbsListView;
 
-public class OverviewFragment extends ListFragment implements
-        OnDismissListener, TabHandler {
+import androidx.fragment.app.ListFragment;
+
+import org.pyload.android.client.R;
+import org.pyload.android.client.components.TabHandler;
+import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.Utils;
+import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.openapi.api.PyLoadRestApi;
+import org.pyload.android.openapi.model.ApiStopDownloadsPostRequest;
+import org.pyload.android.openapi.model.DownloadInfo;
+import org.pyload.android.openapi.model.DownloadStatus;
+import org.pyload.android.openapi.model.ServerStatus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class OverviewFragment extends ListFragment implements TabHandler {
 
     private pyLoadApp app;
     private PyLoadRestApi client;
@@ -57,12 +44,9 @@ public class OverviewFragment extends ListFragment implements
     private List<DownloadInfo> downloads;
     private List<DownloadInfo> allDownloads;
     private String filter = "";
-    private ServerStatus status;
-    private CaptchaTask captcha;
-    private int lastCaptcha = -1;
+    private ServerStatus serverStatus;
     private int interval = 5;
     private boolean update = false;
-    private boolean dialogOpen = false;
     // tab position
     private int pos = -1;
 
@@ -86,15 +70,7 @@ public class OverviewFragment extends ListFragment implements
         public void run() {
             client = app.getClient();
             downloads = app.executeNetworkCall(client.apiStatusDownloadsGet());
-            status = app.executeNetworkCall(client.apiStatusServerGet());
-            if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
-                Log.d("pyLoad", "Captcha available");
-                captcha = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
-                Log.d("pyload", captcha.getResultType());
-                showNotification();
-            } else {
-                app.setCaptchaNotificationShown(false);
-            }
+            serverStatus = app.executeNetworkCall(client.apiStatusServerGet());
         }
     };
 
@@ -109,7 +85,7 @@ public class OverviewFragment extends ListFragment implements
         public void run() {
             refresh();
             if (update)
-                mHandler.postDelayed(this, interval * 1000);
+                mHandler.postDelayed(this, (long) interval * 1000);
         }
     };
 
@@ -117,10 +93,10 @@ public class OverviewFragment extends ListFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        app = (pyLoadApp) getActivity().getApplicationContext();
+        app = (pyLoadApp) requireActivity().getApplicationContext();
 
-        downloads = new ArrayList<DownloadInfo>();
-        adp = new OverviewAdapter(getActivity(), R.layout.overview_item, downloads);
+        downloads = new ArrayList<>();
+        adp = new OverviewAdapter(requireContext(), R.layout.overview_item, downloads);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -157,7 +133,7 @@ public class OverviewFragment extends ListFragment implements
             }
         });
 
-        if (status != null && downloads != null)
+        if (serverStatus != null && downloads != null)
             onDataReceived();
 
         registerForContextMenu(v.findViewById(android.R.id.list));
@@ -214,7 +190,7 @@ public class OverviewFragment extends ListFragment implements
 
                 public void run() {
                     client = app.getClient();
-                    ArrayList<Integer> fids = new ArrayList<Integer>();
+                    ArrayList<Integer> fids = new ArrayList<>();
                     fids.add(info.getFid());
                     ApiStopDownloadsPostRequest request = new ApiStopDownloadsPostRequest().fileIds(fids);
                     app.executeNetworkCall(client.apiStopDownloadsPost(request));
@@ -298,7 +274,7 @@ public class OverviewFragment extends ListFragment implements
      */
     protected void onDataReceived() {
         app.setProgress(false);
-        if (status == null || downloads == null)
+        if (serverStatus == null || downloads == null)
             return;
 
         allDownloads = new ArrayList<>(downloads);
@@ -311,17 +287,10 @@ public class OverviewFragment extends ListFragment implements
                 adapter.setDownloads(downloads);
         }
 
-        statusServer.setText(app.verboseBool(status.getDownload()));
-        reconnect.setText(app.verboseBool(status.getReconnect()));
-        speed.setText(Utils.formatSize(status.getSpeed()) + "/s");
-        active.setText(String.format(Locale.US, "%d / %d", status.getActive(), status.getTotal()));
-
-        if (captcha != null && app.prefs.getBoolean("pull_captcha", true)
-                && captcha.getResultType() != null // string null bug
-                && captcha.getResultType().equals("textual")
-                && lastCaptcha != captcha.getTid()) {
-            showDialog();
-        }
+        statusServer.setText(app.verboseBool(serverStatus.getDownload()));
+        reconnect.setText(app.verboseBool(serverStatus.getReconnect()));
+        speed.setText(Utils.formatSize(serverStatus.getSpeed()) + "/s");
+        active.setText(String.format(Locale.US, "%d / %d", serverStatus.getActive(), serverStatus.getTotal()));
 
     }
 
@@ -336,66 +305,9 @@ public class OverviewFragment extends ListFragment implements
         app.addTask(task);
     }
 
-    private void showDialog() {
-
-        if (dialogOpen || captcha == null)
-            return;
-
-        CaptchaDialog dialog = CaptchaDialog.newInstance(captcha);
-        lastCaptcha = captcha.getTid();
-
-        Log.d("pyLoad", "Got Captcha Task");
-
-        dialog.setOnDismissListener(this);
-
-        dialogOpen = true;
-
-
-        try {
-            dialog.show(getParentFragmentManager(), CaptchaDialog.class.getName());
-        } catch (IllegalStateException e) {
-            dialogOpen = false;
-            // seems to appear when overview is already closed
-            Log.e("pyLoad", "Dialog state error", e);
-        } catch (NullPointerException e) {
-            dialogOpen = false;
-            // something is null, but why?
-            Log.e("pyLoad", "Dialog null pointer error", e);
-        }
-
-    }
-
-    public void onDismiss(DialogInterface arg0) {
-        captcha = null;
-        dialogOpen = false;
-    }
-
     @Override
     public void setPosition(int pos) {
         this.pos = pos;
-    }
-
-    private void showNotification() {
-        if (!app.getCaptchaNotificationShown()) {
-            app.setCaptchaNotificationShown(true);
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app, pyLoadApp.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(getString(R.string.captcha_notification))
-                    .setContentText(getString(R.string.captcha_notification_desc));
-
-            Intent notificationIntent = new Intent(app, pyLoad.class);
-            notificationIntent.putExtra("CaptchaNotification", true);
-            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                flags |= PendingIntent.FLAG_IMMUTABLE;
-            }
-            PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, flags);
-            mBuilder.setContentIntent(contentIntent);
-            NotificationManager mNotificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
-            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            mBuilder.setSound(alarmSound);
-            mNotificationManager.notify(0, mBuilder.build());
-        }
     }
 }
 

@@ -13,14 +13,15 @@
     <string name="bad_login">Nevažeći API ključ.</string>
     <string name="bad_path">Префикс путање изгледа неисправан (404 Није пронађено).</string>
     <string name="cancel">Откажи</string>
-    <string name="cant_move_files">Не можете да преместите појединачне датотеке.</string>
-    <string name="captcha_dialog_titel">Унесите текст</string>
+    <string name="cant_move_files">Не можете да преместите појединачне датотеκε.</string>
     <string name="captcha_notification">Novo captcha dostupno!</string>
     <string name="captcha_notification_desc">Unesite captcha da biste nastavili sa preuzimanjem.</string>
+    <string name="captcha_positional_title">Кликните на право место</string>
+    <string name="captcha_textual_title">Унесите текст</string>
     <string name="certificate_error">SSL сертификат није прихваћен. Додајте га на Android или онемогућите проверу ваљаности.</string>
     <string name="choose">Потражи…</string>
     <string name="choose_action">Избор радње</string>
-    <string name="choose_file">Датотека контејнера</string>
+    <string name="choose_file">Даτοтека контејнера</string>
     <string name="clear_finished">Обриши завршене пакете</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Omogući ClickNLoad podršku (lokalni server na portu 9666).</string>
@@ -39,9 +40,9 @@
     <string name="eula_accept">Прихватам</string>
     <string name="eula_refuse">Не прихватам</string>
     <string name="eula_title">Лиценца</string>
-    <string name="exit_confirm_message">Да ли заиστα желите да изађете из pyLoad-а?</string>
     <string name="exit_confirm_title">Излаз из pyLoad-а</string>
-    <string name="fileinfo_title">Подаци о датотеци</string>
+    <string name="exit_confirm_message">Да ли заиστα желите да изађете из pyLoad-а?</string>
+    <string name="fileinfo_title">Подаци о даτοтеци</string>
     <string name="filter_hint">Filtriraj po imenu…</string>
     <string name="folder">Фасцикла</string>
     <string name="free">Besplatno</string>
@@ -54,7 +55,7 @@
     <string name="keep_screen_on_desc">Спречите искључивање екрана док је апликација у предњем плану.</string>
     <string name="labelPackage">Пакет</string>
     <string name="language">Језик</string>
-    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покретање.</string>
+    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покреταње.</string>
     <string-array name="languages">
         <item>Default</item>
         <item>English</item>
@@ -116,9 +117,9 @@
     <string name="size">Величина</string>
     <string name="socket_error">Не могу да се повежем са наведеним главним рачунаром. Проверите поставке сервера, конфигурацију мреже или прослеђивање порта.</string>
     <string name="ssl">SSL веза</string>
-    <string name="ssl_desc">Омогућите SSL и успоставите безбедну везу са сервером.</string>
+    <string name="ssl_desc">Оμοгућите SSL и успоставите безбедну везу са сервером.</string>
     <string name="ssl_validate">Провери ваљаност SSL сертификата</string>
-    <string name="ssl_validate_desc">Ако је омогућена SSL веза, ова опција проверава да ли је сертификат потписало одговарајуће сертификационо тело.</string>
+    <string name="ssl_validate_desc">Ако је оμοгућена SSL веза, ова опција проверава да ли је сертификат потписало одговарајуће сертификационо тело.</string>
     <string name="status">Статус</string>
     <string name="submit">Сачувај</string>
     <string name="success">Успело.</string>

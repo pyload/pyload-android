@@ -13,9 +13,10 @@
     <string name="bad_path">נראה שקידומת הנתיב שגויה (404 לא נמצא).</string>
     <string name="cancel">בטל</string>
     <string name="cant_move_files">לא ניתן להעביר קבצים בודדים.</string>
-    <string name="captcha_dialog_titel">הזן את הטקסט</string>
     <string name="captcha_notification">קאפצ\'ה חדשה זמינה!</string>
     <string name="captcha_notification_desc">הזן קאפצ\'ה כדי להמשיך בהורדה.</string>
+    <string name="captcha_positional_title">אנא לחץ על המיקום הנכון</string>
+    <string name="captcha_textual_title">הזן את הטקסט</string>
     <string name="certificate_error">אישור SSL לא התקבל. הוסף אותו לאנדרואיד או השבת את האימות.</string>
     <string name="choose">בחר</string>
     <string name="choose_action">בחר פעולה</string>
@@ -38,8 +39,8 @@
     <string name="eula_accept">קבל</string>
     <string name="eula_refuse">דחה</string>
     <string name="eula_title">רישיון</string>
-    <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
     <string name="exit_confirm_title">יציאה מ-pyLoad</string>
+    <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
     <string name="fileinfo_title">מידע קובץ</string>
     <string name="filter_hint">סנן לפי שם…</string>
     <string name="folder">&#x200e;תיקייה</string>
@@ -130,4 +131,5 @@
     <string name="unlimited">ללא הגבלה</string>
     <string name="valid">בתוקף</string>
     <string name="validuntil">בתוקף עד:</string>
+    <string name="yes">כן</string>
 </resources>

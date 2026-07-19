@@ -14,9 +14,10 @@
     <string name="bad_path">Il prefisso del percorso sembra essere errato (404 Non Trovato).</string>
     <string name="cancel">Annulla</string>
     <string name="cant_move_files">Non puoi spostare singoli file.</string>
-    <string name="captcha_dialog_titel">Inserire il testo</string>
     <string name="captcha_notification">Nuovo captcha disponibile!</string>
     <string name="captcha_notification_desc">Inserisci il captcha per continuare il download.</string>
+    <string name="captcha_positional_title">Per favore, clicca sulla posizione corretta</string>
+    <string name="captcha_textual_title">Inserire il testo</string>
     <string name="certificate_error">Certificato SSL non accettato. Aggiungilo in android o disabilita la validazione.</string>
     <string name="choose">Scegli</string>
     <string name="choose_action">Scegli un\'azione</string>
@@ -30,7 +31,7 @@
     <string name="collector">Collettore</string>
     <string name="connect_error">Impossibile collegarsi a pyLoad. Controllare che pyLoad sia in esecuzione e che le impostazioni server siano corrette.</string>
     <string name="connect_timeout">Connessione scaduta. Controllare che le impostazioni server siano corrette.</string>
-    <string name="connection">Connessione</string>
+    <string name="connection">Conesssione</string>
     <string name="delete">Elimina</string>
     <string name="destination">Destinazione</string>
     <string name="drained">limite raggiunto</string>

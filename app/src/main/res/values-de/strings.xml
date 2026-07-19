@@ -14,9 +14,10 @@
     <string name="bad_path">Pfad-Präfix scheint falsch zu sein (404 Nicht Gefunden).</string>
     <string name="cancel">Abbrechen</string>
     <string name="cant_move_files">Du kannst keine einzelnen Dateien verschieben.</string>
-    <string name="captcha_dialog_titel">Bitte geben Sie den Text ein</string>
     <string name="captcha_notification">Neues Captcha verfügbar!</string>
     <string name="captcha_notification_desc">Captcha eingeben, um den Download fortzusetzen.</string>
+    <string name="captcha_positional_title">Bitte klicken Sie auf die richtige Position</string>
+    <string name="captcha_textual_title">Bitte geben Sie den Text ein</string>
     <string name="certificate_error">SSL Zertifikat wurde nicht akzeptiert. Füge es bei Android hinzu oder deaktiviere die Überprüfung.</string>
     <string name="choose">Wähle</string>
     <string name="choose_action">Wähle eine Aktion</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">Annehmen</string>
     <string name="eula_refuse">Ablehnen</string>
     <string name="eula_title">Lizenz</string>
-    <string name="exit_confirm_message">Möchten Sie pyLoad wirklich beenden?</string>
     <string name="exit_confirm_title">pyLoad beenden</string>
+    <string name="exit_confirm_message">Möchten Sie pyLoad wirklich beenden?</string>
     <string name="fileinfo_title">Dateiinfo</string>
     <string name="filter_hint">Nach Name filtern…</string>
     <string name="folder">Verzeichnis</string>
@@ -131,4 +132,5 @@
     <string name="unlimited">unbegrenzt</string>
     <string name="valid">gültig</string>
     <string name="validuntil">Verfällt:</string>
+    <string name="yes">Ja</string>
 </resources>
