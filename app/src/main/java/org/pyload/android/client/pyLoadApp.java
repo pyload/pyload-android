@@ -489,7 +489,7 @@ public class pyLoadApp extends Application {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			CharSequence name = getString(R.string.captcha_notification_channel_name);
 			String description = getString(R.string.captcha_notification_channel_description);
-			int importance = NotificationManager.IMPORTANCE_DEFAULT;
+			int importance = NotificationManager.IMPORTANCE_HIGH;
 			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
 			channel.setDescription(description);
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);

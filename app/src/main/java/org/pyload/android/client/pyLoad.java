@@ -223,10 +223,12 @@ public class pyLoad extends FragmentTabsPager {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        //app.setCaptchaNotificationShown(intent.getBooleanExtra("CaptchaNotification", false));
         if (intent.getBooleanExtra("CaptchaNotification", false)) {
             NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(0);
+
+            Intent captchaIntent = new Intent(this, CaptchaActivity.class);
+            startActivity(captchaIntent);
         }
 
         if (app.prefs.getBoolean("keep_screen_on", true)) {
@@ -515,6 +517,7 @@ public class pyLoad extends FragmentTabsPager {
     protected void onNewIntent(Intent intent) {
         Log.d("pyLoad", "got Intent");
         super.onNewIntent(intent);
+        setIntent(intent);
         if ("SET_CAPTCHA_RESULT".equals(intent.getAction())) {
             int tid = intent.getIntExtra("tid", -1);
             String result = intent.getStringExtra("result");
@@ -547,7 +550,12 @@ public class pyLoad extends FragmentTabsPager {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app, pyLoadApp.CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher)
                     .setContentTitle(getString(R.string.captcha_notification))
-                    .setContentText(getString(R.string.captcha_notification_desc));
+                    .setContentText(getString(R.string.captcha_notification_desc))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_ALARM)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setLocalOnly(true)
+                    .setAutoCancel(true);
 
             Intent notificationIntent = new Intent(app, pyLoad.class);
             notificationIntent.putExtra("CaptchaNotification", true);
