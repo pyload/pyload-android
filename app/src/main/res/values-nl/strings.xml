@@ -14,6 +14,7 @@
     <string name="bad_path">Padvoorvoegsel lijkt onjuist te zijn (404 Niet Gevonden).</string>
     <string name="cancel">Annuleren</string>
     <string name="cant_move_files">U kunt afzonderlijke bestanden niet verplaatsen.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Nieuwe captcha beschikbaar!</string>
     <string name="captcha_notification_desc">Voer de captcha in om het downloaden te hervatten.</string>
     <string name="captcha_positional_title">Klik op de juiste positie</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Accepteren</string>
     <string name="eula_refuse">Weigeren</string>
     <string name="eula_title">Licentie</string>
-    <string name="exit_confirm_title">pyLoad afsluiten</string>
     <string name="exit_confirm_message">Wilt u pyLoad echt afsluiten?</string>
+    <string name="exit_confirm_title">pyLoad afsluiten</string>
     <string name="fileinfo_title">Bestandsinfo</string>
     <string name="filter_hint">Filteren op naam…</string>
     <string name="folder">Map</string>

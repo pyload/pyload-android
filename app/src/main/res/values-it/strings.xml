@@ -14,6 +14,7 @@
     <string name="bad_path">Il prefisso del percorso sembra essere errato (404 Non Trovato).</string>
     <string name="cancel">Annulla</string>
     <string name="cant_move_files">Non puoi spostare singoli file.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Nuovo captcha disponibile!</string>
     <string name="captcha_notification_desc">Inserisci il captcha per continuare il download.</string>
     <string name="captcha_positional_title">Per favore, clicca sulla posizione corretta</string>
@@ -40,6 +41,8 @@
     <string name="eula_accept">Accetto</string>
     <string name="eula_refuse">Rifiuto</string>
     <string name="eula_title">Licenza</string>
+    <string name="exit_confirm_message">Vuoi davvero uscire da pyLoad?</string>
+    <string name="exit_confirm_title">Esci da pyLoad</string>
     <string name="fileinfo_title">Fileinfo</string>
     <string name="filter_hint">Filtra per nome…</string>
     <string name="folder">Cartella</string>

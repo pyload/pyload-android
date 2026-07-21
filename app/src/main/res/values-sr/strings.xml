@@ -14,6 +14,7 @@
     <string name="bad_path">Префикс путање изгледа неисправан (404 Није пронађено).</string>
     <string name="cancel">Откажи</string>
     <string name="cant_move_files">Не можете да преместите појединачне датотеκε.</string>
+    <string name="captcha_interactive_title">Потврдни код</string>
     <string name="captcha_notification">Novo captcha dostupno!</string>
     <string name="captcha_notification_desc">Unesite captcha da biste nastavili sa preuzimanjem.</string>
     <string name="captcha_positional_title">Кликните на право место</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Прихватам</string>
     <string name="eula_refuse">Не прихватам</string>
     <string name="eula_title">Лиценца</string>
-    <string name="exit_confirm_title">Излаз из pyLoad-а</string>
     <string name="exit_confirm_message">Да ли заиστα желите да изађете из pyLoad-а?</string>
+    <string name="exit_confirm_title">Излаз из pyLoad-а</string>
     <string name="fileinfo_title">Подаци о даτοтеци</string>
     <string name="filter_hint">Filtriraj po imenu…</string>
     <string name="folder">Фасцикла</string>
@@ -55,7 +56,7 @@
     <string name="keep_screen_on_desc">Спречите искључивање екрана док је апликација у предњем плану.</string>
     <string name="labelPackage">Пакет</string>
     <string name="language">Језик</string>
-    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покреταње.</string>
+    <string name="language_desc">Језик корисничког окружења. Да бисте га променили, потребно је поновно покретање.</string>
     <string-array name="languages">
         <item>Default</item>
         <item>English</item>
@@ -78,7 +79,7 @@
     </string-array>
     <string name="loading">Учитавање…</string>
     <string name="move">Промени размештај</string>
-    <string name="n_a">недоступно</string>
+    <string name="n_a">недоступνο</string>
     <string name="name">Име</string>
     <string name="no">Не</string>
     <string name="no_accounts">Још увек нема налога</string>

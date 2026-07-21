@@ -14,6 +14,7 @@
     <string name="bad_path">Yol öneki yanlış görünüyor (404 Bulunamadı).</string>
     <string name="cancel">İptal</string>
     <string name="cant_move_files">Tek dosya taşıyamazsınız.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Yeni captcha mevcut!</string>
     <string name="captcha_notification_desc">İndirmeye devam etmek için captcha\'yı girin.</string>
     <string name="captcha_positional_title">Lütfen doğru konuma tıklayın</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Kabul</string>
     <string name="eula_refuse">Reddet</string>
     <string name="eula_title">Lisans</string>
-    <string name="exit_confirm_title">pyLoad\'dan Çık</string>
     <string name="exit_confirm_message">Gerçekten pyLoad\'dan çıkmak istiyor musunuz?</string>
+    <string name="exit_confirm_title">pyLoad\'dan Çık</string>
     <string name="fileinfo_title">Dosya bilgisi</string>
     <string name="filter_hint">Ada göre filtrele…</string>
     <string name="folder">Klasör</string>
@@ -95,8 +96,8 @@
     <string name="package_marquee_desc">Uzun paket adlarını kaydırmak yerine yatay olarak kaydır.</string>
     <string name="package_password">Paket parolası</string>
     <string name="password">Şifre</string>
-    <string name="path_prefix">Yol Öneki</string>
-    <string name="path_prefix_desc">Sunucu URL\'si için yol öneki (örn. /pyload).</string>
+    <string name="path_prefix">Yol Öнеki</string>
+    <string name="path_prefix_desc">Sunucu URL\'si için yol öнеki (örn. /pyload).</string>
     <string name="plugin">Eklenti</string>
     <string name="plugin_config">Eklenti yapılandırma</string>
     <string name="port">Port</string>

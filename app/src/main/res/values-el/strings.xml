@@ -14,6 +14,7 @@
     <string name="bad_path">Το πρόθεμα διαδρομής φαίνεται να είναι λάθος (404 Δεν βρέθηκε).</string>
     <string name="cancel">Ακύρωση</string>
     <string name="cant_move_files">Δεν μπορείτε να μετακινήσετε μόνο αρχεία.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Νέο captcha διαθέσιμο!</string>
     <string name="captcha_notification_desc">Εισαγάγετε το captcha για να συνεχίσετε τη λήψη.</string>
     <string name="captcha_positional_title">Κάντε κλικ στη σωστή θέση</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Αποδοχή</string>
     <string name="eula_refuse">Άρνηση</string>
     <string name="eula_title">Άδεια</string>
-    <string name="exit_confirm_title">Έξοδος από το pyLoad</string>
     <string name="exit_confirm_message">Θέλετε πραγματικά να βγείτε από το pyLoad;</string>
+    <string name="exit_confirm_title">Έξοδος από το pyLoad</string>
     <string name="fileinfo_title">Πληροφορίες αρχείου</string>
     <string name="filter_hint">Φιλτράρισμα κατά όνομα…</string>
     <string name="folder">Φάκελος</string>

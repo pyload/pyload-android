@@ -14,6 +14,7 @@
     <string name="bad_path">Az útvonal előtag hibásnak tűnik (404 Nem található).</string>
     <string name="cancel">Mégse</string>
     <string name="cant_move_files">A fájlok egyenként nem mozgathatóak.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Új captcha érhető el!</string>
     <string name="captcha_notification_desc">Adja meg a captchát a letöltés folytatásához.</string>
     <string name="captcha_positional_title">Kérjük, kattintson a helyes pozícióra</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">elfogad</string>
     <string name="eula_refuse">Visszautasítás</string>
     <string name="eula_title">Licensz</string>
-    <string name="exit_confirm_title">Kilépés a pyLoad-ból</string>
     <string name="exit_confirm_message">Valóban ki akar lépni a pyLoad-ból?</string>
+    <string name="exit_confirm_title">Kilépés a pyLoad-ból</string>
     <string name="fileinfo_title">Fájl infó</string>
     <string name="filter_hint">Szűrés név alapján…</string>
     <string name="folder">mappa</string>

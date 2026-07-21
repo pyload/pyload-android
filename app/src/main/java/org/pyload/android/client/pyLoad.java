@@ -42,11 +42,9 @@ import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
-import org.pyload.android.client.module.Utils;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
 import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
-import org.pyload.android.openapi.model.CaptchaTask;
 import org.pyload.android.openapi.model.Destination;
 
 import java.io.ByteArrayOutputStream;
@@ -69,18 +67,16 @@ public class pyLoad extends FragmentTabsPager {
 
     private OnBackPressedCallback onBackPressedCallback;
 
-    private CaptchaTask currentCaptcha;
-    private int lastCaptchaId = -1;
+    private boolean captchaAvailable = false;
+    private boolean lastCaptchaState = false;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable runCaptchaUpdate = new Runnable() {
         public void run() {
             PyLoadRestApi client = app.getClient();
             if (app.prefs.getBoolean("pull_captcha", true)) {
-                if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
-                    currentCaptcha = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
-                } else {
-                    currentCaptcha = null;
+                captchaAvailable = app.executeNetworkCall(client.apiIsCaptchaWaitingGet());
+                if (!captchaAvailable) {
                     app.setCaptchaNotificationShown(false);
                 }
             }
@@ -89,14 +85,15 @@ public class pyLoad extends FragmentTabsPager {
 
     private final Runnable onCaptchaDataReceived = new Runnable() {
         public void run() {
-            if (currentCaptcha != null && app.prefs.getBoolean("pull_captcha", true)) {
+            if (captchaAvailable && app.prefs.getBoolean("pull_captcha", true)) {
                 captchaBanner.setVisibility(View.VISIBLE);
-                if (lastCaptchaId != currentCaptcha.getTid()) {
+                if (!lastCaptchaState) {
                     showCaptchaNotification();
-                    lastCaptchaId = currentCaptcha.getTid();
+                    lastCaptchaState = true;
                 }
             } else {
                 captchaBanner.setVisibility(View.GONE);
+                lastCaptchaState = false;
             }
         }
     };
@@ -163,11 +160,8 @@ public class pyLoad extends FragmentTabsPager {
 
         captchaBanner = findViewById(R.id.captcha_banner_container);
         captchaBanner.setOnClickListener(v -> {
-            if (currentCaptcha != null) {
-                Intent intent = new Intent(this, CaptchaActivity.class);
-                intent.putExtra("task", Utils.encodeObject(currentCaptcha));
-                startActivity(intent);
-            }
+            Intent intent = new Intent(this, CaptchaActivity.class);
+            startActivity(intent);
         });
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
@@ -224,6 +218,7 @@ public class pyLoad extends FragmentTabsPager {
         super.onResume();
         Intent intent = getIntent();
         if (intent.getBooleanExtra("CaptchaNotification", false)) {
+            intent.removeExtra("CaptchaNotification");
             NotificationManager notificationManager = (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(0);
 
@@ -535,6 +530,10 @@ public class pyLoad extends FragmentTabsPager {
                 Log.d("pyLoad", "Send Captcha result: " + tid + " " + result);
                 app.executeNetworkCall(client.apiSetCaptchaResultPost(tid, result));
             }
+        }, () -> {
+            app.onSuccess();
+            // Check for next captcha immediately after success
+            checkCaptcha();
         }));
 
     }

@@ -16,11 +16,15 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.Utils;
+import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.CaptchaTask;
 
 import java.net.URI;
@@ -29,43 +33,108 @@ import java.util.Map;
 
 public class CaptchaActivity extends AppCompatActivity {
 
+	private static boolean active = false;
+
+	private pyLoadApp app;
 	private CaptchaTask task;
 	private EditText textView;
 	private ImageView imageView;
+	private WebView webView;
+	private View captchaContent;
+	private ProgressBar loading;
+
+	private final Runnable runFetchTask = new Runnable() {
+		public void run() {
+			PyLoadRestApi client = app.getClient();
+			if (app.executeNetworkCall(client.apiIsCaptchaWaitingGet())) {
+				task = app.executeNetworkCall(client.apiGetCaptchaTaskGet(false));
+			} else {
+				task = null;
+			}
+		}
+	};
+
+	private final Runnable onTaskReceived = new Runnable() {
+		public void run() {
+			if (task != null) {
+				initUI();
+			} else {
+				finish();
+			}
+		}
+	};
+
+	private final Runnable finishOnError = this::finish;
+
+	public static boolean isActive() {
+		return active;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.captcha_dialog);
-
-		String taskJson = getIntent().getStringExtra("task");
-		if (taskJson == null) {
-			finish();
-			return;
-		}
-		task = Utils.decodeObject(taskJson, CaptchaTask.class);
+		active = true;
+		app = (pyLoadApp) getApplicationContext();
+		setContentView(R.layout.activity_captcha);
 
 		textView = findViewById(R.id.text);
 		imageView = findViewById(R.id.image);
-		WebView webView = findViewById(R.id.web);
+		webView = findViewById(R.id.web);
+		captchaContent = findViewById(R.id.captcha_content);
+		loading = findViewById(R.id.loading);
 
+		Button enter = findViewById(R.id.enter);
+		Button cancel = findViewById(R.id.cancel);
+
+		enter.setOnClickListener(v -> {
+			submitResult(textView.getText().toString());
+		});
+
+		cancel.setOnClickListener(v -> {
+			finish();
+		});
+
+		fetchNextTask();
+	}
+
+	@Override
+	protected void onNewIntent(@NonNull Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+		fetchNextTask();
+	}
+
+	private void fetchNextTask() {
+		captchaContent.setVisibility(View.GONE);
+		loading.setVisibility(View.VISIBLE);
+		GuiTask guiTask = new GuiTask(runFetchTask, onTaskReceived);
+		guiTask.setCritical(finishOnError);
+		app.addTask(guiTask);
+	}
+
+	private void initUI() {
+		loading.setVisibility(View.GONE);
+		captchaContent.setVisibility(View.VISIBLE);
+
+		textView.setText("");
+		
 		String resultType = task.getResultType();
 		if (resultType == null) resultType = "textual";
 
 		if ("positional".equals(resultType)) {
 			setTitle(R.string.captcha_positional_title);
+		} else if ("interactive".equals(resultType)) {
+			setTitle(R.string.captcha_interactive_title);
 		} else {
 			setTitle(R.string.captcha_textual_title);
 		}
-
-		Button enter = findViewById(R.id.enter);
-		Button cancel = findViewById(R.id.cancel);
 
 		if ("interactive".equals(resultType)) {
 			imageView.setVisibility(View.GONE);
 			textView.setVisibility(View.GONE);
 			webView.setVisibility(View.VISIBLE);
-			enter.setVisibility(View.GONE);
+			findViewById(R.id.enter).setVisibility(View.GONE);
+			
 			WebSettings webSettings = webView.getSettings();
 			webSettings.setJavaScriptEnabled(true);
 			webSettings.setDomStorageEnabled(true);
@@ -74,7 +143,6 @@ public class CaptchaActivity extends AppCompatActivity {
 
 			// Use JavaScript Interface for direct communication
 			webView.addJavascriptInterface(new CaptchaInterface(), "AndroidBridge");
-
 			webView.setWebChromeClient(new WebChromeClient());
 
 			Object data = task.getData();
@@ -89,6 +157,20 @@ public class CaptchaActivity extends AppCompatActivity {
 				}
 			}
 		} else if ("textual".equals(resultType) || "positional".equals(resultType)) {
+			webView.setVisibility(View.GONE);
+			imageView.setVisibility(View.VISIBLE);
+			findViewById(R.id.enter).setVisibility(View.VISIBLE);
+			
+			if ("textual".equals(resultType)) {
+				textView.setVisibility(View.VISIBLE);
+				textView.setFocusableInTouchMode(true);
+				textView.setHint(R.string.captcha_textual_title);
+			} else {
+				textView.setVisibility(View.VISIBLE);
+				textView.setFocusable(false);
+				textView.setHint(R.string.captcha_positional_title);
+			}
+
 			Object data = task.getData();
 			if (data instanceof Map) {
 				@SuppressWarnings("unchecked")
@@ -107,7 +189,6 @@ public class CaptchaActivity extends AppCompatActivity {
 				}
 
 				if ("positional".equals(resultType)) {
-					textView.setVisibility(View.GONE);
 					imageView.setOnTouchListener(new View.OnTouchListener() {
 						@Override
 						public boolean onTouch(View v, MotionEvent event) {
@@ -119,39 +200,46 @@ public class CaptchaActivity extends AppCompatActivity {
 								int x = (int) coords[0];
 								int y = (int) coords[1];
 								textView.setText(String.format(Locale.US, "%d,%d", x, y));
-								Log.d("pyLoad", "Positional captcha: " + x + "," + y);
 							}
 							return true;
 						}
 					});
+				} else {
+					imageView.setOnTouchListener(null);
 				}
 			} else {
 				Log.e("pyLoad", "Captcha data is null or not a Map for " + resultType);
 			}
 		} else {
 			Log.e("pyLoad", "Unsupported captcha type: " + resultType);
+			textView.setVisibility(View.VISIBLE);
 			textView.setHint("Unsupported captcha type: " + resultType);
 			imageView.setVisibility(View.GONE);
-			enter.setVisibility(View.GONE);
+			webView.setVisibility(View.GONE);
 		}
-
-		enter.setOnClickListener(v -> {
-			submitResult(textView.getText().toString());
-		});
-
-		cancel.setOnClickListener(v -> {
-			finish();
-		});
 	}
 
 	private void submitResult(String result) {
-		Intent intent = new Intent(this, pyLoad.class);
-		intent.setAction("SET_CAPTCHA_RESULT");
-		intent.putExtra("tid", task.getTid());
-		intent.putExtra("result", result);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		startActivity(intent);
-		finish();
+		// Show loading state while waiting for confirmation
+		captchaContent.setVisibility(View.GONE);
+		loading.setVisibility(View.VISIBLE);
+
+		GuiTask guiTask = new GuiTask(() -> {
+			PyLoadRestApi client = app.getClient();
+			app.executeNetworkCall(client.apiSetCaptchaResultPost(task.getTid(), result));
+		}, () -> {
+			app.onSuccess();
+			// Fetch next captcha immediately
+			fetchNextTask();
+		});
+		guiTask.setCritical(finishOnError);
+		app.addTask(guiTask);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		active = false;
 	}
 
 	// Native interface for JavaScript to call

@@ -13,6 +13,7 @@
     <string name="bad_path">נראה שקידומת הנתיב שגויה (404 לא נמצא).</string>
     <string name="cancel">בטל</string>
     <string name="cant_move_files">לא ניתן להעביר קבצים בודדים.</string>
+    <string name="captcha_interactive_title">קאפצ\'ה</string>
     <string name="captcha_notification">קאפצ\'ה חדשה זמינה!</string>
     <string name="captcha_notification_desc">הזן קאפצ\'ה כדי להמשיך בהורדה.</string>
     <string name="captcha_positional_title">אנא לחץ על המיקום הנכון</string>
@@ -39,8 +40,8 @@
     <string name="eula_accept">קבל</string>
     <string name="eula_refuse">דחה</string>
     <string name="eula_title">רישיון</string>
-    <string name="exit_confirm_title">יציאה מ-pyLoad</string>
     <string name="exit_confirm_message">האם אתה באמת רוצה לצאת מ-pyLoad?</string>
+    <string name="exit_confirm_title">יציאה מ-pyLoad</string>
     <string name="fileinfo_title">מידע קובץ</string>
     <string name="filter_hint">סנן לפי שם…</string>
     <string name="folder">&#x200e;תיקייה</string>
@@ -53,6 +54,7 @@
     <string name="keep_screen_on">השאר מסך דולק</string>
     <string name="keep_screen_on_desc">מנע מהמסך להיכבות כשהאפליקציה פתוחה.</string>
     <string name="labelPackage">&#x200e;חבילה</string>
+    <string name="lambda" translatable="false"></string>
     <string name="language">שפה</string>
     <string name="language_desc">שפת האפליקציה. דרושה הפעלה מחדש לפני שהשינויים ייכנסו לתוקף.</string>
     <string-array name="languages">
@@ -96,7 +98,7 @@
     <string name="password">סיסמה</string>
     <string name="path_prefix">קידומת נתיב</string>
     <string name="path_prefix_desc">קידומת נתיב עבור כתובת השרת (למשל &#x200e;/pyload).</string>
-    <string name="plugin">&#x200e;פלאגין</string>
+    <string name="plugin">&#x200e;פלאגיн</string>
     <string name="plugin_config">הגדרות פלאגינים</string>
     <string name="port">פורט</string>
     <string name="port_desc">הפורט שבו שרת ה-pyLoad שלך מאזין (ברירת המחדל היא 8000).</string>
@@ -113,7 +115,7 @@
     <string name="search">חיפוש</string>
     <string name="server">שרת</string>
     <string name="server_url">כתובת השרת</string>
-    <string name="size">&#x200e;גודל</string>
+    <string name="size">&#x200e;גودל</string>
     <string name="socket_error">לא ניתן היה להתחבר אל שרת היעד. בדוק את הגדרות השרת, את תצורת הרשת שלך או פתיחת פורטים. </string>
     <string name="ssl">חיבור SSL</string>
     <string name="ssl_desc">צור חיבור מאובטח לשרת המרוחק אם הפעלת את SSL</string>

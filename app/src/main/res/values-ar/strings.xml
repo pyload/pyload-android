@@ -14,6 +14,7 @@
     <string name="bad_path">يبدو أن بادئة المسار خاطئة (404 لم يتم العثور عليه).</string>
     <string name="cancel">الغاء</string>
     <string name="cant_move_files">لا يمكنك تحريك ملفات مفرد.</string>
+    <string name="captcha_interactive_title">كلمة التحقق</string>
     <string name="captcha_notification">كابتشا جديدة متاحة!</string>
     <string name="captcha_notification_desc">أدخل الكابتشا لمتابعة التحميل.</string>
     <string name="captcha_positional_title">يرجى النقر على الموضع الصحيح</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">قبول</string>
     <string name="eula_refuse">رفض</string>
     <string name="eula_title">الترخيص</string>
-    <string name="exit_confirm_title">الخروج من pyLoad</string>
     <string name="exit_confirm_message">هل تريد حقًا الخروج من pyLoad؟</string>
+    <string name="exit_confirm_title">الخروج من pyLoad</string>
     <string name="fileinfo_title">معلومات الملف</string>
     <string name="filter_hint">تصفية حسب الاسم…</string>
     <string name="folder">مجلد</string>
@@ -130,7 +131,7 @@
     <string name="theme_system">افتراضي النظام</string>
     <string name="trafficleft">البيانات:</string>
     <string name="unlimited">غير محدود</string>
-    <string name="valid">صالحة</string>
+    <string name="valid">غير صالح</string>
     <string name="validuntil">انتهاء صلاحية:</string>
     <string name="yes">نعم</string>
 </resources>

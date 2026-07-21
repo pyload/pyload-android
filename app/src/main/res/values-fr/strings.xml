@@ -14,6 +14,7 @@
     <string name="bad_path">Le préfixe de chemin semble être incorrect (404 Non Trouvé).</string>
     <string name="cancel">Annuler</string>
     <string name="cant_move_files">Vous ne pouvez pas déplacer un seul fichier.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Nouveau captcha disponible !</string>
     <string name="captcha_notification_desc">Entrez le captcha pour continuer le téléchargement.</string>
     <string name="captcha_positional_title">Veuillez cliquer sur la bonne position</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Accepter</string>
     <string name="eula_refuse">Refuser</string>
     <string name="eula_title">License</string>
-    <string name="exit_confirm_title">Quitter pyLoad</string>
     <string name="exit_confirm_message">Voulez-vous vraiment quitter pyLoad ?</string>
+    <string name="exit_confirm_title">Quitter pyLoad</string>
     <string name="fileinfo_title">Information sur le fichier</string>
     <string name="filter_hint">Filtrer par nom…</string>
     <string name="folder">Dossier</string>

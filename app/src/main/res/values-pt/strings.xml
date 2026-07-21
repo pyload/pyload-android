@@ -14,8 +14,9 @@
     <string name="bad_path">O prefixo do caminho parece estar incorreto (404 Não Encontrado).</string>
     <string name="cancel">Cancelar</string>
     <string name="cant_move_files">Você não pode mover arquivos individuais.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Novo captcha disponível!</string>
-    <string name="captcha_notification_desc">Insira o captcha para continuar o download.</string>
+    <string name="captcha_notification_desc">Insira o captcha para continuer o download.</string>
     <string name="captcha_positional_title">Por favor, clique na posição correta</string>
     <string name="captcha_textual_title">Por favor insira o texto</string>
     <string name="certificate_error">Certificado SSL não foi aceitou. Adicioná-lo ao android ou desabilitar a validação.</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Aceitar</string>
     <string name="eula_refuse">Recusar</string>
     <string name="eula_title">Licença</string>
-    <string name="exit_confirm_title">Sair do pyLoad</string>
     <string name="exit_confirm_message">Deseja realmente sair do pyLoad?</string>
+    <string name="exit_confirm_title">Sair do pyLoad</string>
     <string name="fileinfo_title">Informação do arquivo</string>
     <string name="filter_hint">Filtrar por nome…</string>
     <string name="folder">Pasta</string>

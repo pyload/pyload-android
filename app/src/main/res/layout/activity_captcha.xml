@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/captcha_content"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="10dp"
+                  android:orientation="vertical">
+        <ImageView android:id="@+id/image"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_gravity="center"
+                   android:padding="5dip"
+                   android:contentDescription="@string/captcha_textual_title"
+                   android:scaleType="fitCenter"
+                   />
+        <EditText android:id="@+id/text"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:lines="1"
+                  android:hint="@string/captcha_textual_title"
+                  android:inputType="text|textNoSuggestions"
+                  android:importantForAutofill="no"
+                  android:textColor="@color/textPrimary"
+                  />
+        <WebView android:id="@+id/web"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="1"
+                 android:visibility="gone"
+                 />
+        <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/linearLayout1">
+
+        <Button
+        	android:text="@string/enter"
+        	android:id="@+id/enter"
+            style="@style/PrimaryButton"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"/>
+
+        <Button
+        	android:text="@string/cancel"
+        	android:id="@+id/cancel"
+            style="@style/SecondaryButton"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"></Button>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

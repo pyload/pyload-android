@@ -14,6 +14,7 @@
     <string name="bad_path">パスプレフィックスが間違っているようです (404 見つかりません).</string>
     <string name="cancel">キャンセル</string>
     <string name="cant_move_files">1 つのファイルを移動することはできません。</string>
+    <string name="captcha_interactive_title">キャプチャ</string>
     <string name="captcha_notification">新しいキャプチャがあります！</string>
     <string name="captcha_notification_desc">ダウンロードを続行するにはキャプチャを入力してください。</string>
     <string name="captcha_positional_title">正しい位置をクリックしてください</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">承認</string>
     <string name="eula_refuse">拒否</string>
     <string name="eula_title">ライセンス</string>
-    <string name="exit_confirm_title">pyLoadを終了</string>
     <string name="exit_confirm_message">本当にpyLoadを終了しますか？</string>
+    <string name="exit_confirm_title">pyLoadを終了</string>
     <string name="fileinfo_title">ファイルインフォメーション</string>
     <string name="filter_hint">名前で絞り込む…</string>
     <string name="folder">フォルダー</string>

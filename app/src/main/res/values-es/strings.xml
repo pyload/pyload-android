@@ -14,6 +14,7 @@
     <string name="bad_path">El prefijo de ruta parece ser incorrecto (404 No Encontrado).</string>
     <string name="cancel">Cancelar</string>
     <string name="cant_move_files">No puedes mover archivos individuales.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">¡Nuevo captcha disponible!</string>
     <string name="captcha_notification_desc">Introduce el captcha para continuar con la descarga.</string>
     <string name="captcha_positional_title">Por favor, haga clic en la posición correcta</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Aceptar</string>
     <string name="eula_refuse">Rechazar</string>
     <string name="eula_title">Licencia</string>
-    <string name="exit_confirm_title">Salir de pyLoad</string>
     <string name="exit_confirm_message">¿Realmente quieres salir de pyLoad?</string>
+    <string name="exit_confirm_title">Salir de pyLoad</string>
     <string name="fileinfo_title">Información del archivo</string>
     <string name="filter_hint">Filtrar por nombre…</string>
     <string name="folder">Carpeta</string>

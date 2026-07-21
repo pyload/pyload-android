@@ -14,6 +14,7 @@
     <string name="bad_path">Prefiks ścieżki wydaje się być błędny (404 Nie znaleziono).</string>
     <string name="cancel">Anuluj</string>
     <string name="cant_move_files">Nie możesz przenosić pojedynczych plików.</string>
+    <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">Dostępna nowa captcha!</string>
     <string name="captcha_notification_desc">Wpisz kod captcha, aby kontynuować pobieranie.</string>
     <string name="captcha_positional_title">Proszę kliknąć w odpowiednim miejscu</string>
@@ -40,8 +41,8 @@
     <string name="eula_accept">Akceptuj</string>
     <string name="eula_refuse">Odmowa</string>
     <string name="eula_title">Licencja</string>
-    <string name="exit_confirm_title">Wyjdź z pyLoad</string>
     <string name="exit_confirm_message">Czy na pewno chcesz wyjdź z pyLoad?</string>
+    <string name="exit_confirm_title">Wyjdź z pyLoad</string>
     <string name="fileinfo_title">Informacja o pliku</string>
     <string name="filter_hint">Filtruj według nazwy…</string>
     <string name="folder">Folder</string>
