@@ -92,8 +92,8 @@
     <string name="on">ενεργό</string>
     <string name="overview">Επισκόπηση</string>
     <string name="package_links">Εισάγετε τους συνδέσμους εδώ.</string>
-    <string name="package_marquee">Κυλιόμενο κείμενο πακέτου</string>
-    <string name="package_marquee_desc">Κύλιση μεγάλων ονομάτων πακέτων οριζόντια αντί για αναδίπλωση.</string>
+    <string name="text_marquee">Κυλιόμενο κείμενο</string>
+    <string name="text_marquee_desc">Κύλιση μεγάλων κειμένων οριζόντια αντί για αναδίπλωση.</string>
     <string name="package_password">Κωδικός πακέτου</string>
     <string name="password">Κωδικός πρόσβασης</string>
     <string name="path_prefix">Πρόθεμα διαδρομής</string>

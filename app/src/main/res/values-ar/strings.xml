@@ -92,8 +92,8 @@
     <string name="on">تشغيل</string>
     <string name="overview">نظرة عامّة</string>
     <string name="package_links">ضع الروابط الخاصة بك هنا.</string>
-    <string name="package_marquee">نص الحزمة المتداول</string>
-    <string name="package_marquee_desc">قم بتمرير أسماء الحزم الطويلة أفقيًا بدلاً من الالتفاف.</string>
+    <string name="text_marquee">نص متداول</string>
+    <string name="text_marquee_desc">قم بتمرير النصوص الطويلة أفقيًا بدلاً من الالتفاف.</string>
     <string name="package_password">كلمة مرور الحزمة</string>
     <string name="password">كلمة المرور</string>
     <string name="path_prefix">بادئة المسار</string>

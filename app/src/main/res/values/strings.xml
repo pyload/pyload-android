@@ -95,8 +95,8 @@
     <string name="on">on</string>
     <string name="overview">Overview</string>
     <string name="package_links">Put your links here.</string>
-    <string name="package_marquee">Scrolling package text</string>
-    <string name="package_marquee_desc">Scroll long package names horizontally instead of wrapping.</string>
+    <string name="text_marquee">Scrolling text</string>
+    <string name="text_marquee_desc">Scroll long text horizontally instead of wrapping.</string>
     <string name="package_password">Package password</string>
     <string name="password">Password</string>
     <string name="path_prefix">Path Prefix</string>

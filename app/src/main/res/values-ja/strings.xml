@@ -92,8 +92,8 @@
     <string name="on">オン</string>
     <string name="overview">概要</string>
     <string name="package_links">ここであなたのリンクを置きます。</string>
-    <string name="package_marquee">パッケージ名のスクロール</string>
-    <string name="package_marquee_desc">長いパッケージ名を折り返さずに水平方向にスクロールします。</string>
+    <string name="text_marquee">テキストのスクロール</string>
+    <string name="text_marquee_desc">長いテキストを折り返さずに水平方向にスクロールします。</string>
     <string name="package_password">パッケージのパスワード</string>
     <string name="password">パスワード</string>
     <string name="path_prefix">パスプレフィックス</string>

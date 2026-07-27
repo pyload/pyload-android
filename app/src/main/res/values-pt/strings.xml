@@ -92,8 +92,8 @@
     <string name="on">ligado</string>
     <string name="overview">Visão geral</string>
     <string name="package_links">Coloque seus links aqui.</string>
-    <string name="package_marquee">Texto do pacote rolável</string>
-    <string name="package_marquee_desc">Rolar nomes longos de pacotes horizontalmente em vez de quebrar a linha.</string>
+    <string name="text_marquee">Texto rolável</string>
+    <string name="text_marquee_desc">Rolar textos longos horizontalmente em vez de quebrar a linha.</string>
     <string name="package_password">Senha do pacote</string>
     <string name="password">Senha</string>
     <string name="path_prefix">Prefixo do caminho</string>

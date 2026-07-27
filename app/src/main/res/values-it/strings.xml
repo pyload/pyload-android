@@ -92,8 +92,8 @@
     <string name="on">on</string>
     <string name="overview">Panoramica</string>
     <string name="package_links">Metti qui i tuoi link.</string>
-    <string name="package_marquee">Testo del pacchetto scorrevole</string>
-    <string name="package_marquee_desc">Fai scorrere i nomi dei pacchetti lunghi orizzontalmente invece di andare a capo.</string>
+    <string name="text_marquee">Testo scorrevole</string>
+    <string name="text_marquee_desc">Fai scorrere i testi lunghi orizzontalmente invece di andare a capo.</string>
     <string name="package_password">Password pacchetto</string>
     <string name="password">Password</string>
     <string name="path_prefix">Prefisso del percorso</string>

@@ -92,8 +92,8 @@
     <string name="on">Wł</string>
     <string name="overview">Przegląd</string>
     <string name="package_links">Umieść linki tutaj.</string>
-    <string name="package_marquee">Przewijany tekst paczki</string>
-    <string name="package_marquee_desc">Przewijaj długie nazwy paczek poziomo zamiast zawijania.</string>
+    <string name="text_marquee">Przewijany tekst</string>
+    <string name="text_marquee_desc">Przewijaj długie teksty poziomo zamiast zawijania.</string>
     <string name="package_password">Hasło pakietu</string>
     <string name="password">Hasło</string>
     <string name="path_prefix">Prefiks ścieżki</string>

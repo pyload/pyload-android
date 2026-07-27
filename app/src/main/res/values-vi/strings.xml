@@ -92,8 +92,8 @@
     <string name="on">trên</string>
     <string name="overview">Tổng quan</string>
     <string name="package_links">Đặt liên kết của bạn ở đây.</string>
-    <string name="package_marquee">Văn bản gói cuộn</string>
-    <string name="package_marquee_desc">Cuộn tên gói dài theo chiều ngang thay vì xuống dòng.</string>
+    <string name="text_marquee">Văn bản cuộn</string>
+    <string name="text_marquee_desc">Cuộn văn bản dài theo chiều ngang thay vì xuống dòng.</string>
     <string name="package_password">Mật khẩu gói</string>
     <string name="password">Mật khẩu</string>
     <string name="path_prefix">Tiền tố đường dẫn</string>

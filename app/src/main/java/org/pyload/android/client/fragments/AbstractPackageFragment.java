@@ -474,7 +474,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		GroupViewHolder holder = (GroupViewHolder) convertView.getTag();
 		holder.name.setText(pack.getName());
 
-		boolean marquee = app.prefs.getBoolean("package_marquee", true);
+		boolean marquee = app.prefs.getBoolean("text_marquee", true);
 		if (marquee) {
 			holder.name.setSingleLine(true);
 			holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
@@ -528,7 +528,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		if (!file.getName().equals(holder.name.getText()))
 			holder.name.setText(file.getName());
 
-		boolean marquee = app.prefs.getBoolean("package_marquee", true);
+		boolean marquee = app.prefs.getBoolean("text_marquee", true);
 		if (marquee) {
 			holder.name.setSingleLine(true);
 			holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);

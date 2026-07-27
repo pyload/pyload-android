@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,11 +75,13 @@ class AccountAdapter extends BaseAdapter {
     }
 
     private LayoutInflater layoutInflater;
+    private final pyLoadApp app;
     private List<AccountInfo> data;
     private boolean loading = true;
 
     public AccountAdapter(final Context context) {
         layoutInflater = LayoutInflater.from(context);
+        app = (pyLoadApp) context.getApplicationContext();
 
         data = new ArrayList<AccountInfo>();
     }
@@ -147,6 +150,18 @@ class AccountAdapter extends BaseAdapter {
             holder.premium.setText(R.string.free);
         }
         holder.name.setText(acc.getLogin());
+
+        boolean marquee = app.prefs.getBoolean("text_marquee", true);
+        if (marquee) {
+            holder.name.setSingleLine(true);
+            holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            holder.name.setHorizontallyScrolling(true);
+            holder.name.setSelected(true);
+        } else {
+            holder.name.setSingleLine(false);
+            holder.name.setEllipsize(null);
+            holder.name.setHorizontallyScrolling(false);
+        }
 
         if (Boolean.TRUE.equals(acc.getValid()))
             holder.valid.setText(R.string.valid);

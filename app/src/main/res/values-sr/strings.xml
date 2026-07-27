@@ -92,8 +92,8 @@
     <string name="on">укључено</string>
     <string name="overview">Преглед</string>
     <string name="package_links">Овде копирате везе.</string>
-    <string name="package_marquee">Kretanje teksta paketa</string>
-    <string name="package_marquee_desc">Pomerajte dugačka imena paketa horizontalno umesto prelamanja.</string>
+    <string name="text_marquee">Kretanje teksta</string>
+    <string name="text_marquee_desc">Pomerajte dugačke tekstove horizontalno umesto prelamanja.</string>
     <string name="package_password">Lozinka paketa</string>
     <string name="password">Лозинка</string>
     <string name="path_prefix">Префикс путање</string>

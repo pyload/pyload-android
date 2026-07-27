@@ -92,8 +92,8 @@
     <string name="on">encendido</string>
     <string name="overview">Resumen</string>
     <string name="package_links">Pon aquí tus enlaces.</string>
-    <string name="package_marquee">Texto de paquete desplazable</string>
-    <string name="package_marquee_desc">Desplazar nombres largos de paquetes horizontalmente en lugar de ajustarlos.</string>
+    <string name="text_marquee">Texto desplazable</string>
+    <string name="text_marquee_desc">Desplazar textos largos horizontalmente en lugar de ajustarlos.</string>
     <string name="package_password">Contraseña del paquete</string>
     <string name="password">Contraseña</string>
     <string name="path_prefix">Prefijo de ruta</string>

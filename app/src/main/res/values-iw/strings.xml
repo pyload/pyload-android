@@ -92,8 +92,8 @@
     <string name="on">&#x200e;פעיל</string>
     <string name="overview">הורדות</string>
     <string name="package_links">הכנס את הקישורים שלך כאן.</string>
-    <string name="package_marquee">טקסט חבילה נגלל</string>
-    <string name="package_marquee_desc">גלילת שמות חבילות ארוכים אופקית במקום גלישת שורות.</string>
+    <string name="text_marquee">טקסט נגלל</string>
+    <string name="text_marquee_desc">גלילת טקסטים ארוכים אופקית במקום גלישת שורות.</string>
     <string name="package_password">סיסמת חבילה</string>
     <string name="password">סיסמה</string>
     <string name="path_prefix">קידומת נתיב</string>

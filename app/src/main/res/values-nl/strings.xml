@@ -92,8 +92,8 @@
     <string name="on">aan</string>
     <string name="overview">Overzicht</string>
     <string name="package_links">Zet hier je links.</string>
-    <string name="package_marquee">Scrollende pakket tekst</string>
-    <string name="package_marquee_desc">Lange pakketnamen horizontaal scrollen in plaats van omwikkelen.</string>
+    <string name="text_marquee">Scrollende tekst</string>
+    <string name="text_marquee_desc">Lange teksten horizontaal scrollen in plaats van omwikkelen.</string>
     <string name="package_password">Pakket wachtwoord</string>
     <string name="password">Wachtwoord</string>
     <string name="path_prefix">Padvoorvoegsel</string>

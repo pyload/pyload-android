@@ -92,8 +92,8 @@
     <string name="on">Allumé</string>
     <string name="overview">Aperçu</string>
     <string name="package_links">Placez vos liens ici.</string>
-    <string name="package_marquee">Texte de paquet défilant</string>
-    <string name="package_marquee_desc">Faire défiler les longs noms de paquets horizontalement au lieu de les envelopper.</string>
+    <string name="text_marquee">Texte défilant</string>
+    <string name="text_marquee_desc">Faire défiler les longs textes horizontalement au lieu de les envelopper.</string>
     <string name="package_password">Mot de passe du paquet</string>
     <string name="password">Mot de passe</string>
     <string name="path_prefix">Préfixe de chemin</string>

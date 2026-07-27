@@ -92,8 +92,8 @@
     <string name="on">be</string>
     <string name="overview">Főképernyő</string>
     <string name="package_links">Ide kell a linkeket másolni.</string>
-    <string name="package_marquee">Gördülő csomagnév</string>
-    <string name="package_marquee_desc">Hosszú csomagnevek vízszintes görgetése tördelés helyett.</string>
+    <string name="text_marquee">Gördülő szöveg</string>
+    <string name="text_marquee_desc">Hosszú szövegek vízszintes görgetése tördelés helyett.</string>
     <string name="package_password">Csomag jelszava</string>
     <string name="password">Jelszó</string>
     <string name="path_prefix">Útvonal előtag</string>

@@ -385,7 +385,7 @@ class OverviewAdapter extends BaseAdapter {
             holder.name.setText(info.getName());
         }
 
-        boolean marquee = app.prefs.getBoolean("package_marquee", true);
+        boolean marquee = app.prefs.getBoolean("text_marquee", true);
         if (marquee) {
             holder.name.setSingleLine(true);
             holder.name.setEllipsize(TextUtils.TruncateAt.MARQUEE);

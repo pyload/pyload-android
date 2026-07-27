@@ -92,8 +92,8 @@
     <string name="on">ein</string>
     <string name="overview">Übersicht</string>
     <string name="package_links">Füge deine Links hier ein.</string>
-    <string name="package_marquee">Lauftext für Pakete</string>
-    <string name="package_marquee_desc">Lange Paketnamen horizontal scrollen statt umbrechen.</string>
+    <string name="text_marquee">Lauftext</string>
+    <string name="text_marquee_desc">Langen Text horizontal scrollen statt umbrechen.</string>
     <string name="package_password">Paket-Passwort</string>
     <string name="password">Passwort</string>
     <string name="path_prefix">Pfad-Präfix</string>

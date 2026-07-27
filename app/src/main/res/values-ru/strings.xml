@@ -92,8 +92,8 @@
     <string name="on">вкл.</string>
     <string name="overview">Обзор</string>
     <string name="package_links">Поместите ваши ссылки здесь.</string>
-    <string name="package_marquee">Прокрутка текста пакета</string>
-    <string name="package_marquee_desc">Прокручивать длинные имена пакетов по горизонтали вместо переноса.</string>
+    <string name="text_marquee">Прокрутка текста</string>
+    <string name="text_marquee_desc">Прокручивать длинные тексты по горизонтали вместо переноса.</string>
     <string name="package_password">Пароль пакета</string>
     <string name="password">Пароль</string>
     <string name="path_prefix">Префикс пути</string>
