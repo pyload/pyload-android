@@ -37,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
 
+@SuppressWarnings("unchecked")
 public class ApiClient {
 
   protected Map<String, Interceptor> apiAuthorizations;
@@ -255,6 +256,7 @@ public class ApiClient {
  * when the deserialization fails due to JsonParseException and the
  * expected type is String, then just return the body string.
  */
+@SuppressWarnings("unchecked")
 class GsonResponseBodyConverterToString<T> implements Converter<ResponseBody, T> {
   protected final Gson gson;
   protected final Type type;

@@ -179,6 +179,17 @@ tasks.register('moveOpenApiCode') {
             // Move new generated code
             sourceDir.parentFile.mkdirs()
             sourceDir.renameTo(targetDir)
+
+            // Post-processing: Suppress warnings in ApiClient.java
+            def apiClientFile = new File(targetDir, "ApiClient.java")
+            if (apiClientFile.exists()) {
+                println "Applying warning suppressions to ApiClient.java..."
+                def content = apiClientFile.text
+                content = content.replace("public class ApiClient", "@SuppressWarnings(\"unchecked\")\npublic class ApiClient")
+                content = content.replace("class GsonResponseBodyConverterToString", "@SuppressWarnings(\"unchecked\")\nclass GsonResponseBodyConverterToString")
+                apiClientFile.text = content
+            }
+
             println "✅ Successfully moved generated code to src/main/java/org/pyload/android/openapi"
         }
     }
