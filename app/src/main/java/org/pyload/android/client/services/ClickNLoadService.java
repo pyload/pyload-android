@@ -1,4 +1,4 @@
-package org.pyload.android.client.services.clicknload;
+package org.pyload.android.client.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

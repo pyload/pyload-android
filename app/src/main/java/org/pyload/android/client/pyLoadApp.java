@@ -31,6 +31,7 @@ import org.pyload.android.client.exceptions.WrongServer;
 import org.pyload.android.client.module.AllTrustManager;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.TaskQueue;
+import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.ApiClient;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.auth.ApiKeyAuth;
@@ -92,7 +93,7 @@ public class pyLoadApp extends Application {
 		startTaskQueue();
 
 		if (prefs.getBoolean("clicknload", false)) {
-			Intent intent = new Intent(this, org.pyload.android.client.services.clicknload.ClickNLoadService.class);
+			Intent intent = new Intent(this, ClickNLoadService.class);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 				startForegroundService(intent);
 			} else {

@@ -16,6 +16,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
+import org.pyload.android.client.services.ClickNLoadService;
+
 public class Preferences extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
@@ -119,7 +121,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                 updateUrlSummary();
             } else if ("clicknload".equals(key)) {
                 boolean enabled = sharedPreferences.getBoolean(key, false);
-                Intent intent = new Intent(getContext(), org.pyload.android.client.services.clicknload.ClickNLoadService.class);
+                Intent intent = new Intent(getContext(), ClickNLoadService.class);
                 if (enabled) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         getContext().startForegroundService(intent);

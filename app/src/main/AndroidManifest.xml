@@ -128,7 +128,7 @@
                   android:windowSoftInputMode="adjustResize"/>
 
         <service
-            android:name=".services.clicknload.ClickNLoadService"
+            android:name=".services.ClickNLoadService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
