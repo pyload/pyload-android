@@ -42,6 +42,7 @@ import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
 import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
@@ -234,6 +235,15 @@ public class pyLoad extends FragmentTabsPager {
 
         mHandler.post(mCaptchaTimeTask);
         app.refreshTab();
+
+        if (app.prefs.getBoolean("clicknload", false)) {
+            Intent clicknloadIntent = new Intent(this, ClickNLoadService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(clicknloadIntent);
+            } else {
+                startService(clicknloadIntent);
+            }
+        }
     }
 
     @Override

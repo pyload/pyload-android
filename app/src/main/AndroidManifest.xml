@@ -133,5 +133,14 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <receiver
+            android:name=".services.ClickNLoadService$StopClickNLoadReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.pyload.android.STOP_CLICKNLOAD" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>

@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -43,6 +45,7 @@ public class ClickNLoadService extends Service {
 
     private static final String TAG = "ClickNLoadService";
     private static final int PORT = 9666;
+    private static final String STOP_ACTION = "org.pyload.android.STOP_CLICKNLOAD";
     private ServerThread serverThread;
 
     @Override
@@ -71,10 +74,16 @@ public class ClickNLoadService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
+        Intent stopIntent = new Intent(this, StopClickNLoadReceiver.class);
+        stopIntent.setAction(STOP_ACTION);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0,
+                stopIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
         return new NotificationCompat.Builder(this, channelId)
                 .setContentText(getString(R.string.clicknload_service_running))
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pendingIntent)
+                .addAction(0, getString(R.string.close), stopPendingIntent)
                 .build();
     }
 
@@ -328,5 +337,18 @@ public class ClickNLoadService extends Service {
             return m.group(1);
         }
         return null;
+    }
+
+    public static class StopClickNLoadReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ClickNLoadService.STOP_ACTION.equals(intent.getAction())) {
+                pyLoadApp app = (pyLoadApp) context.getApplicationContext();
+                if (!app.isAppInForeground()) {
+                    Intent stopServiceIntent = new Intent(context, ClickNLoadService.class);
+                    context.stopService(stopServiceIntent);
+                }
+            }
+        }
     }
 }
