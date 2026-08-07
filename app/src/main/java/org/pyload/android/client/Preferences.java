@@ -16,6 +16,9 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import org.pyload.android.client.services.ClickNLoadService;
 
 public class Preferences extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
@@ -87,6 +90,10 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
+            if ("about_screen".equals(rootKey)) {
+                requireActivity().setTitle(R.string.about);
+            }
+
             Preference themePreference = findPreference("theme");
             if (themePreference != null) {
                 themePreference.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -96,6 +103,30 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
             }
 
             updateUrlSummary();
+            updateAboutInfo();
+        }
+
+        private void updateAboutInfo() {
+            Preference aboutScreen = findPreference("about_screen");
+            if (aboutScreen != null) {
+                aboutScreen.setSummary("pyLoad " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+            }
+
+            Preference versionPref = findPreference("version");
+            if (versionPref != null) {
+                versionPref.setSummary("pyLoad " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+            }
+
+            Preference gitPref = findPreference("git_commit");
+            if (gitPref != null) {
+                gitPref.setSummary(BuildConfig.GIT_COMMIT);
+            }
+
+            Preference buildDatePref = findPreference("build_date");
+            if (buildDatePref != null) {
+                DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+                buildDatePref.setSummary(dateFormat.format(new Date(BuildConfig.BUILD_DATE)));
+            }
         }
 
         @Override

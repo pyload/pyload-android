@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="about">אודות</string>
     <string name="abort">הפסק</string>
     <string name="accounts">חשבונות</string>
     <string name="add">הוסף</string>
@@ -27,6 +28,7 @@
     <string name="clicknload_desc">אפשר תמיכה ב-ClickNLoad (שרת מקומי בפורט 9666).</string>
     <string name="clicknload_dest_desc">בחר היכן יישלחו הקישורים החדשים שנוספו.</string>
     <string name="clicknload_service_running">שירות ClickNLoad פועל…</string>
+    <string name="build_date">תאריך בנייה</string>
     <string name="close">סגור</string>
     <string name="collector">אוסף</string>
     <string name="connect_error">לא ניתן להתחבר אל pyLoad. ודא ש- pyLoad פועל והגדרות השרת הן נכונות.</string>
@@ -45,6 +47,7 @@
     <string name="fileinfo_title">מידע קובץ</string>
     <string name="filter_hint">סנן לפי שם…</string>
     <string name="folder">&#x200e;תיקייה</string>
+    <string name="git_commit">Git Commit</string>
     <string name="free">חינם</string>
     <string name="general">כללי</string>
     <string name="general_config">הגדרות כלליות</string>
@@ -133,5 +136,6 @@
     <string name="unlimited">ללא הגבלה</string>
     <string name="valid">בתוקף</string>
     <string name="validuntil">בתוקף עד:</string>
+    <string name="version">גרסה</string>
     <string name="yes">כן</string>
 </resources>

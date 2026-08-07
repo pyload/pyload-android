@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="_0_0" translatable="false">0 / 0</string>
+    <string name="about">About</string>
     <string name="abort">Abort</string>
     <string name="accounts">Accounts</string>
     <string name="add">Add</string>
@@ -30,6 +31,7 @@
     <string name="clicknload_desc">Enable ClickNLoad support (local server on port 9666).</string>
     <string name="clicknload_dest_desc">Choose where newly added links should be sent.</string>
     <string name="clicknload_service_running">ClickNLoad service is running…</string>
+    <string name="build_date">Build Date</string>
     <string name="close">Close</string>
     <string name="collector">Collector</string>
     <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are correct.</string>
@@ -48,6 +50,7 @@
     <string name="fileinfo_title">Fileinfo</string>
     <string name="filter_hint">Filter by name…</string>
     <string name="folder">Folder</string>
+    <string name="git_commit">Git Commit</string>
     <string name="free">Free</string>
     <string name="general">General</string>
     <string name="general_config">General config</string>
@@ -136,5 +139,6 @@
     <string name="unlimited">unlimited</string>
     <string name="valid">valid</string>
     <string name="validuntil">Expires:</string>
+    <string name="version">Version</string>
     <string name="yes">Yes</string>
 </resources>

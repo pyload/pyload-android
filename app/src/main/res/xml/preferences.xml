@@ -83,4 +83,25 @@
             android:summary="@string/api_key_desc"
             android:title="@string/api_key" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about" android:key="about_category">
+        <PreferenceScreen
+            android:key="about_screen">
+
+            <Preference
+                android:key="about_header"
+                android:layout="@layout/about_header"
+                android:selectable="false" />
+
+            <Preference
+                android:key="version"
+                android:title="@string/version" />
+            <Preference
+                android:key="git_commit"
+                android:title="@string/git_commit" />
+            <Preference
+                android:key="build_date"
+                android:title="@string/build_date" />
+        </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

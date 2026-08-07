@@ -5,6 +5,31 @@ plugins {
 //    id 'com.github.ben-manes.versions' version '0.54.0'
 }
 
+def getGitHash = {
+    try {
+        def head = file('../.git/HEAD').text.trim()
+        if (head.startsWith('ref: ')) {
+            def refPath = head.substring(5)
+            def refFile = file("../.git/${refPath}")
+            if (refFile.exists()) {
+                return refFile.text.trim().substring(0, 7)
+            }
+            // If ref file doesn't exist, it might be in packed-refs
+            def packedRefs = file('../.git/packed-refs')
+            if (packedRefs.exists()) {
+                def line = packedRefs.readLines().find { it.endsWith(refPath) }
+                if (line) {
+                    return line.split(' ')[0].substring(0, 7)
+                }
+            }
+            return "unknown"
+        }
+        return head.substring(0, 7)
+    } catch (Exception ignored) {
+        return "unknown"
+    }
+}
+
 android {
     compileSdk = 35
 
@@ -14,6 +39,11 @@ android {
         applicationId = "org.pyload.android.client"
         minSdk = 21
         targetSdk = 35
+        versionCode = 24
+        versionName = "v0.4.2"
+
+        buildConfigField "String", "GIT_COMMIT", "\"${getGitHash()}\""
+        buildConfigField "long", "BUILD_DATE", "${System.currentTimeMillis()}L"
     }
 
     buildFeatures {
