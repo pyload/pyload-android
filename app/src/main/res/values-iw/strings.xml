@@ -105,6 +105,7 @@
     <string name="plugin_config">הגדרות פלאגינים</string>
     <string name="port">פורט</string>
     <string name="port_desc">הפורט שבו שרת ה-pyLoad שלך מאזין (ברירת המחדל היא 8000).</string>
+    <string name="polling_paused_error">יותר מדי שגיאות חיבור. העדכון האוטומטי הופסק. רענן ידנית כדי להמשיך.</string>
     <string name="premium">פרימיום</string>
     <string name="queue">תור</string>
     <string name="refresh">רענן</string>

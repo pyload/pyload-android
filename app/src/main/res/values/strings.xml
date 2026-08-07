@@ -108,6 +108,7 @@
     <string name="plugin_config">Plugin config</string>
     <string name="port">Port</string>
     <string name="port_desc">The port where your pyLoad server is listening (default is 8000).</string>
+    <string name="polling_paused_error">Too many connection errors. Polling paused. Refresh manually to resume.</string>
     <string name="premium">Premium</string>
     <string name="queue">Queue</string>
     <string name="refresh">Refresh</string>

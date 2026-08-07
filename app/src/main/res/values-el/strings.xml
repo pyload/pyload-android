@@ -105,6 +105,7 @@
     <string name="plugin_config">Ρυθμίσεις πρόσθετων</string>
     <string name="port">Θύρα</string>
     <string name="port_desc">Η θύρα στην οποία ακούει ο διακομιστής pyLoad (η προεπιλογή είναι 8000).</string>
+    <string name="polling_paused_error">Πάρα πολλά σφάλματα σύνδεσης. Η αυτόματη ενημέρωση σταμάτησε. Ανανεώστε χειροκίνητα για να συνεχίσετε.</string>
     <string name="premium">Premium</string>
     <string name="queue">Ουρά</string>
     <string name="refresh">Ανανέωση</string>

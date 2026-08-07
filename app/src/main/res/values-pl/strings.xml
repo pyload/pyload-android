@@ -105,6 +105,7 @@
     <string name="plugin_config">Konfiguracja pluginów</string>
     <string name="port">Port</string>
     <string name="port_desc">Port, na którym nasłuchuje serwer pyLoad (domyślnie 8000).</string>
+    <string name="polling_paused_error">Zbyt wiele błędów połączenia. Odpytywanie wstrzymane. Odśwież ręcznie, aby wznowić.</string>
     <string name="premium">Premium</string>
     <string name="queue">Kolejka</string>
     <string name="refresh">Odśwież</string>

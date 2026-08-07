@@ -105,6 +105,7 @@
     <string name="plugin_config">Cấu hình plugin</string>
     <string name="port">Cổng</string>
     <string name="port_desc">Cổng mà máy chủ pyLoad của bạn đang lắng nghe (mặc định là 8000).</string>
+    <string name="polling_paused_error">Quá nhiều lỗi kết nối. Đã tạm dừng bỏ phiếu. Làm mới thủ công để tiếp tục.</string>
     <string name="premium">Cao cấp</string>
     <string name="queue">Hàng đợi</string>
     <string name="refresh">Làm mới</string>

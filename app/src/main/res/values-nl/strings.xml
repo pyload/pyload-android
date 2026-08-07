@@ -105,6 +105,7 @@
     <string name="plugin_config">Plugin instellingen</string>
     <string name="port">Poort</string>
     <string name="port_desc">De poort waarop uw pyLoad-server luistert (standaard is 8000).</string>
+    <string name="polling_paused_error">Te veel verbindingsfouten. Polling gepauzeerd. Vernieuw handmatig om te hervatten.</string>
     <string name="premium">Premium</string>
     <string name="queue">Wachtrij</string>
     <string name="refresh">Verversen</string>

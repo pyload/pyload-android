@@ -105,6 +105,7 @@
     <string name="plugin_config">Configuración del plugin</string>
     <string name="port">Puerto</string>
     <string name="port_desc">El puerto en el que escucha su servidor pyLoad (el valor predeterminado es 8000).</string>
+    <string name="polling_paused_error">Demasiados errores de conexión. Polling en pausa. Actualice manualmente para reanudar.</string>
     <string name="premium">Premium</string>
     <string name="queue">Cola</string>
     <string name="refresh">Actualizar</string>

@@ -105,6 +105,7 @@
     <string name="plugin_config">اعدادات الاضافات</string>
     <string name="port">المنفذ</string>
     <string name="port_desc">المنفذ الذي يستمع إليه خادم pyLoad الخاص بك (الافتراضي هو 8000).</string>
+    <string name="polling_paused_error">أخطاء اتصال كثيرة جدًا. توقف التحديث التلقائي مؤقتًا. قم بالتحديث يدويًا للمتابعة.</string>
     <string name="premium">بريميوم</string>
     <string name="queue">قائمة الإنتظار</string>
     <string name="refresh">تحديث</string>

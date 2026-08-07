@@ -74,6 +74,7 @@ public class pyLoad extends FragmentTabsPager {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable runCaptchaUpdate = new Runnable() {
         public void run() {
+            if (app.isPollingPaused()) return;
             PyLoadRestApi client = app.getClient();
             if (app.prefs.getBoolean("pull_captcha", true)) {
                 captchaAvailable = app.executeNetworkCall(client.apiIsCaptchaWaitingGet());
@@ -86,7 +87,12 @@ public class pyLoad extends FragmentTabsPager {
 
     private final Runnable onCaptchaDataReceived = new Runnable() {
         public void run() {
-            if (captchaAvailable && app.prefs.getBoolean("pull_captcha", true)) {
+            if (app.isPollingPaused() || !app.prefs.getBoolean("pull_captcha", true)) {
+                captchaBanner.setVisibility(View.GONE);
+                return;
+            }
+
+            if (captchaAvailable) {
                 captchaBanner.setVisibility(View.VISIBLE);
                 if (!lastCaptchaState) {
                     showCaptchaNotification();
@@ -101,6 +107,9 @@ public class pyLoad extends FragmentTabsPager {
 
     private final Runnable mCaptchaTimeTask = new Runnable() {
         public void run() {
+            if (app.isPollingPaused()) {
+                return;
+            }
             checkCaptcha();
             int interval;
             try {
@@ -234,7 +243,9 @@ public class pyLoad extends FragmentTabsPager {
         }
 
         mHandler.post(mCaptchaTimeTask);
-        app.refreshTab();
+        if (!app.isPollingPaused()) {
+            app.refreshTab();
+        }
 
         if (app.prefs.getBoolean("clicknload", false)) {
             Intent clicknloadIntent = new Intent(this, ClickNLoadService.class);
@@ -250,7 +261,6 @@ public class pyLoad extends FragmentTabsPager {
     protected void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mCaptchaTimeTask);
-        app.clearTasks();
     }
 
     @Override
@@ -549,7 +559,7 @@ public class pyLoad extends FragmentTabsPager {
     }
 
     private void checkCaptcha() {
-        if (!app.hasConnection()) return;
+        if (!app.hasConnection() || app.isPollingPaused()) return;
         app.addTask(new GuiTask(runCaptchaUpdate, onCaptchaDataReceived));
     }
 

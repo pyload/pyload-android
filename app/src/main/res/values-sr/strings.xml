@@ -105,6 +105,7 @@
     <string name="plugin_config">Поставке прикључака</string>
     <string name="port">Порт</string>
     <string name="port_desc">Порт на коме ваш pyLoad сервер слуша (подразумевано је 8000).</string>
+    <string name="polling_paused_error">Превише грешака у повезивању. Polling је паузиран. Освежите ручно да бисте наставили.</string>
     <string name="premium">Premium</string>
     <string name="queue">Ред</string>
     <string name="refresh">Освежи</string>

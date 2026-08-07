@@ -105,6 +105,7 @@
     <string name="plugin_config">Конфигурация приложений</string>
     <string name="port">Порт</string>
     <string name="port_desc">Порт, который прослушивает ваш сервер pyLoad (по умолчанию 8000).</string>
+    <string name="polling_paused_error">Слишком много ошибок соединения. Опрос приостановлен. Обновите вручную, чтобы возобновить.</string>
     <string name="premium">Премиум</string>
     <string name="queue">Очередь</string>
     <string name="refresh">Обновить</string>

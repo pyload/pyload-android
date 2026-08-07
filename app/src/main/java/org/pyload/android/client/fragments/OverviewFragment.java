@@ -77,12 +77,17 @@ public class OverviewFragment extends ListFragment implements TabHandler {
     private final Runnable cancelUpdate = new Runnable() {
 
         public void run() {
-            stopUpdate();
+            if (!update) {
+                stopUpdate();
+            }
         }
     };
 
     private final Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
+            if (app.isPollingPaused()) {
+                return;
+            }
             refresh();
             if (update)
                 mHandler.postDelayed(this, (long) interval * 1000);
@@ -295,7 +300,7 @@ public class OverviewFragment extends ListFragment implements TabHandler {
     }
 
     public void refresh() {
-        if (!app.hasConnection())
+        if (!app.hasConnection() || app.isPollingPaused())
             return;
 
         app.setProgress(true);

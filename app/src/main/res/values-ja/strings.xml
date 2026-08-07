@@ -105,6 +105,7 @@
     <string name="plugin_config">プラグインの設定</string>
     <string name="port">ポート</string>
     <string name="port_desc">pyLoad サーバーがリッスンしているポート (デフォルトは 8000)。</string>
+    <string name="polling_paused_error">接続エラーが多すぎます。ポーリングを一時停止しました。手動で更新して再開してください。</string>
     <string name="premium">プレミアム</string>
     <string name="queue">キュー</string>
     <string name="refresh">更新</string>

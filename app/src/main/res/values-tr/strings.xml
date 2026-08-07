@@ -105,6 +105,7 @@
     <string name="plugin_config">Eklenti yapılandırma</string>
     <string name="port">Port</string>
     <string name="port_desc">pyLoad sunucunuzun dinlediği bağlantı noktası (varsayılan 8000\'dir).</string>
+    <string name="polling_paused_error">Çok fazla bağlantı hatası. Yoklama duraklatıldı. Devam etmek için manuel olarak yenileyin.</string>
     <string name="premium">Premium</string>
     <string name="queue">Kuyruk</string>
     <string name="refresh">Yenile</string>

@@ -69,6 +69,10 @@ public class pyLoadApp extends Application {
 	private boolean captchaNotificationShown;
 	private int activityCount = 0;
 
+	private int consecutiveConnectionErrors = 0;
+	private boolean pollingPaused = false;
+	private Snackbar persistentSnackbar = null;
+
 	private static final String[] clientVersion = {"0.5"};
 
 	@Override
@@ -113,12 +117,19 @@ public class pyLoadApp extends Application {
 			@Override
 			public void onActivityResumed(Activity activity) {
 				currentActivity = activity;
+				if (pollingPaused) {
+					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+				}
 			}
 
 			@Override
 			public void onActivityPaused(Activity activity) {
 				if (currentActivity == activity) {
 					currentActivity = null;
+				}
+				if (persistentSnackbar != null) {
+					persistentSnackbar.dismiss();
+					persistentSnackbar = null;
 				}
 			}
 
@@ -327,10 +338,30 @@ public class pyLoadApp extends Application {
 			errorMessage = getString(R.string.error);
 
 		if (isAppInForeground()) {
-			showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
+			if (pollingPaused) {
+				return;
+			}
+			if (isConnectionError(lastException)) {
+				consecutiveConnectionErrors++;
+				if (consecutiveConnectionErrors >= 3) {
+					pollingPaused = true;
+					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+				} else {
+					showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
+				}
+			} else {
+				showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
+			}
 		}
 
 		setProgress(false);
+	}
+
+	private boolean isConnectionError(Throwable t) {
+		Throwable tr = findException(t);
+		return tr instanceof SocketTimeoutException ||
+				tr instanceof SocketException ||
+				tr instanceof SSLHandshakeException;
 	}
 
 	private void showCenteredSnackbar(Object message, int length) {
@@ -348,6 +379,14 @@ public class pyLoadApp extends Application {
 			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (Integer) message, length);
 		} else {
 			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (String) message, length);
+		}
+
+		if (length == Snackbar.LENGTH_INDEFINITE) {
+			if (persistentSnackbar != null && persistentSnackbar.isShown()) {
+				// Don't recreate if already showing the same indefinite snackbar for this activity
+				return;
+			}
+			persistentSnackbar = snackbar;
 		}
 
 		View snackbarView = snackbar.getView();
@@ -383,6 +422,15 @@ public class pyLoadApp extends Application {
 	};
 
 	public void onSuccess() {
+		consecutiveConnectionErrors = 0;
+		if (pollingPaused) {
+			pollingPaused = false;
+			if (persistentSnackbar != null) {
+				persistentSnackbar.dismiss();
+				persistentSnackbar = null;
+			}
+		}
+
 		if (isAppInForeground()) {
 			showCenteredSnackbar(R.string.success, Snackbar.LENGTH_SHORT);
 		}
@@ -391,6 +439,9 @@ public class pyLoadApp extends Application {
 	}
 
 	public void refreshTab() {
+		if (isPollingPaused()) {
+			return;
+		}
 		Fragment frag = main.getCurrentFragment();
 
 		Log.d("pyLoad", "Refreshing Tab: " + frag);
@@ -438,6 +489,12 @@ public class pyLoadApp extends Application {
 	public void resetClient() {
 		Log.d("pyLoad", "Client resetted");
 		client = null;
+		consecutiveConnectionErrors = 0;
+		pollingPaused = false;
+		if (persistentSnackbar != null) {
+			persistentSnackbar.dismiss();
+			persistentSnackbar = null;
+		}
 	}
 
     /**
@@ -496,6 +553,10 @@ public class pyLoadApp extends Application {
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);
 			notificationManager.createNotificationChannel(channel);
 		}
+	}
+
+	public boolean isPollingPaused() {
+		return pollingPaused;
 	}
 
 }

@@ -105,6 +105,7 @@
     <string name="plugin_config">Beépülő beállítások</string>
     <string name="port">Port</string>
     <string name="port_desc">A port, amelyen a pyLoad szerver figyel (alapértelmezett a 8000).</string>
+    <string name="polling_paused_error">Túl sok csatlakozási hiba. A lekérdezés szünetel. Frissítsen manuálisan a folytatáshoz.</string>
     <string name="premium">Prémium</string>
     <string name="queue">Sor</string>
     <string name="refresh">Frissítés</string>
