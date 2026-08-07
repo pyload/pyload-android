@@ -90,10 +90,6 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
-            if ("about_screen".equals(rootKey)) {
-                requireActivity().setTitle(R.string.about);
-            }
-
             Preference themePreference = findPreference("theme");
             if (themePreference != null) {
                 themePreference.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -132,6 +128,16 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         @Override
         public void onResume() {
             super.onResume();
+
+            PreferenceScreen screen = getPreferenceScreen();
+            if (screen != null && "about_screen".equals(screen.getKey())) {
+                requireActivity().setTitle(R.string.about);
+            } else if (screen != null && screen.getTitle() != null) {
+                requireActivity().setTitle(screen.getTitle());
+            } else {
+                requireActivity().setTitle(R.string.app_settings);
+            }
+
             if (getPreferenceManager().getSharedPreferences() != null) {
                 getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             }
