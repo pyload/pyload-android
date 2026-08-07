@@ -74,7 +74,7 @@ public class FragmentTabsPager extends AppCompatActivity {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_container), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-            return windowInsets;
+            return WindowInsetsCompat.CONSUMED;
         });
 
         if (savedInstanceState != null) {

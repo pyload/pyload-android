@@ -21,6 +21,9 @@ import android.widget.ProgressBar;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.Utils;
@@ -92,6 +95,12 @@ public class CaptchaActivity extends AppCompatActivity {
 
 		cancel.setOnClickListener(v -> {
 			finish();
+		});
+
+		ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, windowInsets) -> {
+			Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+			v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+			return WindowInsetsCompat.CONSUMED;
 		});
 
 		fetchNextTask();

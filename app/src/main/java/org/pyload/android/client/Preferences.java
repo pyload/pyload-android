@@ -55,7 +55,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.preferences_container), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-            return windowInsets;
+            return WindowInsetsCompat.CONSUMED;
         });
     }
 
