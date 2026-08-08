@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
@@ -71,6 +73,7 @@ public class pyLoadApp extends Application {
 
 	private int consecutiveConnectionErrors = 0;
 	private boolean pollingPaused = false;
+	private boolean snackbarDismissedByUser = false;
 	private Snackbar persistentSnackbar = null;
 
 	private static final String[] clientVersion = {"0.5"};
@@ -117,7 +120,7 @@ public class pyLoadApp extends Application {
 			@Override
 			public void onActivityResumed(Activity activity) {
 				currentActivity = activity;
-				if (pollingPaused) {
+				if (pollingPaused && !snackbarDismissedByUser) {
 					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
 				}
 			}
@@ -381,16 +384,36 @@ public class pyLoadApp extends Application {
 			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (String) message, length);
 		}
 
+		View snackbarView = snackbar.getView();
+		TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+
 		if (length == Snackbar.LENGTH_INDEFINITE) {
 			if (persistentSnackbar != null && persistentSnackbar.isShown()) {
 				// Don't recreate if already showing the same indefinite snackbar for this activity
 				return;
 			}
 			persistentSnackbar = snackbar;
+			
+			TextView closeButton = new TextView(snackbarView.getContext());
+			closeButton.setText("✕");
+			if (textView != null) {
+				closeButton.setTextColor(textView.getCurrentTextColor());
+			}
+			closeButton.setTextSize(10);
+			closeButton.setPadding(16, 12, 16, 12);
+			FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT
+			);
+			layoutParams.gravity = Gravity.TOP | Gravity.END;
+			closeButton.setLayoutParams(layoutParams);
+			closeButton.setOnClickListener(v -> {
+				snackbarDismissedByUser = true;
+				snackbar.dismiss();
+			});
+			((ViewGroup) snackbarView).addView(closeButton);
 		}
 
-		View snackbarView = snackbar.getView();
-		TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
 		if (textView != null) {
 			textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 			textView.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -423,6 +446,7 @@ public class pyLoadApp extends Application {
 
 	public void onSuccess() {
 		consecutiveConnectionErrors = 0;
+		snackbarDismissedByUser = false;
 		if (pollingPaused) {
 			pollingPaused = false;
 			if (persistentSnackbar != null) {
@@ -440,7 +464,12 @@ public class pyLoadApp extends Application {
 
 	public void refreshTab() {
 		if (isPollingPaused()) {
-			return;
+			pollingPaused = false;
+			snackbarDismissedByUser = false;
+			if (persistentSnackbar != null) {
+				persistentSnackbar.dismiss();
+				persistentSnackbar = null;
+			}
 		}
 		Fragment frag = main.getCurrentFragment();
 
@@ -491,6 +520,7 @@ public class pyLoadApp extends Application {
 		client = null;
 		consecutiveConnectionErrors = 0;
 		pollingPaused = false;
+		snackbarDismissedByUser = false;
 		if (persistentSnackbar != null) {
 			persistentSnackbar.dismiss();
 			persistentSnackbar = null;
