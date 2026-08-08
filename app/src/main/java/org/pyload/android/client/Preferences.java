@@ -16,9 +16,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 import org.pyload.android.client.services.ClickNLoadService;
 
 public class Preferences extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
@@ -120,8 +117,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
             Preference buildDatePref = findPreference("build_date");
             if (buildDatePref != null) {
-                DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
-                buildDatePref.setSummary(dateFormat.format(new Date(BuildConfig.BUILD_DATE)));
+                buildDatePref.setSummary(BuildConfig.BUILD_DATE);
             }
         }
 

@@ -43,7 +43,7 @@ android {
         versionName = "v0.4.2"
 
         buildConfigField "String", "GIT_COMMIT", "\"${getGitHash()}\""
-        buildConfigField "long", "BUILD_DATE", "${System.currentTimeMillis()}L"
+        buildConfigField "String", "BUILD_DATE", "\"${new java.text.SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", java.util.Locale.US).format(new java.util.Date())}\""
     }
 
     buildFeatures {
