@@ -378,10 +378,15 @@ public class pyLoadApp extends Application {
 		}
 
 		Snackbar snackbar;
+		View parentView = currentActivity.findViewById(android.R.id.content);
+		if (parentView == null) {
+			parentView = currentActivity.getWindow().getDecorView();
+		}
+
 		if (message instanceof Integer) {
-			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (Integer) message, length);
+			snackbar = Snackbar.make(parentView, (Integer) message, length);
 		} else {
-			snackbar = Snackbar.make(currentActivity.findViewById(android.R.id.content), (String) message, length);
+			snackbar = Snackbar.make(parentView, (String) message, length);
 		}
 
 		View snackbarView = snackbar.getView();

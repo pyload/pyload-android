@@ -10,6 +10,7 @@ import java.util.Map;
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.components.DragExpandableListView;
 import org.pyload.android.client.components.ExpandableListFragment;
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.dialogs.FileInfoDialog;
@@ -34,9 +35,11 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.text.TextUtils;
+import android.annotation.SuppressLint;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -68,10 +71,21 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				return 1;
 			else if (b == null)
 				return -1;
-			else if (a instanceof PackageData && b instanceof PackageData)
-				return ((PackageData) a).getOrder().compareTo(((PackageData) b).getOrder());
-			else if (a instanceof FileData && b instanceof FileData)
-				return ((FileData) a).getOrder().compareTo(((FileData) b).getOrder());
+			else if (a instanceof PackageData && b instanceof PackageData) {
+				Integer oa = ((PackageData) a).getOrder();
+				Integer ob = ((PackageData) b).getOrder();
+				if (oa == null && ob == null) return 0;
+				if (oa == null) return 1;
+				if (ob == null) return -1;
+				return oa.compareTo(ob);
+			} else if (a instanceof FileData && b instanceof FileData) {
+				Integer oa = ((FileData) a).getOrder();
+				Integer ob = ((FileData) b).getOrder();
+				if (oa == null && ob == null) return 0;
+				if (oa == null) return 1;
+				if (ob == null) return -1;
+				return oa.compareTo(ob);
+			}
 			return 0;
 		}
 	};
@@ -81,8 +95,23 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	private String filter = "";
 	private pyLoadApp app;
 	private PyLoadRestApi client;
+	private boolean isReorderMode = false;
+	private int reorderType = -1; // 0 for packages, 1 for files
+	private int reorderGroupIndex = -1;
 	// tab position
 	private int pos = -1;
+
+	public boolean isReorderMode() {
+		return isReorderMode;
+	}
+
+	public int getReorderType() {
+		return reorderType;
+	}
+
+	public int getReorderGroupIndex() {
+		return reorderGroupIndex;
+	}
 
 	@Override
 	public void onAttach(Context context) {
@@ -102,9 +131,59 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		super.onViewCreated(view, savedInstanceState);
 
 		registerForContextMenu(view.findViewById(android.R.id.list));
-		PackageListAdapter adp = new PackageListAdapter(getActivity(), data,
+		PackageListAdapter adp = new PackageListAdapter(getActivity(), this, data,
 				R.layout.package_item, R.layout.package_child_item, app);
 		setListAdapter(adp);
+
+		if (getExpandableListView() instanceof DragExpandableListView) {
+			((DragExpandableListView) getExpandableListView()).setOnItemMovedListener(new DragExpandableListView.OnItemMovedListener() {
+				@Override
+				public void onGroupMoved(int from, int to) {
+					Collections.swap(data, from, to);
+					adp.notifyDataSetChanged();
+				}
+
+				@Override
+				public void onChildMoved(int group, int from, int to) {
+					PackageData pack = data.get(group);
+					List<FileData> links = pack.getLinks();
+					if (links != null) {
+						Collections.swap(links, from, to);
+						adp.notifyDataSetChanged();
+					}
+				}
+
+				@Override
+				public void onDragStopped() {
+					isReorderMode = false;
+					reorderType = -1;
+					reorderGroupIndex = -1;
+					DragExpandableListView list = (DragExpandableListView) getExpandableListView();
+					int group = list.getDragGroup();
+					int child = list.getDragChild();
+
+					if (list.isGroupDrag()) {
+						PackageData pack = data.get(group);
+						app.addTask(new GuiTask(new Runnable() {
+							public void run() {
+								client = app.getClient();
+								app.executeNetworkCall(client.apiOrderPackagePost(pack.getPid(), group));
+							}
+						}, app.handleSuccess));
+					} else {
+						PackageData pack = data.get(group);
+						FileData file = pack.getLinks().get(child);
+						app.addTask(new GuiTask(new Runnable() {
+							public void run() {
+								client = app.getClient();
+								app.executeNetworkCall(client.apiOrderFilePost(file.getFid(), child));
+							}
+						}, app.handleSuccess));
+					}
+					adp.notifyDataSetChanged();
+				}
+			});
+		}
 
 		getExpandableListView().setOnScrollListener(new AbsListView.OnScrollListener() {
 			@Override
@@ -184,8 +263,12 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				}, app.handleSuccess));
 
 			} else if (itemId == R.id.move) {
-				Toast.makeText(getActivity(), R.string.cant_move_files,
-						Toast.LENGTH_SHORT).show();
+				return false;
+			} else if (itemId == R.id.reorder) {
+				isReorderMode = true;
+				reorderType = 1;
+				reorderGroupIndex = groupPos;
+				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			}
 
 			return true;
@@ -241,6 +324,11 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
                     }
 				}, app.handleSuccess));
 
+			} else if (itemId == R.id.reorder) {
+				isReorderMode = true;
+				reorderType = 0;
+				reorderGroupIndex = -1;
+				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			} else if (itemId == R.id.package_password) {
 				final EditText input = new EditText(getActivity());
 				input.setText(pack.getPassword());
@@ -431,11 +519,13 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 	private final LayoutInflater layoutInflater;
 	private List<PackageData> data;
 	private final pyLoadApp app;
+	private final AbstractPackageFragment fragment;
 
-	public PackageListAdapter(Context context, List<PackageData> data,
+	public PackageListAdapter(Context context, AbstractPackageFragment fragment, List<PackageData> data,
 			int groupRes, int childRes, pyLoadApp app) {
 
 		this.data = data;
+		this.fragment = fragment;
 		this.groupRes = groupRes;
 		this.childRes = childRes;
 		this.app = app;
@@ -476,6 +566,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	public View getGroupView(int group, boolean isExpanded, View convertView,
 			ViewGroup parent) {
 
@@ -488,6 +579,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.package_progress);
 			holder.size = (TextView) convertView.findViewById(R.id.size_stats);
 			holder.links = (TextView) convertView.findViewById(R.id.link_stats);
+			holder.reorder_handle = (ImageView) convertView.findViewById(R.id.reorder_handle);
 			convertView.setTag(holder);
 		}
 
@@ -513,9 +605,26 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 				+ Utils.formatSize(pack.getSizetotal()));
 		holder.links.setText(pack.getLinksdone() + " / " + pack.getLinks().size());
 
+		if (fragment.isReorderMode() && fragment.getReorderType() == 0 && fragment.getExpandableListView() instanceof DragExpandableListView) {
+			holder.reorder_handle.setVisibility(View.VISIBLE);
+			holder.reorder_handle.setOnTouchListener((v, event) -> {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
+					int flatPos = list.getFlatListPosition(
+							ExpandableListView.getPackedPositionForGroup(group));
+					list.startDrag(flatPos, v);
+					return true;
+				}
+				return false;
+			});
+		} else {
+			holder.reorder_handle.setVisibility(View.GONE);
+		}
+
 		return convertView;
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	public View getChildView(int group, int child, boolean isLastChild,
 			View convertView, ViewGroup parent) {
 
@@ -533,6 +642,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.plugin = (TextView) convertView.findViewById(R.id.plugin);
 			holder.status_icon = (ImageView) convertView
 					.findViewById(R.id.status_icon);
+			holder.reorder_handle = (ImageView) convertView.findViewById(R.id.reorder_handle);
 			convertView.setTag(holder);
 		}
 
@@ -577,6 +687,22 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.status_icon.setImageResource(0);
 		}
 
+		if (fragment.isReorderMode() && fragment.getReorderType() == 1 && fragment.getReorderGroupIndex() == group && fragment.getExpandableListView() instanceof DragExpandableListView) {
+			holder.reorder_handle.setVisibility(View.VISIBLE);
+			holder.reorder_handle.setOnTouchListener((v, event) -> {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
+					int flatPos = list.getFlatListPosition(
+							ExpandableListView.getPackedPositionForChild(group, child));
+					list.startDrag(flatPos, v);
+					return true;
+				}
+				return false;
+			});
+		} else {
+			holder.reorder_handle.setVisibility(View.GONE);
+		}
+
 		return convertView;
 	}
 
@@ -589,6 +715,7 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		private ProgressBar progress;
 		private TextView size;
 		private TextView links;
+		private ImageView reorder_handle;
 	}
 
 	static class ChildViewHolder {
@@ -597,5 +724,6 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 		private TextView size;
 		private TextView plugin;
 		private ImageView status_icon;
+		private ImageView reorder_handle;
 	}
 }

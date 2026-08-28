@@ -15,7 +15,17 @@
 	android:layout_alignTop="@+id/name"
 	android:layout_alignBottom="@+id/name"
 	android:scaleType="centerInside"/>
-	
+
+	<ImageView
+		android:id="@+id/reorder_handle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:src="@drawable/ic_reorder"
+		android:visibility="gone"
+		android:padding="8dp" />
+
 	<org.pyload.android.client.components.ScrollingTextView android:id="@+id/name" android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearance"
@@ -26,14 +36,14 @@
     	android:scrollHorizontally="true"
         android:singleLine="true"
 		android:layout_toRightOf="@+id/status_icon"
-		android:layout_alignParentRight="true"/>
+		android:layout_toLeftOf="@id/reorder_handle"/>
 		
 	<LinearLayout android:id="@+id/linear"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/name"
 		android:layout_alignLeft="@+id/name"
-		android:layout_alignParentRight="true">
+		android:layout_toLeftOf="@id/reorder_handle">
 				
 		<TextView android:layout_width="wrap_content"
 			android:id="@+id/status"
