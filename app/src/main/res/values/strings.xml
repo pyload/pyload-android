@@ -85,6 +85,8 @@
     </string-array>
     <string name="loading">Loading…</string>
     <string name="move">Move location</string>
+    <string name="move_to_queue">Move to Queue</string>
+    <string name="move_to_collector">Move to Collector</string>
     <string name="n_a">n/a</string>
     <string name="name">Name</string>
     <string name="no">No</string>
@@ -115,6 +117,7 @@
     <string name="refresh_rate">Refresh Rate</string>
     <string name="refresh_rate_desc">Time in seconds how often Overview screen should refresh.</string>
     <string name="remote_settings">Remote Settings</string>
+    <string name="reorder">Reorder</string>
     <string name="restart">Restart</string>
     <string name="restart_failed">Restart failed files</string>
     <string name="retrieve_captcha">Retrieve captcha tasks</string>

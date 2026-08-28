@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Laden…</string>
     <string name="move">Locatie verplaatsen</string>
+    <string name="move_to_queue">Verplaatsen naar wachtrij</string>
+    <string name="move_to_collector">Verplaatsen naar verzamelaar</string>
     <string name="n_a">n.v.t</string>
     <string name="name">Naam</string>
     <string name="no">Nee</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Vernieuwingsfrequentie</string>
     <string name="refresh_rate_desc">Om de hoeveel seconden het Overzicht scherm zich ververst.</string>
     <string name="remote_settings">Instellingen voor externe verbindingen</string>
+    <string name="reorder">Herschikken</string>
     <string name="restart">Herstarten</string>
     <string name="restart_failed">Herstart mislukte bestanden</string>
     <string name="retrieve_captcha">Captcha taken ophalen</string>

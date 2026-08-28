@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">読み込み中…</string>
     <string name="move">移動します。</string>
+    <string name="move_to_queue">キューへ移動</string>
+    <string name="move_to_collector">コレクターへ移動</string>
     <string name="n_a">n/a</string>
     <string name="name">名前</string>
     <string name="no">いいえ</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">リフレッシュ レート</string>
     <string name="refresh_rate_desc">時間秒どのくらいの頻度で概要画面を更新する必要があります。</string>
     <string name="remote_settings">リモート設定</string>
+    <string name="reorder">並べ替え</string>
     <string name="restart">再起動</string>
     <string name="restart_failed">失敗したファイルを再起動します。</string>
     <string name="retrieve_captcha">キャプチャ タスクを取得します。</string>

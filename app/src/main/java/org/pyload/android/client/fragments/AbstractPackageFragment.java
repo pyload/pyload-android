@@ -313,6 +313,26 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.package_context_menu, menu);
 		menu.setHeaderTitle(R.string.choose_action);
+
+		if (menuInfo instanceof ExpandableListView.ExpandableListContextMenuInfo info) {
+			int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+
+			MenuItem moveItem = menu.findItem(R.id.move);
+			MenuItem passwordItem = menu.findItem(R.id.package_password);
+
+			if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+				if (moveItem != null) moveItem.setVisible(false);
+				if (passwordItem != null) passwordItem.setVisible(false);
+			} else {
+				if (moveItem != null) {
+					if (dest == 0) {
+						moveItem.setTitle(R.string.move_to_collector);
+					} else {
+						moveItem.setTitle(R.string.move_to_queue);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

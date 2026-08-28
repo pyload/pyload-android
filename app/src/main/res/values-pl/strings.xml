@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Ładowanie…</string>
     <string name="move">Przenieś do innej lokalizacji</string>
+    <string name="move_to_queue">Przenieś do kolejki</string>
+    <string name="move_to_collector">Przenieś do kolektora</string>
     <string name="n_a">nie dotyczy</string>
     <string name="name">Nazwa</string>
     <string name="no">Nie</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Częstotliwość odświeżania</string>
     <string name="refresh_rate_desc">Czas odświeżania ekranu w sekundach.</string>
     <string name="remote_settings">Ustawienia zdalnego dostępu</string>
+    <string name="reorder">Zmień kolejność</string>
     <string name="restart">Restart</string>
     <string name="restart_failed">Ponów błędne pobrania</string>
     <string name="retrieve_captcha">Odebrano nowe captcha</string>

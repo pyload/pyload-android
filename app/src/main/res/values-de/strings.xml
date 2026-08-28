@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Wird geladen…</string>
     <string name="move">Position ändern</string>
+    <string name="move_to_queue">In Warteschlange verschieben</string>
+    <string name="move_to_collector">In Linksammler verschieben</string>
     <string name="n_a">n/v</string>
     <string name="name">Name</string>
     <string name="no">Nein</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Aktualisierungsrate</string>
     <string name="refresh_rate_desc">Zeit in Sekunden wie oft die Übersicht aktualisiert wird.</string>
     <string name="remote_settings">Servereinstellungen</string>
+    <string name="reorder">Umordnen</string>
     <string name="restart">Neustarten</string>
     <string name="restart_failed">Fehlgeschlagene Dateien neu starten</string>
     <string name="retrieve_captcha">Rufe Captcha-Anfragen ab</string>

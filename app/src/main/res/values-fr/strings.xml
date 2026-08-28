@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Chargement…</string>
     <string name="move">Changer d\'emplacement</string>
+    <string name="move_to_queue">Déplacer vers la file d\'attente</string>
+    <string name="move_to_collector">Déplacer vers les paquets</string>
     <string name="n_a">n/a</string>
     <string name="name">Nom</string>
     <string name="no">Non</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Taux de raffraichissement</string>
     <string name="refresh_rate_desc">Le temps en secondes où l\'aperçu devrait être rafraîchit.</string>
     <string name="remote_settings">Réglages à distance</string>
+    <string name="reorder">Réorganiser</string>
     <string name="restart">Redémarrer</string>
     <string name="restart_failed">Redémarrer les fichiers échoués</string>
     <string name="retrieve_captcha">Récupérer la liste de captcha</string>

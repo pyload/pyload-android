@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Caricamento…</string>
     <string name="move">Sposta posizione</string>
+    <string name="move_to_queue">Sposta nella coda</string>
+    <string name="move_to_collector">Sposta nel collettore</string>
     <string name="n_a">n/a</string>
     <string name="name">Nome</string>
     <string name="no">No</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Frequenza Aggiornamento</string>
     <string name="refresh_rate_desc">Ogni quanti secondi la schermata Panoramica dovrebbe aggiornarsi.</string>
     <string name="remote_settings">Impostazioni Remote</string>
+    <string name="reorder">Riordina</string>
     <string name="restart">Riavvia</string>
     <string name="restart_failed">Riavvia file falliti</string>
     <string name="retrieve_captcha">Recupera i captcha</string>

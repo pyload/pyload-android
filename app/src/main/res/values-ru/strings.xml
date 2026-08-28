@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Загрузка…</string>
     <string name="move">Переместить</string>
+    <string name="move_to_queue">Переместить в очередь</string>
+    <string name="move_to_collector">Переместить в коллектор</string>
     <string name="n_a">н/д</string>
     <string name="name">Название</string>
     <string name="no">Нет</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Частота Обновления</string>
     <string name="refresh_rate_desc">Как часто следует обновлять экран Обзора, в секундах.</string>
     <string name="remote_settings">Удаленные Настройки</string>
+    <string name="reorder">Изменить порядок</string>
     <string name="restart">Перезапустить</string>
     <string name="restart_failed">Перезапустить неудавшиеся загрузки</string>
     <string name="retrieve_captcha">Получение задач каптчи</string>

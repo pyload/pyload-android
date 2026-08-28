@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Đang tải…</string>
     <string name="move">Di chuyển vị trí</string>
+    <string name="move_to_queue">Di chuyển vào hàng đợi</string>
+    <string name="move_to_collector">Di chuyển vào bộ sưu tập</string>
     <string name="n_a">n/a</string>
     <string name="name">Tên</string>
     <string name="no">Không</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Làm mới tỷ lệ</string>
     <string name="refresh_rate_desc">Thời gian để màn hình tổng quát sẽ làm tươi, tính bằng giây.</string>
     <string name="remote_settings">Cài đặt từ xa</string>
+    <string name="reorder">Sắp xếp lại</string>
     <string name="restart">Khởi động lại</string>
     <string name="restart_failed">Khởi động lại tập tin không thành công</string>
     <string name="retrieve_captcha">Lấy lại captcha</string>

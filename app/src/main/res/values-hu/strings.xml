@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Betöltés…</string>
     <string name="move">Hely áthelyezése</string>
+    <string name="move_to_queue">Áthelyezés a sorba</string>
+    <string name="move_to_collector">Áthelyezés a gyűjtőbe</string>
     <string name="n_a">n/a</string>
     <string name="name">Név</string>
     <string name="no">Nem</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Frissítés gyakorisága</string>
     <string name="refresh_rate_desc">Főképernyő frissítési gyakorisága másodpercben.</string>
     <string name="remote_settings">Távoli beállítások</string>
+    <string name="reorder">Átrendezés</string>
     <string name="restart">Újraindítás</string>
     <string name="restart_failed">Hibás fájlok újrakezdése</string>
     <string name="retrieve_captcha">Captcha betöltése</string>

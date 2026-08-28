@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Учитавање…</string>
     <string name="move">Промени размештај</string>
+    <string name="move_to_queue">Премести у ред</string>
+    <string name="move_to_collector">Премести у колектор</string>
     <string name="n_a">недоступνο</string>
     <string name="name">Име</string>
     <string name="no">Не</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Учесталост освежавања</string>
     <string name="refresh_rate_desc">Колико често се екран са прегледом освежава (у секундама).</string>
     <string name="remote_settings">Удаљене поставке</string>
+    <string name="reorder">Промени реδοслед</string>
     <string name="restart">Поново покрени</string>
     <string name="restart_failed">Поново покрени</string>
     <string name="retrieve_captcha">Преузимај потврдне кодове</string>

@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">Φόρτωση…</string>
     <string name="move">Τοποθεσία για μετακίνηση</string>
+    <string name="move_to_queue">Μετακίνηση στην Ουρά</string>
+    <string name="move_to_collector">Μετακίνηση στον Συλλέκτη</string>
     <string name="n_a">n/a</string>
     <string name="name">Όνομα</string>
     <string name="no">Όχι</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">Ρυθμός ανανέωσης</string>
     <string name="refresh_rate_desc">Χρόνος σε δευτερόλεπτα πόσο συχνά θα πρέπει να ανανεώνεται η οθόνη επισκόπησης.</string>
     <string name="remote_settings">Απομακρυσμένες ρυθμίσεις</string>
+    <string name="reorder">Ανακατάταξη</string>
     <string name="restart">Επανεκκίνηση</string>
     <string name="restart_failed">Επανεκκίνηση αποτυχημένων αρχείων</string>
     <string name="retrieve_captcha">Ανάκτηση εργασιών captcha</string>

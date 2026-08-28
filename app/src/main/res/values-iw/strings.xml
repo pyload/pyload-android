@@ -82,6 +82,8 @@
     </string-array>
     <string name="loading">טוען…</string>
     <string name="move">העבר מיקום</string>
+    <string name="move_to_queue">העבר לתור</string>
+    <string name="move_to_collector">העבר לאוסף</string>
     <string name="n_a">n/a</string>
     <string name="name">שם</string>
     <string name="no">לא</string>
@@ -112,6 +114,7 @@
     <string name="refresh_rate">קצב רענון</string>
     <string name="refresh_rate_desc">כל כמה שניות מסך הסקירה אמור להתרענן.</string>
     <string name="remote_settings">הגדרות מרוחקות</string>
+    <string name="reorder">סדר מחדש</string>
     <string name="restart">התחל מחדש</string>
     <string name="restart_failed">הפעל מחדש את הקבצים שנכשלו</string>
     <string name="retrieve_captcha">קבל משימות captcha</string>
