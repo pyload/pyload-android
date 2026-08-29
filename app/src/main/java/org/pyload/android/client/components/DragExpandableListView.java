@@ -27,29 +27,34 @@ public class DragExpandableListView extends ExpandableListView {
 
     private View dragView;
     private Bitmap dragBitmap;
-    private int dragStartRawY;
-    private int dragOffset;
     private int dragPos; // Flat position
     private int dragGroup = -1;
     private int dragChild = -1;
     private boolean isGroupDrag = false;
 
+    private int dragHoverY; // Current touch Y in list coords
+    private int dragTouchOffset; // Offset from touch Y to item top
+
     private final Paint paint = new Paint();
 
     public DragExpandableListView(Context context) {
         super(context);
+        paint.setAlpha(180); // Slight transparency for the floating item
     }
 
     public DragExpandableListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        paint.setAlpha(180);
     }
 
     public DragExpandableListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        paint.setAlpha(180);
     }
 
     public DragExpandableListView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        paint.setAlpha(180);
     }
 
     public void setOnItemMovedListener(OnItemMovedListener listener) {
@@ -68,7 +73,7 @@ public class DragExpandableListView extends ExpandableListView {
         return isGroupDrag;
     }
 
-    public void startDrag(int position, View handle) {
+    public void startDrag(int position, float rawY) {
         long packedPos = getExpandableListPosition(position);
         int group = getPackedPositionGroup(packedPos);
         int child = getPackedPositionChild(packedPos);
@@ -84,6 +89,10 @@ public class DragExpandableListView extends ExpandableListView {
         dragChild = child;
         isGroupDrag = (child == -1);
 
+        if (isGroupDrag && isGroupExpanded(group)) {
+            collapseGroup(group);
+        }
+
         dragView = getChildAt(position - getFirstVisiblePosition());
         if (dragView == null || dragView.getWidth() <= 0 || dragView.getHeight() <= 0) return;
 
@@ -91,13 +100,12 @@ public class DragExpandableListView extends ExpandableListView {
         Canvas canvas = new Canvas(dragBitmap);
         dragView.draw(canvas);
 
-        Rect rect = new Rect();
-        if (!handle.getGlobalVisibleRect(rect)) return;
-        dragStartRawY = rect.centerY();
+        int[] listCoords = new int[2];
+        getLocationOnScreen(listCoords);
+        dragHoverY = (int) (rawY - listCoords[1]);
+        dragTouchOffset = dragHoverY - dragView.getTop();
         
-        dragOffset = 0;
         dragEnabled = true;
-        dragView.setVisibility(View.INVISIBLE);
         invalidate();
     }
 
@@ -113,14 +121,14 @@ public class DragExpandableListView extends ExpandableListView {
             switch (action) {
                 case MotionEvent.ACTION_MOVE:
                     int y = (int) ev.getY();
-                    int rawY = (int) ev.getRawY();
-                    dragOffset = rawY - dragStartRawY;
+                    dragHoverY = y;
                     
                     int targetPos = pointToPosition((int)ev.getX(), y);
                     if (targetPos != INVALID_POSITION) {
                         checkSwap(targetPos);
                     }
                     
+                    checkScroll(y);
                     invalidate();
                     return true;
 
@@ -142,6 +150,16 @@ public class DragExpandableListView extends ExpandableListView {
         return super.onTouchEvent(ev);
     }
 
+    private void checkScroll(int y) {
+        int height = getHeight();
+        int scrollBound = height / 5;
+        if (y < scrollBound) {
+            smoothScrollBy(-20, 0);
+        } else if (y > height - scrollBound) {
+            smoothScrollBy(20, 0);
+        }
+    }
+
     private void checkSwap(int targetPos) {
         if (targetPos == dragPos) return;
 
@@ -150,6 +168,7 @@ public class DragExpandableListView extends ExpandableListView {
         int targetChild = getPackedPositionChild(targetPacked);
 
         if (isGroupDrag) {
+            // Ensure target is a group and not dragging inside an expanded package
             if (targetChild == -1 && targetGroup != -1 && targetGroup != dragGroup) {
                 if (movedListener != null) {
                     movedListener.onGroupMoved(dragGroup, targetGroup);
@@ -158,6 +177,7 @@ public class DragExpandableListView extends ExpandableListView {
                 }
             }
         } else {
+            // Ensure target is a child within the SAME group
             if (targetGroup == dragGroup && targetChild != -1 && targetChild != dragChild) {
                 if (movedListener != null) {
                     movedListener.onChildMoved(dragGroup, dragChild, targetChild);
@@ -170,9 +190,6 @@ public class DragExpandableListView extends ExpandableListView {
 
     private void stopDrag() {
         dragEnabled = false;
-        if (dragView != null) {
-            dragView.setVisibility(View.VISIBLE);
-        }
         dragView = null;
         if (dragBitmap != null) {
             dragBitmap.recycle();
@@ -182,11 +199,24 @@ public class DragExpandableListView extends ExpandableListView {
     }
 
     @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        if (dragEnabled) {
+            int position = getPositionForView(child);
+            if (position == dragPos) {
+                // This is the gap, don't draw the item
+                return true;
+            }
+        }
+        return super.drawChild(canvas, child, drawingTime);
+    }
+
+    @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (dragEnabled && dragBitmap != null && dragView != null) {
+        if (dragEnabled && dragBitmap != null) {
             int x = 0;
-            int y = dragView.getTop() + dragOffset;
+            // Draw floating item at touch position with proper offset
+            int y = dragHoverY - dragTouchOffset;
             canvas.drawBitmap(dragBitmap, x, y, paint);
         }
     }

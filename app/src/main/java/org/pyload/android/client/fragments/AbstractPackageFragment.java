@@ -98,6 +98,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 	private boolean isReorderMode = false;
 	private int reorderType = -1; // 0 for packages, 1 for files
 	private int reorderGroupIndex = -1;
+	private int reorderChildIndex = -1;
 	// tab position
 	private int pos = -1;
 
@@ -111,6 +112,10 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 
 	public int getReorderGroupIndex() {
 		return reorderGroupIndex;
+	}
+
+	public int getReorderChildIndex() {
+		return reorderChildIndex;
 	}
 
 	@Override
@@ -158,6 +163,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 					isReorderMode = false;
 					reorderType = -1;
 					reorderGroupIndex = -1;
+					reorderChildIndex = -1;
 					DragExpandableListView list = (DragExpandableListView) getExpandableListView();
 					int group = list.getDragGroup();
 					int child = list.getDragChild();
@@ -268,6 +274,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				isReorderMode = true;
 				reorderType = 1;
 				reorderGroupIndex = groupPos;
+				reorderChildIndex = childPos;
 				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			}
 
@@ -327,7 +334,11 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			} else if (itemId == R.id.reorder) {
 				isReorderMode = true;
 				reorderType = 0;
-				reorderGroupIndex = -1;
+				reorderGroupIndex = groupPos;
+				reorderChildIndex = -1;
+				if (getExpandableListView().isGroupExpanded(groupPos)) {
+					getExpandableListView().collapseGroup(groupPos);
+				}
 				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			} else if (itemId == R.id.package_password) {
 				final EditText input = new EditText(getActivity());
@@ -605,14 +616,14 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 				+ Utils.formatSize(pack.getSizetotal()));
 		holder.links.setText(pack.getLinksdone() + " / " + pack.getLinks().size());
 
-		if (fragment.isReorderMode() && fragment.getReorderType() == 0 && fragment.getExpandableListView() instanceof DragExpandableListView) {
+		if (fragment.isReorderMode() && fragment.getReorderType() == 0 && fragment.getReorderGroupIndex() == group && fragment.getExpandableListView() instanceof DragExpandableListView) {
 			holder.reorder_handle.setVisibility(View.VISIBLE);
 			holder.reorder_handle.setOnTouchListener((v, event) -> {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
 					int flatPos = list.getFlatListPosition(
 							ExpandableListView.getPackedPositionForGroup(group));
-					list.startDrag(flatPos, v);
+					list.startDrag(flatPos, event.getRawY());
 					return true;
 				}
 				return false;
@@ -687,14 +698,14 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.status_icon.setImageResource(0);
 		}
 
-		if (fragment.isReorderMode() && fragment.getReorderType() == 1 && fragment.getReorderGroupIndex() == group && fragment.getExpandableListView() instanceof DragExpandableListView) {
+		if (fragment.isReorderMode() && fragment.getReorderType() == 1 && fragment.getReorderGroupIndex() == group && fragment.getReorderChildIndex() == child && fragment.getExpandableListView() instanceof DragExpandableListView) {
 			holder.reorder_handle.setVisibility(View.VISIBLE);
 			holder.reorder_handle.setOnTouchListener((v, event) -> {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
 					int flatPos = list.getFlatListPosition(
 							ExpandableListView.getPackedPositionForChild(group, child));
-					list.startDrag(flatPos, v);
+					list.startDrag(flatPos, event.getRawY());
 					return true;
 				}
 				return false;
