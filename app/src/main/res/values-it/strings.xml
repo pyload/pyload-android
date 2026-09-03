@@ -35,6 +35,7 @@
     <string name="connect_error">Impossibile collegarsi a pyLoad. Controllare che pyLoad sia in esecuzione e che le impostazioni server siano corrette.</string>
     <string name="connect_timeout">Connessione scaduta. Controllare che le impostazioni server siano corrette.</string>
     <string name="connection">Conesssione</string>
+    <string name="copied">Copiato!</string>
     <string name="delete">Elimina</string>
     <string name="destination">Destinazione</string>
     <string name="drained">limite raggiunto</string>

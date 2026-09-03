@@ -34,6 +34,7 @@
     <string name="connect_error">לא ניתן להתחבר אל pyLoad. ודא ש- pyLoad פועל והגדרות השרת הן נכונות.</string>
     <string name="connect_timeout">החיבור נכשל. בדוק שהגדרות השרת נכונות.</string>
     <string name="connection">חיבור</string>
+    <string name="copied">הועתק!</string>
     <string name="delete">מחק</string>
     <string name="destination">יעד</string>
     <string name="drained">המכסה הסתיימה</string>

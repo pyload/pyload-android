@@ -35,6 +35,7 @@
     <string name="connect_error">Не могу да се повежем са сервером pyLoad-а. Проверите да ли је покренут и је ли исправно подешен.</string>
     <string name="connect_timeout">Веза је истекла. Проверите да ли су поставке сервера у реду.</string>
     <string name="connection">Веза</string>
+    <string name="copied">Копирано!</string>
     <string name="delete">Обриши</string>
     <string name="destination">Одредиште</string>
     <string name="drained">лимит достигнут</string>

@@ -35,6 +35,7 @@
     <string name="connect_error">Không thể kết nối đến pyLoad. Kiểm tra rằng pyLoad đang chạy và cài đặt máy chủ là chính xác.</string>
     <string name="connect_timeout">Kết nối hết thời gian. Xin vui lòng kiểm tra rằng cài đặt máy chủ là chính xác.</string>
     <string name="connection">Kết nối</string>
+    <string name="copied">Đã sao chép!</string>
     <string name="delete">Xóa</string>
     <string name="destination">Điểm đến</string>
     <string name="drained">đạt giới hạn</string>

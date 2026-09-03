@@ -35,6 +35,7 @@
     <string name="connect_error">Impossible de se connecter à Pyload. Verifier que Pyload est bien lancé et que la configuration de votre serveur est correct.</string>
     <string name="connect_timeout">Connexion expirée. Merci de verifier vos paramètres serveur.</string>
     <string name="connection">Connexion</string>
+    <string name="copied">Copié !</string>
     <string name="delete">Supprimer</string>
     <string name="destination">Destination</string>
     <string name="drained">limite atteinte</string>

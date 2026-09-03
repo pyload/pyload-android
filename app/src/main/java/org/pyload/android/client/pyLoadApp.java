@@ -367,7 +367,7 @@ public class pyLoadApp extends Application {
 				tr instanceof SSLHandshakeException;
 	}
 
-	private void showCenteredSnackbar(Object message, int length) {
+	public void showCenteredSnackbar(Object message, int length) {
 		if (currentActivity == null) {
 			if (message instanceof Integer) {
 				Toast.makeText(this, (Integer) message, length).show();

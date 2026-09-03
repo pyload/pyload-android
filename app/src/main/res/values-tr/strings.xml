@@ -35,6 +35,7 @@
     <string name="connect_error">PyLoad\'a bağlanamadı. PyLoad\'un çalıştığından ve sunucu ayarlarının doğru olduğundan emin olun.</string>
     <string name="connect_timeout">Bağlantı zaman aşımına uğradı. Lütfen sunucu ayarlarının doğru olduğunu denetleyin.</string>
     <string name="connection">Bağlantı</string>
+    <string name="copied">Kopyalandı!</string>
     <string name="delete">sil</string>
     <string name="destination">Hedef</string>
     <string name="drained">sınıra ulaşıldı</string>

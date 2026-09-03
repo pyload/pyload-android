@@ -35,6 +35,7 @@
     <string name="connect_error">Αποτυχία σύνδεσης στο pyLoad. Ελέγξτε ότι το pyLoad λειτουργεί και ότι οι ρυθμίσεις του διακομιστή είναι σωστές.</string>
     <string name="connect_timeout">Εξαντλήθηκε η προσπάθεια σύνδεσης. Παρακαλώ ελέγξτε ότι οι ρυθμίσεις του διακομιστή είναι σωστές.</string>
     <string name="connection">Σύνδεση</string>
+    <string name="copied">Αντιγράφηκε!</string>
     <string name="delete">Διαγραφή</string>
     <string name="destination">Προορισμός</string>
     <string name="drained">το όριο συμπληρώθηκε</string>

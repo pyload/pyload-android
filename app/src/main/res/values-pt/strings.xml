@@ -35,6 +35,7 @@
     <string name="connect_error">Não foi possível conectar ao pyLoad. Verifique se está o pyLoad esta executando e se as configurações de servidor estão corretas.</string>
     <string name="connect_timeout">Tempo de conexão esgotado. Por favor verifique se as configurações do servidor estão corretas.</string>
     <string name="connection">Conexão</string>
+    <string name="copied">Copiado!</string>
     <string name="delete">Excluir</string>
     <string name="destination">Destino</string>
     <string name="drained">limite atingido</string>

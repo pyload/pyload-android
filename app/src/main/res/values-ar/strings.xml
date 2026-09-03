@@ -35,6 +35,7 @@
     <string name="connect_error">لا يمكن الاتصال ب باي لود. تاكد من ان باي لود يعمل و ان اعدادات الخادم صحيحة.</string>
     <string name="connect_timeout">انتهاء وقت الاتصال, الرجاء التحقق من ان اعدادات الخادم صحيحة.</string>
     <string name="connection">الاتصال</string>
+    <string name="copied">تم النسخ!</string>
     <string name="delete">حذف</string>
     <string name="destination">الوجهة</string>
     <string name="drained">تم بلوغ الحد</string>

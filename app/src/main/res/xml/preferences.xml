@@ -93,13 +93,13 @@
                 android:layout="@layout/about_header"
                 android:selectable="false" />
 
-            <Preference
+            <org.pyload.android.client.components.CopyablePreference
                 android:key="version"
                 android:title="@string/version" />
-            <Preference
+            <org.pyload.android.client.components.CopyablePreference
                 android:key="git_commit"
                 android:title="@string/git_commit" />
-            <Preference
+            <org.pyload.android.client.components.CopyablePreference
                 android:key="build_date"
                 android:title="@string/build_date" />
         </PreferenceScreen>

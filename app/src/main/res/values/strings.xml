@@ -37,6 +37,7 @@
     <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are correct.</string>
     <string name="connect_timeout">Connecting timed out. Please check that the server settings are correct.</string>
     <string name="connection">Connection</string>
+    <string name="copied">Copied!</string>
     <string name="delete">Delete</string>
     <string name="destination">Destination</string>
     <string name="drained">limit reached</string>
@@ -133,6 +134,9 @@
     <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is signed by a CA known by Android</string>
     <string name="status">Status</string>
     <string name="submit">Submit</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="push_notifications_desc">Receive notifications via Firebase Cloud Messaging.</string>
+    <string name="notifications">Notifications</string>
     <string name="success">Success.</string>
     <string name="theme">Theme</string>
     <string name="theme_dark">Dark</string>

@@ -35,6 +35,7 @@
     <string name="connect_error">Не удалось подключиться к pyLoad. Проверьте, что запущена pyLoad и параметры сервера являются правильными. </string>
     <string name="connect_timeout">Соединения истекло. Пожалуйста, проверьте правильность настройки сервера.</string>
     <string name="connection">Подключение</string>
+    <string name="copied">Скопировано!</string>
     <string name="delete">Удалить</string>
     <string name="destination">Назначение</string>
     <string name="drained">лимит исчерпан</string>

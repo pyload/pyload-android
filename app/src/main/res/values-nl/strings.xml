@@ -35,6 +35,7 @@
     <string name="connect_error">Kan geen verbinding maken met pyLoad. Controleer of pyLoad wordt uitgevoerd en the serverinstellingen juist zijn.</string>
     <string name="connect_timeout">Verbinding maken duurt te lang. Controleer uw serverinstellingen, alstublieft.</string>
     <string name="connection">Verbinding</string>
+    <string name="copied">Gekopieerd!</string>
     <string name="delete">Verwijderen</string>
     <string name="destination">Bestemming</string>
     <string name="drained">limiet bereikt</string>

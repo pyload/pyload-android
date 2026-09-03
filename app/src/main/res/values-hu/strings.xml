@@ -35,6 +35,7 @@
     <string name="connect_error">Nem sikerült kapcsolatba lépni a pyLoad-al. Ellenőrizd, hogy fut-e a pyLoad és hogy helyesek-e a szerver beállításai.</string>
     <string name="connect_timeout">Kapcsolat időtúllépés. Ellenőrizd a szerver beállításait.</string>
     <string name="connection">Kapcsolat</string>
+    <string name="copied">Másolva!</string>
     <string name="delete">Törlés</string>
     <string name="destination">Cél</string>
     <string name="drained">limit elérve</string>

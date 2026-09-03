@@ -35,6 +35,7 @@
     <string name="connect_error">PyLoad に接続できませんでした。PyLoad が実行されている、サーバーの設定が正しいことを確認してください。</string>
     <string name="connect_timeout">接続タイムアウトしました。サーバーの設定が正しいことを確認してください。</string>
     <string name="connection">接続</string>
+    <string name="copied">コピーしました！</string>
     <string name="delete">削除</string>
     <string name="destination">保存先：</string>
     <string name="drained">制限に達しました</string>
