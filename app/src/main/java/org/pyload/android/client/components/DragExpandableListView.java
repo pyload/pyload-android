@@ -36,6 +36,22 @@ public class DragExpandableListView extends ExpandableListView {
     private int dragTouchOffset; // Offset from touch Y to item top
 
     private final Paint paint = new Paint();
+    private boolean ignoreTouch = false;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            int scrollbarWidth = Math.max(getVerticalScrollbarWidth(), 48);
+            ignoreTouch = (ev.getX() > getWidth() - scrollbarWidth);
+        }
+        if (ignoreTouch) {
+            if (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_CANCEL) {
+                ignoreTouch = false;
+            }
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
     public DragExpandableListView(Context context) {
         super(context);
