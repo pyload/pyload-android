@@ -165,6 +165,9 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 					reorderGroupIndex = -1;
 					reorderChildIndex = -1;
 					DragExpandableListView list = (DragExpandableListView) getExpandableListView();
+					if (list != null) {
+						list.setReorderMode(false);
+					}
 					int group = list.getDragGroup();
 					int child = list.getDragChild();
 
@@ -275,6 +278,10 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				reorderType = 1;
 				reorderGroupIndex = groupPos;
 				reorderChildIndex = childPos;
+				DragExpandableListView list = (DragExpandableListView) getExpandableListView();
+				if (list != null) {
+					list.setReorderMode(true);
+				}
 				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			}
 
@@ -338,6 +345,10 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				reorderChildIndex = -1;
 				if (getExpandableListView().isGroupExpanded(groupPos)) {
 					getExpandableListView().collapseGroup(groupPos);
+				}
+				DragExpandableListView list = (DragExpandableListView) getExpandableListView();
+				if (list != null) {
+					list.setReorderMode(true);
 				}
 				((PackageListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
 			} else if (itemId == R.id.package_password) {

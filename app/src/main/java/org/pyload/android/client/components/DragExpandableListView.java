@@ -4,11 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewConfiguration;
 import android.widget.ExpandableListView;
 
 public class DragExpandableListView extends ExpandableListView {
@@ -20,6 +19,10 @@ public class DragExpandableListView extends ExpandableListView {
     }
 
     private boolean dragEnabled = false;
+    private boolean reorderMode = false;
+    private boolean isScrolling = false;
+    private float touchDownX, touchDownY;
+
     private OnItemMovedListener movedListener;
     private int dragStartPos;
     private int dragStartGroup;
@@ -36,22 +39,6 @@ public class DragExpandableListView extends ExpandableListView {
     private int dragTouchOffset; // Offset from touch Y to item top
 
     private final Paint paint = new Paint();
-    private boolean ignoreTouch = false;
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            int scrollbarWidth = Math.max(getVerticalScrollbarWidth(), 48);
-            ignoreTouch = (ev.getX() > getWidth() - scrollbarWidth);
-        }
-        if (ignoreTouch) {
-            if (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_CANCEL) {
-                ignoreTouch = false;
-            }
-            return true;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
 
     public DragExpandableListView(Context context) {
         super(context);
@@ -77,6 +64,19 @@ public class DragExpandableListView extends ExpandableListView {
         this.movedListener = listener;
     }
 
+    public void setReorderMode(boolean reorder) {
+        this.reorderMode = reorder;
+        setHapticFeedbackEnabled(!reorder);
+    }
+
+    @Override
+    public boolean performHapticFeedback(int feedbackConstant) {
+        if (reorderMode) {
+            return false;
+        }
+        return super.performHapticFeedback(feedbackConstant);
+    }
+
     public int getDragGroup() {
         return dragGroup;
     }
@@ -87,6 +87,56 @@ public class DragExpandableListView extends ExpandableListView {
 
     public boolean isGroupDrag() {
         return isGroupDrag;
+    }
+
+    @Override
+    public boolean showContextMenu() {
+        if (reorderMode) {
+            return true;
+        }
+        return super.showContextMenu();
+    }
+
+    @Override
+    public boolean showContextMenuForChild(View originalView) {
+        if (reorderMode) {
+            return true;
+        }
+        return super.showContextMenuForChild(originalView);
+    }
+
+    @Override
+    public boolean showContextMenuForChild(View originalView, float x, float y) {
+        if (reorderMode) {
+            return true;
+        }
+        return super.showContextMenuForChild(originalView, x, y);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (reorderMode && !dragEnabled) {
+            int touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touchDownX = ev.getX();
+                    touchDownY = ev.getY();
+                    isScrolling = false;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (Math.hypot(ev.getX() - touchDownX, ev.getY() - touchDownY) > touchSlop) {
+                        isScrolling = true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    if (!isScrolling) {
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     public void startDrag(int position, float rawY) {
@@ -132,6 +182,18 @@ public class DragExpandableListView extends ExpandableListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        if (reorderMode && !dragEnabled) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    if (!isScrolling) {
+                        isScrolling = false;
+                        return true;
+                    }
+                    isScrolling = false;
+                    break;
+            }
+        }
         if (dragEnabled) {
             int action = ev.getAction();
             switch (action) {
