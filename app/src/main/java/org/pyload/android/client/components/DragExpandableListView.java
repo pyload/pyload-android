@@ -89,6 +89,10 @@ public class DragExpandableListView extends ExpandableListView {
         return isGroupDrag;
     }
 
+    public boolean isDragEnabled() {
+        return dragEnabled;
+    }
+
     @Override
     public boolean showContextMenu() {
         if (reorderMode) {

@@ -627,11 +627,13 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 				+ Utils.formatSize(pack.getSizetotal()));
 		holder.links.setText(pack.getLinksdone() + " / " + pack.getLinks().size());
 
-		if (fragment.isReorderMode() && fragment.getReorderType() == 0 && fragment.getReorderGroupIndex() == group && fragment.getExpandableListView() instanceof DragExpandableListView) {
+		DragExpandableListView list = fragment.getExpandableListView() instanceof DragExpandableListView ? (DragExpandableListView) fragment.getExpandableListView() : null;
+		boolean isDragging = list != null && list.isDragEnabled();
+
+		if (!isDragging && fragment.isReorderMode() && fragment.getReorderType() == 0 && fragment.getReorderGroupIndex() == group && list != null) {
 			holder.reorder_handle.setVisibility(View.VISIBLE);
 			holder.reorder_handle.setOnTouchListener((v, event) -> {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
 					int flatPos = list.getFlatListPosition(
 							ExpandableListView.getPackedPositionForGroup(group));
 					list.startDrag(flatPos, event.getRawY());
@@ -709,11 +711,13 @@ class PackageListAdapter extends BaseExpandableListAdapter {
 			holder.status_icon.setImageResource(0);
 		}
 
-		if (fragment.isReorderMode() && fragment.getReorderType() == 1 && fragment.getReorderGroupIndex() == group && fragment.getReorderChildIndex() == child && fragment.getExpandableListView() instanceof DragExpandableListView) {
+		DragExpandableListView list = fragment.getExpandableListView() instanceof DragExpandableListView ? (DragExpandableListView) fragment.getExpandableListView() : null;
+		boolean isDragging = list != null && list.isDragEnabled();
+
+		if (!isDragging && fragment.isReorderMode() && fragment.getReorderType() == 1 && fragment.getReorderGroupIndex() == group && fragment.getReorderChildIndex() == child && list != null) {
 			holder.reorder_handle.setVisibility(View.VISIBLE);
 			holder.reorder_handle.setOnTouchListener((v, event) -> {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					DragExpandableListView list = (DragExpandableListView) fragment.getExpandableListView();
 					int flatPos = list.getFlatListPosition(
 							ExpandableListView.getPackedPositionForChild(group, child));
 					list.startDrag(flatPos, event.getRawY());
