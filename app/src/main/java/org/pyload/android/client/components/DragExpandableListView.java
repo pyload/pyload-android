@@ -146,6 +146,10 @@ public class DragExpandableListView extends ExpandableListView {
 
         if (group == -1) return;
 
+        if (getParent() != null) {
+            getParent().requestDisallowInterceptTouchEvent(true);
+        }
+
         dragStartPos = position;
         dragStartGroup = group;
         dragStartChild = child;
@@ -195,6 +199,9 @@ public class DragExpandableListView extends ExpandableListView {
             }
         }
         if (dragEnabled) {
+            if (getParent() != null) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+            }
             int action = ev.getAction();
             switch (action) {
                 case MotionEvent.ACTION_MOVE:
@@ -268,6 +275,9 @@ public class DragExpandableListView extends ExpandableListView {
 
     private void stopDrag() {
         dragEnabled = false;
+        if (getParent() != null) {
+            getParent().requestDisallowInterceptTouchEvent(false);
+        }
         dragView = null;
         if (dragBitmap != null) {
             dragBitmap.recycle();
