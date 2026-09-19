@@ -72,6 +72,7 @@ public class pyLoadApp extends Application {
 	private int activityCount = 0;
 
 	private int consecutiveConnectionErrors = 0;
+	private int consecutiveLoginErrors = 0;
 	private boolean pollingPaused = false;
 	private boolean snackbarDismissedByUser = false;
 	private Snackbar persistentSnackbar = null;
@@ -346,7 +347,17 @@ public class pyLoadApp extends Application {
 			}
 			if (isConnectionError(lastException)) {
 				consecutiveConnectionErrors++;
+				consecutiveLoginErrors = 0;
 				if (consecutiveConnectionErrors >= 3) {
+					pollingPaused = true;
+					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+				} else {
+					showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
+				}
+			} else if (lastException instanceof WrongLogin) {
+				consecutiveLoginErrors++;
+				consecutiveConnectionErrors = 0;
+				if (consecutiveLoginErrors >= 3) {
 					pollingPaused = true;
 					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
 				} else {
@@ -451,6 +462,7 @@ public class pyLoadApp extends Application {
 
 	public void onSuccess() {
 		consecutiveConnectionErrors = 0;
+		consecutiveLoginErrors = 0;
 		snackbarDismissedByUser = false;
 		if (pollingPaused) {
 			pollingPaused = false;
@@ -524,6 +536,7 @@ public class pyLoadApp extends Application {
 		Log.d("pyLoad", "Client resetted");
 		client = null;
 		consecutiveConnectionErrors = 0;
+		consecutiveLoginErrors = 0;
 		pollingPaused = false;
 		snackbarDismissedByUser = false;
 		if (persistentSnackbar != null) {
