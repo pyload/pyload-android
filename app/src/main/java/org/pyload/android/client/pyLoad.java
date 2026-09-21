@@ -1,6 +1,7 @@
 package org.pyload.android.client;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,10 +66,11 @@ public class pyLoad extends FragmentTabsPager {
     private MenuItem searchItem;
     private View captchaBanner;
 
-    private OnBackPressedCallback onBackPressedCallback;
-
     private boolean captchaAvailable = false;
     private boolean lastCaptchaState = false;
+
+    private boolean isKeyboardVisible = false;
+    private long lastKeyboardCloseTime = 0;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable runCaptchaUpdate = new Runnable() {
@@ -173,8 +174,21 @@ public class pyLoad extends FragmentTabsPager {
             Intent intent = new Intent(this, CaptchaActivity.class);
             startActivity(intent);
         });
+        
+        final View rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            android.graphics.Rect r = new android.graphics.Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+            boolean isVisible = keypadHeight > screenHeight * 0.15;
+            if (!isVisible && isKeyboardVisible) {
+                lastKeyboardCloseTime = System.currentTimeMillis();
+            }
+            isKeyboardVisible = isVisible;
+        });
 
-        onBackPressedCallback = new OnBackPressedCallback(true) {
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 if (searchItem != null && searchItem.isActionViewExpanded()) {
@@ -263,6 +277,7 @@ public class pyLoad extends FragmentTabsPager {
         mHandler.removeCallbacks(mCaptchaTimeTask);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -274,7 +289,6 @@ public class pyLoad extends FragmentTabsPager {
             searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionExpand(MenuItem item) {
-                    onBackPressedCallback.setEnabled(true);
                     MenuItem addLinks = menu.findItem(R.id.add_links);
                     if (addLinks != null) {
                         addLinks.setVisible(false);
@@ -284,7 +298,20 @@ public class pyLoad extends FragmentTabsPager {
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
-                    onBackPressedCallback.setEnabled(false);
+                    // If keyboard is visible, we hide keyboard, but do NOT collapse
+                    if (item.getItemId() == R.id.search && isKeyboardVisible) {
+                        MenuItem search = menu.findItem(R.id.search);
+                        if (search != null) {
+                            SearchView searchView = (SearchView) search.getActionView();
+                            if (searchView != null) {
+                                android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                if (imm != null) {
+                                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                                }
+                                return false;
+                            }
+                        }
+                    }
                     MenuItem addLinks = menu.findItem(R.id.add_links);
                     if (addLinks != null) {
                         addLinks.setVisible(true);
@@ -320,19 +347,6 @@ public class pyLoad extends FragmentTabsPager {
                             if (imm != null) {
                                 imm.showSoftInput(v, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
                             }
-                        }
-                        return false;
-                    });
-
-                    searchAutoComplete.setOnKeyListener((v, keyCode, event) -> {
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            if (event.getAction() == KeyEvent.ACTION_UP) {
-                                if (searchItem != null && searchItem.isActionViewExpanded()) {
-                                    searchItem.collapseActionView();
-                                }
-                            }
-                            // Always consume back key when search is expanded to prevent default SearchView behavior
-                            return searchItem != null && searchItem.isActionViewExpanded();
                         }
                         return false;
                     });

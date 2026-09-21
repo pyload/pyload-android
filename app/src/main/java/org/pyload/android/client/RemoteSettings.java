@@ -1,27 +1,31 @@
 package org.pyload.android.client;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.view.MenuItem;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.KeyEvent;
-import androidx.appcompat.widget.SearchView;
-import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
+
 import org.pyload.android.client.components.TabHandler;
-import android.content.Context;
-import androidx.fragment.app.FragmentManager;
 
 public class RemoteSettings extends AppCompatActivity {
 
     private MenuItem searchItem;
     private OnBackPressedCallback onBackPressedCallback;
+    private boolean isKeyboardVisible = false;
+    private long lastKeyboardCloseTime = 0;
 
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
@@ -40,6 +44,19 @@ public class RemoteSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_settings);
+
+        final View rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            android.graphics.Rect r = new android.graphics.Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+            boolean isVisible = keypadHeight > screenHeight * 0.15;
+            if (!isVisible && isKeyboardVisible) {
+                lastKeyboardCloseTime = System.currentTimeMillis();
+            }
+            isKeyboardVisible = isVisible;
+        });
 
         onBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
@@ -93,6 +110,7 @@ public class RemoteSettings extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -122,6 +140,16 @@ public class RemoteSettings extends AppCompatActivity {
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
+                    if (isKeyboardVisible) {
+                        SearchView searchView = (SearchView) searchItem.getActionView();
+                        if (searchView != null) {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            if (imm != null) {
+                                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                            }
+                        }
+                        return false;
+                    }
                     onBackPressedCallback.setEnabled(false);
                     return true;
                 }
@@ -155,19 +183,6 @@ public class RemoteSettings extends AppCompatActivity {
                             if (imm != null) {
                                 imm.showSoftInput(v, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
                             }
-                        }
-                        return false;
-                    });
-
-                    searchAutoComplete.setOnKeyListener((v, keyCode, event) -> {
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            if (event.getAction() == KeyEvent.ACTION_UP) {
-                                if (searchItem != null && searchItem.isActionViewExpanded()) {
-                                    searchItem.collapseActionView();
-                                }
-                            }
-                            // Always consume back key when search is expanded to prevent default SearchView behavior
-                            return searchItem != null && searchItem.isActionViewExpanded();
                         }
                         return false;
                     });
