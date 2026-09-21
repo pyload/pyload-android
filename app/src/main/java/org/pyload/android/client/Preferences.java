@@ -16,20 +16,13 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
+import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.services.ClickNLoadService;
 
 public class Preferences extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
-        android.content.SharedPreferences prefs = newBase.getSharedPreferences(newBase.getPackageName() + "_preferences", android.content.Context.MODE_PRIVATE);
-        String language = prefs.getString("language", "");
-        if (!language.isEmpty()) {
-            java.util.Locale locale = new java.util.Locale(language);
-            android.content.res.Configuration config = new android.content.res.Configuration(newBase.getResources().getConfiguration());
-            config.setLocale(locale);
-            newBase = newBase.createConfigurationContext(config);
-        }
-        super.attachBaseContext(newBase);
+        super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
     }
 
     @Override
@@ -86,6 +79,16 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
+
+            Preference languagePreference = findPreference("language");
+            if (languagePreference != null) {
+                languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                    String newLang = (String) newValue;
+                    LanguageUtils.applyLanguage(requireContext(), newLang);
+                    requireActivity().recreate();
+                    return true;
+                });
+            }
 
             Preference themePreference = findPreference("theme");
             if (themePreference != null) {

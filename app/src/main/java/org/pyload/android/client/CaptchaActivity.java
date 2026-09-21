@@ -1,5 +1,6 @@
 package org.pyload.android.client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.CaptchaTask;
@@ -37,6 +39,11 @@ import java.util.Map;
 public class CaptchaActivity extends AppCompatActivity {
 
 	private static boolean active = false;
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
+	}
 
 	private pyLoadApp app;
 	private CaptchaTask task;

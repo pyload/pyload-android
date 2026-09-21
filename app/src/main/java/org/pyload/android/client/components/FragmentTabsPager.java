@@ -18,6 +18,7 @@ package org.pyload.android.client.components;
 import java.util.ArrayList;
 
 import org.pyload.android.client.R;
+import org.pyload.android.client.module.LanguageUtils;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,15 +46,7 @@ public class FragmentTabsPager extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
-        android.content.SharedPreferences prefs = newBase.getSharedPreferences(newBase.getPackageName() + "_preferences", android.content.Context.MODE_PRIVATE);
-        String language = prefs.getString("language", "");
-        if (!language.isEmpty()) {
-            java.util.Locale locale = new java.util.Locale(language);
-            android.content.res.Configuration config = new android.content.res.Configuration(newBase.getResources().getConfiguration());
-            config.setLocale(locale);
-            newBase = newBase.createConfigurationContext(config);
-        }
-        super.attachBaseContext(newBase);
+        super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
     }
 
     @Override

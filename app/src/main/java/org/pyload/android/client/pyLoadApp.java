@@ -32,6 +32,7 @@ import org.pyload.android.client.exceptions.WrongPathPrefix;
 import org.pyload.android.client.exceptions.WrongServer;
 import org.pyload.android.client.module.AllTrustManager;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.TaskQueue;
 import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.ApiClient;
@@ -56,6 +57,11 @@ import retrofit2.Retrofit;
 public class pyLoadApp extends Application {
 
 	public static final String CHANNEL_ID = "pyload_channel";
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(LanguageUtils.attachBaseContext(base));
+	}
 
 	private PyLoadRestApi client;
 
@@ -84,6 +90,9 @@ public class pyLoadApp extends Application {
 		super.onCreate();
 
 		prefs = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
+		String language = prefs.getString("language", "");
+		LanguageUtils.applyLanguage(this, language);
+
 		String theme = prefs.getString("theme", "system");
 		applyTheme(theme);
 
@@ -122,7 +131,7 @@ public class pyLoadApp extends Application {
 			public void onActivityResumed(Activity activity) {
 				currentActivity = activity;
 				if (pollingPaused && !snackbarDismissedByUser) {
-					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+					showCenteredSnackbar(R.string.polling_paused_error, Snackbar.LENGTH_INDEFINITE);
 				}
 			}
 
@@ -170,10 +179,18 @@ public class pyLoadApp extends Application {
 	}
 
 	public String verboseBool(boolean state) {
-		if (state)
-			return getString(R.string.on);
-		else
-			return getString(R.string.off);
+		int resId = state ? R.string.on : R.string.off;
+		return getLocalizedString(resId);
+	}
+
+	public String getLocalizedString(int resId) {
+		Context ctx = currentActivity != null ? currentActivity : this;
+		return LanguageUtils.getLocalizedString(ctx, resId);
+	}
+
+	public String getLocalizedString(int resId, Object... formatArgs) {
+		Context ctx = currentActivity != null ? currentActivity : this;
+		return LanguageUtils.getLocalizedString(ctx, resId, formatArgs);
 	}
 
 	private boolean checkAuth() {
@@ -319,27 +336,27 @@ public class pyLoadApp extends Application {
 
 		String errorMessage;
 		if (lastException instanceof WrongLogin)
-			errorMessage = getString(R.string.bad_login);
+			errorMessage = getLocalizedString(R.string.bad_login);
 		else if (lastException instanceof WrongPathPrefix)
-			errorMessage = getString(R.string.bad_path);
+			errorMessage = getLocalizedString(R.string.bad_path);
 		else if (lastException instanceof WrongServer)
-			errorMessage = String.format(getString(R.string.old_server), clientVersion[clientVersion.length - 1]);
+			errorMessage = getLocalizedString(R.string.old_server, (Object[]) clientVersion);
 		else if (lastException instanceof RuntimeException) {
 			Throwable tr = findException(lastException);
 			if (tr instanceof SSLHandshakeException)
-				errorMessage = getString(R.string.certificate_error);
+				errorMessage = getLocalizedString(R.string.certificate_error);
 			else if (tr instanceof SocketTimeoutException)
-				errorMessage = getString(R.string.connect_timeout);
+				errorMessage = getLocalizedString(R.string.connect_timeout);
 			else if (tr instanceof ConnectException)
-				errorMessage = getString(R.string.connect_error);
+				errorMessage = getLocalizedString(R.string.connect_error);
 			else if (tr instanceof SocketException)
-				errorMessage = getString(R.string.socket_error);
+				errorMessage = getLocalizedString(R.string.socket_error);
 			else
-				errorMessage = getString(R.string.no_connection) + " " + tr.getMessage();
+				errorMessage = getLocalizedString(R.string.no_connection) + " " + tr.getMessage();
 		} else if (lastException != null)
 			errorMessage = lastException.getMessage();
 		else
-			errorMessage = getString(R.string.error);
+			errorMessage = getLocalizedString(R.string.error);
 
 		if (isAppInForeground()) {
 			if (pollingPaused) {
@@ -350,7 +367,7 @@ public class pyLoadApp extends Application {
 				consecutiveLoginErrors = 0;
 				if (consecutiveConnectionErrors >= 3) {
 					pollingPaused = true;
-					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+					showCenteredSnackbar(R.string.polling_paused_error, Snackbar.LENGTH_INDEFINITE);
 				} else {
 					showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
 				}
@@ -359,7 +376,7 @@ public class pyLoadApp extends Application {
 				consecutiveConnectionErrors = 0;
 				if (consecutiveLoginErrors >= 3) {
 					pollingPaused = true;
-					showCenteredSnackbar(getString(R.string.polling_paused_error), Snackbar.LENGTH_INDEFINITE);
+					showCenteredSnackbar(R.string.polling_paused_error, Snackbar.LENGTH_INDEFINITE);
 				} else {
 					showCenteredSnackbar(errorMessage, Snackbar.LENGTH_LONG);
 				}

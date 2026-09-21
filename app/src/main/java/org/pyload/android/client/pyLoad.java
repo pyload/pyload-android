@@ -42,6 +42,7 @@ import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
@@ -134,9 +135,10 @@ public class pyLoad extends FragmentTabsPager {
             }
     );
 
-    /**
-     * Called when the activity is first created.
-     */
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
+    }
 
     public void onCreate(Bundle savedInstanceState) {
 

@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.Utils;
 
 import java.util.regex.Matcher;
@@ -39,15 +40,7 @@ public class AddLinksActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
-        android.content.SharedPreferences prefs = newBase.getSharedPreferences(newBase.getPackageName() + "_preferences", android.content.Context.MODE_PRIVATE);
-        String language = prefs.getString("language", "");
-        if (!language.isEmpty()) {
-            java.util.Locale locale = new java.util.Locale(language);
-            android.content.res.Configuration config = new android.content.res.Configuration(newBase.getResources().getConfiguration());
-            config.setLocale(locale);
-            newBase = newBase.createConfigurationContext(config);
-        }
-        super.attachBaseContext(newBase);
+        super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
     }
 	
 	@Override
