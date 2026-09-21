@@ -298,18 +298,15 @@ public class pyLoad extends FragmentTabsPager {
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
-                    // If keyboard is visible, we hide keyboard, but do NOT collapse
+                    // If keyboard is visible, we hide keyboard, but do NOT collapse the search view
                     if (item.getItemId() == R.id.search && isKeyboardVisible) {
-                        MenuItem search = menu.findItem(R.id.search);
-                        if (search != null) {
-                            SearchView searchView = (SearchView) search.getActionView();
-                            if (searchView != null) {
-                                android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                if (imm != null) {
-                                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-                                }
-                                return false;
+                        SearchView searchView = (SearchView) searchItem.getActionView();
+                        if (searchView != null) {
+                            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            if (imm != null) {
+                                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                             }
+                            return false;
                         }
                     }
                     MenuItem addLinks = menu.findItem(R.id.add_links);

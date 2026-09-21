@@ -140,6 +140,7 @@ public class RemoteSettings extends AppCompatActivity {
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
+                    // If keyboard is visible, we hide keyboard, but do NOT collapse the search view
                     if (isKeyboardVisible) {
                         SearchView searchView = (SearchView) searchItem.getActionView();
                         if (searchView != null) {
