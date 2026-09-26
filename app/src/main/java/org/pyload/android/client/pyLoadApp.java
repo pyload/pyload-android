@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Application;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,9 +31,11 @@ import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.exceptions.WrongLogin;
 import org.pyload.android.client.exceptions.WrongPathPrefix;
 import org.pyload.android.client.exceptions.WrongServer;
+import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.AllTrustManager;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.LanguageUtils;
+import org.pyload.android.client.module.ServerManager;
 import org.pyload.android.client.module.TaskQueue;
 import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.ApiClient;
@@ -48,6 +51,7 @@ import java.net.SocketTimeoutException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -124,6 +128,16 @@ public class pyLoadApp extends Application {
 
 			@Override
 			public void onActivityStarted(Activity activity) {
+				if (activityCount == 0) {
+					if (prefs.getBoolean("clicknload", false)) {
+						Intent intent = new Intent(pyLoadApp.this, ClickNLoadService.class);
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+							startForegroundService(intent);
+						} else {
+							startService(intent);
+						}
+					}
+				}
 				activityCount++;
 			}
 
@@ -193,20 +207,47 @@ public class pyLoadApp extends Application {
 		return LanguageUtils.getLocalizedString(ctx, resId, formatArgs);
 	}
 
-	private boolean checkAuth() {
-		// replace protocol, some user also enter it
-		String host = prefs.getString("host", "10.0.2.2").replaceFirst("^[a-zA-z]+://", "");
-		int port = Integer.parseInt(prefs.getString("port", "8000"));
-		String apiKey = prefs.getString("api_key", "");
+	public void switchServer(String serverId) {
+		ServerManager.getInstance(this).setActiveServerId(serverId);
+		resetClient();
+		clearTasks();
+		if (main != null) {
+			main.updateServerSubtitle();
+		}
+		refreshTab();
+	}
 
-        ApiClient apiClient = new ApiClient();
+	private boolean checkAuth() {
+		Server activeServer = ServerManager.getInstance(this).getActiveServer();
+		try {
+			client = getClientForServer(activeServer);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public PyLoadRestApi getClientForServer(Server server) throws WrongLogin, WrongServer {
+		if (server == null) {
+			server = ServerManager.getInstance(this).getActiveServer();
+		}
+		String host = server.getHost().replaceFirst("^[a-zA-z]+://", "");
+		int port;
+		try {
+			port = Integer.parseInt(server.getPort());
+		} catch (NumberFormatException e) {
+			port = 8000;
+		}
+		String apiKey = server.getApiKey();
+
+		ApiClient apiClient = new ApiClient();
 		apiClient.getOkBuilder()
 				.connectTimeout(8, TimeUnit.SECONDS)
 				.readTimeout(8, TimeUnit.SECONDS);
 
-		boolean useSsl = prefs.getBoolean("ssl", false);
+		boolean useSsl = server.isSsl();
 		if (useSsl) {
-			boolean validateSsl = prefs.getBoolean("ssl_validate", true);
+			boolean validateSsl = server.isSslValidate();
 			TrustManager[] trustManagers;
 			try {
 				if (validateSsl) {
@@ -219,7 +260,6 @@ public class pyLoadApp extends Application {
 				}
 				SSLContext sslContext = SSLContext.getInstance("TLS");
 				sslContext.init(null, trustManagers, new SecureRandom());
-				Log.d("pyLoad", "SSL Context created");
 
 				apiClient.getOkBuilder().sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustManagers[0]);
 			} catch (Exception e) {
@@ -234,7 +274,7 @@ public class pyLoadApp extends Application {
 		}
 
 		String protocol = useSsl ? "https://" : "http://";
-		String pathPrefix = prefs.getString("path_prefix", "");
+		String pathPrefix = server.getPathPrefix();
 		if (!pathPrefix.startsWith("/") && !pathPrefix.isEmpty()) {
 			pathPrefix = "/" + pathPrefix;
 		}
@@ -249,20 +289,20 @@ public class pyLoadApp extends Application {
 		retrofit.converterFactories().remove(0);
 		apiClient.setAdapterBuilder(retrofit);
 
-		boolean authSuccessful;
+		PyLoadRestApi pyLoadRestApi;
 		try {
 			ApiKeyAuth apiKeyAuth = new ApiKeyAuth("header", "X-API-Key");
 			apiKeyAuth.setApiKey(apiKey);
 			apiClient.addAuthorization("ApiKeyAuth", apiKeyAuth);
 
-			PyLoadRestApi pyLoadRestApi = apiClient.createService(PyLoadRestApi.class);
+			pyLoadRestApi = apiClient.createService(PyLoadRestApi.class);
 
 			Response<ServerStatus> serverStatus = pyLoadRestApi.apiStatusServerGet().execute();
-			authSuccessful = serverStatus.isSuccessful();
-			if (authSuccessful) {
-				client = pyLoadRestApi;
-			} else if (serverStatus.code() == 404) {
-				throw new WrongPathPrefix();
+			if (!serverStatus.isSuccessful()) {
+				if (serverStatus.code() == 404) {
+					throw new WrongPathPrefix();
+				}
+				throw new WrongLogin();
 			}
 		} catch (WrongPathPrefix e) {
 			throw e;
@@ -270,31 +310,26 @@ public class pyLoadApp extends Application {
 			throw new RuntimeException(e);
 		}
 
-		return authSuccessful;
+		String serverVersion = executeNetworkCall(pyLoadRestApi.apiGetServerVersionGet());
+		boolean match = false;
+		for (String version : clientVersion) {
+			if (serverVersion.startsWith(version)) {
+				match = true;
+				break;
+			}
+		}
+		if (!match) {
+			throw new WrongServer();
+		}
+
+		return pyLoadRestApi;
 	}
 
 	public PyLoadRestApi getClient() throws WrongLogin, WrongServer {
 
 		if (client == null) {
 			Log.d("pyLoad", "Creating new Client");
-			boolean authSuccessful = checkAuth();
-			if (!authSuccessful) {
-				client = null;
-				throw new WrongLogin();
-			}
-
-            String server = executeNetworkCall(client.apiGetServerVersionGet());
-            boolean match = false;
-			
-			for (String version : clientVersion)
-				if (server.startsWith(version)) {
-					match = true;
-					break;
-				}
-			
-			if (!match)
-				throw new WrongServer();
-
+			client = getClientForServer(null);
 		}
 		return client;
 	}

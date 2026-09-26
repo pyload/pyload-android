@@ -23,65 +23,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/clicknload" android:key="clicknload_category">
-        <CheckBoxPreference
-			android:key="clicknload"
-			android:title="@string/clicknload"
-			android:summary="@string/clicknload_desc"
-			android:defaultValue="false"/>
-
-        <ListPreference android:key="clicknload_dest"
-            android:title="@string/destination"
-            android:summary="@string/clicknload_dest_desc"
-            android:defaultValue="1"
-            android:entries="@array/destination_list"
-            android:entryValues="@array/destination_values"
-            android:dependency="clicknload"/>
+        <org.pyload.android.client.components.ClickNLoadPreferenceScreen
+            android:key="clicknload"
+            android:title="@string/clicknload"
+            android:summary="@string/clicknload_desc"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:key="connection_category" android:title="@string/connection">
-		<PreferenceScreen
-			android:key="server_url"
-			android:title="@string/server_url">
-
-			<PreferenceCategory
-				android:key="server_details"
-				android:title="@string/server">
-				<EditTextPreference
-					android:key="host"
-					android:singleLine="true"
-					android:summary="@string/ip_desc"
-					android:title="@string/ip" />
-				<EditTextPreference
-					android:defaultValue="8000"
-					android:id="@+id/port"
-					android:inputType="number"
-					android:key="port"
-					android:singleLine="true"
-					android:summary="@string/port_desc"
-					android:title="@string/port" />
-				<EditTextPreference
-					android:defaultValue=""
-					android:key="path_prefix"
-					android:singleLine="true"
-					android:summary="@string/path_prefix_desc"
-					android:title="@string/path_prefix" />
-				<CheckBoxPreference
-					android:defaultValue="false"
-					android:key="ssl"
-					android:summary="@string/ssl_desc"
-					android:title="@string/ssl" />
-				<CheckBoxPreference
-					android:defaultValue="true"
-					android:key="ssl_validate"
-					android:summary="@string/ssl_validate_desc"
-					android:title="@string/ssl_validate" />
-			</PreferenceCategory>
-		</PreferenceScreen>
-        <EditTextPreference
-            android:key="api_key"
-            android:singleLine="true"
-            android:summary="@string/api_key_desc"
-            android:title="@string/api_key" />
+        <Preference
+            android:key="manage_servers_pref"
+            android:title="@string/servers"
+            android:summary="@string/manage_servers" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about" android:key="about_category">

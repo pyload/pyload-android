@@ -117,6 +117,8 @@
         </activity>
 
         <activity android:name=".Preferences" android:label="@string/app_settings" android:exported="false"/>
+        <activity android:name=".ServerListActivity" android:label="@string/servers" android:exported="false"/>
+        <activity android:name=".ServerEditActivity" android:exported="false"/>
         <activity android:name=".AddLinksActivity" android:exported="false"/>
         <activity android:name=".RemoteSettings" android:label="@string/remote_settings" android:exported="false"/>
         <activity android:name=".CaptchaActivity"
@@ -124,6 +126,13 @@
                   android:exported="false"
                   android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ClickNLoadServerSelectActivity"
+                  android:label="@string/clicknload"
+                  android:exported="false"
+                  android:theme="@style/Theme.Material3.DayNight.Dialog"
+                  android:excludeFromRecents="true"
+                  android:taskAffinity=""
+                  android:launchMode="singleInstance"/>
 
         <service
             android:name=".services.ClickNLoadService"

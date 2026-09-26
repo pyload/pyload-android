@@ -1,27 +1,40 @@
 package org.pyload.android.client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import org.pyload.android.client.components.ClickNLoadPreferenceScreen;
+import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.LanguageUtils;
+import org.pyload.android.client.module.ServerManager;
 import org.pyload.android.client.services.ClickNLoadService;
+
+import java.util.List;
 
 public class Preferences extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     @Override
-    protected void attachBaseContext(android.content.Context newBase) {
+    protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
     }
 
@@ -78,7 +91,11 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.preferences, rootKey);
+            if ("clicknload".equals(rootKey) || "clicknload_screen".equals(rootKey)) {
+                setPreferencesFromResource(R.xml.clicknload_preferences, null);
+            } else {
+                setPreferencesFromResource(R.xml.preferences, rootKey);
+            }
 
             Preference languagePreference = findPreference("language");
             if (languagePreference != null) {
@@ -98,8 +115,112 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                 });
             }
 
+            Preference manageServersPref = findPreference("manage_servers_pref");
+            if (manageServersPref != null) {
+                manageServersPref.setOnPreferenceClickListener(preference -> {
+                    Intent intent = new Intent(getContext(), ServerListActivity.class);
+                    startActivity(intent);
+                    return true;
+                });
+            }
+
+            Preference clicknloadServerPref = findPreference("clicknload_server_option");
+            if (clicknloadServerPref != null) {
+                clicknloadServerPref.setOnPreferenceClickListener(preference -> {
+                    List<Server> servers = ServerManager.getInstance(requireContext()).getServers();
+                    SharedPreferences prefs = requireContext().getSharedPreferences(requireContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                    String serverOption = prefs.getString("clicknload_server_option", "ask");
+                    String currentTargetId = prefs.getString("clicknload_target_server_id", null);
+
+                    String[] items = new String[servers.size() + 1];
+                    items[0] = getString(R.string.clicknload_server_ask);
+
+                    int selectedIndex = 0;
+                    if (servers.size() == 1) {
+                        selectedIndex = 1;
+                    } else if ("quick_select".equals(serverOption) && currentTargetId != null) {
+                        for (int i = 0; i < servers.size(); i++) {
+                            Server s = servers.get(i);
+                            if (s.getId().equals(currentTargetId)) {
+                                selectedIndex = i + 1;
+                                break;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < servers.size(); i++) {
+                        Server s = servers.get(i);
+                        items[i + 1] = s.getName() + " (" + s.getFormattedUrl() + ")";
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(),
+                            android.R.layout.select_dialog_singlechoice, items) {
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0 && servers.size() == 1) {
+                                return false;
+                            }
+                            return super.isEnabled(position);
+                        }
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+                            if (position == 0 && servers.size() == 1) {
+                                view.setAlpha(0.4f);
+                            } else {
+                                view.setAlpha(1.0f);
+                            }
+                            return view;
+                        }
+                    };
+
+                    new MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.clicknload_destination_server)
+                            .setSingleChoiceItems(adapter, selectedIndex, (dialog, which) -> {
+                                dialog.dismiss();
+                                if (which == 0) {
+                                    prefs.edit()
+                                            .putString("clicknload_server_option", "ask")
+                                            .remove("clicknload_target_server_id")
+                                            .remove("clicknload_target_server_name")
+                                            .apply();
+                                } else {
+                                    Server selected = servers.get(which - 1);
+                                    prefs.edit()
+                                            .putString("clicknload_server_option", "quick_select")
+                                            .putString("clicknload_target_server_id", selected.getId())
+                                            .putString("clicknload_target_server_name", selected.getName())
+                                            .apply();
+                                }
+                                updateClickNLoadServerSummary();
+                            })
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
+                    return true;
+                });
+            }
+
             updateUrlSummary();
+            updateClickNLoadServerSummary();
             updateAboutInfo();
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(Preference preference) {
+            if (preference instanceof ClickNLoadPreferenceScreen) {
+                Fragment fragment = new SettingsFragment();
+                Bundle args = new Bundle();
+                args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, "clicknload_screen");
+                fragment.setArguments(args);
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.preferences_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+            }
+            return super.onPreferenceTreeClick(preference);
         }
 
         private void updateAboutInfo() {
@@ -131,6 +252,8 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
             PreferenceScreen screen = getPreferenceScreen();
             if (screen != null && "about_screen".equals(screen.getKey())) {
                 requireActivity().setTitle(R.string.about);
+            } else if (screen != null && ("clicknload".equals(screen.getKey()) || "clicknload_screen".equals(screen.getKey()))) {
+                requireActivity().setTitle(R.string.clicknload);
             } else if (screen != null && screen.getTitle() != null) {
                 requireActivity().setTitle(screen.getTitle());
             } else {
@@ -141,6 +264,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                 getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             }
             updateUrlSummary();
+            updateClickNLoadServerSummary();
         }
 
         @Override
@@ -153,9 +277,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-            if ("host".equals(key) || "port".equals(key) || "ssl".equals(key) || "path_prefix".equals(key)) {
-                updateUrlSummary();
-            } else if ("clicknload".equals(key)) {
+            if ("clicknload".equals(key)) {
                 boolean enabled = sharedPreferences.getBoolean(key, false);
                 Intent intent = new Intent(getContext(), ClickNLoadService.class);
                 if (enabled) {
@@ -171,24 +293,37 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         }
 
         private void updateUrlSummary() {
-            Preference serverUrl = findPreference("server_url");
-            if (serverUrl != null) {
+            if (getContext() == null) return;
+            Server active = ServerManager.getInstance(getContext()).getActiveServer();
+
+            Preference manageServersPref = findPreference("manage_servers_pref");
+            if (manageServersPref != null && active != null) {
+                manageServersPref.setSummary(active.getName() + " (" + active.getFormattedUrl() + ")");
+            }
+        }
+
+        private void updateClickNLoadServerSummary() {
+            if (getContext() == null) return;
+            Preference clicknloadServerPref = findPreference("clicknload_server_option");
+            if (clicknloadServerPref != null) {
+                List<Server> servers = ServerManager.getInstance(getContext()).getServers();
+                if (servers.size() == 1) {
+                    Server singleServer = servers.get(0);
+                    clicknloadServerPref.setSummary(singleServer.getName() + " (" + singleServer.getFormattedUrl() + ")");
+                    return;
+                }
                 SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-                if (prefs != null) {
-                    String host = prefs.getString("host", "");
-                    String port = prefs.getString("port", "8000");
-                    String pathPrefix = prefs.getString("path_prefix", "");
-
-                    if (!pathPrefix.startsWith("/") && !pathPrefix.isEmpty()) {
-                        pathPrefix = "/" + pathPrefix;
+                String val = prefs != null ? prefs.getString("clicknload_server_option", "ask") : "ask";
+                if ("quick_select".equals(val)) {
+                    String targetId = prefs != null ? prefs.getString("clicknload_target_server_id", null) : null;
+                    Server targetServer = ServerManager.getInstance(getContext()).getServer(targetId);
+                    if (targetServer != null) {
+                        clicknloadServerPref.setSummary(targetServer.getName() + " (" + targetServer.getFormattedUrl() + ")");
+                    } else {
+                        clicknloadServerPref.setSummary(R.string.clicknload_server_quick_select);
                     }
-                    if (pathPrefix.endsWith("/")) {
-                        pathPrefix = pathPrefix.substring(0, pathPrefix.length() - 1);
-                    }
-
-                    boolean ssl = prefs.getBoolean("ssl", false);
-                    String protocol = ssl ? "https://" : "http://";
-                    serverUrl.setSummary(protocol + host + ":" + port + pathPrefix);
+                } else {
+                    clicknloadServerPref.setSummary(R.string.clicknload_server_ask);
                 }
             }
         }

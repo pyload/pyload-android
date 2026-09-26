@@ -27,7 +27,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-		android:textAppearance="?android:attr/textAppearance"
+		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:fontFamily="sans-serif-medium"
 		android:textColor="@color/textPrimary"
 		android:gravity="center_vertical"

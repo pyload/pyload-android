@@ -5,8 +5,11 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -15,22 +18,33 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.pyload.android.client.components.FragmentTabsPager;
@@ -40,9 +54,15 @@ import org.pyload.android.client.fragments.AbstractPackageFragment;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
+import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.LanguageUtils;
+import org.pyload.android.client.module.ServerManager;
+import org.pyload.android.client.services.ClickNLoadService;
+
+import java.util.List;
+import org.pyload.android.client.module.ServerManager;
 import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
@@ -140,6 +160,7 @@ public class pyLoad extends FragmentTabsPager {
         super.attachBaseContext(LanguageUtils.attachBaseContext(newBase));
     }
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 
         Log.d("pyLoad", "Starting pyLoad App");
@@ -179,7 +200,7 @@ public class pyLoad extends FragmentTabsPager {
         
         final View rootView = findViewById(android.R.id.content);
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            android.graphics.Rect r = new android.graphics.Rect();
+            Rect r = new Rect();
             rootView.getWindowVisibleDisplayFrame(r);
             int screenHeight = rootView.getRootView().getHeight();
             int keypadHeight = screenHeight - r.bottom;
@@ -206,6 +227,26 @@ public class pyLoad extends FragmentTabsPager {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+
+            View customView = getLayoutInflater().inflate(R.layout.action_bar_title, null);
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.CENTER_VERTICAL | Gravity.START
+            );
+            getSupportActionBar().setCustomView(customView, lp);
+
+            View titleContainer = customView.findViewById(R.id.action_bar_title_container);
+            if (titleContainer != null) {
+                titleContainer.setOnClickListener(v -> showFastServerSwitchDialog());
+            }
+        }
+
+        updateServerSubtitle();
     }
 
     @Override
@@ -239,9 +280,78 @@ public class pyLoad extends FragmentTabsPager {
         }
     }
 
+    public void updateServerSubtitle() {
+        if (getSupportActionBar() != null) {
+            View customView = getSupportActionBar().getCustomView();
+            if (customView != null) {
+                TextView subtitleView = customView.findViewById(R.id.action_bar_subtitle);
+                Server active = ServerManager.getInstance(this).getActiveServer();
+                if (active != null) {
+                    String sub = String.format(getString(R.string.active_server_subtitle), active.getName());
+                    subtitleView.setText(sub);
+                    subtitleView.setVisibility(View.VISIBLE);
+                } else {
+                    subtitleView.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    public void showFastServerSwitchDialog() {
+        List<Server> servers = ServerManager.getInstance(this).getServers();
+        if (servers.isEmpty()) {
+            Intent intent = new Intent(this, ServerListActivity.class);
+            startActivity(intent);
+            return;
+        }
+
+        Server activeServer = ServerManager.getInstance(this).getActiveServer();
+        String activeId = activeServer != null ? activeServer.getId() : "";
+
+        CharSequence[] items = new CharSequence[servers.size()];
+        int selectedIndex = -1;
+
+        for (int i = 0; i < servers.size(); i++) {
+            Server s = servers.get(i);
+            items[i] = s.getName() + " (" + s.getFormattedUrl() + ")";
+            if (s.getId().equals(activeId)) {
+                selectedIndex = i;
+            }
+        }
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.switch_server)
+                .setSingleChoiceItems(items, selectedIndex, (d, which) -> {
+                    d.dismiss();
+                    Server selected = servers.get(which);
+                    if (!selected.getId().equals(activeId)) {
+                        app.switchServer(selected.getId());
+                    }
+                })
+                .setNeutralButton(R.string.manage_servers, (d, which) -> {
+                    Intent intent = new Intent(pyLoad.this, ServerListActivity.class);
+                    startActivity(intent);
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create();
+
+        dialog.setOnShowListener(d -> {
+            Button neutralButton = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+            if (neutralButton instanceof MaterialButton mb) {
+                mb.setIconResource(R.drawable.ic_settings_gear);
+                mb.setText("");
+                mb.setContentDescription(getString(R.string.manage_servers));
+                TooltipCompat.setTooltipText(mb, getString(R.string.manage_servers));
+            }
+        });
+
+        dialog.show();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        updateServerSubtitle();
         Intent intent = getIntent();
         if (intent.getBooleanExtra("CaptchaNotification", false)) {
             intent.removeExtra("CaptchaNotification");
@@ -304,7 +414,7 @@ public class pyLoad extends FragmentTabsPager {
                     if (item.getItemId() == R.id.search && isKeyboardVisible) {
                         SearchView searchView = (SearchView) searchItem.getActionView();
                         if (searchView != null) {
-                            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm != null) {
                                 imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                             }
@@ -327,7 +437,7 @@ public class pyLoad extends FragmentTabsPager {
                 int searchPlateId = androidx.appcompat.R.id.search_plate;
                 View searchPlate = searchView.findViewById(searchPlateId);
                 if (searchPlate != null) {
-                    searchPlate.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+                    searchPlate.setBackgroundColor(Color.TRANSPARENT);
                 }
 
                 searchView.setSubmitButtonEnabled(false);
@@ -336,15 +446,15 @@ public class pyLoad extends FragmentTabsPager {
                 View searchAutoComplete = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
                 if (searchAutoComplete != null) {
                     searchAutoComplete.setOnTouchListener((v, event) -> {
-                        if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
                             // Force focus reset to trigger keyboard if it was dismissed
                             if (v.isFocused()) {
                                 v.clearFocus();
                                 v.requestFocus();
                             }
-                            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm != null) {
-                                imm.showSoftInput(v, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+                                imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
                             }
                         }
                         return false;
@@ -354,9 +464,9 @@ public class pyLoad extends FragmentTabsPager {
                 searchView.setOnSearchClickListener(v -> {
                     // Immediate focus and open keyboard
                     searchView.requestFocus();
-                    android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
-                        imm.showSoftInput(searchView.findFocus(), android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+                        imm.showSoftInput(searchView.findFocus(), InputMethodManager.SHOW_IMPLICIT);
                     }
                 });
 
@@ -374,7 +484,7 @@ public class pyLoad extends FragmentTabsPager {
 
                     // Apply the same color as the magnifier icon
                     if (closeBtn instanceof ImageView) {
-                        android.util.TypedValue typedValue = new android.util.TypedValue();
+                        TypedValue typedValue = new TypedValue();
                         getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true);
                         int color = typedValue.data;
                         ((ImageView) closeBtn).setColorFilter(color);

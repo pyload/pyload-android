@@ -14,6 +14,9 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="textAppearanceBodyLarge">?attr/textAppearanceSubtitle1</item>
+        <item name="textAppearanceBodyMedium">?attr/textAppearanceBody2</item>
         <item name="preferenceTheme">@style/PreferenceTheme</item>
 
         <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
@@ -35,6 +38,9 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="textAppearanceBodyLarge">?attr/textAppearanceSubtitle1</item>
+        <item name="textAppearanceBodyMedium">?attr/textAppearanceBody2</item>
         <item name="preferenceTheme">@style/PreferenceTheme</item>
 
         <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>

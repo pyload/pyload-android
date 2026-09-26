@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 
 import org.pyload.android.client.components.TabHandler;
 import org.pyload.android.client.module.LanguageUtils;
+import org.pyload.android.client.models.Server;
+import org.pyload.android.client.module.ServerManager;
 
 public class RemoteSettings extends AppCompatActivity {
 
@@ -71,6 +73,10 @@ public class RemoteSettings extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Server activeServer = ServerManager.getInstance(this).getActiveServer();
+            if (activeServer != null) {
+                getSupportActionBar().setSubtitle(activeServer.getName());
+            }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.remote_settings_container), (v, windowInsets) -> {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="clicknload_screen"
+    android:title="@string/clicknload">
+
+    <CheckBoxPreference
+        android:key="clicknload"
+        android:title="@string/clicknload"
+        android:summary="@string/clicknload_desc"
+        android:defaultValue="false" />
+
+    <Preference
+        android:key="clicknload_server_option"
+        android:title="@string/clicknload_destination_server"
+        android:summary="@string/clicknload_server_ask"
+        android:dependency="clicknload" />
+
+    <ListPreference
+        android:key="clicknload_dest"
+        android:title="@string/destination"
+        android:summary="@string/clicknload_dest_desc"
+        android:defaultValue="1"
+        android:entries="@array/destination_list"
+        android:entryValues="@array/destination_values"
+        android:dependency="clicknload" />
+
+</PreferenceScreen>

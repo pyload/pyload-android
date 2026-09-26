@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="_0_0" translatable="false">0 / 0</string>
-    <string name="about">About</string>
     <string name="abort">Abort</string>
+    <string name="about">About</string>
     <string name="accounts">Accounts</string>
+    <string name="active_server">Active Server</string>
+    <string name="active_server_subtitle">Server: %s</string>
     <string name="add">Add</string>
     <string name="add_links">Add Links</string>
+    <string name="add_server">Add Server</string>
     <string name="addlinks_desc">Add a new Package.</string>
     <string name="api_key">API Key</string>
     <string name="api_key_desc">Your API Key for authentication.</string>
@@ -13,8 +16,8 @@
     <string name="app_settings">App Settings</string>
     <string name="bad_login">Invalid API key.</string>
     <string name="bad_path">Path Prefix seems to be wrong (404 Not Found).</string>
+    <string name="build_date">Build Date</string>
     <string name="cancel">Cancel</string>
-    <string name="cant_move_files">You can\'t move single files.</string>
     <string name="captcha_interactive_title">Captcha</string>
     <string name="captcha_notification">New captcha available!</string>
     <string name="captcha_notification_channel_description" translatable="false">Notifications when a new captcha is available.</string>
@@ -26,12 +29,15 @@
     <string name="choose">Choose</string>
     <string name="choose_action">Choose an action</string>
     <string name="choose_file">Container File</string>
+    <string name="choose_server">Choose server</string>
     <string name="clear_finished">Clear finished packages</string>
     <string name="clicknload">ClickNLoad</string>
     <string name="clicknload_desc">Enable ClickNLoad support (local server on port 9666).</string>
     <string name="clicknload_dest_desc">Choose where newly added links should be sent.</string>
+    <string name="clicknload_destination_server">Destination server</string>
+    <string name="clicknload_server_ask">Ask every time</string>
+    <string name="clicknload_server_quick_select">Specify a server using quick select dialog</string>
     <string name="clicknload_service_running">ClickNLoad service is running…</string>
-    <string name="build_date">Build Date</string>
     <string name="close">Close</string>
     <string name="collector">Collector</string>
     <string name="connect_error">Could not connect to pyLoad. Check that pyLoad is running and server settings are correct.</string>
@@ -39,8 +45,11 @@
     <string name="connection">Connection</string>
     <string name="copied">Copied!</string>
     <string name="delete">Delete</string>
+    <string name="delete_server">Delete Server</string>
+    <string name="delete_server_confirm">Are you sure you want to delete this server profile?</string>
     <string name="destination">Destination</string>
     <string name="drained">limit reached</string>
+    <string name="edit_server">Edit Server</string>
     <string name="enter">Enter</string>
     <string name="error">Error</string>
     <string name="eula_accept">Accept</string>
@@ -49,12 +58,13 @@
     <string name="exit_confirm_message">Do you really want to exit pyLoad?</string>
     <string name="exit_confirm_title">Exit pyLoad</string>
     <string name="fileinfo_title">Fileinfo</string>
+    <string name="fill_required_fields">Please fill in all required fields</string>
     <string name="filter_hint">Filter by name…</string>
     <string name="folder">Folder</string>
-    <string name="git_commit">Git Commit</string>
     <string name="free">Free</string>
     <string name="general">General</string>
     <string name="general_config">General config</string>
+    <string name="git_commit">Git Commit</string>
     <string name="invalid">invalid</string>
     <string name="ip">Address</string>
     <string name="ip_desc">IP or hostname of the remote pyLoad Core.</string>
@@ -85,9 +95,10 @@
         <item>Hebrew</item>
     </string-array>
     <string name="loading">Loading…</string>
+    <string name="manage_servers">Manage Servers…</string>
     <string name="move">Move location</string>
-    <string name="move_to_queue">Move to Queue</string>
     <string name="move_to_collector">Move to Collector</string>
+    <string name="move_to_queue">Move to Queue</string>
     <string name="n_a">n/a</string>
     <string name="name">Name</string>
     <string name="no">No</string>
@@ -101,17 +112,15 @@
     <string name="on">on</string>
     <string name="overview">Overview</string>
     <string name="package_links">Put your links here.</string>
-    <string name="text_marquee">Scrolling text</string>
-    <string name="text_marquee_desc">Scroll long text horizontally instead of wrapping.</string>
     <string name="package_password">Package password</string>
     <string name="password">Password</string>
     <string name="path_prefix">Path Prefix</string>
     <string name="path_prefix_desc">Path prefix for the server URL (e.g. /pyload).</string>
     <string name="plugin">Plugin</string>
     <string name="plugin_config">Plugin config</string>
+    <string name="polling_paused_error">Too many connection errors. Polling paused. Refresh manually to resume.</string>
     <string name="port">Port</string>
     <string name="port_desc">The port where your pyLoad server is listening (default is 8000).</string>
-    <string name="polling_paused_error">Too many connection errors. Polling paused. Refresh manually to resume.</string>
     <string name="premium">Premium</string>
     <string name="queue">Queue</string>
     <string name="refresh">Refresh</string>
@@ -123,9 +132,13 @@
     <string name="restart_failed">Restart failed files</string>
     <string name="retrieve_captcha">Retrieve captcha tasks</string>
     <string name="retrieve_captcha_desc">Get captcha tasks from pyLoad when Overview is displayed.</string>
+    <string name="save">Save</string>
     <string name="search">Search</string>
     <string name="server">Server</string>
-    <string name="server_url">Server URL</string>
+    <string name="server_details">Server details</string>
+    <string name="server_name">Server Name / Nickname</string>
+    <string name="server_name_hint">e.g. Home NAS</string>
+    <string name="servers">Servers</string>
     <string name="size">Size</string>
     <string name="socket_error">Could not connect to target host. Check the server settings, your network configuration or port forwarding.</string>
     <string name="ssl">SSL Connection</string>
@@ -134,10 +147,10 @@
     <string name="ssl_validate_desc">If "SSL Connection" is enabled, check that the certificate presented by the core is signed by a CA known by Android</string>
     <string name="status">Status</string>
     <string name="submit">Submit</string>
-    <string name="push_notifications">Push Notifications</string>
-    <string name="push_notifications_desc">Receive notifications via Firebase Cloud Messaging.</string>
-    <string name="notifications">Notifications</string>
     <string name="success">Success.</string>
+    <string name="switch_server">Switch Server</string>
+    <string name="text_marquee">Scrolling text</string>
+    <string name="text_marquee_desc">Scroll long text horizontally instead of wrapping.</string>
     <string name="theme">Theme</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_desc">Application appearance theme.</string>

@@ -28,7 +28,7 @@
 
 	<org.pyload.android.client.components.ScrollingTextView android:id="@+id/name" android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearance"
+		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:textColor="@color/textPrimary"
 		android:text="@string/n_a"
 		android:marqueeRepeatLimit="marquee_forever"

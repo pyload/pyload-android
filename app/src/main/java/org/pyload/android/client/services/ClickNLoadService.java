@@ -15,10 +15,13 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import org.pyload.android.client.ClickNLoadServerSelectActivity;
 import org.pyload.android.client.R;
 import org.pyload.android.client.pyLoad;
 import org.pyload.android.client.pyLoadApp;
+import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.module.ServerManager;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
@@ -28,6 +31,7 @@ import org.pyload.android.openapi.model.Destination;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.List;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
@@ -40,6 +44,9 @@ import java.util.regex.Pattern;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ClickNLoadService extends Service {
 
@@ -244,22 +251,48 @@ public class ClickNLoadService extends Service {
         }
     }
 
+    private Server getTargetServer(pyLoadApp app) {
+        List<Server> servers = ServerManager.getInstance(this).getServers();
+        if (servers.size() == 1) {
+            return servers.get(0);
+        }
+
+        String serverOption = app.prefs.getString("clicknload_server_option", "ask");
+        if ("quick_select".equals(serverOption)) {
+            String targetServerId = app.prefs.getString("clicknload_target_server_id", null);
+            Server targetServer = ServerManager.getInstance(this).getServer(targetServerId);
+            if (targetServer != null) {
+                return targetServer;
+            }
+        }
+        return null;
+    }
+
     private void addDLCContainer(String content, String packageName) {
         pyLoadApp app = (pyLoadApp) getApplicationContext();
-        app.addTask(new GuiTask(() -> {
-            PyLoadRestApi client = app.getClient();
+        Server targetServer = getTargetServer(app);
+        if (targetServer != null) {
+            app.addTask(new GuiTask(() -> {
+                PyLoadRestApi client = app.getClientForServer(targetServer);
 
-            int destVal = Integer.parseInt(app.prefs.getString("clicknload_dest", "1"));
-            Destination dest = destVal == 0 ? Destination.QUEUE : Destination.COLLECTOR;
+                int destVal = Integer.parseInt(app.prefs.getString("clicknload_dest", "1"));
+                Destination dest = destVal == 0 ? Destination.QUEUE : Destination.COLLECTOR;
 
-            byte[] fileBytes = content.replace(" ", "+").getBytes();
-            String filename = packageName.toLowerCase().endsWith(".dlc") ? packageName : packageName + ".dlc";
+                byte[] fileBytes = content.replace(" ", "+").getBytes();
+                String filename = packageName.toLowerCase().endsWith(".dlc") ? packageName : packageName + ".dlc";
 
-            okhttp3.RequestBody body = okhttp3.RequestBody.Companion.create(fileBytes, null);
-            okhttp3.MultipartBody.Part multipartBody = okhttp3.MultipartBody.Part.createFormData("data", filename, body);
+                RequestBody body = RequestBody.Companion.create(fileBytes, null);
+                MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("data", filename, body);
 
-            app.executeNetworkCall(client.apiUploadContainerPost(filename, multipartBody, dest));
-        }, app.handleSuccess));
+                app.executeNetworkCall(client.apiUploadContainerPost(filename, multipartBody, dest));
+            }, app.handleSuccess));
+        } else {
+            Intent intent = new Intent(this, ClickNLoadServerSelectActivity.class);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_TYPE, ClickNLoadServerSelectActivity.TYPE_DLC);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_PACKAGE_NAME, packageName);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_DLC_CONTENT, content);
+            promptServerSelection(intent, packageName);
+        }
     }
 
     private void addEncryptedLinks(String crypted, String jk, String packageName, String password) {
@@ -302,32 +335,86 @@ public class ClickNLoadService extends Service {
 
     private void executeAddPackage(ArrayList<String> linkList, String packageName, String password) {
         pyLoadApp app = (pyLoadApp) getApplicationContext();
-        app.addTask(new GuiTask(() -> {
-            PyLoadRestApi client = app.getClient();
+        Server targetServer = getTargetServer(app);
+        if (targetServer != null) {
+            app.addTask(new GuiTask(() -> {
+                PyLoadRestApi client = app.getClientForServer(targetServer);
 
-            ApiAddPackagePostRequest request = new ApiAddPackagePostRequest()
-                    .name(packageName)
-                    .links(linkList)
-                    .dest(Destination.COLLECTOR);
-            int pid = app.executeNetworkCall(client.apiAddPackagePost(request));
+                ApiAddPackagePostRequest request = new ApiAddPackagePostRequest()
+                        .name(packageName)
+                        .links(linkList)
+                        .dest(Destination.COLLECTOR);
+                int pid = app.executeNetworkCall(client.apiAddPackagePost(request));
 
-            if (password != null && !password.isEmpty()) {
-                HashMap<String, Object> opts = new HashMap<>();
-                opts.put("password", password);
+                if (password != null && !password.isEmpty()) {
+                    HashMap<String, Object> opts = new HashMap<>();
+                    opts.put("password", password);
 
-                ApiSetPackageDataPostRequest setPackageDataRequest = new ApiSetPackageDataPostRequest()
-                        .packageId(pid)
-                        .data(opts);
-                app.executeNetworkCall(client.apiSetPackageDataPost(setPackageDataRequest));
+                    ApiSetPackageDataPostRequest setPackageDataRequest = new ApiSetPackageDataPostRequest()
+                            .packageId(pid)
+                            .data(opts);
+                    app.executeNetworkCall(client.apiSetPackageDataPost(setPackageDataRequest));
+                }
+
+                int destVal = Integer.parseInt(app.prefs.getString("clicknload_dest", "1"));
+                Destination dest = destVal == 0 ? Destination.QUEUE : Destination.COLLECTOR;
+
+                if (dest == Destination.QUEUE) {
+                    app.executeNetworkCall(client.apiPushToQueuePost(pid));
+                }
+            }, app.handleSuccess));
+        } else {
+            Intent intent = new Intent(this, ClickNLoadServerSelectActivity.class);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_TYPE, ClickNLoadServerSelectActivity.TYPE_LINKS);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_PACKAGE_NAME, packageName);
+            intent.putExtra(ClickNLoadServerSelectActivity.EXTRA_PASSWORD, password);
+            intent.putStringArrayListExtra(ClickNLoadServerSelectActivity.EXTRA_LINKS, linkList);
+            promptServerSelection(intent, packageName);
+        }
+    }
+
+    private void promptServerSelection(Intent selectIntent, String packageName) {
+        selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        String channelId = "clicknload_prompt_channel";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    getString(R.string.clicknload),
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
             }
+        }
 
-            int destVal = Integer.parseInt(app.prefs.getString("clicknload_dest", "1"));
-            Destination dest = destVal == 0 ? Destination.QUEUE : Destination.COLLECTOR;
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                (int) System.currentTimeMillis(),
+                selectIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
 
-            if (dest == Destination.QUEUE) {
-                app.executeNetworkCall(client.apiPushToQueuePost(pid));
-            }
-        }, app.handleSuccess));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(getString(R.string.clicknload))
+                .setContentText(getString(R.string.choose_server) + ": " + packageName)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setFullScreenIntent(pendingIntent, true)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        if (notificationManager != null) {
+            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+        }
+
+        try {
+            startActivity(selectIntent);
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting ClickNLoadServerSelectActivity", e);
+        }
     }
 
     private String decryptJK(String jk) {
@@ -343,11 +430,8 @@ public class ClickNLoadService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (ClickNLoadService.STOP_ACTION.equals(intent.getAction())) {
-                pyLoadApp app = (pyLoadApp) context.getApplicationContext();
-                if (!app.isAppInForeground()) {
-                    Intent stopServiceIntent = new Intent(context, ClickNLoadService.class);
-                    context.stopService(stopServiceIntent);
-                }
+                Intent stopServiceIntent = new Intent(context, ClickNLoadService.class);
+                context.stopService(stopServiceIntent);
             }
         }
     }
