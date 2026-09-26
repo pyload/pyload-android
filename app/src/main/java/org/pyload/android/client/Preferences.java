@@ -322,10 +322,15 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
             Preference clicknloadServerPref = findPreference("clicknload_server_option");
             if (clicknloadServerPref != null) {
                 List<Server> servers = ServerManager.getInstance(getContext()).getServers();
-                if (servers.size() == 1) {
-                    Server singleServer = servers.get(0);
-                    clicknloadServerPref.setSummary(singleServer.getName() + " (" + singleServer.getFormattedUrl() + ")");
+                if (servers.size() <= 1) {
+                    clicknloadServerPref.setEnabled(false);
+                    if (servers.size() == 1) {
+                        Server singleServer = servers.get(0);
+                        clicknloadServerPref.setSummary(singleServer.getName() + " (" + singleServer.getFormattedUrl() + ")");
+                    }
                     return;
+                } else {
+                    clicknloadServerPref.setEnabled(true);
                 }
                 SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
                 String val = prefs != null ? prefs.getString("clicknload_server_option", "ask") : "ask";
