@@ -81,8 +81,17 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
         Bundle args = new Bundle();
         args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.getKey());
         fragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.preferences_container, fragment)
+
+        var ft = getSupportFragmentManager().beginTransaction();
+        if (!"about_screen".equals(pref.getKey())) {
+            ft.setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+            );
+        }
+        ft.replace(R.id.preferences_container, fragment)
                 .addToBackStack(null)
                 .commit();
         return true;
@@ -215,6 +224,12 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                 args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, "clicknload_screen");
                 fragment.setArguments(args);
                 requireActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left,
+                                R.anim.slide_in_left,
+                                R.anim.slide_out_right
+                        )
                         .replace(R.id.preferences_container, fragment)
                         .addToBackStack(null)
                         .commit();
