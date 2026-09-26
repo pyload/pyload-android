@@ -304,7 +304,7 @@ public class pyLoadApp extends Application {
 				}
 				throw new WrongLogin();
 			}
-		} catch (WrongPathPrefix e) {
+		} catch (WrongPathPrefix | WrongLogin e) {
 			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
