@@ -43,13 +43,7 @@ public class Server {
     }
 
     public String getName() {
-        if (name != null && !name.trim().isEmpty()) {
-            return name;
-        }
-        if (host != null && !host.trim().isEmpty()) {
-            return host;
-        }
-        return "Server";
+        return name != null ? name : "";
     }
 
     public void setName(String name) {

@@ -1,31 +1,35 @@
 package org.pyload.android.client;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.ServerManager;
 
-import java.util.Locale;
-
 public class ServerEditActivity extends AppCompatActivity {
 
     public static final String EXTRA_SERVER_ID = "server_id";
+    private boolean isFormValid = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -53,6 +57,9 @@ public class ServerEditActivity extends AppCompatActivity {
             if (serverId != null) {
                 args.putString(EXTRA_SERVER_ID, serverId);
             }
+            if (getIntent().getData() != null) {
+                args.putParcelable("deep_link_uri", getIntent().getData());
+            }
             fragment.setArguments(args);
             getSupportFragmentManager()
                     .beginTransaction()
@@ -67,10 +74,34 @@ public class ServerEditActivity extends AppCompatActivity {
         });
     }
 
+    public void setFormValid(boolean valid) {
+        if (isFormValid != valid) {
+            isFormValid = valid;
+            supportInvalidateOptionsMenu();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.server_edit_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem saveItem = menu.findItem(R.id.action_save);
+        if (saveItem != null) {
+            saveItem.setEnabled(isFormValid);
+
+            String saveText = getString(R.string.save);
+            SpannableString spannable = new SpannableString(saveText);
+
+            int color = ContextCompat.getColor(this, isFormValid ? R.color.textPrimary : R.color.textDisabled);
+
+            spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), 0);
+            saveItem.setTitle(spannable);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -80,6 +111,9 @@ public class ServerEditActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (id == R.id.action_save) {
+            if (!isFormValid) {
+                return true;
+            }
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.preferences_container);
             if (fragment instanceof ServerEditFragment editFragment) {
                 editFragment.saveAndFinish();
@@ -104,6 +138,22 @@ public class ServerEditActivity extends AppCompatActivity {
                 server = new Server(null, "", "", "8000", "", false, true, "");
             }
 
+            if (getArguments() != null && getArguments().containsKey("deep_link_uri")) {
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    uri = getArguments().getParcelable("deep_link_uri", Uri.class);
+                } else {
+                    uri = getArguments().getParcelable("deep_link_uri");
+                }
+                if (uri != null) {
+                    if (uri.getQueryParameter("host") != null) server.setHost(uri.getQueryParameter("host"));
+                    if (uri.getQueryParameter("port") != null) server.setPort(uri.getQueryParameter("port"));
+                    if (uri.getQueryParameter("path") != null) server.setPathPrefix(uri.getQueryParameter("path"));
+                    if (uri.getQueryParameter("ssl") != null) server.setSsl(Boolean.parseBoolean(uri.getQueryParameter("ssl")));
+                    if (uri.getQueryParameter("key") != null) server.setApiKey(uri.getQueryParameter("key"));
+                }
+            }
+
             EditTextPreference namePref = findPreference("server_name");
             EditTextPreference hostPref = findPreference("host");
             EditTextPreference portPref = findPreference("port");
@@ -112,17 +162,27 @@ public class ServerEditActivity extends AppCompatActivity {
             CheckBoxPreference sslValidatePref = findPreference("ssl_validate");
             EditTextPreference apiKeyPref = findPreference("api_key");
 
+            Preference.OnPreferenceChangeListener changeListener = (preference, newValue) -> {
+                if (getView() != null) {
+                    getView().post(this::validateForm);
+                }
+                return true;
+            };
+
             if (namePref != null) {
                 namePref.setText(server.getName());
                 namePref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                namePref.setOnPreferenceChangeListener(changeListener);
             }
             if (hostPref != null) {
                 hostPref.setText(server.getHost());
                 hostPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                hostPref.setOnPreferenceChangeListener(changeListener);
             }
             if (portPref != null) {
                 portPref.setText(server.getPort());
                 portPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                portPref.setOnPreferenceChangeListener(changeListener);
             }
             if (pathPrefixPref != null) {
                 pathPrefixPref.setText(server.getPathPrefix());
@@ -141,8 +201,32 @@ public class ServerEditActivity extends AppCompatActivity {
                     if (val == null || val.isEmpty()) {
                         return getString(R.string.api_key_desc);
                     }
-                    return "••••••••";
+                    if (val.length() <= 8) {
+                        return "********";
+                    }
+                    return val.substring(0, 4) + "********" + val.substring(val.length() - 4);
                 });
+                apiKeyPref.setOnPreferenceChangeListener(changeListener);
+            }
+
+            validateForm();
+        }
+
+        private void validateForm() {
+            EditTextPreference namePref = findPreference("server_name");
+            EditTextPreference hostPref = findPreference("host");
+            EditTextPreference portPref = findPreference("port");
+            EditTextPreference apiKeyPref = findPreference("api_key");
+
+            String name = namePref != null && namePref.getText() != null ? namePref.getText().trim() : "";
+            String host = hostPref != null && hostPref.getText() != null ? hostPref.getText().trim() : "";
+            String port = portPref != null && portPref.getText() != null ? portPref.getText().trim() : "";
+            String apiKey = apiKeyPref != null && apiKeyPref.getText() != null ? apiKeyPref.getText().trim() : "";
+
+            boolean valid = !name.isEmpty() && !host.isEmpty() && !port.isEmpty() && !apiKey.isEmpty();
+
+            if (getActivity() instanceof ServerEditActivity activity) {
+                activity.setFormValid(valid);
             }
         }
 

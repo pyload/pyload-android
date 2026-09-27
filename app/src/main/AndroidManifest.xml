@@ -118,7 +118,14 @@
 
         <activity android:name=".Preferences" android:label="@string/app_settings" android:exported="false"/>
         <activity android:name=".ServerListActivity" android:label="@string/servers" android:exported="false"/>
-        <activity android:name=".ServerEditActivity" android:exported="false"/>
+        <activity android:name=".ServerEditActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="org.pyload.android.client" android:host="addserver" />
+            </intent-filter>
+        </activity>
         <activity android:name=".AddLinksActivity" android:exported="false"/>
         <activity android:name=".RemoteSettings" android:label="@string/remote_settings" android:exported="false"/>
         <activity android:name=".CaptchaActivity"
