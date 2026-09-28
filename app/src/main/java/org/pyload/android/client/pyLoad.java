@@ -59,11 +59,7 @@ import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
 import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.ServerManager;
-import org.pyload.android.client.services.ClickNLoadService;
-
 import java.util.List;
-import org.pyload.android.client.module.ServerManager;
-import org.pyload.android.client.services.ClickNLoadService;
 import org.pyload.android.openapi.api.PyLoadRestApi;
 import org.pyload.android.openapi.model.ApiAddPackagePostRequest;
 import org.pyload.android.openapi.model.ApiSetPackageDataPostRequest;
@@ -373,14 +369,7 @@ public class pyLoad extends FragmentTabsPager {
             app.refreshTab();
         }
 
-        if (app.prefs.getBoolean("clicknload", false)) {
-            Intent clicknloadIntent = new Intent(this, ClickNLoadService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(clicknloadIntent);
-            } else {
-                startService(clicknloadIntent);
-            }
-        }
+        app.updateClickNLoadService();
     }
 
     @Override

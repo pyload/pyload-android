@@ -14,6 +14,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 
 import org.pyload.android.client.ClickNLoadServerSelectActivity;
 import org.pyload.android.client.R;
@@ -56,8 +57,19 @@ public class ClickNLoadService extends Service {
     private ServerThread serverThread;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        startForeground(1, createNotification());
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(1, createNotification());
+        if (ServerManager.getInstance(this).getServers().isEmpty()) {
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE);
+            stopSelf();
+            return START_NOT_STICKY;
+        }
         if (serverThread == null || !serverThread.isAlive()) {
             serverThread = new ServerThread();
             serverThread.start();

@@ -102,6 +102,8 @@
     <string name="no_connection">Nem sikerült kapcsolatot létesíteni:</string>
     <string name="no_downloads">Nincs aktív letöltés.</string>
     <string name="no_packages">Nincs csomag.</string>
+    <string name="no_server_configured">Nincs szerver konfigurálva. Koppintson szerver hozzáadásához.</string>
+    <string name="no_servers_found">Nincsenek szerverprofilok. Koppintson a + gombra egy hozzáadásához.</string>
     <string name="off">ki</string>
     <string name="ok">OK</string>
     <string name="old_server">A szerver verziószáma nem megfelelő, használj %s pyLoad verziót.</string>

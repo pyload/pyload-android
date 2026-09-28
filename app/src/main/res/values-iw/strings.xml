@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="abort">הפסק</string>
     <string name="about">אודות</string>
     <string name="accounts">חשבונות</string>
@@ -70,7 +70,7 @@
     <string name="labelPackage">‎חבילה</string>
     <string name="lambda" translatable="false"></string>
     <string name="language">שפה</string>
-    <string name="language_desc">שפת האפליקציה. דרושה הפעלה מחדש לפני שהשינויים ייכנסו לתוקף.</string>
+    <string name="language_desc">שפת האפליקציה.</string>
     <string-array name="languages">
         <item>Default</item>
         <item>English</item>
@@ -103,6 +103,9 @@
     <string name="no_connection">לא ניתן ליצור חיבור:</string>
     <string name="no_downloads">אין הורדות פעילות.</string>
     <string name="no_packages">אין חבילות.</string>
+    <string name="no_server_configured">לא הוגדר שרת. לחץ כדי להוסיף שרת.</string>
+    <string name="no_servers_found">אין פרופילי שרתים. לחץ על + כדי להוסיף אחד.</string>
+    <string name="not_set" tools:override="true" tools:ignore="ExtraTranslation">לא הוגדר</string>
     <string name="off">‎כבוי</string>
     <string name="ok">אישור</string>
     <string name="old_server">גירסת השרת אינה תואמת, השתמש ב- pyLoad %s.</string>

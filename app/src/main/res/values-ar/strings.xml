@@ -102,6 +102,8 @@
     <string name="no_connection">لا يمكن انشاء الاتصال:</string>
     <string name="no_downloads">لا يوجد تحميلات فعاله.</string>
     <string name="no_packages">لا يوجد حزم.</string>
+    <string name="no_server_configured">لم يتم تكوين أي خادم. انقر لإضافة خادم.</string>
+    <string name="no_servers_found">لا توجد ملفات تعريف خادم. انقر على + لإضافة واحد.</string>
     <string name="off">ايقاف</string>
     <string name="ok">موافق</string>
     <string name="old_server">اصدار الخادم غير متوافق, الرجاء استخدام باي لود %s.</string>

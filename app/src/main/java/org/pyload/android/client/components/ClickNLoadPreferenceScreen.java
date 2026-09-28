@@ -25,6 +25,7 @@ public class ClickNLoadPreferenceScreen extends Preference {
         if (widget instanceof CheckBox checkBox) {
             boolean isChecked = getSharedPreferences() != null && getSharedPreferences().getBoolean(getKey(), false);
             checkBox.setChecked(isChecked);
+            checkBox.setEnabled(isEnabled());
             checkBox.setClickable(false);
             checkBox.setFocusable(false);
         }

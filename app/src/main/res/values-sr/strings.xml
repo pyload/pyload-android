@@ -102,6 +102,8 @@
     <string name="no_connection">Не могу да успоставим везу:</string>
     <string name="no_downloads">Нема активних преузимања.</string>
     <string name="no_packages">Нема пакета.</string>
+    <string name="no_server_configured">Сервер није конфигурисан. Додирните да бисте додали сервер.</string>
+    <string name="no_servers_found">Нема профила сервера. Додирните + да бисте додали.</string>
     <string name="off">искључено</string>
     <string name="ok">Ок</string>
     <string name="old_server">Верзија сервера се не подудара. Користите pyLoad %s.</string>

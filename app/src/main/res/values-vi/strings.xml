@@ -102,6 +102,8 @@
     <string name="no_connection">Không thể thiết lập kết nối:</string>
     <string name="no_downloads">Chưa có tập tin tải về.</string>
     <string name="no_packages">Không có gói.</string>
+    <string name="no_server_configured">Chưa cấu hình máy chủ. Nhấn để thêm máy chủ.</string>
+    <string name="no_servers_found">Không có hồ sơ máy chủ. Nhấn + để thêm.</string>
     <string name="off">tắt</string>
     <string name="ok">OK</string>
     <string name="old_server">Phiên bản máy chủ không phù hợp với, xin vui lòng sử dụng pyLoad %s.</string>

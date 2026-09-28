@@ -3,7 +3,6 @@ package org.pyload.android.client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +16,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.TwoStatePreference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -213,6 +212,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
             updateUrlSummary();
             updateClickNLoadServerSummary();
+            updateClickNLoadState();
             updateAboutInfo();
         }
 
@@ -280,6 +280,7 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
             }
             updateUrlSummary();
             updateClickNLoadServerSummary();
+            updateClickNLoadState();
         }
 
         @Override
@@ -292,18 +293,9 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-            if ("clicknload".equals(key)) {
-                boolean enabled = sharedPreferences.getBoolean(key, false);
-                Intent intent = new Intent(getContext(), ClickNLoadService.class);
-                if (enabled) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        getContext().startForegroundService(intent);
-                    } else {
-                        getContext().startService(intent);
-                    }
-                } else {
-                    getContext().stopService(intent);
-                }
+            if ("clicknload".equals(key) && getContext() != null) {
+                pyLoadApp app = (pyLoadApp) getContext().getApplicationContext();
+                app.updateClickNLoadService();
             }
         }
 
@@ -312,8 +304,12 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
             Server active = ServerManager.getInstance(getContext()).getActiveServer();
 
             Preference manageServersPref = findPreference("manage_servers_pref");
-            if (manageServersPref != null && active != null) {
-                manageServersPref.setSummary(active.getName() + " (" + active.getFormattedUrl() + ")");
+            if (manageServersPref != null) {
+                if (active != null) {
+                    manageServersPref.setSummary(active.getName() + " (" + active.getFormattedUrl() + ")");
+                } else {
+                    manageServersPref.setSummary(R.string.no_server_configured);
+                }
             }
         }
 
@@ -327,6 +323,8 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                     if (servers.size() == 1) {
                         Server singleServer = servers.get(0);
                         clicknloadServerPref.setSummary(singleServer.getName() + " (" + singleServer.getFormattedUrl() + ")");
+                    } else {
+                        clicknloadServerPref.setSummary(R.string.no_server_configured);
                     }
                     return;
                 } else {
@@ -344,6 +342,29 @@ public class Preferences extends AppCompatActivity implements PreferenceFragment
                     }
                 } else {
                     clicknloadServerPref.setSummary(R.string.clicknload_server_ask);
+                }
+            }
+        }
+
+        private void updateClickNLoadState() {
+            if (getContext() == null) return;
+            List<Server> servers = ServerManager.getInstance(getContext()).getServers();
+            boolean hasServers = !servers.isEmpty();
+
+            SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+            if (!hasServers && prefs != null && prefs.getBoolean("clicknload", false)) {
+                prefs.edit().putBoolean("clicknload", false).apply();
+            }
+
+            Preference clicknloadPref = findPreference("clicknload");
+            if (clicknloadPref != null) {
+                if (!hasServers) {
+                    if (clicknloadPref instanceof TwoStatePreference twoStatePref) {
+                        twoStatePref.setChecked(false);
+                    }
+                    clicknloadPref.setEnabled(false);
+                } else {
+                    clicknloadPref.setEnabled(true);
                 }
             }
         }

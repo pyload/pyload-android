@@ -102,6 +102,8 @@
     <string name="no_connection">Die Verbindung konnte nicht hergestellt werden:</string>
     <string name="no_downloads">Keine aktiven Downloads.</string>
     <string name="no_packages">Keine Pakete.</string>
+    <string name="no_server_configured">Kein Server konfiguriert. Tippen Sie, um einen Server hinzuzufügen.</string>
+    <string name="no_servers_found">Keine Serverprofile vorhanden. Tippen Sie auf +, um eines hinzuzufügen.</string>
     <string name="off">aus</string>
     <string name="ok">OK</string>
     <string name="old_server">Server Version stimmt nicht überein, bitte nutze pyLoad %s.</string>

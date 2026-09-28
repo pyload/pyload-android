@@ -102,6 +102,8 @@
     <string name="no_connection">Bağlantı kurulamadı:</string>
     <string name="no_downloads">Aktif yükleme yok.</string>
     <string name="no_packages">Paket yok.</string>
+    <string name="no_server_configured">Yapılandırılmış sunucu yok. Sunucu eklemek için dokunun.</string>
+    <string name="no_servers_found">Sunucu profili yok. Eklemek için + ögesine dokunun.</string>
     <string name="off">Kapat</string>
     <string name="ok">Tamam</string>
     <string name="old_server">Sunucu sürüm uymuyor, lütfen pyLoad %s kullanın.</string>

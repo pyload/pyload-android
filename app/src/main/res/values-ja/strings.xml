@@ -102,6 +102,8 @@
     <string name="no_connection">接続を確立できませんでした。</string>
     <string name="no_downloads">アクティブなダウンロードはありません</string>
     <string name="no_packages">パッケージはありません。</string>
+    <string name="no_server_configured">サーバーが設定されていません。タップしてサーバーを追加してください。</string>
+    <string name="no_servers_found">サーバープロファイルがありません。+ をタップして追加してください。</string>
     <string name="off">オフ</string>
     <string name="ok">OK</string>
     <string name="old_server">サーバーのバージョンと一致しません、pyLoad %s を使用してください。</string>

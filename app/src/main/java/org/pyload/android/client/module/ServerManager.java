@@ -48,7 +48,7 @@ public class ServerManager {
             }
         }
 
-        if (servers.isEmpty()) {
+        if (!prefs.contains(PREF_SERVERS_JSON)) {
             migrateLegacyServer();
         }
 
@@ -122,13 +122,6 @@ public class ServerManager {
             activeServerId = server.getId();
             prefs.edit().putString(PREF_ACTIVE_SERVER_ID, activeServerId).apply();
         }
-        if (server == null) {
-            server = new Server(UUID.randomUUID().toString(), "Default Server", "10.0.2.2", "8000", "", false, true, "");
-            servers.add(server);
-            activeServerId = server.getId();
-            saveServers();
-            prefs.edit().putString(PREF_ACTIVE_SERVER_ID, activeServerId).apply();
-        }
         return server;
     }
 
@@ -146,7 +139,7 @@ public class ServerManager {
         if (server == null) return;
         servers.add(server);
         saveServers();
-        if (servers.size() == 1) {
+        if (servers.size() == 1 || activeServerId == null) {
             setActiveServerId(server.getId());
         }
     }
@@ -177,7 +170,7 @@ public class ServerManager {
                 } else {
                     activeServerId = null;
                     prefs.edit().remove(PREF_ACTIVE_SERVER_ID).apply();
-                    migrateLegacyServer();
+                    syncLegacyPrefs();
                 }
             }
             return true;
@@ -195,6 +188,15 @@ public class ServerManager {
                     .putBoolean("ssl", active.isSsl())
                     .putBoolean("ssl_validate", active.isSslValidate())
                     .putString("api_key", active.getApiKey())
+                    .apply();
+        } else {
+            prefs.edit()
+                    .remove("host")
+                    .remove("port")
+                    .remove("path_prefix")
+                    .remove("ssl")
+                    .remove("ssl_validate")
+                    .remove("api_key")
                     .apply();
         }
     }

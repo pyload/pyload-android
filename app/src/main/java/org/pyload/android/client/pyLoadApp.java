@@ -113,14 +113,7 @@ public class pyLoadApp extends Application {
 		taskQueue = new TaskQueue(this, new Handler(Looper.getMainLooper()), exceptionMap);
 		startTaskQueue();
 
-		if (prefs.getBoolean("clicknload", false)) {
-			Intent intent = new Intent(this, ClickNLoadService.class);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-				startForegroundService(intent);
-			} else {
-				startService(intent);
-			}
-		}
+		updateClickNLoadService();
 
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 			@Override
@@ -129,14 +122,7 @@ public class pyLoadApp extends Application {
 			@Override
 			public void onActivityStarted(Activity activity) {
 				if (activityCount == 0) {
-					if (prefs.getBoolean("clicknload", false)) {
-						Intent intent = new Intent(pyLoadApp.this, ClickNLoadService.class);
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-							startForegroundService(intent);
-						} else {
-							startService(intent);
-						}
-					}
+					updateClickNLoadService();
 				}
 				activityCount++;
 			}
@@ -144,7 +130,15 @@ public class pyLoadApp extends Application {
 			@Override
 			public void onActivityResumed(Activity activity) {
 				currentActivity = activity;
-				if (pollingPaused && !snackbarDismissedByUser) {
+				if (ServerManager.getInstance(pyLoadApp.this).getServers().isEmpty()) {
+					pollingPaused = true;
+					if (!isServerManagementActivity(activity)) {
+						showCenteredSnackbar(R.string.no_server_configured, Snackbar.LENGTH_INDEFINITE, v -> {
+							Intent intent = new Intent(activity, ServerEditActivity.class);
+							activity.startActivity(intent);
+						});
+					}
+				} else if (pollingPaused && !snackbarDismissedByUser) {
 					showCenteredSnackbar(R.string.polling_paused_error, Snackbar.LENGTH_INDEFINITE);
 				}
 			}
@@ -171,6 +165,26 @@ public class pyLoadApp extends Application {
 			@Override
 			public void onActivityDestroyed(Activity activity) {}
 		});
+	}
+
+	public void updateClickNLoadService() {
+		Intent intent = new Intent(this, ClickNLoadService.class);
+		if (ServerManager.getInstance(this).getServers().isEmpty()) {
+			if (prefs.getBoolean("clicknload", false)) {
+				prefs.edit().putBoolean("clicknload", false).apply();
+			}
+			stopService(intent);
+			return;
+		}
+		if (prefs.getBoolean("clicknload", false)) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+				startForegroundService(intent);
+			} else {
+				startService(intent);
+			}
+		} else {
+			stopService(intent);
+		}
 	}
 
 	public static void applyTheme(String theme) {
@@ -230,6 +244,9 @@ public class pyLoadApp extends Application {
 	public PyLoadRestApi getClientForServer(Server server) throws WrongLogin, WrongServer {
 		if (server == null) {
 			server = ServerManager.getInstance(this).getActiveServer();
+		}
+		if (server == null) {
+			throw new RuntimeException(getLocalizedString(R.string.no_server_configured));
 		}
 		String host = server.getHost().replaceFirst("^[a-zA-z]+://", "");
 		int port;
@@ -365,9 +382,26 @@ public class pyLoadApp extends Application {
 		}
 	};
 
+	private boolean isServerManagementActivity(Activity activity) {
+		return activity instanceof ServerListActivity || activity instanceof ServerEditActivity;
+	}
+
 	public void onException() {
 		client = null;
-        // The task queue will log an error with exception
+
+		if (ServerManager.getInstance(this).getServers().isEmpty()) {
+			pollingPaused = true;
+			if (isAppInForeground() && currentActivity != null && !isServerManagementActivity(currentActivity)) {
+				showCenteredSnackbar(R.string.no_server_configured, Snackbar.LENGTH_INDEFINITE, v -> {
+					if (currentActivity != null) {
+						Intent intent = new Intent(currentActivity, ServerEditActivity.class);
+						currentActivity.startActivity(intent);
+					}
+				});
+			}
+			setProgress(false);
+			return;
+		}
 
 		String errorMessage;
 		if (lastException instanceof WrongLogin)
@@ -431,6 +465,10 @@ public class pyLoadApp extends Application {
 	}
 
 	public void showCenteredSnackbar(Object message, int length) {
+		showCenteredSnackbar(message, length, null);
+	}
+
+	public void showCenteredSnackbar(Object message, int length, View.OnClickListener actionListener) {
 		if (currentActivity == null) {
 			if (message instanceof Integer) {
 				Toast.makeText(this, (Integer) message, length).show();
@@ -454,6 +492,13 @@ public class pyLoadApp extends Application {
 
 		View snackbarView = snackbar.getView();
 		TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+
+		if (actionListener != null) {
+			snackbarView.setOnClickListener(v -> {
+				snackbar.dismiss();
+				actionListener.onClick(v);
+			});
+		}
 
 		if (length == Snackbar.LENGTH_INDEFINITE) {
 			if (persistentSnackbar != null && persistentSnackbar.isShown()) {
@@ -595,6 +640,7 @@ public class pyLoadApp extends Application {
 			persistentSnackbar.dismiss();
 			persistentSnackbar = null;
 		}
+		updateClickNLoadService();
 	}
 
     /**

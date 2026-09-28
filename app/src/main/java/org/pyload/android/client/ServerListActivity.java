@@ -85,7 +85,12 @@ public class ServerListActivity extends AppCompatActivity {
     }
 
     private void loadServers() {
-        adapter.setServers(ServerManager.getInstance(this).getServers());
+        List<Server> servers = ServerManager.getInstance(this).getServers();
+        adapter.setServers(servers);
+        TextView emptyView = findViewById(R.id.text_empty_servers);
+        if (emptyView != null) {
+            emptyView.setVisibility(servers.isEmpty() ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void showEditDialog(String serverId) {
@@ -138,7 +143,7 @@ public class ServerListActivity extends AppCompatActivity {
             holder.btnDelete.setOnClickListener(v -> new MaterialAlertDialogBuilder(ServerListActivity.this)
                     .setTitle(R.string.delete_server)
                     .setMessage(R.string.delete_server_confirm)
-                    .setPositiveButton(R.string.delete_server, (dialog, which) -> {
+                    .setPositiveButton(R.string.delete, (dialog, which) -> {
                         ServerManager.getInstance(ServerListActivity.this).deleteServer(server.getId());
                         pyLoadApp app = (pyLoadApp) getApplicationContext();
                         app.resetClient();

@@ -102,6 +102,8 @@
     <string name="no_connection">Αδυναμία δημιουργίας  σύνδεσης:</string>
     <string name="no_downloads">Δεν υπάρχουν ενεργές λήψεις.</string>
     <string name="no_packages">Δεν υπάρχουν πακέτα.</string>
+    <string name="no_server_configured">Δεν έχει διαμορφωθεί διακομιστής. Πατήστε για προσθήκη διακομιστή.</string>
+    <string name="no_servers_found">Δεν βρέθηκαν προφίλ διακομιστή. Πατήστε + για προσθήκη.</string>
     <string name="off">ανενεργό</string>
     <string name="ok">OK</string>
     <string name="old_server">Η έκδοση του διακομιστή δεν ταιριάζει, παρακαλούμε χρησιμοποιήστε το pyLoad %s.</string>

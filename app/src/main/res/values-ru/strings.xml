@@ -102,6 +102,8 @@
     <string name="no_connection">Не удалось установить соединение:</string>
     <string name="no_downloads">Нет активных загрузок.</string>
     <string name="no_packages">Нет пакетов.</string>
+    <string name="no_server_configured">Сервер не настроен. Нажмите, чтобы добавить сервер.</string>
+    <string name="no_servers_found">Профили серверов отсутствуют. Нажмите +, чтобы добавить.</string>
     <string name="off">выкл.</string>
     <string name="ok">OK</string>
     <string name="old_server">Серверная версия не совпадает, пожалуйста, используйте pyLoad %s.</string>

@@ -102,6 +102,8 @@
     <string name="no_connection">Nie można ustanowić połączenia:</string>
     <string name="no_downloads">Brak aktywnych transferów.</string>
     <string name="no_packages">Brak pakietów.</string>
+    <string name="no_server_configured">Brak skonfigurowanego serwera. Stuknij, aby dodać serwer.</string>
+    <string name="no_servers_found">Brak profili serwerów. Stuknij +, aby dodać.</string>
     <string name="off">Wył</string>
     <string name="ok">OK</string>
     <string name="old_server">Niezgodna wersja serwera, należy użyć pyLoad %s.</string>

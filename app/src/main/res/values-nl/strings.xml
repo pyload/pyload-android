@@ -102,6 +102,8 @@
     <string name="no_connection">Kan geen verbinding maken:</string>
     <string name="no_downloads">Geen actieve downloads.</string>
     <string name="no_packages">Geen pakketten.</string>
+    <string name="no_server_configured">Geen server geconfigureerd. Tik om een server toe te voegen.</string>
+    <string name="no_servers_found">Geen serverprofielen. Tik op + om er een toe te voegen.</string>
     <string name="off">uit</string>
     <string name="ok">OK</string>
     <string name="old_server">Serverversie komt niet overeen, gebruik pyLoad %s.</string>
