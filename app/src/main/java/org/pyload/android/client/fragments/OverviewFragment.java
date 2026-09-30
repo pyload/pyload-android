@@ -311,6 +311,27 @@ public class OverviewFragment extends ListFragment implements TabHandler {
     }
 
     @Override
+    public void clearData() {
+        if (downloads != null) {
+            downloads.clear();
+        }
+        if (allDownloads != null) {
+            allDownloads.clear();
+        }
+        try {
+            OverviewAdapter adapter = (OverviewAdapter) getListAdapter();
+            if (adapter != null) {
+                adapter.setDownloads(new ArrayList<>());
+            }
+        } catch (Exception ignored) {}
+        serverStatus = null;
+        if (statusServer != null) statusServer.setText("");
+        if (reconnect != null) reconnect.setText("");
+        if (speed != null) speed.setText("");
+        if (active != null) active.setText("");
+    }
+
+    @Override
     public void setPosition(int pos) {
         this.pos = pos;
     }

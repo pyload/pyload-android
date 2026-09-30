@@ -230,6 +230,7 @@ public class pyLoadApp extends Application {
 		clearTasks();
 		if (main != null) {
 			main.updateServerSubtitle();
+			main.clearAllTabLists();
 		}
 		refreshTab();
 	}
@@ -644,6 +645,9 @@ public class pyLoadApp extends Application {
 		if (persistentSnackbar != null) {
 			persistentSnackbar.dismiss();
 			persistentSnackbar = null;
+		}
+		if (main != null) {
+			main.clearAllTabLists();
 		}
 		updateClickNLoadService();
 	}

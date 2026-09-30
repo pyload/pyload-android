@@ -44,6 +44,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -355,8 +356,8 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 				final EditText input = new EditText(getActivity());
 				input.setText(pack.getPassword());
 				int padding = (int) (16 * getResources().getDisplayMetrics().density);
-				android.widget.FrameLayout container = new android.widget.FrameLayout(getActivity());
-				android.widget.FrameLayout.LayoutParams params = new  android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				FrameLayout container = new FrameLayout(getActivity());
+				FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 				params.leftMargin = padding;
 				params.rightMargin = padding;
 				input.setLayoutParams(params);
@@ -424,7 +425,7 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 		inflater.inflate(R.menu.package_context_menu, menu);
 		menu.setHeaderTitle(R.string.choose_action);
 
-		if (menuInfo instanceof ExpandableListView.ExpandableListContextMenuInfo info) {
+		if (menuInfo instanceof ExpandableListContextMenuInfo info) {
 			int type = ExpandableListView.getPackedPositionType(info.packedPosition);
 
 			MenuItem moveItem = menu.findItem(R.id.move);
@@ -525,6 +526,22 @@ public abstract class AbstractPackageFragment extends ExpandableListFragment
 			PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
 			adapter.setData(data);
 		}
+	}
+
+	@Override
+	public void clearData() {
+		if (data != null) {
+			data.clear();
+		}
+		if (allData != null) {
+			allData.clear();
+		}
+		try {
+			PackageListAdapter adapter = (PackageListAdapter) getExpandableListAdapter();
+			if (adapter != null) {
+				adapter.setData(new ArrayList<>());
+			}
+		} catch (Exception ignored) {}
 	}
 
 	protected void onTaskPerformed() {

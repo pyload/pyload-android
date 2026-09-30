@@ -372,6 +372,16 @@ public class pyLoad extends FragmentTabsPager {
         app.updateClickNLoadService();
     }
 
+    public void clearAllTabLists() {
+        if (mTabsAdapter == null) return;
+        for (int i = 0; i < mTabsAdapter.getCount(); i++) {
+            Fragment frag = mTabsAdapter.getFragment(i);
+            if (frag instanceof TabHandler tabHandler) {
+                tabHandler.clearData();
+            }
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
