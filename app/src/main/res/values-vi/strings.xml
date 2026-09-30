@@ -8,6 +8,9 @@
     <string name="add">Thêm</string>
     <string name="add_links">Thêm liên kết</string>
     <string name="add_server">Thêm máy chủ</string>
+    <string name="scan_barcode">Quét mã QR</string>
+    <string name="scan_failed">Quét thất bại hoặc đã hủy</string>
+    <string name="invalid_qr_code">Định dạng mã QR không hợp lệ</string>
     <string name="addlinks_desc">Thêm một gói mới.</string>
     <string name="api_key">API Key</string>
     <string name="api_key_desc">API key của bạn để xác thực.</string>

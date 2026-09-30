@@ -8,6 +8,9 @@
     <string name="add">Добавить</string>
     <string name="add_links">Добавить ссылки</string>
     <string name="add_server">Добавить сервер</string>
+    <string name="scan_barcode">Сканировать QR-код</string>
+    <string name="scan_failed">Сканирование не удалось или отменено</string>
+    <string name="invalid_qr_code">Недействительный формат QR-кода</string>
     <string name="addlinks_desc">Добавить новый пакет.</string>
     <string name="api_key">API-ключ</string>
     <string name="api_key_desc">Ваш API-ключ для аутентификации.</string>

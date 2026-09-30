@@ -8,6 +8,9 @@
     <string name="add">Додај</string>
     <string name="add_links">Додај везе</string>
     <string name="add_server">Додај сервер</string>
+    <string name="scan_barcode">Скенирајте QR код</string>
+    <string name="scan_failed">Скенирање није успело или је отказано</string>
+    <string name="invalid_qr_code">Неважећи формат QR кода</string>
     <string name="addlinks_desc">Додајте нови пакет.</string>
     <string name="api_key">API ključ</string>
     <string name="api_key_desc">Vaš API ključ za autentifikaciju.</string>

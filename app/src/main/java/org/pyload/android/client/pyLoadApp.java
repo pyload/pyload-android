@@ -137,6 +137,9 @@ public class pyLoadApp extends Application {
 							Intent intent = new Intent(activity, ServerEditActivity.class);
 							activity.startActivity(intent);
 						});
+					} else if (persistentSnackbar != null) {
+						persistentSnackbar.dismiss();
+						persistentSnackbar = null;
 					}
 				} else if (pollingPaused && !snackbarDismissedByUser) {
 					showCenteredSnackbar(R.string.polling_paused_error, Snackbar.LENGTH_INDEFINITE);
@@ -383,7 +386,9 @@ public class pyLoadApp extends Application {
 	};
 
 	private boolean isServerManagementActivity(Activity activity) {
-		return activity instanceof ServerListActivity || activity instanceof ServerEditActivity;
+		return activity instanceof ServerListActivity
+				|| activity instanceof ServerEditActivity
+				|| activity instanceof BarcodeScannerActivity;
 	}
 
 	public void onException() {

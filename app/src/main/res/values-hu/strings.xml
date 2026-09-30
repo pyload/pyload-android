@@ -8,6 +8,9 @@
     <string name="add">Hozzáad</string>
     <string name="add_links">Link hozzáadás</string>
     <string name="add_server">Szerver hozzáadása</string>
+    <string name="scan_barcode">QR-kód beolvasása</string>
+    <string name="scan_failed">A beolvasás sikertelen vagy megszakítva</string>
+    <string name="invalid_qr_code">Érvénytelen QR-kód formátum</string>
     <string name="addlinks_desc">Új csomag</string>
     <string name="api_key">API kulcs</string>
     <string name="api_key_desc">Az API kulcsod hitelesítéshez.</string>

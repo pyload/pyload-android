@@ -2,8 +2,6 @@ package org.pyload.android.client;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -13,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -30,11 +30,22 @@ import org.pyload.android.client.module.ServerManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ServerListActivity extends AppCompatActivity {
 
     private ServerAdapter adapter;
+
+    private final ActivityResultLauncher<Intent> barcodeScannerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    String scannedData = result.getData().getStringExtra(BarcodeScannerActivity.EXTRA_SCANNED_DATA);
+                    if (scannedData != null && !scannedData.trim().isEmpty()) {
+                        Intent intent = new Intent(this, ServerEditActivity.class);
+                        intent.putExtra(ServerEditActivity.EXTRA_SCANNED_DATA, scannedData.trim());
+                        startActivity(intent);
+                    }
+                }
+            });
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -60,9 +71,26 @@ public class ServerListActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab_add_server);
         fab.setOnClickListener(v -> showEditDialog(null));
 
+        FloatingActionButton fabScan = findViewById(R.id.fab_scan_barcode);
+        if (fabScan != null) {
+            fabScan.setOnClickListener(v -> startBarcodeScanner());
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.server_list_container), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            v.setPadding(insets.left, insets.top, 0, 0);
+
+            View fabContainer = findViewById(R.id.fab_container);
+            if (fabContainer != null) {
+                ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fabContainer.getLayoutParams();
+                int margin24dp = (int) (24 * getResources().getDisplayMetrics().density);
+                lp.bottomMargin = insets.bottom + margin24dp;
+                lp.rightMargin = insets.right + margin24dp;
+                fabContainer.setLayoutParams(lp);
+            }
+
+            recyclerView.setPadding(insets.left, 0, insets.right, insets.bottom + (int) (120 * getResources().getDisplayMetrics().density));
+
             return WindowInsetsCompat.CONSUMED;
         });
 
@@ -99,6 +127,11 @@ public class ServerListActivity extends AppCompatActivity {
             intent.putExtra(ServerEditActivity.EXTRA_SERVER_ID, serverId);
         }
         startActivity(intent);
+    }
+
+    private void startBarcodeScanner() {
+        Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        barcodeScannerLauncher.launch(intent);
     }
 
     private class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.ViewHolder> {

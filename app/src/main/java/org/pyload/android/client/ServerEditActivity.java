@@ -22,13 +22,18 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONObject;
 import org.pyload.android.client.models.Server;
 import org.pyload.android.client.module.LanguageUtils;
 import org.pyload.android.client.module.ServerManager;
+import org.pyload.android.client.module.Utils;
+
+import java.util.Map;
 
 public class ServerEditActivity extends AppCompatActivity {
 
     public static final String EXTRA_SERVER_ID = "server_id";
+    public static final String EXTRA_SCANNED_DATA = "scanned_data";
     private boolean isFormValid = false;
 
     @Override
@@ -56,6 +61,9 @@ public class ServerEditActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             if (serverId != null) {
                 args.putString(EXTRA_SERVER_ID, serverId);
+            }
+            if (getIntent().hasExtra(EXTRA_SCANNED_DATA)) {
+                args.putString(EXTRA_SCANNED_DATA, getIntent().getStringExtra(EXTRA_SCANNED_DATA));
             }
             if (getIntent().getData() != null) {
                 args.putParcelable("deep_link_uri", getIntent().getData());
@@ -136,6 +144,10 @@ public class ServerEditActivity extends AppCompatActivity {
             }
             if (server == null) {
                 server = new Server(null, "", "", "8000", "", false, true, "");
+            }
+
+            if (getArguments() != null && getArguments().containsKey(EXTRA_SCANNED_DATA)) {
+                applyScannedData(getArguments().getString(EXTRA_SCANNED_DATA), server);
             }
 
             if (getArguments() != null && getArguments().containsKey("deep_link_uri")) {
@@ -270,6 +282,68 @@ public class ServerEditActivity extends AppCompatActivity {
             }
 
             requireActivity().finish();
+        }
+
+        private void applyScannedData(String rawData, Server server) {
+            if (rawData == null || rawData.trim().isEmpty()) return;
+            String data = rawData.trim();
+
+            if (data.startsWith("{") && data.endsWith("}")) {
+                try {
+                    JSONObject json = new JSONObject(data);
+                    if (json.has("name")) server.setName(json.getString("name"));
+                    if (json.has("host")) server.setHost(json.getString("host"));
+                    if (json.has("port")) server.setPort(json.getString("port"));
+                    if (json.has("path")) server.setPathPrefix(json.getString("path"));
+                    if (json.has("path_prefix")) server.setPathPrefix(json.getString("path_prefix"));
+                    if (json.has("ssl")) server.setSsl(json.getBoolean("ssl"));
+                    if (json.has("ssl_validate")) server.setSslValidate(json.getBoolean("ssl_validate"));
+                    if (json.has("apiKey")) server.setApiKey(json.getString("apiKey"));
+                    if (json.has("api_key")) server.setApiKey(json.getString("api_key"));
+                    if (json.has("key")) server.setApiKey(json.getString("key"));
+                    return;
+                } catch (Exception ignored) {}
+            }
+
+            try {
+                Uri uri = Uri.parse(data);
+                if (uri.getScheme() != null && (uri.getScheme().equalsIgnoreCase("http") || uri.getScheme().equalsIgnoreCase("https"))) {
+                    server.setSsl("https".equalsIgnoreCase(uri.getScheme()));
+                    if (uri.getHost() != null && !uri.getHost().isEmpty()) {
+                        server.setHost(uri.getHost());
+                    }
+                    if (uri.getPort() != -1) {
+                        server.setPort(String.valueOf(uri.getPort()));
+                    }
+                    if (uri.getPath() != null && !uri.getPath().isEmpty() && !"/".equals(uri.getPath())) {
+                        server.setPathPrefix(uri.getPath());
+                    }
+                }
+
+                String queryString = null;
+                if (data.contains("#")) {
+                    queryString = data.substring(data.indexOf('#') + 1);
+                    if (queryString.startsWith("?")) {
+                        queryString = queryString.substring(1);
+                    }
+                } else if (uri.getQuery() != null) {
+                    queryString = uri.getQuery();
+                }
+
+                if (queryString != null && !queryString.trim().isEmpty()) {
+                    Map<String, String> params = Utils.parseQueryParams(queryString.trim());
+                    if (params.containsKey("name")) server.setName(params.get("name"));
+                    if (params.containsKey("host")) server.setHost(params.get("host"));
+                    if (params.containsKey("port")) server.setPort(params.get("port"));
+                    if (params.containsKey("path")) server.setPathPrefix(params.get("path"));
+                    if (params.containsKey("path_prefix")) server.setPathPrefix(params.get("path_prefix"));
+                    if (params.containsKey("ssl")) server.setSsl(Boolean.parseBoolean(params.get("ssl")));
+                    if (params.containsKey("ssl_validate")) server.setSslValidate(Boolean.parseBoolean(params.get("ssl_validate")));
+                    if (params.containsKey("key")) server.setApiKey(params.get("key"));
+                    if (params.containsKey("api_key")) server.setApiKey(params.get("api_key"));
+                    if (params.containsKey("apiKey")) server.setApiKey(params.get("apiKey"));
+                }
+            } catch (Exception ignored) {}
         }
     }
 }

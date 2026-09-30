@@ -8,6 +8,9 @@
     <string name="add">追加</string>
     <string name="add_links">リンクを追加します。</string>
     <string name="add_server">サーバーを追加</string>
+    <string name="scan_barcode">QRコードをスキャン</string>
+    <string name="scan_failed">スキャンに失敗したかキャンセルされました</string>
+    <string name="invalid_qr_code">無効なQRコード形式です</string>
     <string name="addlinks_desc">新しいパッケージを追加します。</string>
     <string name="api_key">APIキー</string>
     <string name="api_key_desc">認証のためのAPIキー。</string>

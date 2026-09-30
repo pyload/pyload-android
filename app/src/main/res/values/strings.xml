@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="_0_0" translatable="false">0 / 0</string>
     <string name="abort">Abort</string>
     <string name="about">About</string>
@@ -9,6 +9,9 @@
     <string name="add">Add</string>
     <string name="add_links">Add Links</string>
     <string name="add_server">Add Server</string>
+    <string name="scan_barcode">Scan QR Code</string>
+    <string name="scan_failed">Scanning failed or cancelled</string>
+    <string name="invalid_qr_code">Invalid QR code format</string>
     <string name="addlinks_desc">Add a new Package.</string>
     <string name="api_key">API Key</string>
     <string name="api_key_desc">Your API Key for authentication.</string>

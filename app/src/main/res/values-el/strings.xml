@@ -8,6 +8,9 @@
     <string name="add">Προσθήκη</string>
     <string name="add_links">Προσθήκη Συνδέσμων</string>
     <string name="add_server">Προσθήκη διακομιστή</string>
+    <string name="scan_barcode">Σάρωση κωδικού QR</string>
+    <string name="scan_failed">Η σάρωση απέτυχε ή ακυρώθηκε</string>
+    <string name="invalid_qr_code">Μη έγκυρη μορφή κωδικού QR</string>
     <string name="addlinks_desc">Προσθήκη νέου πακέτου.</string>
     <string name="api_key">Κλειδί API</string>
     <string name="api_key_desc">Το κλειδί API σας για αυθεντικοποίηση.</string>

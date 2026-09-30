@@ -8,6 +8,9 @@
     <string name="add">Aggiungi</string>
     <string name="add_links">Aggiungi Link</string>
     <string name="add_server">Aggiungi server</string>
+    <string name="scan_barcode">Scansiona codice QR</string>
+    <string name="scan_failed">Scansione non riuscita o annullata</string>
+    <string name="invalid_qr_code">Formato codice QR non valido</string>
     <string name="addlinks_desc">Aggiungi un nuovo Pacchetto.</string>
     <string name="api_key">Chiave API</string>
     <string name="api_key_desc">La tua chiave API per l\'autenticazione.</string>

@@ -8,6 +8,9 @@
     <string name="add">إضافة</string>
     <string name="add_links">اضافة روابط</string>
     <string name="add_server">إضافة خادم</string>
+    <string name="scan_barcode">مسح رمز QR</string>
+    <string name="scan_failed">فشل المسح الضوئي أو تم إلغاؤه</string>
+    <string name="invalid_qr_code">تنسيق رمز QR غير صالح</string>
     <string name="addlinks_desc">إضافة حزمة جديدة.</string>
     <string name="api_key">مفتاح API</string>
     <string name="api_key_desc">مفتاح API الخاص بك للمصادقة.</string>

@@ -8,6 +8,9 @@
     <string name="add">הוסף</string>
     <string name="add_links">הוסף קישורים</string>
     <string name="add_server">הוסף שרת</string>
+    <string name="scan_barcode">סרוק קוד QR</string>
+    <string name="scan_failed">הסריקה נכשלה או בוטלה</string>
+    <string name="invalid_qr_code">פורמט קוד QR לא תקין</string>
     <string name="addlinks_desc">הוסף חבילה חדשה.</string>
     <string name="api_key">מפתח API</string>
     <string name="api_key_desc">מפתח ה‑API שלך לאימות.</string>

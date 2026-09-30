@@ -8,6 +8,9 @@
     <string name="add">Ekle</string>
     <string name="add_links">Linkleri Ekle</string>
     <string name="add_server">Sunucu Ekle</string>
+    <string name="scan_barcode">QR Kod Taraması</string>
+    <string name="scan_failed">Tarama başarısız oldu veya iptal edildi</string>
+    <string name="invalid_qr_code">Geçersiz QR kod biçimi</string>
     <string name="addlinks_desc">Yeni bir paket ekleyin.</string>
     <string name="api_key">API Anahtarı</string>
     <string name="api_key_desc">Kimlik doğrulama için API anahtarınız.</string>

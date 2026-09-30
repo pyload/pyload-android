@@ -8,6 +8,9 @@
     <string name="add">Toevoegen</string>
     <string name="add_links">Link toevoegen</string>
     <string name="add_server">Server toevoegen</string>
+    <string name="scan_barcode">QR-code scannen</string>
+    <string name="scan_failed">Scannen mislukt of geannuleerd</string>
+    <string name="invalid_qr_code">Ongeldig QR-codeformaat</string>
     <string name="addlinks_desc">Nieuwe pakket toevoegen.</string>
     <string name="api_key">API-sleutel</string>
     <string name="api_key_desc">Je API-sleutel voor authenticatie.</string>
