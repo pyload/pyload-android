@@ -147,7 +147,7 @@
         <activity android:name=".BarcodeScannerActivity"
                   android:label="@string/scan_barcode"
                   android:exported="false"
-                  android:theme="@style/Theme.Material3.DayNight.NoActionBar"/>
+                  android:theme="@style/AppTheme"/>
 
         <service
             android:name=".services.ClickNLoadService"
