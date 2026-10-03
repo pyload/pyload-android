@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <group
+        android:pivotX="12"
+        android:pivotY="12"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
+        android:translateX="-0.3"
+        android:translateY="-0.3">
+
+        <!-- Top Server Unit Line-Art Outline -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M5,5.5h14a1,1 0 0,1 1,1v3a1,1 0 0,1 -1,1H5a1,1 0 0,1 -1,-1v-3a1,1 0 0,1 1,-1z"/>
+
+        <!-- Bottom Server Unit Line-Art Outline -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M5,13h10a1,1 0 0,1 1,1v3a1,1 0 0,1 -1,1H5a1,1 0 0,1 -1,-1v-3a1,1 0 0,1 1,-1z"/>
+
+        <!-- LED Indicator Lines inside top server unit -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:pathData="M7.5,8h2 M11.5,8h2"/>
+
+        <!-- LED Indicator Line inside bottom server unit -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:pathData="M7.5,15.5h2"/>
+
+        <!-- Plus Sign (+) in bottom right corner -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1.8"
+            android:strokeLineCap="round"
+            android:pathData="M19.5,15.5v6 M16.5,18.5h6"/>
+    </group>
+
+</vector>

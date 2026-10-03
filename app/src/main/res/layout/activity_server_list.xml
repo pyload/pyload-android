@@ -34,24 +34,25 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:padding="8dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_scan_barcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="12dp"
             android:contentDescription="@string/scan_barcode"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_barcode" />
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/ic_qr_code" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/add_server"
-            app:srcCompat="@drawable/ic_menu_server_add" />
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/ic_server_add" />
 
     </LinearLayout>
 
