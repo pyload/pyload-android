@@ -42,6 +42,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -484,9 +485,12 @@ public class pyLoad extends FragmentTabsPager {
                     // Apply the same color as the magnifier icon
                     if (closeBtn instanceof ImageView) {
                         TypedValue typedValue = new TypedValue();
-                        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true);
-                        int color = typedValue.data;
-                        ((ImageView) closeBtn).setColorFilter(color);
+                        if (getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)) {
+                            int color = typedValue.resourceId != 0
+                                    ? ContextCompat.getColor(this, typedValue.resourceId)
+                                    : typedValue.data;
+                            ((ImageView) closeBtn).setColorFilter(color);
+                        }
                     }
 
                     closeBtn.setOnClickListener(v -> {

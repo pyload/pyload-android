@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -206,9 +207,12 @@ public class RemoteSettings extends AppCompatActivity {
 
                     if (closeBtn instanceof ImageView) {
                         android.util.TypedValue typedValue = new android.util.TypedValue();
-                        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true);
-                        int color = typedValue.data;
-                        ((ImageView) closeBtn).setColorFilter(color);
+                        if (getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)) {
+                            int color = typedValue.resourceId != 0
+                                    ? ContextCompat.getColor(this, typedValue.resourceId)
+                                    : typedValue.data;
+                            ((ImageView) closeBtn).setColorFilter(color);
+                        }
                     }
 
                     closeBtn.setOnClickListener(v -> {
