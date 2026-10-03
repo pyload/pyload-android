@@ -197,7 +197,7 @@ public class RemoteSettings extends AppCompatActivity {
                     }
                 });
 
-                // Force the 'X' button to close the search view entirely
+                // Clear search text if active, otherwise close the search view entirely
                 int closeBtnId = androidx.appcompat.R.id.search_close_btn;
                 View closeBtn = searchView.findViewById(closeBtnId);
                 if (closeBtn != null) {
@@ -212,7 +212,12 @@ public class RemoteSettings extends AppCompatActivity {
                     }
 
                     closeBtn.setOnClickListener(v -> {
-                        searchItem.collapseActionView();
+                        CharSequence query = searchView.getQuery();
+                        if (query != null && query.length() > 0) {
+                            searchView.setQuery("", false);
+                        } else {
+                            searchItem.collapseActionView();
+                        }
                     });
                 }
 
