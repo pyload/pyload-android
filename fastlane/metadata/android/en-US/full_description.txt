@@ -1,19 +1,23 @@
-This is the official Android client for the pyLoad Download Manager. You need to have pyLoad running on your pc or server.
+Connect to your pyLoad Download Manager from Android. This app requires a running pyLoad Core 0.5.x instance on your PC, server, or Docker host.
+
+Install pyLoad from PyPI (https://github.com/pyload/pyload#quick-start), or use the LinuxServer Docker image: https://docs.linuxserver.io/images/docker-pyload-ng.
 
 Features:
-- Add links via Share option (e.g. Chrome/YouTube -> pyLoad)
-- Add packages, or upload container files (DLC, CCF etc.)
-- Display current downloads
-- Display queue/collector
-- Delete/Move/Restart packages
-- Abort downloads
-- Enter Captchas for downloads
-- Toggle download/reconnect
-- Edit server side settings
-- View accounts
-- Secure SSL connection to the Core
+- Configure and switch between multiple pyLoad servers
+- Scan a QR code to fill in server connection details
+- View download status, progress, speed, and server status
+- Browse the queue and collector; delete, move, restart, and abort downloads
+- Add links, including through Android's Share menu
+- Upload container files such as DLC and CCF
+- Enter captchas and manage accounts
+- Toggle downloads and reconnect
+- View and edit server-side settings
+- Connect over SSL with configurable certificate validation
+- Choose light, dark, or system theme
+- Use Click'N'Load to send links or DLC files to a configured server
 
-You need an API key to connect the app to your pyLoad instance. Open pyLoad in your browser and navigate to:
-Settings → Users → Next to your username tap on Actions → Manage API Keys → Generate.
+To connect, add a server and enter its address and API key. Generate an API key in pyLoad under Settings → Users → Actions → Manage API Keys → Generate. Keep the key safe; pyLoad only shows it when it is generated.
 
-Please report any issues with the client here: https://github.com/pyload/pyload-android/issues
+Scan a QR code to quickly populate server configuration.
+
+Please report app issues at https://github.com/pyload/pyload-android/issues

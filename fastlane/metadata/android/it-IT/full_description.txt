@@ -1,0 +1,23 @@
+Connettiti al Download Manager pyLoad da Android. Questa app richiede un’istanza di pyLoad Core 0.5.x in esecuzione sul tuo PC, server o host Docker.
+
+Installa pyLoad da PyPI (https://github.com/pyload/pyload#quick-start) oppure usa l’immagine Docker di LinuxServer: https://docs.linuxserver.io/images/docker-pyload-ng.
+
+Funzionalità:
+- Configura più server pyLoad e passa da uno all’altro
+- Scansiona un codice QR per inserire i dati di connessione al server
+- Visualizza stato, avanzamento e velocità dei download e lo stato del server
+- Esplora la coda e il raccoglitore; elimina, sposta, riavvia e annulla i download
+- Aggiungi link, anche dal menu Condividi di Android
+- Carica file contenitore come DLC e CCF
+- Inserisci captcha e gestisci gli account
+- Attiva o metti in pausa i download e la riconnessione
+- Visualizza e modifica le impostazioni del server
+- Connettiti tramite SSL con convalida dei certificati configurabile
+- Scegli il tema chiaro, scuro o di sistema
+- Usa Click'N'Load per inviare link o file DLC a un server configurato
+
+Per connetterti, aggiungi un server e inserisci il suo indirizzo e la chiave API. Genera una chiave API in pyLoad da Impostazioni → Utenti → Azioni → Gestisci chiavi API → Genera. Conserva la chiave in un luogo sicuro; pyLoad la mostra solo al momento della creazione.
+
+Scansiona un codice QR per compilare rapidamente la configurazione del server.
+
+Segnala i problemi dell’app all’indirizzo https://github.com/pyload/pyload-android/issues

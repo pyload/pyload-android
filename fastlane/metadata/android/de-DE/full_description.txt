@@ -1,19 +1,23 @@
-Dies ist der offizielle Android-Client für den pyLoad Download Manager. Sie müssen pyLoad auf Ihrem PC oder Server ausgeführt haben.
+Verbinden Sie sich über Android mit Ihrem pyLoad Download Manager. Diese App benötigt eine laufende pyLoad-Core-Instanz der Version 0.5.x auf Ihrem PC, Server oder Docker-Host.
 
-Features:
-- Links über die Share-Option hinzufügen (z. B. Chrome/YouTube -> pyLoad)
-- Pakete hinzufügen oder Containerdateien hochladen (DLC, CCF etc.)
-- Aktuelle Downloads anzeigen
-- Warteschlange/Linksammler anzeigen
-- Pakete löschen/verschieben/neu starten
-- Downloads abbrechen
-- Captchas für Downloads eingeben
-- Download/Reconnect umschalten
-- Serverseitige Einstellungen bearbeiten
-- Konten anzeigen
-- Sichere SSL-Verbindung zum Core
+Installieren Sie pyLoad von PyPI (https://github.com/pyload/pyload#quick-start) oder verwenden Sie das LinuxServer-Docker-Image: https://docs.linuxserver.io/images/docker-pyload-ng.
 
-Sie benötigen einen API-Schlüssel, um die App mit Ihrer pyLoad-Instanz zu verbinden. Öffnen Sie pyLoad in Ihrem Browser und navigieren Sie zu:
-Einstellungen → Benutzer → Tippen Sie neben Ihrem Benutzernamen auf Aktionen → API-Schlüssel verwalten → Generieren.
+Funktionen:
+- Mehrere pyLoad-Server einrichten und zwischen ihnen wechseln
+- QR-Code scannen, um Verbindungsdaten zu übernehmen
+- Downloadstatus, Fortschritt, Geschwindigkeit und Serverstatus anzeigen
+- Warteschlange und Linksammler durchsuchen; Downloads löschen, verschieben, neu starten und abbrechen
+- Links hinzufügen, auch über das Android-Teilen-Menü
+- Containerdateien wie DLC und CCF hochladen
+- Captchas eingeben und Konten verwalten
+- Downloads und Reconnect umschalten
+- Serverseitige Einstellungen anzeigen und bearbeiten
+- SSL-Verbindung mit konfigurierbarer Zertifikatsprüfung
+- Helles, dunkles oder systemweites Design auswählen
+- Links und DLC-Dateien per Click'N'Load an einen konfigurierten Server senden
 
-Bitte melden Sie alle Probleme mit dem Client hier: https://github.com/pyload/pyload-android/issues
+Zum Verbinden fügen Sie einen Server mit Adresse und API-Schlüssel hinzu. Erstellen Sie den API-Schlüssel in pyLoad unter Einstellungen → Benutzer → Aktionen → API-Schlüssel verwalten → Generieren. Bewahren Sie den Schlüssel sicher auf; pyLoad zeigt ihn nur bei der Erstellung an.
+
+Scannen Sie einen QR-Code, um die Serverkonfiguration schnell zu übernehmen.
+
+Probleme mit der App melden Sie bitte unter https://github.com/pyload/pyload-android/issues

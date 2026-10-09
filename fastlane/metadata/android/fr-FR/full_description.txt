@@ -1,0 +1,23 @@
+Connectez-vous à votre gestionnaire de téléchargements pyLoad depuis Android. Cette application nécessite une instance pyLoad Core 0.5.x en cours d’exécution sur votre PC, serveur ou hôte Docker.
+
+Installez pyLoad depuis PyPI (https://github.com/pyload/pyload#quick-start) ou utilisez l’image Docker LinuxServer : https://docs.linuxserver.io/images/docker-pyload-ng.
+
+Fonctionnalités :
+- Configurez plusieurs serveurs pyLoad et passez de l’un à l’autre
+- Scannez un code QR pour renseigner les informations de connexion au serveur
+- Consultez l’état, la progression et la vitesse des téléchargements ainsi que l’état du serveur
+- Parcourez la file d’attente et le collecteur ; supprimez, déplacez, relancez et annulez des téléchargements
+- Ajoutez des liens, notamment depuis le menu de partage Android
+- Envoyez des fichiers conteneurs tels que DLC et CCF
+- Saisissez des captchas et gérez les comptes
+- Activez ou mettez en pause les téléchargements et la reconnexion
+- Consultez et modifiez les paramètres du serveur
+- Connectez-vous en SSL avec validation des certificats configurable
+- Choisissez un thème clair, sombre ou celui du système
+- Utilisez Click'N'Load pour envoyer des liens ou des fichiers DLC à un serveur configuré
+
+Pour vous connecter, ajoutez un serveur et saisissez son adresse et sa clé API. Générez une clé API dans pyLoad via Paramètres → Utilisateurs → Actions → Gérer les clés API → Générer. Conservez-la en lieu sûr ; pyLoad ne l’affiche qu’au moment de sa création.
+
+Scannez un code QR pour renseigner rapidement la configuration du serveur.
+
+Signalez les problèmes liés à l’application sur https://github.com/pyload/pyload-android/issues
